@@ -29,6 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
 import { MealsMealIdGet$Params } from 'src/app/api/fn/meals/meals-meal-id-get';
 import { ActivatedRoute } from '@angular/router';
+import { GetMealRequest } from 'src/app/api/models/get-meal-request';
 
 
 @Component({
@@ -92,8 +93,8 @@ export class AddMealComponent implements OnInit {
   stepperOrientation: Observable<StepperOrientation>;
   @Input() mealID: string | null = ''
   smallMealOptionID: string | null = ''
-  mediumMealOptionAdded: string | null = ''
-  largeMealOptionAdded: string | null = ''
+  mediumMealOptionID: string | null = ''
+  largeMealOptionID: string | null = ''
   categoryOptions: Option[] = [];
   spiceLevelOptions: Option[] = [];
   tagsOptions: Option[] = [];
@@ -124,7 +125,26 @@ export class AddMealComponent implements OnInit {
       const mealsMealIdGet$Params: MealsMealIdGet$Params = {
         MealID: this.mealID
       }
-      this.mealsService.mealsMealIdGet(mealsMealIdGet$Params)
+      let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
+        panelClass: '',
+        disableClose: true
+      });
+      this.mealsService.mealsMealIdGet(mealsMealIdGet$Params).subscribe({
+        next: (body) => {
+          console.log(body)
+          dialogRef.close()
+          this.loadMeal(body)
+          this.isMealAdded = true;
+        },
+        error: error => {
+          dialogRef.close()
+          if (error.error.errors) {
+            this.errorMessages = error.error.errors;
+          } else {
+            this.errorMessages.push(error.error);
+          }
+        }
+      })
     }
   }
   constructor(private mealsService: MealsService,
@@ -132,9 +152,6 @@ export class AddMealComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     breakpointObserver: BreakpointObserver) {
-
-console.log(this.mealID,false)
-
 
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
@@ -203,6 +220,40 @@ console.log(this.mealID,false)
       description: this.addMealForm.value.description,
       mealOptions: []
     }
+  }
+
+  loadMeal(getMealRequest: GetMealRequest ){
+    this.meal = {
+      title: getMealRequest.title ?? '',
+      mealID: getMealRequest.mealID?? '',
+      mealCategory: getMealRequest.mealCategory,
+      mealSpiceLevel: getMealRequest.mealSpiceLevel,
+      description: getMealRequest.description ?? '',
+      tagsID: getMealRequest.mealTags?.flatMap(x => x.tagID !== undefined ? [x.tagID] : []),
+      mealOptions: []
+    }
+    getMealRequest.getMealOptionsRequest?.forEach(mealOption => {
+      this.meal.mealOptions.push({
+        mealOptionID: mealOption.mealOptionID ?? '',
+        MealSizeOption: mealOption.mealSizeOption ?? 0,
+        isAvailable: mealOption.isAvailable ?? false,
+        price: mealOption.price ?? 0,
+        availableQuantity: 5,
+        saveQuantitySetting: mealOption.saveQuantity ?? false
+      })
+    })
+    console.log(this.meal)
+    this.loadForm(this.meal)
+  }
+
+  loadForm(meal: Meal){
+    this.smallMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 0)?.mealOptionID ??''
+    this.mediumMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 1)?.mealOptionID ??''
+    this.largeMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 2)?.mealOptionID ??''
+    this.title.setValue(meal.title)
+    this.description.setValue(meal.description)
+    this.category.setValue(meal.mealCategory)
+    this.tags.setValue(meal.tagsID)
   }
 
   saveMealOption(mealOptionID: string | null) {
@@ -331,11 +382,11 @@ console.log(this.mealID,false)
         }
         else if (this.mealSize.value === 1) {
           this.isMediumMealOptionAdded = true
-          this.mediumMealOptionAdded = mealOptionID[0]
+          this.mediumMealOptionID = mealOptionID[0]
         }
         else if (this.mealSize.value === 2) {
           this.isLargeMealOptionAdded = true
-          this.largeMealOptionAdded = mealOptionID[0]
+          this.largeMealOptionID = mealOptionID[0]
         }
         this.saveMealOption(mealOptionID)
         console.log(this.meal)
