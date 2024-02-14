@@ -36,7 +36,7 @@
                     [options]="categoryOptions"></app-select-input>
                 <app-select-input [control]="spiceLevel" type="text" placeholder="Spice Level" label="Spice Level"
                     [options]="spiceLevelOptions"></app-select-input>
-                <app-chips-auto-complete-input [control]="tags" type="text" label="Tags"
+                <app-chips-auto-complete-input [SelectedOptions]="selectedTags" [control]="tags" type="text" label="Tags"
                     [options]="tagsOptions"></app-chips-auto-complete-input>
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Description</mat-label>
@@ -89,23 +89,31 @@
 
                 <app-input class="me-1" class="me-1" [control]="quantity" type="number" format="999"
                     label="Available quantity"></app-input>
-
+                    {{ isSmallMealOptionAdded ? 'Edit 0 Meal Option' : 'Add 0 Meal Option' }}
+                    {{ isMediumMealOptionAdded ? 'Edit 1 Meal Option' : 'Add 1 Meal Option' }}
+                    {{ isLargeMealOptionAdded ? 'Edit 2 Meal Option' : 'Add 2 Meal Option' }}
                 <app-file-input [control]="image"></app-file-input>
-                <div [ngSwitch]="mealSize.value">
+                <div>
+                    <button mat-button matStepperNext>{{AddOrEdit}} Meal Option</button>
+                    <button mat-button matStepperPrevious>Back</button>
+                </div>
+                <!-- <div [ngSwitch]="mealSize.value">
                     <button mat-button matStepperNext *ngSwitchCase="0">
+                        small
                         {{ isSmallMealOptionAdded ? 'Edit Meal Option' : 'Add Meal Option' }}
                     </button>
                     <button mat-button matStepperNext *ngSwitchCase="1">
+                        Medium
                         {{ isMediumMealOptionAdded ? 'Edit Meal Option' : 'Add Meal Option' }}
                     </button>
                     <button mat-button matStepperNext *ngSwitchCase="2">
+                        Large
                         {{ isLargeMealOptionAdded ? 'Edit Meal Option' : 'Add Meal Option' }}
                     </button>
                     <button mat-button matStepperNext *ngSwitchDefault>
                         Add Meal Option
                     </button>
-                    <button mat-button matStepperPrevious>Back</button>
-                </div>
+                </div> -->
                 <img [src]="image.value.url" width="50" height="50">
             </form>
         </ng-template>

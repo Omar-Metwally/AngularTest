@@ -1,11 +1,18 @@
+import { filter } from 'rxjs/operators';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { FormControl, FormsModule, Validators } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { Title } from '@angular/platform-browser';
 import { GetMealRequest, GetMealTableRequest } from 'src/app/api/models';
 import { MealsService } from 'src/app/api/services';
+import { FilterPipe } from 'src/app/filter.pipe';
+import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
+import { SharedModule } from "../../shared/shared.module"; 
 
 export interface PeriodicElement {
   name: string;
@@ -27,15 +34,27 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-meals-table',
-  standalone: true,
-  imports: [MatTableModule, MatSortModule, MatButtonModule],
-  templateUrl: './meals-table.component.html',
-  styleUrl: './meals-table.component.css'
+    selector: 'app-meals-table',
+    standalone: true,
+    templateUrl: './meals-table.component.html',
+    styleUrl: './meals-table.component.css',
+    imports: [MatTableModule, MatSortModule, MatButtonModule, MatAutocomplete, MatFormField, MatLabel, FormsModule,
+        MatInputModule, SharedModule]
 })
 export class MealsTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+
+  searchText: FormControl = new FormControl('');
+  // searchText: string = '';
+
+  // categoryFilter: number | null = null; // Changed to number type
+  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA); // Assuming ELEMENT_DATA is your data source
+
+  // searchText: any;
+  // categoryFilter: any;
+
+
   displayedColumns: string[] = ['title', 'category', 'spiceLevel', 'totalSold', 'isAvailable', 'rating', 'button'];
   //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   getMealTableRequest: GetMealTableRequest[] = []
@@ -82,4 +101,45 @@ export class MealsTableComponent implements AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
+
+  // searchText='';
+
+//    productContainer=[];
+//    searchProduct(item) {
+//     let box=``;
+//     for(var i=0; i < productContainer.length; i++){
+//       if (productContainer[i].name.toLowerCase().includes(item.toLowerCase()) == true)
+//       { }
+//     }
+// }
+
+// myDataSource:any;
+// findProductByName(name:HTMLInputElement){
+//   this.applyFilter(name.value);
+// }
+
+//   applyFilter(filterValue:string){
+//     filterValue=filterValue.trim();
+//     filterValue=filterValue.toLowerCase();
+//     this.myDataSource.filter=filterValue;
+//   }
+applyFilter() {
+  this.dataSource.filter = this.searchText.value.trim().toLowerCase();
+}
+// applyFilter() {
+//   this.dataSource.filterPredicate = (data, filter: string) => {
+//     const searchTextLowerCase = this.searchText.trim().toLowerCase();
+//     if (this.categoryFilter !== null) {
+//       return (
+//         data.title.toLowerCase().includes(searchTextLowerCase) &&
+//         data.category === this.categoryFilter
+//       );
+//     } else {
+//       return data.title.toLowerCase().includes(searchTextLowerCase);
+//     }
+//   };
+//   this.dataSource.filter = 'triggerFilter';
+// }
+
 }

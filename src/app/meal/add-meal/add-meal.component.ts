@@ -2,7 +2,6 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { SharedModule } from "../../shared/shared.module";
 import { SelectInputComponent } from "../../shared/select-input/select-input.component";
-import { Option } from 'src/app/shared/models/address/option';
 import { ChipsAutoCompleteInputComponent } from "../../shared/chips-auto-complete-input/chips-auto-complete-input.component";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,7 +27,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
 import { MealsMealIdGet$Params } from 'src/app/api/fn/meals/meals-meal-id-get';
-import { ActivatedRoute } from '@angular/router';
+import { Option } from 'src/app/shared/models/address/option';
+import { GetMealRequest } from 'src/app/api/models/get-meal-request';
+import { MealCategory, MealSpiceLevel } from 'src/app/api/models';
 
 
 @Component({
@@ -92,8 +93,8 @@ export class AddMealComponent implements OnInit {
   stepperOrientation: Observable<StepperOrientation>;
   @Input() mealID: string | null = ''
   smallMealOptionID: string | null = ''
-  mediumMealOptionAdded: string | null = ''
-  largeMealOptionAdded: string | null = ''
+  mediumMealOptionID: string | null = ''
+  largeMealOptionID: string | null = ''
   categoryOptions: Option[] = [];
   spiceLevelOptions: Option[] = [];
   tagsOptions: Option[] = [];
@@ -101,6 +102,8 @@ export class AddMealComponent implements OnInit {
   isSmallMealOptionAdded: boolean = false;
   isMediumMealOptionAdded: boolean = false;
   isLargeMealOptionAdded: boolean = false;
+  AddOrEdit: string = 'Add'
+  selectedTags: Option[] = []
   meal: Meal = {
     title: '',
     mealID: '',
@@ -110,7 +113,7 @@ export class AddMealComponent implements OnInit {
   previousMealSize: number
   currentMealOption: mealOption = {
     mealOptionID: '',
-    MealSizeOption: 0,
+    MealSizeOption: 1,
     isAvailable: false,
     price: 0,
     availableQuantity: 0,
@@ -118,13 +121,34 @@ export class AddMealComponent implements OnInit {
     // imagePath: ''
   }
   //imagePath: string = '';
+  mealSpiceLevel = MealSpiceLevel
+  mealCategory = MealCategory
 
   ngOnInit() {
     if(this.mealID != null){
       const mealsMealIdGet$Params: MealsMealIdGet$Params = {
         MealID: this.mealID
       }
-      this.mealsService.mealsMealIdGet(mealsMealIdGet$Params)
+      let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
+        panelClass: '',
+        disableClose: true
+      });
+      this.mealsService.mealsMealIdGet(mealsMealIdGet$Params).subscribe({
+        next: (body) => {
+          console.log(body)
+          dialogRef.close()
+          this.loadMeal(body)
+          this.isMealAdded = true;
+        },
+        error: error => {
+          dialogRef.close()
+          if (error.error.errors) {
+            this.errorMessages = error.error.errors;
+          } else {
+            this.errorMessages.push(error.error);
+          }
+        }
+      })
     }
   }
   constructor(private mealsService: MealsService,
@@ -133,12 +157,9 @@ export class AddMealComponent implements OnInit {
     private dialog: MatDialog,
     breakpointObserver: BreakpointObserver) {
 
-console.log(this.mealID,false)
-
-
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
-    this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
+    this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1dc', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
 
     this.addMealForm = this.formBuilder.group({
       title: this.title,
@@ -158,30 +179,35 @@ console.log(this.mealID,false)
       image: this.image
     })
 
-    this.quantity.disable()
-    this.saveQuantitySetting.disable()
+
+
 
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
 
+
     this.previousMealSize = this.addMealOptionForm.get('SizeOption')?.value;
     this.addMealOptionForm.get('SizeOption')?.valueChanges.subscribe((currentMealSize) => {
+      console.log(currentMealSize)
       this.saveMealOption(this.currentMealOption.mealOptionID)
       console.log(this.meal, this.imagePath)
       this.previousMealSize = currentMealSize;
 
-      let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == this.previousMealSize);
+      let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == currentMealSize);
 
+      console.log(index)
       if (index !== -1 && index !== undefined) {
         this.currentMealOption = this.meal.mealOptions[index]
+        this.mealSize.setValue(currentMealSize, {emitEvent: false})
         //this.mealSize.setValue(this.currentMealOption.MealSizeOption)
         this.price.setValue(this.currentMealOption.price)
         this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
         this.isAvailable.setValue(this.currentMealOption.isAvailable)
         this.quantity.setValue(this.currentMealOption.availableQuantity)
         this.image.setValue(this.currentMealOption.image)
+        console.log(this.mealSize.value, false)
         // this.imagePath.setValue(this.currentMealOption.imagePath)
       }
       else {
@@ -190,19 +216,93 @@ console.log(this.mealID,false)
         this.isAvailable.reset()
         this.quantity.reset()
         this.image.reset()
+        this.quantity.disable()
+        this.saveQuantitySetting.disable()
+        console.log('reset is done')
       }
+      this.ChangeAddOrEdit()
     });
+  }
+
+  ChangeAddOrEdit(){
+    switch (this.mealSize.value) {
+      case 0:
+        this.AddOrEdit = this.isSmallMealOptionAdded ? 'Edit' : 'Add';
+        break;
+      case 1:
+        this.AddOrEdit = this.isMediumMealOptionAdded ? 'Edit' : 'Add';
+        break;
+      case 2:
+        this.AddOrEdit = this.isLargeMealOptionAdded ? 'Edit' : 'Add';
+        break;
+      default:
+        this.AddOrEdit = 'Add'
+        break;
+    }
   }
 
   saveMeal() {
     this.meal = {
       title: this.addMealForm.value.title,
       mealID: this.mealID ?? '',
-      mealCategory: +this.addMealForm.value.category.id,
-      mealSpiceLevel: +this.addMealForm.value.spiceLevel.id,
+      mealCategory: this.addMealForm.value.category,
+      mealSpiceLevel: this.addMealForm.value.spiceLevel,
       description: this.addMealForm.value.description,
       mealOptions: []
     }
+  }
+
+  loadMeal(getMealRequest: GetMealRequest ){
+    let mealCategoryIndex = getMealRequest.mealCategory ?? 0
+    let mealSpiceLevelIndex = getMealRequest.mealSpiceLevel ?? 0
+    this.meal = {
+      title: getMealRequest.title ?? '',
+      mealID: getMealRequest.mealID?? '',
+      mealCategory: this.categoryOptions.find(x => +x.id == (mealCategoryIndex)),
+      mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
+      description: getMealRequest.description ?? '', 
+      tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)), //getMealRequest.mealTags?.flatMap(x => x.tagID !== undefined ? [x.tagID] : []),
+      mealOptions: []
+    }
+
+    getMealRequest.getMealOptionsRequest?.forEach(mealOption => {
+      this.meal.mealOptions.push({
+        mealOptionID: mealOption.mealOptionID ?? '',
+        MealSizeOption: mealOption.mealSizeOption ?? 0,
+        isAvailable: mealOption.isAvailable ?? false,
+        price: mealOption.price ?? 0,
+        availableQuantity: 5,
+        saveQuantitySetting: mealOption.saveQuantity ?? false
+      })
+    })
+    this.loadForm(this.meal)
+  }
+
+  loadForm(meal: Meal){
+    this.smallMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 0)?.mealOptionID ??''
+    if(this.smallMealOptionID) this.isSmallMealOptionAdded = true
+    this.mediumMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 1)?.mealOptionID ??''
+    if(this.mediumMealOptionID) this.isMediumMealOptionAdded = true
+    this.largeMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 2)?.mealOptionID ??''
+    if(this.largeMealOptionID) this.isLargeMealOptionAdded = true
+    this.title.setValue(meal.title)
+    this.description.setValue(meal.description)
+    this.category.setValue(meal.mealCategory)
+    this.spiceLevel.setValue(meal.mealSpiceLevel)
+    this.tags.setValue(meal.tagsID)
+    this.selectedTags = meal.tagsID?? []
+
+    let mealOption: mealOption | undefined = meal.mealOptions.at(0)
+
+    if(mealOption){
+      this.price.setValue(mealOption.price)
+      this.quantity.setValue(mealOption.availableQuantity)
+      this.saveQuantitySetting.setValue(mealOption.saveQuantitySetting)
+      this.mealSize.setValue(mealOption.MealSizeOption)
+      this.isAvailable.setValue(mealOption.isAvailable)
+      console.log('load is done')
+    }
+
   }
 
   saveMealOption(mealOptionID: string | null) {
@@ -214,8 +314,6 @@ console.log(this.mealID,false)
       availableQuantity: this.quantity.value,
       saveQuantitySetting: this.saveQuantitySetting.value,
       image: this.image.value,
-      // imageFile: this.image.value,
-      // imagePath: this.imagePath.value
     }
     let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == this.previousMealSize);
 
@@ -266,8 +364,8 @@ console.log(this.mealID,false)
           'MealID': this.mealID ?? '',
           'Name': this.addMealForm.value.title,
           'Description': this.addMealForm.value.description,
-          'MealCategory': +this.addMealForm.value.category.id,
-          'MealSpiceLevel': +this.addMealForm.value.spiceLevel.id,
+          'MealCategory': this.addMealForm.value.category.id,
+          'MealSpiceLevel': this.addMealForm.value.spiceLevel.id,
           'TagsID': this.addMealForm.value.tags.map((o: Option) => o.id),
         }
       }
@@ -288,7 +386,6 @@ console.log(this.mealID,false)
 
   mealOptionForm() {
     type MealSizeValues = 0 | 1 | 2;
-    // Define a type for the meal size actions
     const mealSizeActions = {
       0: this.isSmallMealOptionAdded,
       1: this.isMediumMealOptionAdded,
@@ -331,12 +428,13 @@ console.log(this.mealID,false)
         }
         else if (this.mealSize.value === 1) {
           this.isMediumMealOptionAdded = true
-          this.mediumMealOptionAdded = mealOptionID[0]
+          this.mediumMealOptionID = mealOptionID[0]
         }
         else if (this.mealSize.value === 2) {
           this.isLargeMealOptionAdded = true
-          this.largeMealOptionAdded = mealOptionID[0]
+          this.largeMealOptionID = mealOptionID[0]
         }
+        this.ChangeAddOrEdit()
         this.saveMealOption(mealOptionID)
         console.log(this.meal)
       },

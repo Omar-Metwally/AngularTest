@@ -21,8 +21,8 @@ export class ChipsAutoCompleteInputComponent {
   input!: ElementRef<HTMLInputElement>;
   filteredOptions: Option[] = [];
   //separatorKeysCodes: number[] = [ENTER, COMMA];
-  SelectedOptions: Option[] = [];
 
+  @Input() SelectedOptions: Option[] = [];
   @Input() control: FormControl = new FormControl('')
   @Input() type = 'text'
   @Input() placeholder = ''
@@ -52,6 +52,7 @@ export class ChipsAutoCompleteInputComponent {
   filter(): void {
     const filterValue = this.input.nativeElement.value.toLowerCase();
     this.filteredOptions = this.options.filter(o => o.name.toLowerCase().includes(filterValue));
+    console.log(this.SelectedOptions)
   }
 
 }

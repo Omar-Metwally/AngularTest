@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum MealSpiceLevel {
-  $0 = 0,
-  $1 = 1,
-  $2 = 2,
-  $3 = 3,
-  $4 = 4
+  'Not Spicy' = 0,
+  'Mild' = 1,
+  'Medium' = 2,
+  'Hot' = 3,
+  'Very Hot' = 4
 }

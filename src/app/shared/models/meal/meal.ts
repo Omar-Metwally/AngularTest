@@ -1,12 +1,13 @@
 import { MealCategory, MealSpiceLevel } from "src/app/api/models";
 import { mealOption } from "./mealOption";
+import { Option } from "../address/option";
 
 export interface Meal {
     mealID: string;
     title: string;
     description: string;
-    mealCategory?: MealCategory;
-    mealSpiceLevel?: MealSpiceLevel;
-    tagsID?: Array<string>;
+    mealCategory?: Option;
+    mealSpiceLevel?: Option;
+    tagsID?: Array<Option>;
     mealOptions: Array<mealOption>;
 }

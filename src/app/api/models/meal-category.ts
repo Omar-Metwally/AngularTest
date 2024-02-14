@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum MealCategory {
-  $0 = 0,
-  $1 = 1,
-  $2 = 2
+  'Main Dish' = 0,
+  'Side Dish' = 1,
+  'Appetizer ' = 2
 }
