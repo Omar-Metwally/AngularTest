@@ -10,6 +10,11 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { GetMealRequest } from '../models/get-meal-request';
+import { GetMealTableRequest } from '../models/get-meal-table-request';
+import { mealsChiefMealsGet } from '../fn/meals/meals-chief-meals-get';
+import { MealsChiefMealsGet$Params } from '../fn/meals/meals-chief-meals-get';
+import { mealsChiefMealsGet$Plain } from '../fn/meals/meals-chief-meals-get-plain';
+import { MealsChiefMealsGet$Plain$Params } from '../fn/meals/meals-chief-meals-get-plain';
 import { mealsGet } from '../fn/meals/meals-get';
 import { MealsGet$Params } from '../fn/meals/meals-get';
 import { mealsGet$Plain } from '../fn/meals/meals-get-plain';
@@ -147,6 +152,53 @@ export class MealsService extends BaseService {
   mealsPost(params?: MealsPost$Params, context?: HttpContext): Observable<string> {
     return this.mealsPost$Response(params, context).pipe(
       map((r: StrictHttpResponse<string>): string => r.body)
+    );
+  }
+
+  /** Path part for operation `mealsChiefMealsGet()` */
+  static readonly MealsChiefMealsGetPath = '/Meals/ChiefMeals';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsChiefMealsGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsChiefMealsGet$Plain$Response(params?: MealsChiefMealsGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealTableRequest>>> {
+    return mealsChiefMealsGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsChiefMealsGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsChiefMealsGet$Plain(params?: MealsChiefMealsGet$Plain$Params, context?: HttpContext): Observable<Array<GetMealTableRequest>> {
+    return this.mealsChiefMealsGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetMealTableRequest>>): Array<GetMealTableRequest> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsChiefMealsGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsChiefMealsGet$Response(params?: MealsChiefMealsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealTableRequest>>> {
+    return mealsChiefMealsGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsChiefMealsGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsChiefMealsGet(params?: MealsChiefMealsGet$Params, context?: HttpContext): Observable<Array<GetMealTableRequest>> {
+    return this.mealsChiefMealsGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetMealTableRequest>>): Array<GetMealTableRequest> => r.body)
     );
   }
 

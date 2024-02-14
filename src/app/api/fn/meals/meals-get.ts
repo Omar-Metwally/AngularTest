@@ -12,7 +12,7 @@ import { MealSizeOption } from '../../models/meal-size-option';
 export interface MealsGet$Params {
   TagFilter?: Array<string>;
   SizeFilter?: Array<MealSizeOption>;
-  CheifFilter?: Array<string>;
+  ChiefFilter?: Array<string>;
   StartPrice?: number;
   EndPrice?: number;
   PageSize?: number;
@@ -24,7 +24,7 @@ export function mealsGet(http: HttpClient, rootUrl: string, params?: MealsGet$Pa
   if (params) {
     rb.query('TagFilter', params.TagFilter, {});
     rb.query('SizeFilter', params.SizeFilter, {});
-    rb.query('CheifFilter', params.CheifFilter, {});
+    rb.query('ChiefFilter', params.ChiefFilter, {});
     rb.query('StartPrice', params.StartPrice, {});
     rb.query('EndPrice', params.EndPrice, {});
     rb.query('PageSize', params.PageSize, {});

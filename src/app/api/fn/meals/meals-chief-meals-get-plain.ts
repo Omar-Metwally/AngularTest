@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { GetMealRequest } from '../../models/get-meal-request';
+import { GetMealTableRequest } from '../../models/get-meal-table-request';
 import { MealSizeOption } from '../../models/meal-size-option';
 
-export interface MealsGet$Plain$Params {
+export interface MealsChiefMealsGet$Plain$Params {
   TagFilter?: Array<string>;
   SizeFilter?: Array<MealSizeOption>;
   ChiefFilter?: Array<string>;
@@ -19,8 +19,8 @@ export interface MealsGet$Plain$Params {
   PageNumber?: number;
 }
 
-export function mealsGet$Plain(http: HttpClient, rootUrl: string, params?: MealsGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealRequest>>> {
-  const rb = new RequestBuilder(rootUrl, mealsGet$Plain.PATH, 'get');
+export function mealsChiefMealsGet$Plain(http: HttpClient, rootUrl: string, params?: MealsChiefMealsGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealTableRequest>>> {
+  const rb = new RequestBuilder(rootUrl, mealsChiefMealsGet$Plain.PATH, 'get');
   if (params) {
     rb.query('TagFilter', params.TagFilter, {});
     rb.query('SizeFilter', params.SizeFilter, {});
@@ -36,9 +36,9 @@ export function mealsGet$Plain(http: HttpClient, rootUrl: string, params?: Meals
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<GetMealRequest>>;
+      return r as StrictHttpResponse<Array<GetMealTableRequest>>;
     })
   );
 }
 
-mealsGet$Plain.PATH = '/Meals';
+mealsChiefMealsGet$Plain.PATH = '/Meals/ChiefMeals';

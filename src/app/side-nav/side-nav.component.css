@@ -4,18 +4,19 @@
 }
 
 .sidenav-header{
-    padding-top: 24px;
+    padding-top: 9px;
     text-align: center;
+    position: relative;
 
 
 
 
 
 
-    > img{
+    div > img{
         border-radius: 100%;
         object-fit: cover;
-        margin-bottom: 10px;
+        /* margin-bottom: 10px; */
     }
 
     .header-text{
@@ -50,4 +51,16 @@
     border-left-color: var(--primary-color);
     background-color: rgba(0, 0, 0, 0.05);
 }
+.menu-button {
+    display: block;
+    position: relative;
+    margin-left: 10px;
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    /* z-index: 2; Ensure the button is above the image */
+}
 
+.image-container {
+    position: relative;
+}

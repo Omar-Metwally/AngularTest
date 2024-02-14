@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { SharedModule } from "../../shared/shared.module";
 import { SelectInputComponent } from "../../shared/select-input/select-input.component";
@@ -27,6 +27,8 @@ import { MealOptionPut$Params } from 'src/app/api/fn/meal-option/meal-option-put
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
+import { MealsMealIdGet$Params } from 'src/app/api/fn/meals/meals-meal-id-get';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -34,9 +36,9 @@ import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-
   standalone: true,
   templateUrl: './add-meal.component.html',
   styleUrl: './add-meal.component.css',
-  imports: [MatIconModule ,CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, ChiefRegisterComponent, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
+  imports: [MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, ChiefRegisterComponent, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
 })
-export class AddMealComponent {
+export class AddMealComponent implements OnInit {
 
   title: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator, Validators.minLength(3), Validators.maxLength(20)],
@@ -81,14 +83,14 @@ export class AddMealComponent {
   imagePath: FormControl = new FormControl('');
 
   file: Blob | null = null
-
+  //private mealId = inject(ActivatedRoute);
   addMealForm: FormGroup = new FormGroup({});
   addMealOptionForm: FormGroup = new FormGroup({});
   submitted = false;
   errorMessages: string[] = [];
   returnUrl: string | null = null;
   stepperOrientation: Observable<StepperOrientation>;
-  mealID: string | null = ''
+  @Input() mealID: string | null = ''
   smallMealOptionID: string | null = ''
   mediumMealOptionAdded: string | null = ''
   largeMealOptionAdded: string | null = ''
@@ -117,12 +119,23 @@ export class AddMealComponent {
   }
   //imagePath: string = '';
 
-
+  ngOnInit() {
+    if(this.mealID != null){
+      const mealsMealIdGet$Params: MealsMealIdGet$Params = {
+        MealID: this.mealID
+      }
+      this.mealsService.mealsMealIdGet(mealsMealIdGet$Params)
+    }
+  }
   constructor(private mealsService: MealsService,
     private mealOptionService: MealOptionService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     breakpointObserver: BreakpointObserver) {
+
+console.log(this.mealID,false)
+
+
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
     this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
@@ -230,17 +243,15 @@ export class AddMealComponent {
         panelClass: '',
         disableClose: true
       });
-  
-      console.log(true)
       this.mealsService.mealsPost$Response(createMealRequest).subscribe({
         next: (response: HttpResponse<any>) => {
-          // dialogRef.close()
+          dialogRef.close()
           this.mealID = response.headers.get('Location');
           this.saveMeal()
           this.isMealAdded = true;
         },
         error: error => {
-          // dialogRef.close()
+          dialogRef.close()
           if (error.error.errors) {
             this.errorMessages = error.error.errors;
           } else {
@@ -285,7 +296,6 @@ export class AddMealComponent {
     };
 
     const action = mealSizeActions[this.mealSize.value as MealSizeValues];
-    console.log(action)
     if (action) {
       this.putMealOption();
     } else {
@@ -310,8 +320,6 @@ export class AddMealComponent {
       panelClass: '',
       disableClose: true
     });
-
-    console.log(true)
     this.mealOptionService.mealOptionPost(createMealOptionRequest).subscribe({
       next: (mealOptionID) => {
 
@@ -348,12 +356,12 @@ export class AddMealComponent {
   putMealOption() {
     const updateMealOptionRequest: MealOptionPut$Params = {
       body: {
-        'mealOptionID': this.currentMealOption.mealOptionID ?? '',
-        'isAvailable': this.isAvailable.value,
-        'price': this.price.value,
-        'availableQuantity': this.quantity.value,
-        'saveQuantitySetting': this.saveQuantitySetting.value,
-        'image': this.image.value.file
+        'MealOptionID': this.currentMealOption.mealOptionID ?? '',
+        'IsAvailable': this.isAvailable.value,
+        'Price': this.price.value,
+        'AvailableQuantity': this.quantity.value,
+        'SaveQuantitySetting': this.saveQuantitySetting.value,
+        'Image': this.image.value.file
       }
     }
     this.mealOptionService.mealOptionPut(updateMealOptionRequest).subscribe({
@@ -367,7 +375,6 @@ export class AddMealComponent {
         else if (this.mealSize.value === 2) {
           this.isLargeMealOptionAdded = true
         }
-        console.log(this.meal)
       },
       error: error => {
         if (error.error.errors) {
@@ -377,79 +384,6 @@ export class AddMealComponent {
         }
       }
     })
-  }
-
-  addMeal() {
-    if (!this.isMealAdded) {
-      if (this.addMealForm.valid) {
-        const createMealRequest: MealsPost$Params = {
-          body: {
-            'name': this.addMealForm.value.title,
-            'description': this.addMealForm.value.description,
-            'mealCategory': +this.addMealForm.value.category.id,
-            'mealSpiceLevel': +this.addMealForm.value.spiceLevel.id,
-            'tagsID': this.addMealForm.value.tags.map((o: Option) => o.id),
-          }
-        }
-        this.mealsService.mealsPost$Response(createMealRequest,).subscribe({
-          next: (response: HttpResponse<any>) => {
-            this.mealID = response.headers.get('Location');
-            this.isMealAdded = true;
-            this.saveMeal()
-            console.log(this.meal)
-          },
-          error: error => {
-            if (error.error.errors) {
-              this.errorMessages = error.error.errors;
-            } else {
-              this.errorMessages.push(error.error);
-            }
-          }
-        })
-      }
-    }
-  }
-
-  addMealOption() {
-    if (this.addMealOptionForm.valid) {
-      const createMealOptionRequest: MealOptionPost$Params = {
-        body: {
-          'MealID': this.mealID ?? '',
-          'MealSizeOption': this.mealSize.value,
-          'IsAvailable': this.isAvailable.value,
-          'Price': this.price.value,
-          'AvailableQuantity': this.quantity.value,
-          'SaveQuantitySetting': this.saveQuantitySetting.value,
-          'Image': this.image.value
-        }
-      }
-
-      this.mealOptionService.mealOptionPost(createMealOptionRequest).subscribe({
-        next: (mealOptionID) => {
-
-          if (this.mealSize.value === 1) {
-            this.isSmallMealOptionAdded = true
-            this.smallMealOptionID = mealOptionID[0]
-          }
-          else if (this.mealSize.value === 2) {
-            this.isMediumMealOptionAdded = true
-            this.mediumMealOptionAdded = mealOptionID[0]
-          }
-          else if (this.mealSize.value === 3) {
-            this.isLargeMealOptionAdded = true
-            this.largeMealOptionAdded = mealOptionID[0]
-          }
-        },
-        error: error => {
-
-          if (error.error.errors) {
-            this.errorMessages = error.error.errors;
-          } else {
-            this.errorMessages.push(error.error);
-          }
-        }
-      })
-    }
   }
 
   toggleQuantityInput(yes: boolean) {
@@ -467,7 +401,7 @@ export class AddMealComponent {
     }
   }
 
-  showProgressSpinnerUntilExecuted(observable: Observable<Object>) {
+  OpenSpinner() {
     let dialogRef: MatDialogRef<MatProgressSpinnerModule> = this.dialog.open(MatProgressSpinnerModule, {
       panelClass: '',
       disableClose: true
