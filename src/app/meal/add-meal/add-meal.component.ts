@@ -349,7 +349,7 @@ export class AddMealComponent implements OnInit {
           this.isMealAdded = true;
         },
         error: error => {
-          dialogRef.close()
+          // dialogRef.close()
           if (error.error.errors) {
             this.errorMessages = error.error.errors;
           } else {

@@ -1,55 +1,58 @@
-<form [formGroup]="addMealForm">
-
-</form>
-
-<!-- <mat-stepper orientation="vertical">
-    <mat-step>
-      <ng-template matStepLabel>Step 1</ng-template>
-      <ng-template matStepContent>
-        <p>This content was rendered lazily</p>
-        <button mat-button matStepperNext>Next</button>
-      </ng-template>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Step 2</ng-template>
-      <ng-template matStepContent>
-        <p>This content was also rendered lazily</p>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </ng-template>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Step 3</ng-template>
-      <p>This content was rendered eagerly</p>
-      <button mat-button matStepperPrevious>Back</button>
-    </mat-step>
-  </mat-stepper> -->
-
+<div class="container p-5 ">
+    <div class="row">
+        <div class="col-md-6 align-items-center align-self-center">
+            <h4 class="fw-bold">Add a New Dish</h4>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-success px-4">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
 <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
     labelPosition="bottom">
     <mat-step [optional]="false" [completed]="isMealAdded" label="Dish Profile" state="dish">
-        <!-- <ng-template matStepLabel>Dish Profile</ng-template> -->
         <ng-template matStepContent>
             <form [formGroup]="addMealForm" (ngSubmit)="mealForm()">
-                <app-input class="me-1" [control]="title" type="text" label="Dish Title"></app-input>
-                <app-select-input [control]="category" type="text" placeholder="Category" label="Category"
-                    [options]="categoryOptions"></app-select-input>
-                <app-select-input [control]="spiceLevel" type="text" placeholder="Spice Level" label="Spice Level"
-                    [options]="spiceLevelOptions"></app-select-input>
-                <app-chips-auto-complete-input [SelectedOptions]="selectedTags" [control]="tags" type="text" label="Tags"
-                    [options]="tagsOptions"></app-chips-auto-complete-input>
-                <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Description</mat-label>
-                    <textarea [formControl]="description" matInput #message maxlength="256"
-                        placeholder="Ex. I need help with..."></textarea>
-                    <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
-                    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-                </mat-form-field>
-                <div>
-                    <button type="submit" mat-button matStepperNext *ngIf="!isMealAdded">Add Meal</button>
-                    <button type="submit" mat-button matStepperNext *ngIf="isMealAdded">Edit Meal</button>
+            <div class="py-5 container">
+                <div class="row row-cols-1 row-cols-md-2 row align-items-center">
+                    <div class="col">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-8 col-lg-10 col-md-12 col-sm-10">
+                            <app-input class="mb-2" [control]="title" type="text" label="Dish Title"></app-input>
+                            <app-select-input class="mb-2" [control]="category" type="text" placeholder="Category" label="Category"
+                                [options]="categoryOptions"></app-select-input>
+                            <app-select-input class="mb-2" [control]="spiceLevel" type="text" placeholder="Spice Level"
+                                label="Spice Level" [options]="spiceLevelOptions"></app-select-input>
+                            <app-chips-auto-complete-input class="mb-2" [SelectedOptions]="selectedTags" [control]="tags" type="text"
+                                label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Description</mat-label>
+                                <textarea [formControl]="description" matInput #message maxlength="256"
+                                    placeholder="Ex. I need help with..."></textarea>
+                                <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+                                <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                            </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row justify-content-center">
+                            <div class="flex-box">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
+            <section class="mt-5 pb-3">
+                <div class=" text-center justify-content-center mb-3">
+                    <button type="submit" class="btn btn-success" matStepperNext *ngIf="!isMealAdded">Add Meal</button>
+                    <button type="submit" class="btn btn-success" matStepperNext *ngIf="isMealAdded">Edit Meal</button>
+                </div>
+            </section>
+        </form>
+
         </ng-template>
     </mat-step>
     <mat-step [stepControl]="addMealOptionForm" label="Dish Options" state="dish-option">
@@ -89,9 +92,9 @@
 
                 <app-input class="me-1" class="me-1" [control]="quantity" type="number" format="999"
                     label="Available quantity"></app-input>
-                    {{ isSmallMealOptionAdded ? 'Edit 0 Meal Option' : 'Add 0 Meal Option' }}
-                    {{ isMediumMealOptionAdded ? 'Edit 1 Meal Option' : 'Add 1 Meal Option' }}
-                    {{ isLargeMealOptionAdded ? 'Edit 2 Meal Option' : 'Add 2 Meal Option' }}
+                {{ isSmallMealOptionAdded ? 'Edit 0 Meal Option' : 'Add 0 Meal Option' }}
+                {{ isMediumMealOptionAdded ? 'Edit 1 Meal Option' : 'Add 1 Meal Option' }}
+                {{ isLargeMealOptionAdded ? 'Edit 2 Meal Option' : 'Add 2 Meal Option' }}
                 <app-file-input [control]="image"></app-file-input>
                 <div>
                     <button mat-button matStepperNext>{{AddOrEdit}} Meal Option</button>

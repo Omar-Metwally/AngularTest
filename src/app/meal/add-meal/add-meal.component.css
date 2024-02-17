@@ -1,18 +1,23 @@
+.mat-horizontal-stepper-header-container{
+  margin-left: 25rem !important;
+  margin-right: 25rem !important;
+}
+
 .transparent .mat-mdc-dialog-container {
-    --mdc-dialog-container-color: .transparent;
+  --mdc-dialog-container-color: .transparent;
 }
 
 .mat-mdc-dialog-container {
-    --mdc-dialog-container-color: .transparent;
+  --mdc-dialog-container-color: .transparent;
 }
 
 .transparent {
-    background: transparent !important;
-    box-shadow: none !important;
-  }
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
 .transparent .mat-mdc-dialog-surface {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 /* ::ng-deep .custom-dialog > mat-dialog-container {
@@ -23,3 +28,47 @@
     background-color: transparent !important;
     box-shadow: none !important;
   } */
+.mat-mdc-dialog-surface .mdc-dialog__surface{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-surface.mdc-dialog__surface{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-surface{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.mdc-dialog__surface{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  }
+.line {
+  height: 3px;
+  width: 50%;
+  background-color: #5ABB47;
+}
+
+.flex-box {
+  background-color: #D5F5E3;
+  width: 30rem;
+  height: 500px;
+  border-radius: 5px;
+}
+
+button {
+  width: 25%;
+}
