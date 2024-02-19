@@ -1,0 +1,13 @@
+.category-box{
+    width: 202px;
+    height: 136px;
+    top: 61px;
+    left: 288px;
+    border-radius: 10px;
+    background-color:  #989696;
+    margin: 10px;
+}
+.gfg {
+    /* position: sticky !important; */
+    top: 10px !important; /* Adjust this value to control the distance from the top of the viewport */
+  }

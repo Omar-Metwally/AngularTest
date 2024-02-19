@@ -16,8 +16,9 @@ const routes: Routes = [
       { path: 'admin', loadChildren: () => import('./admin/admin.module').then(module => module.AdminModule) },
     ]
   },
-  // Implenting lazy loading by the following format
+  // Implanting lazy loading by the following format
   { path: 'about-us', loadComponent: () => import('./about-us/about-us.component').then(module => module.AboutUsComponent ) },
+  { path: 'menu', loadComponent: () => import('./menu/menu.component').then(module => module.MenuComponent ) },
   { path: 'become-a-chief', loadComponent: () => import('./account/chief-signup/chief-signup.component').then(module => module.ChiefSignupComponent ) },
   { path: 'test', loadComponent: () => import('./account/chief-register/chief-register.component').then(module => module.ChiefRegisterComponent ) },
   { path: 'meal/add-meal/:mealID', loadComponent: () => import('./meal/add-meal/add-meal.component').then(module => module.AddMealComponent ) },

@@ -27,6 +27,7 @@ export { MealCategory } from './models/meal-category';
 export { MealSizeOption } from './models/meal-size-option';
 export { MealSpiceLevel } from './models/meal-spice-level';
 export { OrderStatus } from './models/order-status';
+export { SortBy } from './models/sort-by';
 export { SubscriptionStatus } from './models/subscription-status';
 export { TokenRequestModel } from './models/token-request-model';
 export { UpdateSubscriptionDayDataRequest } from './models/update-subscription-day-data-request';

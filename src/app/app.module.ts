@@ -17,6 +17,7 @@ import { ChiefSignupComponent } from './account/chief-signup/chief-signup.compon
 import { AddMealComponent } from './meal/add-meal/add-meal.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { ProfileComponent } from './profile/profile.component';
         ChiefSignupComponent,
         AddMealComponent,
         SideNavComponent,
-        ProfileComponent
+        ProfileComponent,
+        MenuComponent,
     ]
 })
 export class AppModule { }

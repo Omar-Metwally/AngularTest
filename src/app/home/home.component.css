@@ -44,7 +44,35 @@
     color: #656565;
 }
 
+.landing-2 .container .button{
+    padding: 8px 16px 8px 16px;
+    border-radius: 10px;
+    border: 1px;
+    border-style: solid;
+    border-color: #31AC18;
+    background-color: #FDFFFC;
+    color: #31AC18;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+}
 
+.landing-2 .container .button:hover{
+    background-color: #31AC18;
+    color: white;
+    transition: 500ms;
+}
+
+.emptybox{
+    width: 300px;
+    height: 400px;
+    background-color: #31AC18;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
 
 
 .landing-4 .container h2 {
@@ -137,3 +165,14 @@ font-style: normal;
 font-weight: 700;
 line-height: 130%;
 }
+.icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  .icon-button img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }

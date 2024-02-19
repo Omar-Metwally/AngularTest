@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-center">
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+        <div class="category-box"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2">
+            <div class="mt-4">
+                <app-select-input class="mb-2" [control]="category" type="text" placeholder="Category" label="Category"
+                    [options]="categoryOptions"></app-select-input>
+                <app-select-input class="mb-2" [control]="spiceLevel" type="text" placeholder="Spice Level"
+                    label="Spice Level" [options]="spiceLevelOptions"></app-select-input>
+                <app-select-input class="mb-2" [control]="sortBy" type="text" placeholder="Sort By" label="Sort By"
+                    [options]="sortByOptions"></app-select-input>
+                <app-chips-auto-complete-input class="mb-2" [SelectedOptions]="selectedTags" [control]="tags"
+                    type="text" label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+                <mat-slider style="width: 95%;" min="0" max="5000" step="true" discrete="true">
+                    <input [formControl]="startPrice" value="0" matSliderStartThumb>
+                    <input [formControl]="endPrice" value="5000" matSliderEndThumb>
+                </mat-slider>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-10 col-xl-10" infiniteScroll [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="250" (scrolled)="onScroll()" [scrollWindow]="true">
+            <div class="text-center" style="
+            font-family: Roboto;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 34px;
+            letter-spacing: 0em;
+            text-align: left;
+            ">Our Most popular Dishes</div>
+            <div @fadeIn class="row d-flex justify-content-start">
+                @for (mealCard of mealsCard; track mealCard) {
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-start">
+                    <app-meal-card [mealCardData]="mealCard"></app-meal-card>
+                </div>
+                }
+                <div *ngIf="isLoading">Loading...</div>
+            </div>
+        </div>
+    </div>
+</div>

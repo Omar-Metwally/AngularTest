@@ -190,14 +190,11 @@ export class AddMealComponent implements OnInit {
 
     this.previousMealSize = this.addMealOptionForm.get('SizeOption')?.value;
     this.addMealOptionForm.get('SizeOption')?.valueChanges.subscribe((currentMealSize) => {
-      console.log(currentMealSize)
       this.saveMealOption(this.currentMealOption.mealOptionID)
-      console.log(this.meal, this.imagePath)
       this.previousMealSize = currentMealSize;
 
       let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == currentMealSize);
 
-      console.log(index)
       if (index !== -1 && index !== undefined) {
         this.currentMealOption = this.meal.mealOptions[index]
         this.mealSize.setValue(currentMealSize, {emitEvent: false})

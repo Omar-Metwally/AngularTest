@@ -67,6 +67,9 @@
       [ngClass]="{'collapse': collapsed}">
       <ul class="navbar-nav mb-3 mb-lg-0 col-lg-6">
         <li class="nav-item">
+          <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" routerLink="/menu" routerLinkActive="active">See Menu</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" [routerLinkActiveOptions]={exact:true} routerLink="/"
             routerLinkActive="active">How It Works</a>
         </li>
@@ -74,8 +77,8 @@
           <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" routerLink="/about-us" routerLinkActive="active">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" routerLink="/become-a-chief" >Become A Chef</a>
-        </li>
+          <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" routerLink="/become-a-chief" routerLinkActive="active">Become A Chef</a>
+        </li> 
       </ul>
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 col-lg-3" *ngIf="(accountService.user$ | async) === null">

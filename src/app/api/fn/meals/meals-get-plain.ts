@@ -8,10 +8,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { GetMealRequest } from '../../models/get-meal-request';
 import { MealSizeOption } from '../../models/meal-size-option';
+import { SortBy } from '../../models/sort-by';
 
 export interface MealsGet$Plain$Params {
   TagFilter?: Array<string>;
   SizeFilter?: Array<MealSizeOption>;
+  SortBy?: SortBy;
   ChiefFilter?: Array<string>;
   StartPrice?: number;
   EndPrice?: number;
@@ -24,6 +26,7 @@ export function mealsGet$Plain(http: HttpClient, rootUrl: string, params?: Meals
   if (params) {
     rb.query('TagFilter', params.TagFilter, {});
     rb.query('SizeFilter', params.SizeFilter, {});
+    rb.query('SortBy', params.SortBy, {});
     rb.query('ChiefFilter', params.ChiefFilter, {});
     rb.query('StartPrice', params.StartPrice, {});
     rb.query('EndPrice', params.EndPrice, {});

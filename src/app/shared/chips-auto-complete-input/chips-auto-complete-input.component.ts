@@ -52,8 +52,6 @@ export class ChipsAutoCompleteInputComponent {
   filter(): void {
     const filterValue = this.input.nativeElement.value.toLowerCase();
     this.filteredOptions = this.options.filter(o => o.name.toLowerCase().includes(filterValue));
-    console.log(this.SelectedOptions)
   }
 
 }
-

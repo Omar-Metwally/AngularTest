@@ -93,9 +93,6 @@
 
                 <app-input class="me-1" class="me-1" [control]="quantity" type="number" format="999"
                     label="Available quantity"></app-input>
-                {{ isSmallMealOptionAdded ? 'Edit 0 Meal Option' : 'Add 0 Meal Option' }}
-                {{ isMediumMealOptionAdded ? 'Edit 1 Meal Option' : 'Add 1 Meal Option' }}
-                {{ isLargeMealOptionAdded ? 'Edit 2 Meal Option' : 'Add 2 Meal Option' }}
                 <app-file-input [control]="image"></app-file-input>
                 <div>
                     <button mat-button matStepperNext>{{AddOrEdit}} Meal Option</button>
