@@ -1,28 +1,28 @@
 import { filter } from 'rxjs/operators';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator } from '@angular/material/paginator';
-import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { GetMealRequest, GetMealTableRequest } from 'src/app/api/models';
 import { MealsService } from 'src/app/api/services';
-import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
+import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { SharedModule } from "../../shared/shared.module";
-import { SelectInputComponent } from "../../shared/select-input/select-input.component"; 
+import { SelectInputComponent } from "../../shared/select-input/select-input.component";
 import { MealsGet$Params } from 'src/app/api/fn/meals/meals-get';
 import { Option } from 'src/app/shared/models/address/option';
 
 
 @Component({
-    selector: 'app-meals-table',
-    standalone: true,
-    templateUrl: './meals-table.component.html',
-    styleUrl: './meals-table.component.css',
-    imports: [MatTableModule, MatSortModule, MatButtonModule, MatAutocomplete, MatFormField, MatLabel, FormsModule,
-        MatInputModule, SharedModule, SelectInputComponent]
+  selector: 'app-meals-table',
+  standalone: true,
+  templateUrl: './meals-table.component.html',
+  styleUrl: './meals-table.component.css',
+  imports: [MatTableModule, MatSortModule, MatButtonModule, MatAutocomplete, MatFormField, MatLabel, FormsModule,
+    MatInputModule, SharedModule, SelectInputComponent]
 })
 export class MealsTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
@@ -42,17 +42,17 @@ export class MealsTableComponent implements AfterViewInit {
   });
   tags: FormControl = new FormControl('', {
   });
-  startPrice: FormControl = new FormControl('',{
+  startPrice: FormControl = new FormControl('', {
     validators: [Validators.min(0), Validators.max(5000)]
   })
-  endPrice: FormControl = new FormControl('',{
+  endPrice: FormControl = new FormControl('', {
     validators: [Validators.min(0), Validators.max(5000)]
   })
   filterForm: FormGroup = new FormGroup({});
   mealGetRequest: MealsGet$Params = {
-    PageNumber:1,
-    PageSize:5,
-    SortBy:1,
+    PageNumber: 1,
+    PageSize: 5,
+    SortBy: 1,
   }
 
   displayedColumns: string[] = ['title', 'category', 'spiceLevel', 'totalSold', 'isAvailable', 'rating', 'button'];
@@ -60,14 +60,14 @@ export class MealsTableComponent implements AfterViewInit {
   dataSource = new MatTableDataSource(this.getMealTableRequest);
   errorMessages: string[] = [];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer,private mealsService: MealsService) {
+  constructor(private _liveAnnouncer: LiveAnnouncer, private mealsService: MealsService) {
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
     this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1dc', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
     this.getMealsData()
   }
 
-  getMealsData(){
+  getMealsData() {
     this.mealsService.mealsChiefMealsGet().subscribe({
       next: (body) => {
         console.log(body)
@@ -99,7 +99,78 @@ export class MealsTableComponent implements AfterViewInit {
     }
   }
 
-applyFilter() {
-  this.dataSource.filter = this.searchText.value.trim().toLowerCase();
+//   applyFilter(value: any, columnName: string) {
+//     // console.log(value, columnName);
+//     this.dataSource.filterPredicate = (data: any, filter: any) => {
+//       console.log(data, filter)
+//         const transformedValue = data[columnName].toLowerCase();
+//         return transformedValue.includes(filter);
+//     };
+//     this.dataSource.filter = value;
+// }
+
+applyFilter(value: any, columnName: string) {
+  console.log(value)
+  this.dataSource.filterPredicate = (data: any, filter: any) => {
+      const transformedValue = data[columnName].toString().toLowerCase();
+      return transformedValue.includes(filter.toString().toLowerCase());
+  };
+  this.dataSource.filter = value;
 }
+
+  // applyFilter(value: any, columnName: string) {
+  //   console.log(value, columnName)
+  //   switch (columnName) {
+  //     case ('title'): {
+  //       this.dataSource.filterPredicate =
+  //         (data: any) => {
+  //           console.log(data)
+  //           return data.title.toLowerCase().includes(value)
+  //         };
+  //       break;
+  //     }
+  //     case('category'): {
+  //       this.dataSource.filterPredicate =
+  //       (data: any) => {
+  //         return data.category.toLowerCase().includes(value)
+  //       };
+  //     break;
+  //     }
+  //     default: {
+  //       this.dataSource.filterPredicate =
+  //       (data: any) => {
+  //         console.log(data)
+  //         return data.title.toLowerCase().includes(value)
+  //       };
+  //     }
+  //   }
+
+  // applyFilter(value: any, columnName: string) {
+  //   console.log(value, columnName)
+  //   switch (columnName) {
+  //     case ('title'): {
+  //       this.dataSource.filterPredicate =
+  //         (data: any) => {
+  //           console.log(data)
+  //           return data.title.toLowerCase().includes(value)
+  //         };
+  //       break;
+  //     }
+  //     case('category'): {
+  //       this.dataSource.filterPredicate =
+  //       (data: any) => {
+  //         return data.category.toLowerCase().includes(value)
+  //       };
+  //     break;
+  //     }
+  //     default: {
+  //       this.dataSource.filterPredicate =
+  //       (data: any) => {
+  //         console.log(data)
+  //         return data.title.toLowerCase().includes(value)
+  //       };
+  //     }
+  //   }
+  //   // this.dataSource.filter = this.searchText.value.trim().toLowerCase();
+  // }
 }

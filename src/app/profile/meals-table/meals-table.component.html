@@ -2,9 +2,9 @@
 <div class="class-sm-7">
   <div class="form-outline mt-3">
 
-        <app-input [control]="searchText" type="text" label="Search" (keyup)="applyFilter()" ></app-input>
+        <app-input [control]="searchText" type="text" label="Search" (keyup)="applyFilter(searchText.value, 'title')" ></app-input>
 
-        <app-select-input [control]="category" label="Category" [options]="categoryOptions"></app-select-input>
+        <app-select-input [control]="category" label="Category"  (change)="applyFilter(category.value.id, 'category')" [options]="categoryOptions"></app-select-input>
 
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)  "
   class="mat-elevation-z8">
