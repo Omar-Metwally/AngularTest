@@ -32,6 +32,8 @@ export class ChipsAutoCompleteInputComponent {
   @Input() style = ''
   @Input() class = ''
   @Input() options: Option[] = []
+  @Input() optionSelected!:() => void;
+
   
   remove(option: Option): void {
     const index = this.SelectedOptions.indexOf(option);
@@ -40,6 +42,7 @@ export class ChipsAutoCompleteInputComponent {
       this.SelectedOptions.splice(index, 1);
     }
     this.control.setValue(this.SelectedOptions);
+    this.optionSelected();
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -47,6 +50,8 @@ export class ChipsAutoCompleteInputComponent {
     const index = this.options.indexOf(event.option.value);
     if (index >= 0) this.options.splice(index, 1);
     this.input.nativeElement.value = '';
+
+    this.optionSelected();
   }
 
   filter(): void {

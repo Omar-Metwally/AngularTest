@@ -18,13 +18,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SelectInputComponent } from "../../shared/select-input/select-input.component";
 import { AuthChiefSignUpPost$Plain$Params } from 'src/app/api/fn/auth/auth-chief-sign-up-post-plain';
 import { ChiefRegisterComponent } from '../chief-register/chief-register.component';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-chief-signup',
     standalone: true,
     templateUrl: './chief-signup.component.html',
     styleUrl: './chief-signup.component.css',
-    imports: [ChiefRegisterComponent,MatCheckboxModule, MatButtonModule, MatCardModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, SharedModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule, SelectInputComponent]
+    imports: [ChiefRegisterComponent,MatCheckboxModule, MatButtonModule, NgbAccordionModule, MatCardModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, SharedModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule, SelectInputComponent]
 })
 export class ChiefSignupComponent {
 
@@ -32,6 +33,8 @@ export class ChiefSignupComponent {
   streets: Option[] = []
   buildings: Option[] = []
   
+  items = ['First', 'Second', 'Third', 'Forth'];
+
   district: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator],
   });

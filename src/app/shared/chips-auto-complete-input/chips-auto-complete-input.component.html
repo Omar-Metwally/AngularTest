@@ -10,10 +10,10 @@
     </mat-chip-row>
     }
   </mat-chip-grid>
-  <input #input [formControl]="control" [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+  <input selectionChange #input [formControl]="control" [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
     [placeholder]="placeholder"
     [type]="type" matInput (input)="filter()" (focus)="filter()" />
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+  <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="selected($event)">
     @for (option of filteredOptions ; track option) {
     <mat-option [value]="option">{{option.name}}</mat-option>
     }

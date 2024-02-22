@@ -17,7 +17,7 @@ import jwtDecode from 'jwt-decode';
 })
 export class AccountService {
   private userSource = new ReplaySubject<User | null>(1);
-  user$ = this.userSource.asObservable();
+  user$ = this.userSource.asObservable()
 
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
@@ -37,11 +37,19 @@ export class AccountService {
     )
   }*/
 
+  isUserLoggedIn(): boolean{
+    const key = localStorage.getItem(environment.userKey);
+    if (key) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+
   refreshUser(jwt: string | null) {
-    console.log(jwt);
 
     if (!jwt) {
-      console.log(true);
       this.userSource.next(null);
       return of(undefined);
     }
@@ -51,7 +59,6 @@ export class AccountService {
     let currentDateInSeconds = Math.floor(Date.now() / 1000);
 
     if (expireDate && expireDate > currentDateInSeconds) {
-      console.log(true);
       let user: User = {
         firstName: decodedJWT.given_name,
         lastName: decodedJWT.family_name,
@@ -73,7 +80,6 @@ export class AccountService {
   }
 
   login(model: Login) {
-    console.log(model);
     let headers = new HttpHeaders();
     headers.append('withCredentials', 'true' );
     const options = {

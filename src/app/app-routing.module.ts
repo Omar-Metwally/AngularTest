@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'test', loadComponent: () => import('./account/chief-register/chief-register.component').then(module => module.ChiefRegisterComponent ) },
   { path: 'meal/add-meal/:mealID', loadComponent: () => import('./meal/add-meal/add-meal.component').then(module => module.AddMealComponent ) },
   { path: 'meal/add-meal', loadComponent: () => import('./meal/add-meal/add-meal.component').then(module => module.AddMealComponent ) },
+  { path: 'cart', loadComponent: () => import('./cart/cart.component').then(module => module.CartComponent ) },
   { path: 'account', loadChildren: () => import('./account/account.module').then(module => module.AccountModule) },
   { path: 'profile', loadComponent: () => import('./profile/profile.component').then(module => module.ProfileComponent) },
   { path: 'not-found', component: NotFoundComponent },

@@ -91,6 +91,8 @@ export class SelectInputComponent {
   @Input() style = ''
   @Input() class = ''
   @Input() options: Option[] = []
+  @Input() optionSelected!:() => void;
+
 
   constructor() {
     this.filteredOptions = this.options;
@@ -104,5 +106,11 @@ export class SelectInputComponent {
 
   displayFn(option: Option): string {
     return option && option.name ? option.name : '';
+  }
+
+  hg(){
+    console.log('hello')
+    console.log(this.optionSelected)
+    this.optionSelected()
   }
 }

@@ -26,6 +26,7 @@ export { Governorate } from './models/governorate';
 export { MealCategory } from './models/meal-category';
 export { MealSizeOption } from './models/meal-size-option';
 export { MealSpiceLevel } from './models/meal-spice-level';
+export { MealStyle } from './models/meal-style';
 export { OrderStatus } from './models/order-status';
 export { SortBy } from './models/sort-by';
 export { SubscriptionStatus } from './models/subscription-status';

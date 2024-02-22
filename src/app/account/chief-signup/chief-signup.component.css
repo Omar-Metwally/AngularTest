@@ -2,6 +2,7 @@
     --black: rgb(0,0,0);
     --light-color: #666;
     --box-shadow: 0 .3rem 0.3rem rgba(0, 0, 0, 0.1);
+    --bs-accordion-active-color: var(--black);
 
 }
 
@@ -146,6 +147,33 @@
     text-decoration: underline;
 }
 
+.container .container1 {
+    text-align: center;
+}
+
+.container .button{
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 10px;
+    border: 0.1rem;
+    border-style: solid;
+    border-color: #31AC18;
+    background-color: #FDFFFC;
+    color: #31AC18;
+    font-family: Roboto;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    justify-self: center;
+}
+
+.container .button:hover{
+    background-color: #31AC18;
+    color: white;
+    transition: 500ms;
+}
+
 
 .card1 .card-body .sign {
     color: #31AC18;
@@ -281,6 +309,32 @@
 }
 
 
+
+
+.accordion-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0%;
+}
+
+.accordion-button:focus {
+    outline: none;
+  box-shadow: none;
+    background-color: white;
+    border-color: white;
+    color: black;
+}
+
+.accordion-button:hover {
+    background-color: white;
+    border-color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: white;
+    box-shadow: none;
+    color: black;
+}
 
 .container .footp p{
     color: gray;

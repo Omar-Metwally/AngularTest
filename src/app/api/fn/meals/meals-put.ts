@@ -8,6 +8,7 @@ import { RequestBuilder } from '../../request-builder';
 
 import { MealCategory } from '../../models/meal-category';
 import { MealSpiceLevel } from '../../models/meal-spice-level';
+import { MealStyle } from '../../models/meal-style';
 
 export interface MealsPut$Params {
       body?: {
@@ -16,6 +17,7 @@ export interface MealsPut$Params {
 'Description'?: string;
 'MealSpiceLevel'?: MealSpiceLevel;
 'MealCategory'?: MealCategory;
+'MealStyle'?: MealStyle;
 'TagsID'?: Array<string>;
 'Image'?: Blob;
 }

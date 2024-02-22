@@ -297,7 +297,6 @@ export class AddMealComponent implements OnInit {
       this.saveQuantitySetting.setValue(mealOption.saveQuantitySetting)
       this.mealSize.setValue(mealOption.MealSizeOption)
       this.isAvailable.setValue(mealOption.isAvailable)
-      console.log('load is done')
     }
 
   }
