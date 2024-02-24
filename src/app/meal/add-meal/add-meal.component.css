@@ -64,6 +64,7 @@
 
 .flex-box {
   background-color: #D5F5E3;
+  width: 30rem;
   height: 500px;
   border-radius: 5px;
 }
@@ -71,3 +72,67 @@
 button {
   width: 25%;
 }
+
+#btn-S{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+#btn-m{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+#btn-L{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+
+#btn-y{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+#btn-n{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+#btn-yy{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+#btn-nn{
+  width: 80px;
+  height: 64px;
+  line-height: 50px;
+  font-family: 'Roboto';
+  font-size: 18px;
+}
+
+h3{
+  font-family: 'Roboto';
+  font-size: 20px;
+}
+
+

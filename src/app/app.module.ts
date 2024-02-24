@@ -18,6 +18,7 @@ import { AddMealComponent } from './meal/add-meal/add-meal.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MenuComponent } from './menu/menu.component';
+import { MealComponent } from './meal/meal.component';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { MenuComponent } from './menu/menu.component';
         SideNavComponent,
         ProfileComponent,
         MenuComponent,
+        MealComponent,
     ]
 })
 export class AppModule { }

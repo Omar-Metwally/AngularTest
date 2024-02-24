@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
 import { LoginPopUpComponent } from './login-popup/login-popup.component';
-import { CustomerRegisterComponent } from './customer-register/customer-register.component';
 import { AccountRoutingModule } from './account-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
@@ -17,8 +15,6 @@ import { ChiefSignupComponent } from './chief-signup/chief-signup.component';
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    CustomerRegisterComponent,
     ConfirmEmailComponent,
     SendEmailComponent,
     ResetPasswordComponent,

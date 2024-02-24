@@ -21,11 +21,6 @@ export class UserHasRoleDirective implements OnInit{
           const decodedToken: any = jwt_decode(user.jwt);
           this.appUserHasRole.includes(decodedToken.roles)
           this.viewContainerRef.createEmbeddedView(this.templateRef);
-          /*if (decodedToken.roles.some((role: any) => this.appUserHasRole.includes(role))) {
-            this.viewContainerRef.createEmbeddedView(this.templateRef);
-          } else {
-            this.viewContainerRef.clear();
-          }*/
         } else {
           this.viewContainerRef.clear();
         }

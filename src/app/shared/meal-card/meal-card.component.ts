@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { mealCard } from './meal-card';
+import { mealCard, mealCardOption } from './meal-card';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared.module';
 import { environment } from 'src/environments/environment';
-import { Cart } from '../models/cart/cart';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,45 +25,39 @@ export class MealCardComponent implements OnInit {
     reviewsCount: 0,
     mealCardOptions: [],
   }
-  @Input() addToCart!:(mealOptionID: string) => void;
+  @Input() addToCart!: (mealOptionID: string) => void;
+  currentMealOption: mealCardOption = {
+    mealOptionID: '',
+    mealOptionSize: 0,
+    mealOptionImage: '',
+    mealOptionPrice: 0,
+    IsAvailable: false
+  }
+
+  constructor(private router: Router) { }
 
 
-  // addToCart(mealOptionID: string) {
-  //   const cartString = localStorage.getItem('cart');
-  //   if (cartString) {
-  //     let cartItems: Cart[] = JSON.parse(cartString);
-  //     let cartItem = cartItems.find(x => x.mealOptionID === mealOptionID);
-
-  //     if (!cartItem) {
-  //       cartItem = {
-  //         mealOptionID: mealOptionID,
-  //         quantity: 1,
-  //       };
-  //       cartItems.push(cartItem);
-  //     } else {
-  //       cartItem.quantity++;
-  //     }
-  //     localStorage.setItem('cart', JSON.stringify(cartItems));
-  //   }
-  //   else {
-  //     let cartItems: Cart[] = []
-  //     cartItems.push({
-  //       mealOptionID: mealOptionID,
-  //       quantity: 1
-  //     })
-  //     console.log(cartItems)
-  //     localStorage.setItem('cart', JSON.stringify(cartItems));
-  //   }
-  // }
+  redirectToMeal(event: Event) {
+    if ((event.target as HTMLElement).tagName === 'DIV') {
+      this.router.navigate(['/meal', this.mealCardData.mealID]);
+    }
+  }
 
   displayedImage: string = ''
   displayedPrice: number = 0
   currentMealOptionID: string = ''
 
   ngOnInit(): void {
-    this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${this.mealCardData.mealCardOptions[0].mealOptionID}.jpg`
-    this.displayedPrice = this.mealCardData.mealCardOptions[0].mealOptionPrice
-    this.currentMealOptionID = this.mealCardData.mealCardOptions[0].mealOptionID
+    this.currentMealOption = this.mealCardData.mealCardOptions[0]
+    this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${this.currentMealOption.mealOptionID}.jpg`
+    this.displayedPrice = this.currentMealOption.mealOptionPrice
+    this.currentMealOptionID = this.currentMealOption.mealOptionID
+  }
+  changeCurrentMealOption(mealOptionIndex: number){
+    this.currentMealOption = this.mealCardData.mealCardOptions[mealOptionIndex]
+    this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${this.currentMealOption.mealOptionID}.jpg`
+    this.displayedPrice = this.currentMealOption.mealOptionPrice;
+    this.currentMealOptionID = this.currentMealOption.mealOptionID;
   }
   changeImage(mealOptionID: string, Price: number) {
     this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${mealOptionID}.jpg`

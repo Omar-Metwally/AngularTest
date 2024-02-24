@@ -1,26 +1,25 @@
 <div class="container-fluid">
-    <button (click)="canPerformAdminAction()">fdgfg</button>
     <div class="d-flex justify-content-center">
-        <div class="category-box"></div>
-        <div class="category-box"></div>
-        <div class="category-box"></div>
-        <div class="category-box"></div>
-        <div class="category-box"></div>
-        <div class="category-box"></div>
-        <div class="category-box"></div>
-        <div class="category-box"></div>
+        <div (click)="style.setValue(styleOptions[0])" class="dish-style-box"></div>
+        <div (click)="style.setValue(styleOptions[1])" class="dish-style-box"></div>
+        <div (click)="style.setValue(styleOptions[2])" class="dish-style-box"></div>
+        <div (click)="style.setValue(styleOptions[3])" class="dish-style-box"></div>
+        <div (click)="style.setValue(styleOptions[4])" class="dish-style-box"></div>
+        <div (click)="style.setValue(styleOptions[5])" class="dish-style-box"></div>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2">
             <div class="mt-4">
-                <app-select-input [optionSelected]="hello" class="mb-2" [control]="category" type="text" placeholder="Category" label="Category"
-                    [options]="categoryOptions"></app-select-input>
-                <app-select-input [optionSelected]="hello" class="mb-2" [control]="spiceLevel" type="text" placeholder="Spice Level"
-                    label="Spice Level" [options]="spiceLevelOptions"></app-select-input>
-                <app-select-input [optionSelected]="hello" class="mb-2" [control]="sortBy" type="text" placeholder="Sort By" label="Sort By"
-                    [options]="sortByOptions"></app-select-input>
-                <app-chips-auto-complete-input [optionSelected]="hello" class="mb-2" [SelectedOptions]="selectedTags" [control]="tags"
-                    type="text" label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+                <app-select-input [optionSelected]="hello" class="mb-2" [control]="category" type="text"
+                    placeholder="Category" label="Category" [options]="categoryOptions"></app-select-input>
+                <app-select-input [optionSelected]="hello" class="mb-2" [control]="spiceLevel" type="text"
+                    placeholder="Spice Level" label="Spice Level" [options]="spiceLevelOptions"></app-select-input>
+                <app-select-input [optionSelected]="hello" class="mb-2" [control]="sortBy" type="text"
+                    placeholder="Sort By" label="Sort By" [options]="sortByOptions"></app-select-input>
+                <app-select-input [optionSelected]="hello" class="mb-2" [control]="style" type="text"
+                    placeholder="Dish Style" label="Dish Style" [options]="styleOptions"></app-select-input>
+                <app-chips-auto-complete-input [optionSelected]="hello" class="mb-2" [SelectedOptions]="selectedTags"
+                    [control]="tags" type="text" label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
                 <mat-slider style="width: 95%;" min="0" max="5000" step="true" discrete="true">
                     <input (dragEnd)="hello()" [formControl]="startPrice" matSliderStartThumb>
                     <input (dragEnd)="hello()" [formControl]="endPrice" matSliderEndThumb>

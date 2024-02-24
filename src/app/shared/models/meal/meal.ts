@@ -8,6 +8,7 @@ export interface Meal {
     description: string;
     mealCategory?: Option;
     mealSpiceLevel?: Option;
+    mealStyle?: Option,
     tagsID?: Array<Option>;
     mealOptions: Array<mealOption>;
 }

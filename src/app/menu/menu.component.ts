@@ -12,7 +12,7 @@ import { Option } from 'src/app/shared/models/address/option';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChipsAutoCompleteInputComponent } from "../shared/chips-auto-complete-input/chips-auto-complete-input.component";
 import { MatSliderModule } from '@angular/material/slider';
-import { Cart } from '../shared/models/cart/cart';
+import { Cart } from '../api/models/cart'
 import { AccountService } from '../account/account.service';
 import { CartPost$Params } from '../api/fn/cart/cart-post';
 
@@ -36,6 +36,7 @@ export class MenuComponent implements OnInit {
   categoryOptions: Option[] = [];
   spiceLevelOptions: Option[] = [];
   tagsOptions: Option[] = [];
+  styleOptions: Option [] = [];
   sortByOptions: Option[] = [];
   selectedTags: Option[] = [];
 
@@ -48,6 +49,8 @@ export class MenuComponent implements OnInit {
   });
   tags: FormControl = new FormControl('', {
   });
+  style: FormControl = new FormControl('', {
+  });
   startPrice: FormControl = new FormControl(0, {
     validators: [Validators.min(0), Validators.max(5000)]
   })
@@ -56,7 +59,7 @@ export class MenuComponent implements OnInit {
   })
   filterForm: FormGroup = new FormGroup({});
   mealGetRequest: MealsGet$Params = {
-    PageNumber: 0,
+    PageNumber: 1,
     PageSize: 5,
     SortBy: 0,
     TagFilter: [],
@@ -66,7 +69,7 @@ export class MenuComponent implements OnInit {
   }
   mealsCard: mealCard[] = []
   isLoading = false;
-  currentPage = 0;
+  currentPage = 1;
   itemsPerPage = 10;
 
   toggleLoading = () => this.isLoading = !this.isLoading;
@@ -79,41 +82,42 @@ export class MenuComponent implements OnInit {
       TagFilter: this.selectedTags.length > 0 ? this.selectedTags.map((o: Option) => o.id) : undefined,
       MealCategory: this.category.value.id,
       MealSpiceLevel: this.spiceLevel.value.id,
+      MealStyle: this.style.value.id,
+      PageNumber: this.currentPage,
+      PageSize: this.itemsPerPage
     }
-  }
-
-  canPerformAdminAction() {
-    console.log(this.accountService.isUserLoggedIn())
   }
 
   addToCart = (mealOptionID: string) => {
-    const isUserLoggedIn = this.accountService.isUserLoggedIn();
-    const cartString = localStorage.getItem('cart');
-    if (cartString) {
-      let cartItems: Cart[] = JSON.parse(cartString);
-      let cartItem = cartItems.find(x => x.mealOptionID === mealOptionID);
+    // const isUserLoggedIn = this.accountService.isUserLoggedIn();
+    // const cartString = localStorage.getItem('cart');
+    // if (cartString) {
+    //   let cartItems: Cart[] = JSON.parse(cartString);
+    //   let cartItem = cartItems.find(x => x.mealOptionID === mealOptionID);
 
-      if (!cartItem) {
-        cartItem = {
-          mealOptionID: mealOptionID,
-          quantity: 1,
-        };
-        cartItems.push(cartItem);
-      } else {
-        cartItem.quantity++;
-      }
-      localStorage.setItem('cart', JSON.stringify(cartItems));
-      if (isUserLoggedIn) this.postCart(cartItem)
-    }
-    else {
-      let cartItems: Cart[] = []
-      cartItems.push({
-        mealOptionID: mealOptionID,
-        quantity: 1
-      })
-      localStorage.setItem('cart', JSON.stringify(cartItems));
-      if (isUserLoggedIn) this.postCart(cartItems[0])
-    }
+    //   if (!cartItem) {
+    //     cartItem = {
+    //       mealOptionID: mealOptionID,
+    //       quantity: 1,
+    //     };
+    //     cartItems.push(cartItem);
+    //   } else {
+    //     cartItem.quantity++;
+    //   }
+    //   localStorage.setItem('cart', JSON.stringify(cartItems));
+    //   if (isUserLoggedIn) this.postCart(cartItem)
+    // }
+    // else {
+    //   let cartItems: Cart[] = []
+    //   cartItems.push({
+    //     mealOptionID: mealOptionID,
+    //     quantity: 1
+    //   })
+    //   localStorage.setItem('cart', JSON.stringify(cartItems));
+    //   if (isUserLoggedIn) this.postCart(cartItems[0])
+    // }
+    const cartItem : Cart = { mealOptionID: mealOptionID, quantity: 1 }
+    this.accountService.addItemToCart(cartItem)
   }
   postCart(cartItem: Cart) {
     const CartPostParams: CartPost$Params = {
@@ -124,7 +128,6 @@ export class MenuComponent implements OnInit {
     }
     this.cartService.cartPost(CartPostParams).subscribe({
       next: (response) => {
-        console.log(response)
       },
       error: error => {
         if (error.error.errors) {
@@ -137,6 +140,7 @@ export class MenuComponent implements OnInit {
   }
 
   hello = () => {
+    console.log(this.mealGetRequest)
     this.toggleLoading();
     this.bindData()
     this.mealsService.mealsGet(this.mealGetRequest).subscribe({
@@ -177,8 +181,9 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
-    this.sortByOptions.push({ id: '0', name: 'Best Selling' }, { id: '1', name: 'Newly Added' }, { id: '2', name: 'Price Asc' }, { id: '2', name: 'Price Desc' });
+    this.sortByOptions.push({ id: '0', name: 'Best Selling' }, { id: '1', name: 'Newly Added' }, { id: '2', name: 'Price Asc' }, { id: '3', name: 'Price Desc' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
+    this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Syrian' }, { id: '2', name: 'Lebanese' }, { id: '3', name: 'Western' }, { id: '4', name: 'Asian' }, { id: '5', name: 'Indian' })
     this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1dc', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
     this.hello();
   }
@@ -224,6 +229,7 @@ export class MenuComponent implements OnInit {
       SpiceLevelFilter: this.spiceLevel,
       TagFilter: this.tags,
       SortBy: this.sortBy,
+      MealStyle: this.style,
       StartPrice: this.startPrice,
       EndPrice: this.endPrice,
     })

@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center" *ngIf="mode">
     <div class="col-12 col-lg-5">
         <main class="form-signin">
-            <!-- <form [formGroup]="emailForm" class="form-signin" (ngSubmit)="sendEmail()" autocomplete="off"> -->
+            <form [formGroup]="emailForm" class="form-signin" (ngSubmit)="sendEmail()" autocomplete="off">
                 <div class="text-center mb-4">
                     <h1 class="mb-3 font-weight-normal">
                         <span *ngIf="mode.includes('resend-email-confirmation-link')">
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="form-floatin" *ngIf="errorMessages.length > 0">
-                    <!-- <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages> -->
+                    <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
                 </div>
 
                 <div class="row">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-            <!-- </form> -->
+            </form>
         </main>
     </div>
 </div>

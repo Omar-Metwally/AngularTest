@@ -9,6 +9,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { Cart } from '../models/cart';
 import { cartDelete } from '../fn/cart/cart-delete';
 import { CartDelete$Params } from '../fn/cart/cart-delete';
 import { cartGet } from '../fn/cart/cart-get';
@@ -33,7 +34,7 @@ export class CartService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cartGet$Plain$Response(params?: CartGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+  cartGet$Plain$Response(params?: CartGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
     return cartGet$Plain(this.http, this.rootUrl, params, context);
   }
 
@@ -43,9 +44,9 @@ export class CartService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cartGet$Plain(params?: CartGet$Plain$Params, context?: HttpContext): Observable<boolean> {
+  cartGet$Plain(params?: CartGet$Plain$Params, context?: HttpContext): Observable<Array<Cart>> {
     return this.cartGet$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<boolean>): boolean => r.body)
+      map((r: StrictHttpResponse<Array<Cart>>): Array<Cart> => r.body)
     );
   }
 
@@ -55,7 +56,7 @@ export class CartService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cartGet$Response(params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+  cartGet$Response(params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
     return cartGet(this.http, this.rootUrl, params, context);
   }
 
@@ -65,9 +66,9 @@ export class CartService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cartGet(params?: CartGet$Params, context?: HttpContext): Observable<boolean> {
+  cartGet(params?: CartGet$Params, context?: HttpContext): Observable<Array<Cart>> {
     return this.cartGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<boolean>): boolean => r.body)
+      map((r: StrictHttpResponse<Array<Cart>>): Array<Cart> => r.body)
     );
   }
 

@@ -2,6 +2,8 @@
 /* eslint-disable */
 export { AddRoleModel } from './models/add-role-model';
 export { AuthModel } from './models/auth-model';
+export { Cart } from './models/cart';
+export { CartCartResult } from './models/cart-cart-result';
 export { CreateCustomersPromoCodes } from './models/create-customers-promo-codes';
 export { CreateMealRequest } from './models/create-meal-request';
 export { CreateOrderRequest } from './models/create-order-request';
@@ -23,6 +25,7 @@ export { GetStreetRequest } from './models/get-street-request';
 export { GetSubscriptionDayDataRequest } from './models/get-subscription-day-data-request';
 export { GetSubscriptionRequest } from './models/get-subscription-request';
 export { Governorate } from './models/governorate';
+export { HttpStatusCode } from './models/http-status-code';
 export { MealCategory } from './models/meal-category';
 export { MealSizeOption } from './models/meal-size-option';
 export { MealSpiceLevel } from './models/meal-spice-level';

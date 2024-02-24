@@ -1,4 +1,4 @@
-<div class="card p-2" style="width: 18rem; margin: 15px; ">
+<div (click)="redirectToMeal($event)" class="card p-2" style="width: 18rem; margin: 15px; ">
   <div class="imd">
     <div class="card">
       <img id="foodImage" [src]="displayedImage" class="card-img-top bef" [alt]="mealCardData.title">
@@ -19,53 +19,32 @@
             ({{mealCardData.reviewsCount}})</u></p>
       </div>
       <div class="mt-4 button-container d-flex justify-content-start">
-        <input [disabled]="!mealCardData.mealCardOptions[0]?.IsAvailable || !mealCardData.mealCardOptions[0]?.mealOptionID"
-        [id]="mealCardData.mealCardOptions[0]?.mealOptionID || 'option-0'"
-        type="radio"
-        [name]="mealCardData.mealID"
-        (click)="changeImage(mealCardData.mealCardOptions[0]?.mealOptionID ?? '', mealCardData.mealCardOptions[0]?.mealOptionPrice ?? 0)"
-        class="btn-check">
-        <label class="btn btn-outline-success fixed-size p-1 me-1"
-        (mouseover)="changeImage(mealCardData.mealCardOptions[0]?.mealOptionID ?? '', mealCardData.mealCardOptions[0]?.mealOptionPrice ?? 0)"
-                [for]="mealCardData.mealCardOptions[0]?.mealOptionID || 'option-0'">
-                Small
-                      </label>
-
-        <input [disabled]="!mealCardData.mealCardOptions[1]?.IsAvailable || !mealCardData.mealCardOptions[1]?.mealOptionID"
-        [id]="mealCardData.mealCardOptions[1]?.mealOptionID || 'option-1'"
-        type="radio"
-        [name]="mealCardData.mealID"
-        (click)="changeImage(mealCardData.mealCardOptions[1]?.mealOptionID ?? '', mealCardData.mealCardOptions[1]?.mealOptionPrice ?? 0)"
-        class="btn-check">
-        <label class="btn btn-outline-success fixed-size p-1 me-1"
-        (mouseover)="changeImage(mealCardData.mealCardOptions[1]?.mealOptionID ?? '', mealCardData.mealCardOptions[1]?.mealOptionPrice ?? 0)"
-                [for]="mealCardData.mealCardOptions[1]?.mealOptionID || 'option-1'">
-                Medium
-                      </label>
-
-        <input [disabled]="!mealCardData.mealCardOptions[2]?.IsAvailable || !mealCardData.mealCardOptions[2]?.mealOptionID"
-        [id]="mealCardData.mealCardOptions[2]?.mealOptionID || 'option-2'"
-        type="radio"
-        [name]="mealCardData.mealID"
-        (click)="changeImage(mealCardData.mealCardOptions[2]?.mealOptionID ?? '', mealCardData.mealCardOptions[2]?.mealOptionPrice ?? 0)"
-        class="btn-check">
-        <label class="btn btn-outline-success fixed-size p-1 me-1"
-        (mouseover)="changeImage(mealCardData.mealCardOptions[2]?.mealOptionID ?? '', mealCardData.mealCardOptions[2]?.mealOptionPrice ?? 0)"
-                [for]="mealCardData.mealCardOptions[2]?.mealOptionID || 'option-2'">
-                Large
-                      </label>
-        <!-- @for (option of mealCardData.mealCardOptions; track option) {
-        <input [id]="option.mealOptionID" type="radio" [name]="mealCardData.mealID"
-          (click)="changeImage(option.mealOptionID)" class="btn-check">
-        <label class="btn btn-outline-success fixed-size p-1 me-1" (mouseover)="changeImage(option.mealOptionID)"
-          [for]="option.mealOptionID">
-          @switch (option.mealOptionSize){
-          @case (0){Small}
-          @case (1){Medium}
-          @case (2){Large}
-          }
+        <input
+          [disabled]="this.mealCardData.mealCardOptions[0] && this.mealCardData.mealCardOptions[0].IsAvailable ? false : true"
+          [id]="this.mealCardData.mealCardOptions[0] ? this.mealCardData.mealCardOptions[0].mealOptionID : 'option-0'"
+          type="radio" [name]="mealCardData.mealID" (click)="changeCurrentMealOption(0)" class="btn-check">
+        <label class="btn btn-outline-success fixed-size p-1 me-1" (mouseover)="changeCurrentMealOption(0)"
+          [for]="this.mealCardData.mealCardOptions[0] ? this.mealCardData.mealCardOptions[0].mealOptionID : 'option-0'">
+          Small
         </label>
-        } -->
+
+        <input
+          [disabled]="this.mealCardData.mealCardOptions[1] && this.mealCardData.mealCardOptions[1].IsAvailable ? false : true"
+          [id]="this.mealCardData.mealCardOptions[1] ? this.mealCardData.mealCardOptions[1].mealOptionID : 'option-1'"
+          type="radio" [name]="mealCardData.mealID" (click)="changeCurrentMealOption(1)" class="btn-check">
+        <label class="btn btn-outline-success fixed-size p-1 me-1" (mouseover)="changeCurrentMealOption(1)"
+          [for]="this.mealCardData.mealCardOptions[1] ? this.mealCardData.mealCardOptions[1].mealOptionID : 'option-1'">
+          Medium
+        </label>
+
+        <input
+          [disabled]="this.mealCardData.mealCardOptions[2] && this.mealCardData.mealCardOptions[2].IsAvailable ? false : true"
+          [id]="this.mealCardData.mealCardOptions[2] ? this.mealCardData.mealCardOptions[2].mealOptionID : 'option-2'"
+          type="radio" [name]="mealCardData.mealID" (click)="changeCurrentMealOption(2)" class="btn-check">
+        <label class="btn btn-outline-success fixed-size p-1 me-1" (mouseover)="changeCurrentMealOption(2)"
+          [for]="this.mealCardData.mealCardOptions[2] ? this.mealCardData.mealCardOptions[2].mealOptionID : 'option-2'">
+          Large
+        </label>
       </div>
       <br>
       <div class="d-flex justify-content-between">

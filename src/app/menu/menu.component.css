@@ -1,4 +1,4 @@
-.category-box{
+.dish-style-box{
     width: 202px;
     height: 136px;
     top: 61px;
@@ -6,6 +6,7 @@
     border-radius: 10px;
     background-color:  #989696;
     margin: 10px;
+    cursor: pointer;
 }
 .gfg {
     /* position: sticky !important; */

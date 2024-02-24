@@ -10,6 +10,7 @@ import { GetMealTableRequest } from '../../models/get-meal-table-request';
 import { MealCategory } from '../../models/meal-category';
 import { MealSizeOption } from '../../models/meal-size-option';
 import { MealSpiceLevel } from '../../models/meal-spice-level';
+import { MealStyle } from '../../models/meal-style';
 import { SortBy } from '../../models/sort-by';
 
 export interface MealsChiefMealsGet$Params {
@@ -18,6 +19,7 @@ export interface MealsChiefMealsGet$Params {
   SortBy?: SortBy;
   MealSpiceLevel?: MealSpiceLevel;
   MealCategory?: MealCategory;
+  MealStyle?: MealStyle;
   ChiefFilter?: Array<string>;
   StartPrice?: number;
   EndPrice?: number;
@@ -33,6 +35,7 @@ export function mealsChiefMealsGet(http: HttpClient, rootUrl: string, params?: M
     rb.query('SortBy', params.SortBy, {});
     rb.query('MealSpiceLevel', params.MealSpiceLevel, {});
     rb.query('MealCategory', params.MealCategory, {});
+    rb.query('MealStyle', params.MealStyle, {});
     rb.query('ChiefFilter', params.ChiefFilter, {});
     rb.query('StartPrice', params.StartPrice, {});
     rb.query('EndPrice', params.EndPrice, {});

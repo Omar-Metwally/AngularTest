@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CustomerSignUp } from '../shared/models/account/customerSignup';
 import { Login } from '../shared/models/account/login';
 import { User } from '../shared/models/account/user';
-import { Observable, ReplaySubject, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmEmail } from '../shared/models/account/confirmEmail';
 import { ResetPassword } from '../shared/models/account/resetPassword';
@@ -11,15 +11,21 @@ import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { AbstractControl, AsyncValidator, FormControl, ValidationErrors } from '@angular/forms';
 import jwtDecode from 'jwt-decode';
+import { CartService } from '../api/services';
+import { Cart } from '../api/models/cart'
+import { CartPost$Params } from '../api/fn/cart/cart-post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private userSource = new ReplaySubject<User | null>(1);
+  private cartSource = new BehaviorSubject<Cart[] | null>([]);
   user$ = this.userSource.asObservable()
+  cart$ = this.cartSource.asObservable()
 
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, 
+    private cartService: CartService) { }
 
   /*refreshUser(jwt: string) {
     let decodedJWT = jwtDecode(jwt)
@@ -48,12 +54,12 @@ export class AccountService {
   
 
   refreshUser(jwt: string | null) {
-
     if (!jwt) {
       this.userSource.next(null);
+      const cart = this.getCart()
+      if(cart) this.cartSource.next(cart)
       return of(undefined);
-    }
-  
+    }  
     let decodedJWT: any = jwtDecode(jwt);
     let expireDate = decodedJWT.exp;
     let currentDateInSeconds = Math.floor(Date.now() / 1000);
@@ -67,6 +73,7 @@ export class AccountService {
       };
 
       this.setUser(user);
+      console.log('hello')
       return of(undefined);
     }
   
@@ -80,8 +87,6 @@ export class AccountService {
   }
 
   login(model: Login) {
-    let headers = new HttpHeaders();
-    headers.append('withCredentials', 'true' );
     const options = {
       withCredentials: true
     };
@@ -94,14 +99,63 @@ export class AccountService {
           user.lastName = decodedJWT.family_name,
           user.username = decodedJWT.unique_name,
           this.setUser(user);
+          this.getCartItems().subscribe({});
         }
       })
     );
   }
 
+  addItemToCart(cartItem: Cart){
+    let cart = this.cartSource.value ?? [];
+    cart = this.addOrUpdateCartItem(cart,cartItem)
+    this.setCartItems(cartItem)
+    this.cartSource.next(cart);
+    localStorage.setItem('cart',JSON.stringify(cart))
+  }
+
+  getCartItems(){
+    return this.cartService.cartGet()
+    .pipe(
+      map((cart: Cart[]) => {
+        this.cartSource.next(cart);
+      })
+    );
+  }
+
+  addOrUpdateCartItem(cart: Cart[], cartItemToAdd: Cart) : Cart[]{
+    const index = cart.findIndex(x => x.mealOptionID === cartItemToAdd.mealOptionID)
+    if(index === -1){
+      cart.push(cartItemToAdd);
+    }
+    else{
+      cart[index].quantity = cart[index].quantity + cartItemToAdd.quantity
+    }
+    return cart
+  }
+
+  setCartItems(cartItem: Cart){
+    const cartPostParams: CartPost$Params = {
+      body: {
+        mealOptionID: cartItem.mealOptionID,
+        quantity: cartItem.quantity,
+        timeOfDelivery: cartItem.timeOfDelivery ?? undefined
+      }
+    }
+    return this.cartService.cartPost(cartPostParams).subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: error => {
+        console.log(error)
+      }
+    });
+  }
+
   logout() {
     localStorage.removeItem(environment.userKey);
+    localStorage.removeItem('cart');
     this.userSource.next(null);
+    this.cartSource.next(null)
     this.router.navigateByUrl('/');
     
     return this.http.get(`${environment.appUrl}Auth/RevokeToken`, { withCredentials: true })
@@ -151,10 +205,20 @@ export class AccountService {
     return this.user$;
   }
 
+  getCart() {
+    const key = localStorage.getItem('cart');
+    if (key) {
+      const cart: Cart[] = JSON.parse(key);
+      return cart;
+    }
+    return null;
+  }
+
   private setUser(user: User) {
     localStorage.setItem(environment.userKey, JSON.stringify(user));
     this.userSource.next(user);
   }
+
   
 }
 

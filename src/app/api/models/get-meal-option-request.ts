@@ -7,5 +7,6 @@ export interface GetMealOptionRequest {
   mealOptionID?: string;
   mealSizeOption?: MealSizeOption;
   price?: number;
+  quantity?: number;
   saveQuantity?: boolean;
 }

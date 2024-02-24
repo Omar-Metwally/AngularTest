@@ -1,0 +1,49 @@
+.button-container .btn {
+    margin: 0px;
+    padding: 0px;
+    line-height: none;
+    border: 1px solid #31AC18;
+    border-radius:10px;
+    font-size: 13px;
+    color: grey;
+  }
+
+  .btn-check:checked + .fixed-size {
+    color: black;
+
+  }
+
+  .btn-check:disabled + .fixed-size {
+    background-color: rgb(155, 149, 149);
+    color: white;
+    border: none;
+
+  }
+
+  .btn-check + .fixed-size {
+    color: #656565;
+
+  }
+
+  .btn-outline-success{
+    --bs-btn-hover-color:black !important;
+    --bs-btn-active-color: black !important;
+    --bs-btn-active-bg: #9EE392 !important;
+  }
+  label{
+    color: gray;
+  }
+  .fixed-size {
+    width: 64px; 
+    height: 30px; 
+    text-align: center; 
+    overflow: hidden; 
+    white-space: nowrap; 
+  }
+  .mat-mdc-snack-bar-container {
+    &.my-snackbar-background {
+      --mdc-snackbar-container-color: #2196f3;
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+  }

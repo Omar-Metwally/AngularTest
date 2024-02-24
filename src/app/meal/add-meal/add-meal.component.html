@@ -17,8 +17,8 @@
             <ng-template matStepContent>
                 <form [formGroup]="addMealForm" (ngSubmit)="mealForm()">
                     <div class="py-5 container">
-                        <div class="row row-cols-1 row align-items-center">
-                            <div class="col-md-6 col-sm-12">
+                        <div class="row row-cols-1 row-cols-md-2 row align-items-center">
+                            <div class="col">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-8 col-lg-10 col-md-12 col-sm-10">
                                         <app-input class="mb-2" [control]="title" type="text"
@@ -43,9 +43,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col">
                                 <div class="row justify-content-center">
-                                    <div class="flex-box col-xl-8 col-lg-10 col-md-12 col-sm-10">
+                                    <div class="flex-box">
                                     </div>
                                 </div>
                             </div>
@@ -67,55 +67,79 @@
             <ng-template matStepContent>
                 <form [formGroup]="addMealOptionForm" (ngSubmit)="mealOptionForm()">
                     <div class="py-5 container">
-                        <div class="row row-cols-1 row align-items-center">
+                        <div class=" row ">
                             <div class="col-md-7 col-sm-12">
                                 <div class="row justify-content-center">
-                                    <div class="col-xl-8 col-lg-10 col-md-12 col-sm-10">
+                                    <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
                                         <div class="d-flex justify-content-between">
                                             <input [formControl]="mealSize" [value]="0" type="radio" class="btn-check"
                                                 name="meal-size" id="small" #small autocomplete="off" checked>
-                                            <label class="btn " for="small">Small</label>
+                                            <label class="btn btn-outline-success" for="small" id="btn-S">S</label>
 
                                             <input [formControl]="mealSize" [value]="1" type="radio" class="btn-check"
                                                 name="meal-size" id="medium" #medium autocomplete="off">
-                                            <label class="btn " for="medium">Medium</label>
+                                            <label class="btn btn-outline-success" for="medium" id="btn-m">M</label>
 
                                             <input [formControl]="mealSize" [value]="2" type="radio" class="btn-check"
                                                 name="meal-size" id="large" #large autocomplete="off">
-                                            <label class="btn " for="large">Large</label>
+                                            <label class="btn btn-outline-success" for="large" id="btn-L">L</label>
                                         </div>
-                                        <app-input class="me-1" [control]="price" placeholder="Enter The Price"
+                                        <app-input class="me-1 mt-5" [control]="price" placeholder="Enter The Price"
                                             type="number" format="9999" label="Price"></app-input>
 
-                                        <input class="me-1" [formControl]="saveQuantitySetting" [value]="true"
-                                            type="radio" class="btn-check" name="save-quantity-setting"
-                                            id="save-quantity-setting" autocomplete="off">
-                                        <label class="btn" for="save-quantity-setting">Yes</label>
+                                        <div class="row justify-content-center">
+                                            <div class="col">
+                                                <div class="d-flex justify-content-between">
+                                                <h3 style="width: 50%;">Available?</h3>
+                                                <h3 class="ms-4" style="width: 50%;">Save QTY?</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-between">
+                                                    <input class="me-1 my-5" [formControl]="saveQuantitySetting"
+                                                        [value]="true" type="radio" class="btn-check"
+                                                        name="save-quantity-setting" id="save-quantity-setting"
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-success" for="save-quantity-setting"
+                                                        id="btn-y">Yes</label>
 
-                                        <input [formControl]="saveQuantitySetting" [value]="false" type="radio"
-                                            class="btn-check" name="save-quantity-setting"
-                                            id="not-save-quantity-setting" autocomplete="off">
-                                        <label class="btn" for="not-save-quantity-setting">No</label>
+                                                    <input [formControl]="saveQuantitySetting" [value]="false"
+                                                        type="radio" class="btn-check" name="save-quantity-setting"
+                                                        id="not-save-quantity-setting" autocomplete="off">
+                                                    <label class="btn btn-outline-success mx-2"
+                                                        for="not-save-quantity-setting" id="btn-n">No</label>
 
-                                        <input class="me-1" [formControl]="isAvailable"
-                                            (click)="toggleQuantityInput(true)" [value]="true" type="radio"
-                                            class="btn-check" name="is-available" id="available" autocomplete="off">
-                                        <label class="btn" for="available">Yes</label>
+                                                    <input class="me-1" [formControl]="isAvailable"
+                                                        (click)="toggleQuantityInput(true)" [value]="true" type="radio"
+                                                        class="btn-check" name="is-available" id="available"
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-success mx-2" for="available"
+                                                        id="btn-yy">Yes</label>
 
-                                        <input [formControl]="isAvailable" (click)="toggleQuantityInput(false)"
-                                            [value]="false" type="radio" class="btn-check" name="is-available"
-                                            id="not-available" autocomplete="off">
-                                        <label class="btn" for="not-available">No</label>
+                                                    <input [formControl]="isAvailable"
+                                                        (click)="toggleQuantityInput(false)" [value]="false"
+                                                        type="radio" class="btn-check" name="is-available"
+                                                        id="not-available" autocomplete="off">
+                                                    <label class="btn btn-outline-success " for="not-available"
+                                                        id="btn-nn">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-5 my-5">
+                                            <app-input class="me-1 mt-5 my-5" class="me-1" [control]="quantity"
+                                                type="number" format="999" label="Quantity (if Yes)"></app-input>
+                                        </div>
 
-                                        <app-input class="me-1" class="me-1" [control]="quantity" type="number"
-                                            format="999" label="Available quantity"></app-input>
                                         <app-file-input [control]="image"></app-file-input>
                                     </div>
+
                                 </div>
                             </div>
+
                             <div class="col-md-5 col-sm-12">
-                                <div class="row justify-content-center">
-                                    <div class="flex-box col-xl-8 col-lg-10 col-md-12 col-sm-10">
+                                <h3>Tips</h3>
+                                <div class="d-flex align-items-start">
+                                    <div class="flex-box">
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +149,7 @@
                                 <button type="submit" class="btn btn-success" matStepperNext
                                     *ngIf="!isMealAdded">{{AddOrEdit}} Meal Option</button>
                                 <button type="submit" class="btn btn-success" matStepperNext
-                                    *ngIf="isMealAdded">Back</button>
+                                    *ngIf="isMealAdded">Save</button>
                             </div>
                         </section>
                     </div>
@@ -133,24 +157,6 @@
                         <button mat-button matStepperNext>{{AddOrEdit}} Meal Option</button>
                         <button mat-button matStepperPrevious>Back</button>
                     </div>
-                    <!-- <div [ngSwitch]="mealSize.value">
-                    <button mat-button matStepperNext *ngSwitchCase="0">
-                        small
-                        {{ isSmallMealOptionAdded ? 'Edit Meal Option' : 'Add Meal Option' }}
-                    </button>
-                    <button mat-button matStepperNext *ngSwitchCase="1">
-                        Medium
-                        {{ isMediumMealOptionAdded ? 'Edit Meal Option' : 'Add Meal Option' }}
-                    </button>
-                    <button mat-button matStepperNext *ngSwitchCase="2">
-                        Large
-                        {{ isLargeMealOptionAdded ? 'Edit Meal Option' : 'Add Meal Option' }}
-                    </button>
-                    <button mat-button matStepperNext *ngSwitchDefault>
-                        Add Meal Option
-                    </button>
-                </div> -->
-                    <img [src]="image.value.url" width="50" height="50">
                 </form>
             </ng-template>
         </mat-step>

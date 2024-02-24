@@ -5,7 +5,7 @@ import { SharedService } from './shared/shared.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
 
@@ -23,13 +23,16 @@ export class AppComponent implements OnInit {
         next: _ => {},
         error: error => {
           this.accountService.logout();
-
           if (error.status === 401) {
             this.sharedService.showNotification(false, 'Account blocked', error.error);
           }
         }
       })
-    } else {
+    } 
+    else {
+      this.accountService.getCartItems().subscribe({
+      });
+
       this.accountService.refreshUser(jwt).subscribe();
     }
   }

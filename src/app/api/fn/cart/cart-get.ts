@@ -6,15 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { Cart } from '../../models/cart';
 
 export interface CartGet$Params {
-  CustomerID?: string;
 }
 
-export function cartGet(http: HttpClient, rootUrl: string, params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+export function cartGet(http: HttpClient, rootUrl: string, params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
   const rb = new RequestBuilder(rootUrl, cartGet.PATH, 'get');
   if (params) {
-    rb.query('CustomerID', params.CustomerID, {});
   }
 
   return http.request(
@@ -22,7 +21,7 @@ export function cartGet(http: HttpClient, rootUrl: string, params?: CartGet$Para
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: String((r as HttpResponse<any>).body) === 'true' }) as StrictHttpResponse<boolean>;
+      return r as StrictHttpResponse<Array<Cart>>;
     })
   );
 }

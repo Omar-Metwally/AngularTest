@@ -46,295 +46,284 @@
     </div>
 </form> -->
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-2 row align-items-center">
-        <div class="col">
-            <div class="row" style="margin-top: 3rem; margin-bottom: 9rem;">
-                <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3 mt-3 mb-3">Make Money Doing What You Love
-                </h1>
-                <p class="lead">Enjoy Flexibility, Reach a Wider Audience, and Earn on Your Terms.</p>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-xl-8 col-lg-10 col-md-12 col-sm-10">
-
-                    <form action="">
-                        <div class="card1 container" style="background-color: #EAF7E8;">
-                            <div class="card-body p-3">
-                                <h3 class="text-center">Signup as a Chef</h3>
-                                <!-- <div class="d-flex justify-content-between mt-3 mb-2">
-                                            <app-input class="me-1" style="flex: 1;" [control]="firstName" type="text" placeholder="Hoda" label="First Name"></app-input>
-                                            <app-input class="ms-1" style="flex: 1;" [control]="lastName" type="text" placeholder="Khaled" label="Last Name"></app-input>
-                                        </div> -->
-                                <div class="d-flex justify-content-between mt-3 mb-1">
-                                    <div style="width: 49%;">
-                                        <app-input [control]="firstName" type="text" placeholder="Hoda"
-                                            label="First Name"></app-input>
-                                    </div>
-                                    <div style="width: 49%;">
-                                        <app-input [control]="lastName" type="text" placeholder="Khaled"
-                                            label="Last Name"></app-input>
-                                    </div>
-                                </div>
-                                <div class="mb-1">
-                                    <app-input [control]="email" style="width: 100%;" type="email"
-                                        placeholder="user@example.com" icon="alternate_email" label="Email"></app-input>
-                                </div>
-                                <div class="mb-1">
-                                    <app-input [control]="password" style="width: 100%;" type="password"
-                                        label="Password"></app-input>
-                                </div>
-                                <div class="mb-1">
-                                    <app-input [control]="phone" style="width: 100%;" type="number" prefix="01"
-                                        format="0 0000 0000" label="Phone number"></app-input>
-                                </div>
-                                <div class="d-flex justify-content-between mb-1">
-                                    <div style="width: 32%;">
-                                        <app-select-input [control]="district" type="text"
-                                            placeholder="District" label="District"
-                                            [options]="districts"></app-select-input>
-                                    </div>
-                                    <div style="width: 32%;">
-                                        <app-select-input [control]="street" type="text"
-                                            placeholder="Street" label="Street" [options]="streets"></app-select-input>
-                                    </div>
-                                    <div style="width: 32%;">
-                                        <app-select-input [control]="building" type="text"
-                                            placeholder="Building" label="Building"
-                                            [options]="buildings"></app-select-input>
-                                    </div>
-                                </div>
-
-                                <div class="form-floatin" *ngIf="errorMessages.length > 0">
-                                    <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
-                                    <a class="btn btn-link"
-                                        *ngIf="errorMessages[0].includes('Please confirm your email')">
-                                        Click here to resend email confirmation link in case you didn't receive it.
-                                    </a>
-                                </div>
-                                <mat-checkbox class="example-margin mb-3">
-                                    By Pressing "Sign up" you agree to BlHana Terms of Service, Privacy Policy.
-                                </mat-checkbox>
-                                <button type="submit" style="width: 100%;" class="btn mb-2 p-3 fs-5">Signup</button>
-                            </div>
-                        </div>
-                    </form>
+  <div class="row row-cols-1 row-cols-md-2 row align-items-center">
+    <div class="col">
+      <div class="row" style="margin-top: 3rem; margin-bottom: 9rem;">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3 mt-3 mb-3">Make Money Doing What You Love
+        </h1>
+        <p class="lead">Enjoy Flexibility, Reach a Wider Audience, and Earn on Your Terms.</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10 col-md-12 col-sm-10">
+          <form action="">
+            <div class="card1 container" style="background-color: #EAF7E8;">
+              <div class="card-body p-3">
+                <h3 class="text-center">Signup as a Chef</h3>
+                <div class="d-flex justify-content-between mt-3 mb-1">
+                  <div style="width: 49%;">
+                    <app-input [control]="firstName" type="text" placeholder="Hoda" label="First Name"></app-input>
+                  </div>
+                  <div style="width: 49%;">
+                    <app-input [control]="lastName" type="text" placeholder="Khaled" label="Last Name"></app-input>
+                  </div>
                 </div>
+                <div class="mb-1">
+                  <app-input [control]="email" style="width: 100%;" type="email" placeholder="user@example.com"
+                    icon="alternate_email" label="Email"></app-input>
+                </div>
+                <div class="mb-1">
+                  <app-input [control]="password" style="width: 100%;" type="password" label="Password"></app-input>
+                </div>
+                <div class="mb-1">
+                  <app-input [control]="phone" style="width: 100%;" type="number" prefix="01" format="0 0000 0000"
+                    label="Phone number"></app-input>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                  <div style="width: 32%;">
+                    <app-select-input [control]="district" type="text" placeholder="District" label="District"
+                      [options]="districts"></app-select-input>
+                  </div>
+                  <div style="width: 32%;">
+                    <app-select-input [control]="street" type="text" placeholder="Street" label="Street"
+                      [options]="streets"></app-select-input>
+                  </div>
+                  <div style="width: 32%;">
+                    <app-select-input [control]="building" type="text" placeholder="Building" label="Building"
+                      [options]="buildings"></app-select-input>
+                  </div>
+                </div>
+                <div class="form-floatin" *ngIf="errorMessages.length > 0">
+                  <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+                  <a class="btn btn-link" *ngIf="errorMessages[0].includes('Please confirm your email')">
+                    Click here to resend email confirmation link in case you didn't receive it.
+                  </a>
+                </div>
+                <mat-checkbox class="example-margin mb-3">
+                  By Pressing "Sign up" you agree to BlHana Terms of Service, Privacy Policy.
+                </mat-checkbox>
+                <button type="submit" style="width: 100%;" class="btn mb-2 p-3 fs-5">Signup</button>
+              </div>
             </div>
+          </form>
         </div>
-        <div class="col">
-            <div class="row justify-content-center">
-                <img class="col-10 d-block mx-lg-auto" src="/assets/images/empty.png" alt="" width="" height="120%">
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col">
+      <div class="row justify-content-center">
+        <img class="col-10 d-block mx-lg-auto" src="/assets/images/empty.png" alt="" width="" height="120%">
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="container py-5 text-center">
-    <h1 class="display-5 fw-bolder text-body-emphasis">Why Join [Platform]?</h1>
-    <h3 class="pt-4" style="color: #656565;">illustrations</h3>
-  </div>
+  <h1 class="display-5 fw-bolder text-body-emphasis">Why Join [Platform]?</h1>
+  <h3 class="pt-4" style="color: #656565;">illustrations</h3>
+</div>
 
-  <div class="landing-4">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-          <div class="card">
-            <img src="/assets/images/make-real-money.svg" class="card-img-to1" alt="...">
-            <div class="card-body">
-              <h3 class="card-title h1">Make Real Money</h3>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <img src="/assets/images/be-your-own-boss.svg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h1 class="card-title">Be Your Own Boss</h1>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h1 class="card-title">Serve With Ease</h1>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<div class="landing-4">
   <div class="container">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-lg-6">
-        <p class="lead ">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most
-          popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive
-          prebuilt components, and powerful JavaScript plugins.</p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/make-real-money.svg" class="card-img-to1" alt="...">
+          <div class="card-body">
+            <h3 class="card-title h1">Make Real Money</h3>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content. This content is a little bit longer.</p>
+          </div>
+        </div>
       </div>
-      <div class="col-10 col-sm-8 col-xl-6 col-lg-6">
-        <img src="/assets/images/test.jpg" class="d-block mx-lg-auto" alt="Bootstrap Themes" width="450" height="400">
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/be-your-own-boss.svg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h1 class="card-title">Be Your Own Boss</h1>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h1 class="card-title">Serve With Ease</h1>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content. This content is a little bit longer.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="container">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
-        <img src="/assets/images/test.jpg" class="d-block mx-lg-auto" alt="Bootstrap Themes" width="450" height="400">
-      </div>
-      <div class="col-lg-6">
-        <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most
-          popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive
-          prebuilt components, and powerful JavaScript plugins.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="container py-5 text-center">
-    <h1 class="display-5 fw-bolder text-body-emphasis">How to Sell on [Platform]</h1>
-    <h3 class="pt-5" style="color: #656565;">illustrations</h3>
-  </div>
-
-
-  <!-- حطيت صور اي كلام لحد ميكون فيه صور يا عمر -->
-
-
-  <div class="landing-4">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-md-4 g-4">
-        <div class="col">
-            <div class="card">
-              <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h3 class="card-title">The Customer Orders</h3>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                  content.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-            <div class="card">
-              <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h3 class="card-title">The Customer Orders</h3>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                  content.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h3 class="card-title">The Customer Orders</h3>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                content.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-            <div class="card">
-              <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h3 class="card-title">The Customer Orders</h3>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                  content.</p>
-              </div>
-            </div>
-          </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container py-5 text-center mt-5">
-    <h1 class="display-5 fw-bolder text-body-emphasis">Questions? We’ve got you covered</h1>
-  </div>
-  
 <div class="container">
-      <div ngbAccordion [closeOthers]="true">
-        <!-- @for (item of items; track item) { -->
-          <div ngbAccordionItem class="accordion-item border-bottom border-top border-black border-2">
-            <h2 ngbAccordionHeader>
-              <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
-            </h2>
-            <div ngbAccordionCollapse>
-              <div ngbAccordionBody>
-                <ng-template>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
-                  officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                  wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                  Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-                  excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-                  you probably haven't heard of them accusamus labore sustainable VHS.
-                </ng-template>
-              </div>
-            </div>
-          </div>
-        <!-- } -->
-        <div ngbAccordionItem class="accordion-item border-black border-2">
-          <h2 ngbAccordionHeader>
-            <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
-          </h2>
-          <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
-                officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-                excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-                you probably haven't heard of them accusamus labore sustainable VHS.
-              </ng-template>
-            </div>
-          </div>
-        </div>
-        <div ngbAccordionItem class="accordion-item border-black border-2">
-          <h2 ngbAccordionHeader>
-            <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
-          </h2>
-          <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
-                officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-                excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-                you probably haven't heard of them accusamus labore sustainable VHS.
-              </ng-template>
-            </div>
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-lg-6">
+      <p class="lead ">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most
+        popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive
+        prebuilt components, and powerful JavaScript plugins.</p>
+    </div>
+    <div class="col-10 col-sm-8 col-xl-6 col-lg-6">
+      <img src="/assets/images/test.jpg" class="d-block mx-lg-auto" alt="Bootstrap Themes" width="450" height="400">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img src="/assets/images/test.jpg" class="d-block mx-lg-auto" alt="Bootstrap Themes" width="450" height="400">
+    </div>
+    <div class="col-lg-6">
+      <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most
+        popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive
+        prebuilt components, and powerful JavaScript plugins.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5 text-center">
+  <h1 class="display-5 fw-bolder text-body-emphasis">How to Sell on [Platform]</h1>
+  <h3 class="pt-5" style="color: #656565;">illustrations</h3>
+</div>
+
+
+<!-- حطيت صور اي كلام لحد ميكون فيه صور يا عمر -->
+
+
+<div class="landing-4">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">The Customer Orders</h3>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content.</p>
           </div>
         </div>
-        <div ngbAccordionItem class="accordion-item border-bottom border-black border-2">
-          <h2 ngbAccordionHeader>
-            <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
-          </h2>
-          <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
-                officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-                excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-                you probably haven't heard of them accusamus labore sustainable VHS.
-              </ng-template>
-            </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">The Customer Orders</h3>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">The Customer Orders</h3>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="/assets/images/serve-with-ease.svg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">The Customer Orders</h3>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content.</p>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="container py-5 text-center mt-5">
-      <h1 class="display-5 fw-bolder text-body-emphasis">Still have more questions?</h1>
-    </div>
-    <div class="container">
-      <div class="container1">
-    <button class="button ms-2 btn">Contact Us</button></div>
   </div>
+</div>
+
+<div class="container py-5 text-center mt-5">
+  <h1 class="display-5 fw-bolder text-body-emphasis">Questions? We’ve got you covered</h1>
+</div>
+
+<div class="container">
+  <div ngbAccordion [closeOthers]="true">
+    <!-- @for (item of items; track item) { -->
+    <div ngbAccordionItem class="accordion-item border-bottom border-top border-black border-2">
+      <h2 ngbAccordionHeader>
+        <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
+      </h2>
+      <div ngbAccordionCollapse>
+        <div ngbAccordionBody>
+          <ng-template>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+            officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+            wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+            excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+            you probably haven't heard of them accusamus labore sustainable VHS.
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <!-- } -->
+    <div ngbAccordionItem class="accordion-item border-black border-2">
+      <h2 ngbAccordionHeader>
+        <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
+      </h2>
+      <div ngbAccordionCollapse>
+        <div ngbAccordionBody>
+          <ng-template>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+            officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+            wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+            excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+            you probably haven't heard of them accusamus labore sustainable VHS.
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div ngbAccordionItem class="accordion-item border-black border-2">
+      <h2 ngbAccordionHeader>
+        <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
+      </h2>
+      <div ngbAccordionCollapse>
+        <div ngbAccordionBody>
+          <ng-template>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+            officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+            wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+            excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+            you probably haven't heard of them accusamus labore sustainable VHS.
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div ngbAccordionItem class="accordion-item border-bottom border-black border-2">
+      <h2 ngbAccordionHeader>
+        <button ngbAccordionButton class="accordion-button fw-bold">Question text goes here</button>
+      </h2>
+      <div ngbAccordionCollapse>
+        <div ngbAccordionBody>
+          <ng-template>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+            officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+            wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+            excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+            you probably haven't heard of them accusamus labore sustainable VHS.
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5 text-center mt-5">
+  <h1 class="display-5 fw-bolder text-body-emphasis">Still have more questions?</h1>
+</div>
+<div class="container">
+  <div class="container1">
+    <button class="button ms-2 btn">Contact Us</button>
+  </div>
+</div>

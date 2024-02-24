@@ -6,7 +6,6 @@ import { ChipsAutoCompleteInputComponent } from "../../shared/chips-auto-complet
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MealsService } from 'src/app/api/services/meals.service';
-import { ChiefRegisterComponent } from 'src/app/account/chief-register/chief-register.component';
 import { MealsPost$Params } from 'src/app/api/fn/meals/meals-post';
 import { MatStepperModule, StepperOrientation } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +28,7 @@ import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-
 import { MealsMealIdGet$Params } from 'src/app/api/fn/meals/meals-meal-id-get';
 import { Option } from 'src/app/shared/models/address/option';
 import { GetMealRequest } from 'src/app/api/models/get-meal-request';
-import { MealCategory, MealSpiceLevel } from 'src/app/api/models';
+import { MealCategory, MealSpiceLevel, MealStyle } from 'src/app/api/models';
 
 
 @Component({
@@ -37,7 +36,7 @@ import { MealCategory, MealSpiceLevel } from 'src/app/api/models';
   standalone: true,
   templateUrl: './add-meal.component.html',
   styleUrl: './add-meal.component.css',
-  imports: [MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, ChiefRegisterComponent, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
+  imports: [MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
 })
 export class AddMealComponent implements OnInit {
 
@@ -48,6 +47,9 @@ export class AddMealComponent implements OnInit {
     validators: [Validators.required, Validators.nullValidator],
   });
   spiceLevel: FormControl = new FormControl('', {
+    validators: [Validators.required, Validators.nullValidator],
+  });
+  style: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator],
   });
   tags: FormControl = new FormControl('', {
@@ -97,6 +99,7 @@ export class AddMealComponent implements OnInit {
   largeMealOptionID: string | null = ''
   categoryOptions: Option[] = [];
   spiceLevelOptions: Option[] = [];
+  styleOptions: Option[] = [];
   tagsOptions: Option[] = [];
   isMealAdded: boolean = false;
   isSmallMealOptionAdded: boolean = false;
@@ -123,6 +126,7 @@ export class AddMealComponent implements OnInit {
   //imagePath: string = '';
   mealSpiceLevel = MealSpiceLevel
   mealCategory = MealCategory
+  mealStyle = MealStyle
 
   ngOnInit() {
     if(this.mealID != null){
@@ -135,7 +139,6 @@ export class AddMealComponent implements OnInit {
       });
       this.mealsService.mealsMealIdGet(mealsMealIdGet$Params).subscribe({
         next: (body) => {
-          console.log(body)
           dialogRef.close()
           this.loadMeal(body)
           this.isMealAdded = true;
@@ -160,11 +163,13 @@ export class AddMealComponent implements OnInit {
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
     this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1dc', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
+    this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Syrian' }, { id: '2', name: 'Lebanese' }, { id: '3', name: 'Western' }, { id: '4', name: 'Asian' }, { id: '5', name: 'Indian' })
 
     this.addMealForm = this.formBuilder.group({
       title: this.title,
       category: this.category,
       spiceLevel: this.spiceLevel,
+      style: this.style,
       tags: this.tags,
       description: this.description,
     })
@@ -244,6 +249,7 @@ export class AddMealComponent implements OnInit {
       mealID: this.mealID ?? '',
       mealCategory: this.addMealForm.value.category,
       mealSpiceLevel: this.addMealForm.value.spiceLevel,
+      mealStyle: this.addMealForm.value.style,
       description: this.addMealForm.value.description,
       mealOptions: []
     }
@@ -252,11 +258,14 @@ export class AddMealComponent implements OnInit {
   loadMeal(getMealRequest: GetMealRequest ){
     let mealCategoryIndex = getMealRequest.mealCategory ?? 0
     let mealSpiceLevelIndex = getMealRequest.mealSpiceLevel ?? 0
+    let mealStyleIndex = getMealRequest.mealStyle ?? 0
+
     this.meal = {
       title: getMealRequest.title ?? '',
       mealID: getMealRequest.mealID?? '',
       mealCategory: this.categoryOptions.find(x => +x.id == (mealCategoryIndex)),
       mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
+      mealStyle: this.styleOptions.find(x => +x.id == (mealStyleIndex)),
       description: getMealRequest.description ?? '', 
       tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)), //getMealRequest.mealTags?.flatMap(x => x.tagID !== undefined ? [x.tagID] : []),
       mealOptions: []
@@ -286,6 +295,7 @@ export class AddMealComponent implements OnInit {
     this.description.setValue(meal.description)
     this.category.setValue(meal.mealCategory)
     this.spiceLevel.setValue(meal.mealSpiceLevel)
+    this.style.setValue(meal.mealStyle)
     this.tags.setValue(meal.tagsID)
     this.selectedTags = meal.tagsID?? []
 
@@ -330,6 +340,7 @@ export class AddMealComponent implements OnInit {
           'description': this.addMealForm.value.description,
           'mealCategory': +this.addMealForm.value.category.id,
           'mealSpiceLevel': +this.addMealForm.value.spiceLevel.id,
+          'mealStyle': +this.addMealForm.value.style.id,
           'tagsID': this.addMealForm.value.tags.map((o: Option) => o.id),
         }
       }
@@ -362,6 +373,7 @@ export class AddMealComponent implements OnInit {
           'Description': this.addMealForm.value.description,
           'MealCategory': this.addMealForm.value.category.id,
           'MealSpiceLevel': this.addMealForm.value.spiceLevel.id,
+          'MealStyle': this.addMealForm.value.style.id,
           'TagsID': this.addMealForm.value.tags.map((o: Option) => o.id),
         }
       }

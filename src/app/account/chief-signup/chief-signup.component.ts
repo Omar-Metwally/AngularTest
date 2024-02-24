@@ -17,7 +17,6 @@ import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SelectInputComponent } from "../../shared/select-input/select-input.component";
 import { AuthChiefSignUpPost$Plain$Params } from 'src/app/api/fn/auth/auth-chief-sign-up-post-plain';
-import { ChiefRegisterComponent } from '../chief-register/chief-register.component';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -25,7 +24,7 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
     standalone: true,
     templateUrl: './chief-signup.component.html',
     styleUrl: './chief-signup.component.css',
-    imports: [ChiefRegisterComponent,MatCheckboxModule, MatButtonModule, NgbAccordionModule, MatCardModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, SharedModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule, SelectInputComponent]
+    imports: [MatCheckboxModule, MatButtonModule, NgbAccordionModule, MatCardModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, SharedModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule, SelectInputComponent]
 })
 export class ChiefSignupComponent {
 
