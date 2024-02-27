@@ -22,6 +22,7 @@
 .navbar .navbar-brand {
     font-size: 1.6rem;
     font-weight: bolder;
+    margin-right: 0%;
 }
 
 .navbar .navbar-brand:hover {

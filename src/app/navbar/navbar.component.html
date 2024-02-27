@@ -79,24 +79,14 @@
         <li class="nav-item">
           <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" routerLink="/become-a-chief" routerLinkActive="active">Become A Chef</a>
         </li> 
-        <li class="nav-item">
-          <a class="nav-link nav-edit ps-3 pe-3 me-lg-2" routerLink="/become-a-chief" *ngIf="(accountService.cart$ | async) as cart" routerLinkActive="active">{{cart.length}}</a>
-        </li> 
       </ul>
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 col-lg-3" *ngIf="(accountService.user$ | async) === null">
         <li class="nav-item2">
-          <div [ngClass]="{'collapsed-margin': !collapsed}" class="nav-link p-2 ps-3">
-            <div class="search-box">
-              <input type="text" class="search-input" placeholder="Start Looking For Something!">
-              <a class="search-btn align-items-center" href="#">
-                <mat-icon class="align-items-center">search</mat-icon>
-              </a>
-            </div>
-          </div>
-        <li class="nav-item2">
           <div [ngClass]="{'collapsed-margin': !collapsed}" class="nav-link p-2 pe-3">
-            <a href=""><mat-icon *ngIf="(accountService.cart$ | async) as cart" [matBadge]="cart.length">shopping_cart</mat-icon></a>
+            <a routerLink="/cart">
+              <mat-icon [matBadge]="(accountService.cart$ | async)?.length">shopping_cart</mat-icon>
+            </a>
           </div>
         </li>
 
@@ -111,13 +101,13 @@
       </ul>
       <ul style="flex-direction: row-reverse;" class="navbar-nav ms-auto mb-2 mb-lg-0 col-lg-3"
         *ngIf="(accountService.user$ | async) as user">
-        <div class="align-items-center">
           <!-- <a class="text-black bold" style="text-decoration: none; cursor: pointer;">
           Hi <span class="text-warning">{{user.username | titlecase}}</span>
         </a>
         <a class="nav-link nav-sign ps-3 pe-3 ms-lg-2 btn" (click)="logout()">Logout</a>
         <a class="nav-link" *appUserHasRole="['Chief']" routerLink="/meal/add-meal" routerLinkActive="active">Create
           meal</a> -->
+          <li class="nav-item2">
           <button mat-button [matMenuTriggerFor]="menu">My Account
           </button>
           <mat-menu #menu="matMenu" xPosition="before">
@@ -140,7 +130,14 @@
               <span>Logout</span>
             </button>
           </mat-menu>
-        </div>
+          </li>
+          <li class="nav-item2">
+            <div [ngClass]="{'collapsed-margin': !collapsed}" class="nav-link p-2 pe-3">
+              <a routerLink="/cart">
+                <mat-icon [matBadge]="(accountService.cart$ | async)?.length">shopping_cart</mat-icon>
+              </a>
+            </div>
+          </li>
       </ul>
     </div>
   </div>

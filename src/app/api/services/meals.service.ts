@@ -9,6 +9,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { GetMealOptionCartRequest } from '../models/get-meal-option-cart-request';
 import { GetMealRequest } from '../models/get-meal-request';
 import { GetMealTableRequest } from '../models/get-meal-table-request';
 import { mealsChiefMealsGet } from '../fn/meals/meals-chief-meals-get';
@@ -23,6 +24,10 @@ import { mealsMealIdGet } from '../fn/meals/meals-meal-id-get';
 import { MealsMealIdGet$Params } from '../fn/meals/meals-meal-id-get';
 import { mealsMealIdGet$Plain } from '../fn/meals/meals-meal-id-get-plain';
 import { MealsMealIdGet$Plain$Params } from '../fn/meals/meals-meal-id-get-plain';
+import { mealsMealOptionCartPost } from '../fn/meals/meals-meal-option-cart-post';
+import { MealsMealOptionCartPost$Params } from '../fn/meals/meals-meal-option-cart-post';
+import { mealsMealOptionCartPost$Plain } from '../fn/meals/meals-meal-option-cart-post-plain';
+import { MealsMealOptionCartPost$Plain$Params } from '../fn/meals/meals-meal-option-cart-post-plain';
 import { mealsPost } from '../fn/meals/meals-post';
 import { MealsPost$Params } from '../fn/meals/meals-post';
 import { mealsPost$Plain } from '../fn/meals/meals-post-plain';
@@ -199,6 +204,53 @@ export class MealsService extends BaseService {
   mealsChiefMealsGet(params?: MealsChiefMealsGet$Params, context?: HttpContext): Observable<Array<GetMealTableRequest>> {
     return this.mealsChiefMealsGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<GetMealTableRequest>>): Array<GetMealTableRequest> => r.body)
+    );
+  }
+
+  /** Path part for operation `mealsMealOptionCartPost()` */
+  static readonly MealsMealOptionCartPostPath = '/Meals/MealOptionCart';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsMealOptionCartPost$Plain()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  mealsMealOptionCartPost$Plain$Response(params?: MealsMealOptionCartPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealOptionCartRequest>>> {
+    return mealsMealOptionCartPost$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsMealOptionCartPost$Plain$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  mealsMealOptionCartPost$Plain(params?: MealsMealOptionCartPost$Plain$Params, context?: HttpContext): Observable<Array<GetMealOptionCartRequest>> {
+    return this.mealsMealOptionCartPost$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetMealOptionCartRequest>>): Array<GetMealOptionCartRequest> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsMealOptionCartPost()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  mealsMealOptionCartPost$Response(params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealOptionCartRequest>>> {
+    return mealsMealOptionCartPost(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsMealOptionCartPost$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  mealsMealOptionCartPost(params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<Array<GetMealOptionCartRequest>> {
+    return this.mealsMealOptionCartPost$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetMealOptionCartRequest>>): Array<GetMealOptionCartRequest> => r.body)
     );
   }
 

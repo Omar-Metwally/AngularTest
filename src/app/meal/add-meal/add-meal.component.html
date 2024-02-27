@@ -29,6 +29,9 @@
                                         <app-select-input class="mb-2" [control]="spiceLevel" type="text"
                                             placeholder="Spice Level" label="Spice Level"
                                             [options]="spiceLevelOptions"></app-select-input>
+                                        <app-select-input class="mb-2" [control]="style" type="text"
+                                            placeholder="Dish Style" label="Dish Style"
+                                            [options]="styleOptions"></app-select-input>
                                         <app-chips-auto-complete-input class="mb-2" [SelectedOptions]="selectedTags"
                                             [control]="tags" type="text" label="Tags"
                                             [options]="tagsOptions"></app-chips-auto-complete-input>
@@ -90,8 +93,8 @@
                                         <div class="row justify-content-center">
                                             <div class="col">
                                                 <div class="d-flex justify-content-between">
-                                                <h3 style="width: 50%;">Available?</h3>
-                                                <h3 class="ms-4" style="width: 50%;">Save QTY?</h3>
+                                                    <h3 style="width: 50%;">Available?</h3>
+                                                    <h3 class="ms-4" style="width: 50%;">Save QTY?</h3>
                                                 </div>
                                             </div>
                                             <div class="col">

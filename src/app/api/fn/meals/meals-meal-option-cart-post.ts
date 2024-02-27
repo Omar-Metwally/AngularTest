@@ -6,15 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Cart } from '../../models/cart';
-import { UpsertCartRequest } from '../../models/upsert-cart-request';
+import { GetMealOptionCartRequest } from '../../models/get-meal-option-cart-request';
 
-export interface CartPost$Params {
-      body?: Array<UpsertCartRequest>
+export interface MealsMealOptionCartPost$Params {
+      body?: Array<string>
 }
 
-export function cartPost(http: HttpClient, rootUrl: string, params?: CartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
-  const rb = new RequestBuilder(rootUrl, cartPost.PATH, 'post');
+export function mealsMealOptionCartPost(http: HttpClient, rootUrl: string, params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealOptionCartRequest>>> {
+  const rb = new RequestBuilder(rootUrl, mealsMealOptionCartPost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -24,9 +23,9 @@ export function cartPost(http: HttpClient, rootUrl: string, params?: CartPost$Pa
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<Cart>>;
+      return r as StrictHttpResponse<Array<GetMealOptionCartRequest>>;
     })
   );
 }
 
-cartPost.PATH = '/Cart';
+mealsMealOptionCartPost.PATH = '/Meals/MealOptionCart';

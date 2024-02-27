@@ -6,15 +6,15 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { DiscountCalculateRequest } from '../../models/discount-calculate-request';
 import { GetSubscriptionRequest } from '../../models/get-subscription-request';
-import { UpsertPromoCodeRequest } from '../../models/upsert-promo-code-request';
 
-export interface PromoCodePost$Params {
-      body?: UpsertPromoCodeRequest
+export interface PromoCodeDiscountCalculatePost$Params {
+      body?: DiscountCalculateRequest
 }
 
-export function promoCodePost(http: HttpClient, rootUrl: string, params?: PromoCodePost$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
-  const rb = new RequestBuilder(rootUrl, promoCodePost.PATH, 'post');
+export function promoCodeDiscountCalculatePost(http: HttpClient, rootUrl: string, params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
+  const rb = new RequestBuilder(rootUrl, promoCodeDiscountCalculatePost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -29,4 +29,4 @@ export function promoCodePost(http: HttpClient, rootUrl: string, params?: PromoC
   );
 }
 
-promoCodePost.PATH = '/PromoCode';
+promoCodeDiscountCalculatePost.PATH = '/PromoCode/DiscountCalculate';

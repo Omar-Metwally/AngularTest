@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CustomerSignUp } from '../shared/models/account/customerSignup';
 import { Login } from '../shared/models/account/login';
@@ -13,18 +13,19 @@ import { AbstractControl, AsyncValidator, FormControl, ValidationErrors } from '
 import jwtDecode from 'jwt-decode';
 import { CartService } from '../api/services';
 import { Cart } from '../api/models/cart'
-import { CartPost$Params } from '../api/fn/cart/cart-post';
+import { CartPost$Params, cartPost } from '../api/fn/cart/cart-post';
+import { CartCartResult, UpsertCartRequest } from '../api/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private userSource = new ReplaySubject<User | null>(1);
-  private cartSource = new BehaviorSubject<Cart[] | null>([]);
+  private cartSource = new ReplaySubject<Cart[]>(1);
   user$ = this.userSource.asObservable()
   cart$ = this.cartSource.asObservable()
 
-  constructor(private http: HttpClient, private router: Router, 
+  constructor(private http: HttpClient, private router: Router,
     private cartService: CartService) { }
 
   /*refreshUser(jwt: string) {
@@ -43,7 +44,7 @@ export class AccountService {
     )
   }*/
 
-  isUserLoggedIn(): boolean{
+  isUserLoggedIn(): boolean {
     const key = localStorage.getItem(environment.userKey);
     if (key) {
       return true;
@@ -51,15 +52,15 @@ export class AccountService {
       return false;
     }
   }
-  
+
 
   refreshUser(jwt: string | null) {
     if (!jwt) {
       this.userSource.next(null);
-      const cart = this.getCart()
-      if(cart) this.cartSource.next(cart)
+      this.setCart()
+
       return of(undefined);
-    }  
+    }
     let decodedJWT: any = jwtDecode(jwt);
     let expireDate = decodedJWT.exp;
     let currentDateInSeconds = Math.floor(Date.now() / 1000);
@@ -73,14 +74,16 @@ export class AccountService {
       };
 
       this.setUser(user);
-      console.log('hello')
+      this.setCart()
+
       return of(undefined);
     }
-  
+
     return this.http.get<User>(`${environment.appUrl}Auth/refreshToken`, { withCredentials: true }).pipe(
       map((user: User) => {
         if (user) {
           this.setUser(user);
+          this.addItemToCart();
         }
       })
     );
@@ -90,58 +93,65 @@ export class AccountService {
     const options = {
       withCredentials: true
     };
-    return this.http.post<User>(`${environment.appUrl}Auth/Login`,  model , options  )
-    .pipe(
-      map((user: User) => {
-        if (user) {
-          let decodedJWT: any = jwtDecode(user.jwt);
-          user.firstName =  decodedJWT.given_name,
-          user.lastName = decodedJWT.family_name,
-          user.username = decodedJWT.unique_name,
-          this.setUser(user);
-          this.getCartItems().subscribe({});
-        }
-      })
-    );
+    return this.http.post<User>(`${environment.appUrl}Auth/Login`, model, options)
+      .pipe(
+        map((user: User) => {
+          if (user) {
+            let decodedJWT: any = jwtDecode(user.jwt);
+            user.firstName = decodedJWT.given_name,
+            user.lastName = decodedJWT.family_name,
+            user.username = decodedJWT.unique_name,
+            this.setUser(user);
+            this.addItemToCart();
+          }
+        })
+      );
   }
 
-  addItemToCart(cartItem: Cart){
-    let cart = this.cartSource.value ?? [];
-    cart = this.addOrUpdateCartItem(cart,cartItem)
-    this.setCartItems(cartItem)
-    this.cartSource.next(cart);
-    localStorage.setItem('cart',JSON.stringify(cart))
+  // addItemToCart(cartItem: Cart){
+  //   let cart = this.cartSource.value ?? [];
+  //   cart = this.addOrUpdateCartItem(cart,cartItem)
+  //   this.setCartItems(cartItem)
+  //   this.cartSource.next(cart);
+  //   localStorage.setItem('cart',JSON.stringify(cart))
+  // }
+
+  getCartItems(cartPost$Params: CartPost$Params) {
+    return this.cartService.cartPost(cartPost$Params)
+      .pipe(
+        map((cart: Cart[]) => {
+          this.cartSource.next(cart);
+        })
+      );
   }
 
-  getCartItems(){
-    return this.cartService.cartGet()
-    .pipe(
-      map((cart: Cart[]) => {
-        this.cartSource.next(cart);
-      })
-    );
+  setCart(){
+    let cartItemsString = localStorage.getItem('cart')
+    let cartItems: Cart[] = []
+    if(cartItemsString){
+      cartItems = JSON.parse(cartItemsString)
+    }
+    this.cartSource.next(cartItems)
   }
 
-  addOrUpdateCartItem(cart: Cart[], cartItemToAdd: Cart) : Cart[]{
+  addOrUpdateCartItem(cart: Cart[], cartItemToAdd: Cart): Cart[] {
     const index = cart.findIndex(x => x.mealOptionID === cartItemToAdd.mealOptionID)
-    if(index === -1){
+    if (index === -1) {
       cart.push(cartItemToAdd);
     }
-    else{
+    else {
       cart[index].quantity = cart[index].quantity + cartItemToAdd.quantity
     }
     return cart
   }
 
-  setCartItems(cartItem: Cart){
-    const cartPostParams: CartPost$Params = {
-      body: {
-        mealOptionID: cartItem.mealOptionID,
-        quantity: cartItem.quantity,
-        timeOfDelivery: cartItem.timeOfDelivery ?? undefined
-      }
+  setCartItems(cartItem: Cart) {
+    const upsertCartRequest: UpsertCartRequest[] = [{ mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity, timeOfDelivery: cartItem.timeOfDelivery }]
+    const cartGetParams: CartPost$Params = {
+      body: upsertCartRequest
     }
-    return this.cartService.cartPost(cartPostParams).subscribe({
+    console.log(cartGetParams)
+    return this.cartService.cartPost(cartGetParams).subscribe({
       next: (response) => {
         console.log(response)
       },
@@ -155,19 +165,19 @@ export class AccountService {
     localStorage.removeItem(environment.userKey);
     localStorage.removeItem('cart');
     this.userSource.next(null);
-    this.cartSource.next(null)
+    this.cartSource.closed
     this.router.navigateByUrl('/');
-    
+
     return this.http.get(`${environment.appUrl}Auth/RevokeToken`, { withCredentials: true })
-    .subscribe();
+      .subscribe();
   }
 
   register(model: CustomerSignUp) {
     return this.http.post(`${environment.appUrl}Auth/CustomerSignUp`, model);
   }
 
-  checkEmail(email: AbstractControl){
-    return this.http.post<boolean>(`${environment.appUrl}Auth/CheckEmail`,{email: email.value.toLowerCase()});
+  checkEmail(email: AbstractControl) {
+    return this.http.post<boolean>(`${environment.appUrl}Auth/CheckEmail`, { email: email.value.toLowerCase() });
   }
 
   confirmEmail(model: ConfirmEmail) {
@@ -205,26 +215,157 @@ export class AccountService {
     return this.user$;
   }
 
-  getCart() {
-    const key = localStorage.getItem('cart');
-    if (key) {
-      const cart: Cart[] = JSON.parse(key);
-      return cart;
-    }
-    return null;
-  }
 
   private setUser(user: User) {
     localStorage.setItem(environment.userKey, JSON.stringify(user));
     this.userSource.next(user);
   }
 
-  
+  async addItemToCart(cartItem?: Cart) {
+    let cartItems: Cart[] = []
+    if (cartItem) {
+      cartItems = this.addOrUpdateCart(cartItem)
+    }
+    if (this.isUserLoggedIn()) {
+      cartItems = await this.updateCartItemsFromAPI(cartItems) ?? cartItems
+      this.cartSource.next(cartItems)
+    }
+    else {
+      this.cartSource.next(cartItems)
+    }
+    localStorage.setItem('cart', JSON.stringify(cartItems))
+  }
+
+  addOrUpdateCart(cartItem: Cart) {
+    let cartItems: Cart[] = this.getCart();
+
+    const index = cartItems.findIndex(x => x.mealOptionID === cartItem.mealOptionID)
+    if (index === -1) {
+      cartItems.push(cartItem);
+    }
+    else {
+      cartItems[index].quantity = cartItems[index].quantity + cartItem.quantity
+    }
+    return cartItems
+  }
+
+  getCart() {
+    const key = localStorage.getItem('cart');
+    if (key) {
+      const cart: Cart[] = JSON.parse(key);
+      return cart;
+    }
+    const cart: Cart[] = []
+    localStorage.setItem('cart', JSON.stringify(cart))
+    this.cartSource.next(cart)
+    return cart
+  }
+
+  updateCartItemsFromAPI(cartItems?: Cart[]): Promise<Cart[] | undefined> {
+    return new Promise((resolve, reject) => {
+      if (cartItems) {
+        const upsertCartRequest: UpsertCartRequest[] = []
+
+        for (const cartItem of cartItems) {
+          const upsertRequest: UpsertCartRequest = {
+            mealOptionID: cartItem.mealOptionID,
+            quantity: cartItem.quantity,
+            timeOfDelivery: cartItem.timeOfDelivery
+          };
+          upsertCartRequest.push(upsertRequest);
+        }
+        const cartPost$Params: CartPost$Params = { body: upsertCartRequest }
+
+        this.cartService.cartPost$Response(cartPost$Params).subscribe({
+          next: (response: HttpResponse<any>) => {
+            if (response.status === 200) {
+              cartItems = response.body as Cart[]
+            } else if (response.status === 202) {
+              cartItems = response.body.data as Cart[]
+            }
+            console.log(cartItems, 'from api call')
+            resolve(cartItems)
+          },
+          error: error => {
+            reject(error)
+          }
+        })
+
+      }
+      else {
+        this.cartService.cartPost$Response().subscribe({
+          next: (response: HttpResponse<any>) => {
+            if (response.status === 200) {
+              cartItems = response.body as Cart[]
+            } else if (response.status === 202) {
+              cartItems = response.body.data as Cart[]
+            }
+            resolve(cartItems)
+          },
+          error: error => {
+            reject(error)
+          }
+        })
+      }
+    })
+  }
+
+
+  // updateCartItemsFromAPI(cartItems?: Cart[]):Promise<Cart[] | undefined> {
+  //   if (cartItems) {
+  //     const upsertCartRequest: UpsertCartRequest[] = []
+
+  //     for (const cartItem of cartItems) {
+  //       const upsertRequest: UpsertCartRequest = {
+  //         mealOptionID: cartItem.mealOptionID,
+  //         quantity: cartItem.quantity,
+  //         timeOfDelivery: cartItem.timeOfDelivery
+  //       };
+  //       upsertCartRequest.push(upsertRequest);
+  //     }
+  //     const cartPost$Params: CartPost$Params = { body: upsertCartRequest }
+
+  //     this.cartService.cartPost$Response(cartPost$Params).subscribe({
+  //       next: (response: HttpResponse<any>) => {
+  //         if (response.status === 200) {
+  //           cartItems = response.body as Cart[]
+  //           // Handle 200 status code response
+  //         } else if (response.status === 202) {
+  //           cartItems = response.body.data as Cart[]
+  //         }
+  //         console.log(cartItems, 'from api call')
+  //         return cartItems
+  //       },
+  //       error: error => {
+  //         // Handle error
+  //       }
+  //     })
+
+  //   }
+  //   else {
+  //     this.cartService.cartPost$Plain$Response().subscribe({
+  //       next: (response: HttpResponse<any>) => {
+  //         if (response.status === 200) {
+  //           // Handle 200 status code response
+  //           cartItems = response.body as Cart[]
+  //         } else if (response.status === 202) {
+  //           console.log(response.body.errors as string[])
+  //           console.log(response.body.errors as string[])
+  //           cartItems = response.body.data as Cart[]
+  //         }
+  //       },
+  //       error: error => {
+  //         // Handle error
+  //       }
+  //     })
+  //   }
+  //   return Promise<cartItems | undefined>
+  // }
 }
 
 @Injectable({ providedIn: 'root' })
 export class UniqueEmailValidator implements AsyncValidator {
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService) { }
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     return this.accountService.checkEmail(control).pipe(

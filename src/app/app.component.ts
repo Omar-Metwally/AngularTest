@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './account/account.service';
 import { SharedService } from './shared/shared.service';
+import { CartPost$Params } from './api/fn/cart/cart-post';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit {
     const jwt = this.accountService.getJWT();
     if (!jwt) {
       this.accountService.refreshUser(jwt).subscribe({
-        next: _ => {},
+        next: _ => { },
         error: error => {
           this.accountService.logout();
           if (error.status === 401) {
@@ -28,12 +29,10 @@ export class AppComponent implements OnInit {
           }
         }
       })
-    } 
+    }
     else {
-      this.accountService.getCartItems().subscribe({
-      });
-
       this.accountService.refreshUser(jwt).subscribe();
+      this.accountService.addItemToCart();
     }
   }
 }

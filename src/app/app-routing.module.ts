@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'cart', loadComponent: () => import('./cart/cart.component').then(module => module.CartComponent ) },
   { path: 'account', loadChildren: () => import('./account/account.module').then(module => module.AccountModule) },
   { path: 'profile', loadComponent: () => import('./profile/profile.component').then(module => module.ProfileComponent) },
+  { path: 'test', loadComponent: () => import('./test/test.component').then(module => module.TestComponent) },
   { path: 'meal/:mealID', loadComponent: () => import('./meal/meal.component').then(module => module.MealComponent) },
   { path: 'meal', redirectTo: 'menu', pathMatch: 'full' },
   { path: 'not-found', component: NotFoundComponent },

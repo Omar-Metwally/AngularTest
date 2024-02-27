@@ -7,17 +7,20 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 import { Cart } from '../../models/cart';
+import { UpsertCartRequest } from '../../models/upsert-cart-request';
 
-export interface CartGet$Params {
+export interface CartPost$Plain$Params {
+      body?: Array<UpsertCartRequest>
 }
 
-export function cartGet(http: HttpClient, rootUrl: string, params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
-  const rb = new RequestBuilder(rootUrl, cartGet.PATH, 'get');
+export function cartPost$Plain(http: HttpClient, rootUrl: string, params?: CartPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
+  const rb = new RequestBuilder(rootUrl, cartPost$Plain.PATH, 'post');
   if (params) {
+    rb.body(params.body, 'application/*+json');
   }
 
   return http.request(
-    rb.build({ responseType: 'json', accept: 'text/json', context })
+    rb.build({ responseType: 'text', accept: 'text/plain', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
@@ -26,4 +29,4 @@ export function cartGet(http: HttpClient, rootUrl: string, params?: CartGet$Para
   );
 }
 
-cartGet.PATH = '/Cart';
+cartPost$Plain.PATH = '/Cart';

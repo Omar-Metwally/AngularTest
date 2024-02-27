@@ -15,6 +15,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { Cart } from '../api/models/cart'
 import { AccountService } from '../account/account.service';
 import { CartPost$Params } from '../api/fn/cart/cart-post';
+import { UpsertCartRequest } from '../api/models';
 
 
 @Component({
@@ -120,11 +121,9 @@ export class MenuComponent implements OnInit {
     this.accountService.addItemToCart(cartItem)
   }
   postCart(cartItem: Cart) {
+    const upsertCartRequest: UpsertCartRequest[] = [{mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity}]
     const CartPostParams: CartPost$Params = {
-      body: {
-        mealOptionID: cartItem.mealOptionID,
-        quantity: cartItem.quantity,
-      }
+      body: upsertCartRequest
     }
     this.cartService.cartPost(CartPostParams).subscribe({
       next: (response) => {
@@ -152,10 +151,10 @@ export class MenuComponent implements OnInit {
           chiefName: request.chiefName || '',
           chiefImage: request.chiefImage || '',
           rating: request.rating || 0,
-          reviewsCount: 0, // You need to provide the source for reviewsCount
+          reviewsCount: 0,
           mealCardOptions: request.getMealOptionsRequest?.map(option => ({
             mealOptionID: option.mealOptionID || '',
-            mealOptionSize: option.mealSizeOption || 0, // Assuming MealSizeOption is a number
+            mealOptionSize: option.mealSizeOption || 0,
             mealOptionImage: option.image || '',
             mealOptionPrice: option.price || 0,
             IsAvailable: option.isAvailable || false

@@ -265,7 +265,7 @@ export class AddMealComponent implements OnInit {
       mealID: getMealRequest.mealID?? '',
       mealCategory: this.categoryOptions.find(x => +x.id == (mealCategoryIndex)),
       mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
-      mealStyle: this.styleOptions.find(x => +x.id == (mealStyleIndex)),
+      mealStyle: this.styleOptions.find(x => +x.id == (mealSpiceLevelIndex)),
       description: getMealRequest.description ?? '', 
       tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)), //getMealRequest.mealTags?.flatMap(x => x.tagID !== undefined ? [x.tagID] : []),
       mealOptions: []

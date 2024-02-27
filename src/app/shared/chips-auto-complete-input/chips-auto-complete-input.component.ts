@@ -42,7 +42,7 @@ export class ChipsAutoCompleteInputComponent {
       this.SelectedOptions.splice(index, 1);
     }
     this.control.setValue(this.SelectedOptions);
-    this.optionSelected();
+    this.optionSelected;
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -51,7 +51,7 @@ export class ChipsAutoCompleteInputComponent {
     if (index >= 0) this.options.splice(index, 1);
     this.input.nativeElement.value = '';
 
-    this.optionSelected();
+    this.optionSelected;
   }
 
   filter(): void {

@@ -9,18 +9,18 @@ import { RequestBuilder } from '../../request-builder';
 import { GetSubscriptionRequest } from '../../models/get-subscription-request';
 import { UpsertPromoCodeRequest } from '../../models/upsert-promo-code-request';
 
-export interface PromoCodePost$Plain$Params {
+export interface PromoCodeCreatePromoCodePost$Params {
       body?: UpsertPromoCodeRequest
 }
 
-export function promoCodePost$Plain(http: HttpClient, rootUrl: string, params?: PromoCodePost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
-  const rb = new RequestBuilder(rootUrl, promoCodePost$Plain.PATH, 'post');
+export function promoCodeCreatePromoCodePost(http: HttpClient, rootUrl: string, params?: PromoCodeCreatePromoCodePost$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
+  const rb = new RequestBuilder(rootUrl, promoCodeCreatePromoCodePost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: 'text/plain', context })
+    rb.build({ responseType: 'json', accept: 'text/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
@@ -29,4 +29,4 @@ export function promoCodePost$Plain(http: HttpClient, rootUrl: string, params?: 
   );
 }
 
-promoCodePost$Plain.PATH = '/PromoCode';
+promoCodeCreatePromoCodePost.PATH = '/PromoCode/CreatePromoCode';

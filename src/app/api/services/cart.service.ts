@@ -12,12 +12,10 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { Cart } from '../models/cart';
 import { cartDelete } from '../fn/cart/cart-delete';
 import { CartDelete$Params } from '../fn/cart/cart-delete';
-import { cartGet } from '../fn/cart/cart-get';
-import { CartGet$Params } from '../fn/cart/cart-get';
-import { cartGet$Plain } from '../fn/cart/cart-get-plain';
-import { CartGet$Plain$Params } from '../fn/cart/cart-get-plain';
 import { cartPost } from '../fn/cart/cart-post';
 import { CartPost$Params } from '../fn/cart/cart-post';
+import { cartPost$Plain } from '../fn/cart/cart-post-plain';
+import { CartPost$Plain$Params } from '../fn/cart/cart-post-plain';
 
 @Injectable({ providedIn: 'root' })
 export class CartService extends BaseService {
@@ -25,55 +23,30 @@ export class CartService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `cartGet()` */
-  static readonly CartGetPath = '/Cart';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `cartGet$Plain()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  cartGet$Plain$Response(params?: CartGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
-    return cartGet$Plain(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `cartGet$Plain$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  cartGet$Plain(params?: CartGet$Plain$Params, context?: HttpContext): Observable<Array<Cart>> {
-    return this.cartGet$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<Cart>>): Array<Cart> => r.body)
-    );
-  }
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `cartGet()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  cartGet$Response(params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
-    return cartGet(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `cartGet$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  cartGet(params?: CartGet$Params, context?: HttpContext): Observable<Array<Cart>> {
-    return this.cartGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<Cart>>): Array<Cart> => r.body)
-    );
-  }
-
   /** Path part for operation `cartPost()` */
   static readonly CartPostPath = '/Cart';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cartPost$Plain()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  cartPost$Plain$Response(params?: CartPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
+    return cartPost$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cartPost$Plain$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  cartPost$Plain(params?: CartPost$Plain$Params, context?: HttpContext): Observable<Array<Cart>> {
+    return this.cartPost$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<Cart>>): Array<Cart> => r.body)
+    );
+  }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -81,7 +54,7 @@ export class CartService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  cartPost$Response(params?: CartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  cartPost$Response(params?: CartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Cart>>> {
     return cartPost(this.http, this.rootUrl, params, context);
   }
 
@@ -91,9 +64,9 @@ export class CartService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  cartPost(params?: CartPost$Params, context?: HttpContext): Observable<void> {
+  cartPost(params?: CartPost$Params, context?: HttpContext): Observable<Array<Cart>> {
     return this.cartPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<Array<Cart>>): Array<Cart> => r.body)
     );
   }
 
