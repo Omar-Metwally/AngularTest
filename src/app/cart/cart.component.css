@@ -18,6 +18,31 @@ body{
     white-space: nowrap;
 }
 
+::ng-deep .mat-horizontal-stepper-header-container .mat-step-header{
+    border-radius: 10px;
+    margin-bottom: 0px;
+}
+
+body{
+    margin-top:20px;
+    background-color: #f1f3f7;
+}
+
+.avatar-lg {
+    height: 5rem;
+    width: 5rem;
+}
+
+.font-size-18 {
+    font-size: 18px!important;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 a {
     text-decoration: none!important;
 }
@@ -47,4 +72,104 @@ a {
     background-clip: border-box;
     border: 1px solid #eff0f2;
     border-radius: 1rem;
+}
+
+#cont{
+border-radius: 10px;
+padding: 20px;
+box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+            0 5px 12px -2px rgb(0,0,0,0.1),
+            0 18px 36px -6px rgb(0,0,0,0.1);
+}
+
+
+#F-n{
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #656565;
+}
+
+#diff{
+    color: #31AC18;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+#subTfont{
+    family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+#card{
+    width: 500px;
+    height: 200px;
+    top: 24px;
+    left: 294px;
+    border-radius: 5px, 0px, 0px, 5px;
+}
+
+#mastercard{
+    width: 50px;
+    height: auto;
+}
+
+#cash{
+    width:55px;
+}
+
+#visa{
+    width: 55px;
+}
+
+#cont1{
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+                0 5px 12px -2px rgb(0,0,0,0.1),
+                0 18px 36px -6px rgb(0,0,0,0.1);       
+}
+
+#method{
+    height: 56px;
+    padding: 16px, 20px, 16px, 16px;
+    border-radius: 8px;
+    border: 1px g;
+    gap: 24px;
+}
+
+#method1{
+    height: 56px;
+    padding: 16px, 10px, 16px, 16px;
+    border-radius: 8px;
+    border: 1px g;
+    gap: 24px;
+}
+
+#nextBtn{
+    justify-content: center;
+    width: 391px;
+    height: 51px;
+    top: 812px;
+    left: 524px;
+    padding: 14px, 0px, 13px, 0px;
+    border-radius: 10px;
+    background-color: #31AC18;
+}
+
+#cont2{
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+                0 5px 12px -2px rgb(0,0,0,0.1),
+                0 18px 36px -6px rgb(0,0,0,0.1);
+    justify-content: center;
 }

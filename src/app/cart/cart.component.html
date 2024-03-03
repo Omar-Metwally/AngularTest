@@ -1,0 +1,563 @@
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
+    integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<div class="container">
+
+
+    <!-- <mat-stepper orientation="vertical">
+        <mat-step state="home">
+          <ng-template matStepLabel>Step 1</ng-template>
+          <ng-template matStepContent>
+            <p>This content was rendered lazily</p>
+            <button mat-button matStepperNext>Next</button>
+          </ng-template>
+        </mat-step>
+        <mat-step state="form">
+          <ng-template matStepLabel>Step 2</ng-template>
+          <ng-template matStepContent>
+            <p>This content was also rendered lazily</p>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </ng-template>
+        </mat-step>
+        <mat-step state="last">
+          <ng-template matStepLabel>Step 3</ng-template>
+          <p>This content was rendered eagerly</p>
+          <button mat-button matStepperPrevious>Back</button>
+        </mat-step>
+      
+        changed step icons -->
+    <!-- <ng-template matStepperIcon="edit" let-index="index">
+        <ng-container [ngSwitch]="index">
+            <mat-icon *ngSwitchCase="0">home</mat-icon>
+            <mat-icon *ngSwitchCase="1">format_align_center</mat-icon>
+            <mat-icon *ngSwitchCase="2">done_all</mat-icon>
+        </ng-container>
+        </ng-template>
+        <ng-template matStepperIcon="done" let-index="index">
+        <ng-container [ngSwitch]="index">
+            <mat-icon *ngSwitchCase="0">home</mat-icon>
+            <mat-icon *ngSwitchCase="1">format_align_center</mat-icon>
+            <mat-icon *ngSwitchCase="2">done_all</mat-icon>
+        </ng-container>
+        </ng-template>
+      </mat-stepper> -->
+
+
+    <mat-stepper class="example-stepper" [linear]="true" labelPosition="bottom">
+
+        <ng-template matStepperIcon="cart">
+            <mat-icon>shopping_cart_checkout</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="shipping-info">
+            <mat-icon>person_pin</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="payment-method">
+            <mat-icon>credit_card</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="review-order">
+            <mat-icon>menu-book</mat-icon>
+        </ng-template>
+
+        <mat-step [optional]="true" label="Dish Profile" state="cart">
+            <ng-template matStepContent>
+                <div class="row">
+                    <div class="col-xl-8">
+
+                        <div class="card border shadow-none">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-start border-bottom pb-3">
+                                    <div class="me-4">
+                                        <img src="/assests/images/empty.png" alt="" class="avatar-lg rounded">
+                                    </div>
+                                    <div class="flex-grow-1 align-self-center overflow-hidden">
+                                        <div>
+                                            <h5 class="text-truncate font-size-18"><a href="#"
+                                                    class="text-dark">Burger</a></h5>
+                                            <p class="text-muted mb-0">
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star-half text-warning"></i>
+                                            </p>
+                                            <p class="mb-0 mt-1">Size : <span
+                                                    class="fw-medium">Large</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 ms-2">
+                                        <ul class="list-inline mb-0 font-size-16">
+                                            <li class="list-inline-item">
+                                                <a href="#" class="text-muted px-1">
+                                                    <i class="mdi mdi-trash-can-outline"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="text-muted px-1">
+                                                    <i class="mdi mdi-heart-outline"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Price</p>
+                                                <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
+                                                            class="font-size-16 fw-normal">$500</del></span>350
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Quantity</p>
+                                                <div class="d-inline-flex">
+                                                    <select class="form-select form-select-sm w-xl">
+                                                        <option value="1">1</option>
+                                                        <option value="2" selected="">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Total</p>
+                                                <h5>6518</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        @for (mealOption of mealOptions; track mealOption) {
+                        <div class="card border shadow-none">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-start border-bottom pb-3">
+                                    <div class="me-4">
+                                        <img [src]="mealOption.image" alt="" class="avatar-lg rounded">
+                                    </div>
+                                    <div class="flex-grow-1 align-self-center overflow-hidden">
+                                        <div>
+                                            <h5 class="text-truncate font-size-18"><a href="#"
+                                                    class="text-dark">{{mealOption.title}}</a></h5>
+                                            <p class="text-muted mb-0">
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star-half text-warning"></i>
+                                            </p>
+                                            <p class="mb-0 mt-1">Size : <span
+                                                    class="fw-medium">{{mealOption.mealSpiceLevel}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 ms-2">
+                                        <ul class="list-inline mb-0 font-size-16">
+                                            <li class="list-inline-item">
+                                                <a href="#" class="text-muted px-1">
+                                                    <i class="mdi mdi-trash-can-outline"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="text-muted px-1">
+                                                    <i class="mdi mdi-heart-outline"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <div class="row">
+                                                    <ngb-timepicker [(ngModel)]="time" [hourStep]="hourStep"
+                                                        [minuteStep]="minuteStep" />
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Price</p>
+                                                <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
+                                                            class="font-size-16 fw-normal">$500</del></span>${{mealOption.price}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Quantity</p>
+                                                <div class="d-inline-flex">
+                                                    <select class="form-select form-select-sm w-xl">
+                                                        <option value="1">1</option>
+                                                        <option value="2" selected="">{{mealOption.quantity}}</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Total</p>
+                                                <h5>${{(mealOption.quantity ?? 0 )* mealOption.price}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        }
+                        <!-- end card -->
+
+                        <div class="row my-4">
+                            <div class="col-sm-6">
+                                <a href="ecommerce-products.html" class="btn btn-link text-muted">
+                                    <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                            </div> <!-- end col -->
+                            <div class="col-sm-6">
+                                <div class="text-sm-end mt-2 mt-sm-0">
+                                    <a href="ecommerce-checkout.html" class="btn btn-success">
+                                        <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row-->
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="mt-5 mt-lg-0">
+                            <div class="card border shadow-none">
+                                <div class="card-header bg-transparent border-bottom py-3 px-4">
+                                    <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span>
+                                    </h5>
+                                </div>
+                                <div class="card-body p-4 pt-2">
+
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Sub Total :</td>
+                                                    <td class="text-end">$ {{total}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Shipping Charge :</td>
+                                                    <td class="text-end">$ 25</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Discount : </td>
+                                                    <td class="text-end">$ {{discount}}</td>
+                                                </tr>
+                                                <tr class="bg-light">
+                                                    <th>Total :</th>
+                                                    <td class="text-end">
+                                                        <span class="fw-bold">
+                                                            {{total - discount}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <div class="d-flex flex-row"
+                                                        style="border-radius: 10px; border: 1px; border-style: solid; border-color:#65656591;">
+                                                        <input [formControl]="promoCodeInput" class="m-1"
+                                                            style="border: 0px; height: 100%;" id="typeahead-basic"
+                                                            placeholder="Promo Code" type="text" class="form-control" />
+                                                        <button (click)="applyPromoCode()"
+                                                            class="btn btn-primary">Apply</button>
+                                                        <span *ngIf="promoCodeInput.errors && promoCodeInput.touched">
+                                                            hello</span>
+                                                    </div>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- end table-responsive -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </ng-template>
+        </mat-step>
+        <mat-step label="Dish Options" state="shipping-info">
+            <ng-template matStepContent>
+                <div class="row">
+
+                    <div class="col-12 container p-4" style="background-color: #FDFFFC; border: 1px solid #0C0B0B1C; border-radius: 8px;
+                        max-width: 869px;">
+                        <div class="row" style="font-family: Roboto;
+                    font-size: 18px;
+                    font-weight: 700;
+                    line-height: 21px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    ">
+                            <div class="col pb-3 pt-4">
+                                Shopping Address
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <app-input [control]="firstName" type="text" placeholder="Hoda"
+                                    label="First Name"></app-input>
+                            </div>
+                            <div class="col">
+                                <app-input [control]="lastName" type="text" placeholder="Khaled"
+                                    label="Last Name"></app-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <app-input [control]="phone" style="width: 100%;" type="number" prefix="01"
+                                    format="0 0000 0000" label="Phone number"></app-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text" placeholder="District"
+                                    label="District" [options]="districts"></app-select-input>
+                            </div>
+                            <div class="col">
+                                <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text" placeholder="Street" label="Street"
+                                    [options]="streets"></app-select-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <app-select-input [control]="building" [optionSelected]="buildingOptionSelected" type="text" placeholder="Building"
+                                    label="Building" [options]="buildings"></app-select-input>
+                            </div>
+                            <div class="col">
+                                <app-input [control]="floor" type="text" placeholder="Floor No"
+                                    label="Floor No"></app-input>
+                            </div>
+                            <div class="col">
+                                <app-input [control]="apartment" type="text" placeholder="Apartment No"
+                                    label="Apartment No"></app-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <app-input [control]="deliveryNotes" type="text" placeholder="Notes for delivery"
+                                    label="Notes for delivery"></app-input>
+                            </div>
+                        </div>
+                        <div class="row container justify-content-center d-flex align-items-center">
+                            <div class="col-auto d-flex align-items-center px-1">
+                                <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M5.4987 16.6654V8.33203H15.4987V9.16536C16.082 9.16536 16.6404 9.2487 17.1654 9.40703V8.33203C17.1654 7.41536 16.4154 6.66536 15.4987 6.66536H14.6654V4.9987C14.6654 2.6987 12.7987 0.832031 10.4987 0.832031C8.1987 0.832031 6.33203 2.6987 6.33203 4.9987V6.66536H5.4987C4.58203 6.66536 3.83203 7.41536 3.83203 8.33203V16.6654C3.83203 17.582 4.58203 18.332 5.4987 18.332H10.7154C10.3654 17.832 10.0904 17.2654 9.90703 16.6654H5.4987ZM7.9987 4.9987C7.9987 3.61536 9.11536 2.4987 10.4987 2.4987C11.882 2.4987 12.9987 3.61536 12.9987 4.9987V6.66536H7.9987V4.9987Z"
+                                        fill="#31AC18" />
+                                    <path
+                                        d="M15.4987 10.832C13.1987 10.832 11.332 12.6987 11.332 14.9987C11.332 17.2987 13.1987 19.1654 15.4987 19.1654C17.7987 19.1654 19.6654 17.2987 19.6654 14.9987C19.6654 12.6987 17.7987 10.832 15.4987 10.832ZM15.4987 12.4987C16.1904 12.4987 16.7487 13.057 16.7487 13.7487C16.7487 14.4404 16.1904 14.9987 15.4987 14.9987C14.807 14.9987 14.2487 14.4404 14.2487 13.7487C14.2487 13.057 14.807 12.4987 15.4987 12.4987ZM15.4987 17.4987C14.6404 17.4987 13.882 17.0654 13.432 16.3987C14.0404 16.0487 14.7404 15.832 15.4987 15.832C16.257 15.832 16.957 16.0487 17.5654 16.3987C17.1154 17.0654 16.357 17.4987 15.4987 17.4987Z"
+                                        fill="#31AC18" />
+                                </svg>
+                            </div>
+                            <div class="col-auto px-1" style="
+                        font-family: Roboto;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 17px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                        color: #31AC18;
+                        ">
+                                Security & Privacy
+                            </div>
+                        </div>
+                        <div class="row container d-flex justify-content-center mt-3" style="font-family: Roboto;
+                    font-size: 10px;
+                    font-weight: 700;
+                    line-height: 12px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    color: #656565;
+                    ">
+                            <div class="col-auto pb-4">
+                                We Maintain industry-Standard Physical ,Administration Measures To Safeguard Your
+                                personal Information
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center pt-5">
+                        <button style="width: 391px;
+                    height: 51px;
+                    padding: 14px 0px 13px 0px;
+                    border-radius: 10px;
+                    background: #31AC18;
+                    border: 0;
+                    border-style: none;
+                    font-family: Roboto;
+                    font-size: 18px;
+                    font-weight: 700;
+                    line-height: 24px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    color: white;
+                    ">Next</button>
+                    </div>
+                </div>
+            </ng-template>
+        </mat-step>
+        <mat-step label="Dish Options" state="payment-method">
+            <ng-template matStepContent>
+                <div class="container py-5">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12">
+                            <div id="cont">
+                                <h4>Order summary</h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td colspan="5">Pizza(M) x2</td>
+                
+                                            <td id="F-n">200</td>
+                                            <td>EGP</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td colspan="5">Pizza(L)</td>
+                                            <td id="F-n">300</td>
+                                            <td>EGP</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td colspan="5">Delivery fee</td>
+                                            <td id="F-n">20</td>
+                                            <td>EGP</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td colspan="5">Promo code</td>
+                                            <td id="F-n">-70</td>
+                                            <td>EGP</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td colspan="5">Subtotal After Promo Code</td>
+                                            <td id="diff">300</td>
+                                            <td>EGP</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-4" id="cont1">
+                                <h4>Payment method</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <th scope="row"></th>
+                                        <tr>
+                                            <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio" checked></td>
+                                            <td><img src="/assets/images/Mastercard.webp" id="mastercard"></td>
+                                            <td><img src="/assets/images/visa.webp" id="visa" class="mx-2"></td>
+                                            <td><img src="/assets/images/Paypal.jpg" id="mastercard"></td>
+                                        </tr>
+                                        <tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <th scope="row"></th>
+                                        <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio" checked
+                                                class="my-4"></td>
+                                        <td><img src="/assets/images/cash.jpg" id="cash"></td>
+                                        <td>Cash on delivery</td>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-12" id="cont2">
+                            <div class="d-flex justify-content-center"><img src="/assets/images/card.jpg" alt=".." id="card"></div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <select class="form-select" aria-label="Default select example" id="method">
+                                        <option selected>Mastercard</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12"><label for="exampleInputEmail1" class="form-label"></label>
+                                            <input type="email" class="form-control" id="method1" aria-describedby="emailHelp"
+                                                placeholder="Name on card">
+                                        </div>
+                                        <div class="col-md-6 col-sm-12"><label for="exampleInputEmail1" class="form-label"></label>
+                                            <input type="email" class="form-control" id="method1" aria-describedby="emailHelp"
+                                                placeholder="Card number">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <label form="date"></label>
+                                            <input type="date" class="form-control" id="method1" aria-describedby="date">
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label for="exampleInputPassword1" class="form-label"></label>
+                                            <input type="password" class="form-control" id="method1" placeholder="CVV">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mt-5 d-flex justify-content-center">
+                            <button type="button" class="btn btn-success" id="nextBtn">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </mat-step>
+        <mat-step label="Dish Options" state="review-order">
+            <ng-template matStepContent>
+            </ng-template>
+        </mat-step>
+    </mat-stepper>
+
+</div>

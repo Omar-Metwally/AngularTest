@@ -4,9 +4,10 @@ export interface GetMealReviewRequest {
   createdAt?: string;
   customerID?: string | null;
   description?: string | null;
+  fullScreenImage?: string | null;
   mealId?: string;
   rating?: number;
-  reviewImage?: string | null;
+  thumbnailImage?: string | null;
   title?: string | null;
   updatedAt?: string;
 }

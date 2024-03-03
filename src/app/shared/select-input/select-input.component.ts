@@ -91,8 +91,7 @@ export class SelectInputComponent {
   @Input() style = ''
   @Input() class = ''
   @Input() options: Option[] = []
-  @Input() optionSelected!:() => void;
-
+  @Input() optionSelected: () => void = () => {};
 
   constructor() {
     this.filteredOptions = this.options;

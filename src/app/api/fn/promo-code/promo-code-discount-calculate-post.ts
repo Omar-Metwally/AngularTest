@@ -7,13 +7,12 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 import { DiscountCalculateRequest } from '../../models/discount-calculate-request';
-import { GetSubscriptionRequest } from '../../models/get-subscription-request';
 
 export interface PromoCodeDiscountCalculatePost$Params {
       body?: DiscountCalculateRequest
 }
 
-export function promoCodeDiscountCalculatePost(http: HttpClient, rootUrl: string, params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
+export function promoCodeDiscountCalculatePost(http: HttpClient, rootUrl: string, params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
   const rb = new RequestBuilder(rootUrl, promoCodeDiscountCalculatePost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
@@ -24,7 +23,7 @@ export function promoCodeDiscountCalculatePost(http: HttpClient, rootUrl: string
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<GetSubscriptionRequest>;
+      return (r as HttpResponse<any>).clone({ body: parseFloat(String((r as HttpResponse<any>).body)) }) as StrictHttpResponse<number>;
     })
   );
 }

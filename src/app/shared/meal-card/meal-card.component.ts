@@ -49,18 +49,18 @@ export class MealCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentMealOption = this.mealCardData.mealCardOptions[0]
-    this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${this.currentMealOption.mealOptionID}.jpg`
+    this.displayedImage = this.currentMealOption.mealOptionImage//`${environment.appUrl}images/meal/Thumbnail_${this.currentMealOption.mealOptionID}.jpg`
     this.displayedPrice = this.currentMealOption.mealOptionPrice
     this.currentMealOptionID = this.currentMealOption.mealOptionID
   }
   changeCurrentMealOption(mealOptionIndex: number){
     this.currentMealOption = this.mealCardData.mealCardOptions[mealOptionIndex]
-    this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${this.currentMealOption.mealOptionID}.jpg`
+    this.displayedImage = this.currentMealOption.mealOptionImage//`${environment.appUrl}images/meal/Thumbnail_${this.currentMealOption.mealOptionID}.jpg`
     this.displayedPrice = this.currentMealOption.mealOptionPrice;
     this.currentMealOptionID = this.currentMealOption.mealOptionID;
   }
   changeImage(mealOptionID: string, Price: number) {
-    this.displayedImage = `${environment.appUrl}images/meal/Thumbnail_${mealOptionID}.jpg`
+    this.displayedImage = this.currentMealOption.mealOptionImage//`${environment.appUrl}images/meal/Thumbnail_${mealOptionID}.jpg`
     this.displayedPrice = Price;
     this.currentMealOptionID = mealOptionID;
   }

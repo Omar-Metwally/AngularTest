@@ -239,6 +239,32 @@ $my-app-theme: mat.define-light-theme(
   }
 }
 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, [dir=ltr] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before { 
+  border-top-width: 4px !important;
+  border-top-color: #5ABD46;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=ltr] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 4px !important;
+  border-top-color: #5ABD46;
+}
+
+.mat-stepper-horizontal-line {
+  border-top-width: 4px !important;
+  border-top-color: #5ABD46;
+}
+.mat-stepper-label-position-bottom .mat-stepper-horizontal-line{
+  border-top-width: 4px !important;
+  border-top-color: #5ABD46;
+}
+::ng-deep .mat-horizontal-stepper-header {
+  &[ng-reflect-state='edit'] + .mat-stepper-horizontal-line {
+             border-top-width: 4px !important;
+             border-top-color: #5ABD46;
+  }
+}
+
+
 // .mat-mdc-dialog-container .mdc-dialog__surface {
 //   background-color: transparent !important;
 //   box-shadow: none !important;

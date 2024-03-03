@@ -6,6 +6,7 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { AddMealSideDish } from '../../models/add-meal-side-dish';
 import { MealSizeOption } from '../../models/meal-size-option';
 
 export interface MealOptionPost$Params {
@@ -17,6 +18,7 @@ export interface MealOptionPost$Params {
 'AvailableQuantity'?: number;
 'SaveQuantitySetting'?: boolean;
 'Image'?: Blob;
+'MealSideDishes'?: Array<AddMealSideDish>;
 }
 }
 

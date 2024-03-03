@@ -13,7 +13,7 @@
     </div>
     <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
         labelPosition="bottom">
-        <mat-step [optional]="false" [completed]="isMealAdded" label="Dish Profile" state="dish">
+        <mat-step [optional]="true" [completed]="isMealAdded" label="Dish Profile" state="dish">
             <ng-template matStepContent>
                 <form [formGroup]="addMealForm" (ngSubmit)="mealForm()">
                     <div class="py-5 container">
@@ -126,6 +126,22 @@
                                                     <label class="btn btn-outline-success " for="not-available"
                                                         id="btn-nn">No</label>
                                                 </div>
+                                                <button type="button" mat-raised-button color="green"
+                                                    (click)="addNewSideDish()">Add Side Dish</button>
+                                                <div class="d-flex justify-content-between"
+                                                    *ngFor="let sideDish of sideDishInputs; let i = index">
+                                                    <mat-form-field >
+                                                        <mat-label>Toppings</mat-label>
+                                                        <mat-select [(ngModel)]="sideDish.sideDishOptions" [ngModelOptions]="{standalone: true}" multiple>
+                                                            <mat-option [value]="sideDish.sideDishOptions[0]">hello</mat-option>
+                                                            <mat-option [value]="sideDish.sideDishOptions[0]">hello</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-checkbox [(ngModel)]="sideDish.isFree"[ngModelOptions]="{standalone: true}">is free</mat-checkbox>
+                                                    <mat-checkbox [(ngModel)]="sideDish.isTopping"[ngModelOptions]="{standalone: true}">is topping</mat-checkbox>
+                                                    <button mat-raised-button color="warn"
+                                                        (click)="removeSideDish(i)">Remove Side Dish</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mt-5 my-5">
@@ -134,6 +150,7 @@
                                         </div>
 
                                         <app-file-input [control]="image"></app-file-input>
+
                                     </div>
 
                                 </div>

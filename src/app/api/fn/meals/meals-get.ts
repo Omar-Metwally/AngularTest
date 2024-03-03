@@ -11,10 +11,11 @@ import { MealCategory } from '../../models/meal-category';
 import { MealSizeOption } from '../../models/meal-size-option';
 import { MealSpiceLevel } from '../../models/meal-spice-level';
 import { MealStyle } from '../../models/meal-style';
+import { MealTag } from '../../models/meal-tag';
 import { SortBy } from '../../models/sort-by';
 
 export interface MealsGet$Params {
-  TagFilter?: Array<string>;
+  TagFilter?: Array<MealTag>;
   SizeFilter?: Array<MealSizeOption>;
   SortBy?: SortBy;
   MealSpiceLevel?: MealSpiceLevel;

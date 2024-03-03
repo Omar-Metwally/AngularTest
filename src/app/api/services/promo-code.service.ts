@@ -183,7 +183,7 @@ export class PromoCodeService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  promoCodeDiscountCalculatePost$Plain$Response(params?: PromoCodeDiscountCalculatePost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
+  promoCodeDiscountCalculatePost$Plain$Response(params?: PromoCodeDiscountCalculatePost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
     return promoCodeDiscountCalculatePost$Plain(this.http, this.rootUrl, params, context);
   }
 
@@ -193,9 +193,9 @@ export class PromoCodeService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  promoCodeDiscountCalculatePost$Plain(params?: PromoCodeDiscountCalculatePost$Plain$Params, context?: HttpContext): Observable<GetSubscriptionRequest> {
+  promoCodeDiscountCalculatePost$Plain(params?: PromoCodeDiscountCalculatePost$Plain$Params, context?: HttpContext): Observable<number> {
     return this.promoCodeDiscountCalculatePost$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<GetSubscriptionRequest>): GetSubscriptionRequest => r.body)
+      map((r: StrictHttpResponse<number>): number => r.body)
     );
   }
 
@@ -205,7 +205,7 @@ export class PromoCodeService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  promoCodeDiscountCalculatePost$Response(params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<GetSubscriptionRequest>> {
+  promoCodeDiscountCalculatePost$Response(params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
     return promoCodeDiscountCalculatePost(this.http, this.rootUrl, params, context);
   }
 
@@ -215,9 +215,9 @@ export class PromoCodeService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  promoCodeDiscountCalculatePost(params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<GetSubscriptionRequest> {
+  promoCodeDiscountCalculatePost(params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<number> {
     return this.promoCodeDiscountCalculatePost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<GetSubscriptionRequest>): GetSubscriptionRequest => r.body)
+      map((r: StrictHttpResponse<number>): number => r.body)
     );
   }
 

@@ -15,7 +15,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { Cart } from '../api/models/cart'
 import { AccountService } from '../account/account.service';
 import { CartPost$Params } from '../api/fn/cart/cart-post';
-import { UpsertCartRequest } from '../api/models';
+import { MealTag, UpsertCartRequest } from '../api/models';
 
 
 @Component({
@@ -76,11 +76,12 @@ export class MenuComponent implements OnInit {
   toggleLoading = () => this.isLoading = !this.isLoading;
 
   bindData = (): void => {
+    
     this.mealGetRequest = {
       SortBy: this.sortBy.value.id,
       StartPrice: this.startPrice.value ? this.startPrice.value : undefined,
       EndPrice: this.endPrice.value ? this.endPrice.value : undefined,
-      TagFilter: this.selectedTags.length > 0 ? this.selectedTags.map((o: Option) => o.id) : undefined,
+      TagFilter: this.selectedTags.length > 0 ? this.selectedTags.map((o: Option) => o.id as unknown as MealTag) : undefined,
       MealCategory: this.category.value.id,
       MealSpiceLevel: this.spiceLevel.value.id,
       MealStyle: this.style.value.id,
@@ -144,6 +145,7 @@ export class MenuComponent implements OnInit {
     this.bindData()
     this.mealsService.mealsGet(this.mealGetRequest).subscribe({
       next: (body) => {
+        console.log(body)
         this.mealsCard = body.map(request => ({
           mealID: request.mealID || '',
           chiefID: request.chiefID || '',
@@ -155,7 +157,7 @@ export class MenuComponent implements OnInit {
           mealCardOptions: request.getMealOptionsRequest?.map(option => ({
             mealOptionID: option.mealOptionID || '',
             mealOptionSize: option.mealSizeOption || 0,
-            mealOptionImage: option.image || '',
+            mealOptionImage: option.thumbnailImage || '',
             mealOptionPrice: option.price || 0,
             IsAvailable: option.isAvailable || false
           })).sort((a, b) => a.mealOptionSize - b.mealOptionSize) || []
@@ -183,8 +185,25 @@ export class MenuComponent implements OnInit {
     this.sortByOptions.push({ id: '0', name: 'Best Selling' }, { id: '1', name: 'Newly Added' }, { id: '2', name: 'Price Asc' }, { id: '3', name: 'Price Desc' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
     this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Syrian' }, { id: '2', name: 'Lebanese' }, { id: '3', name: 'Western' }, { id: '4', name: 'Asian' }, { id: '5', name: 'Indian' })
-    this.tagsOptions.push({ id: '1', name: 'Healthy' }, { id: '3', name: 'Keto' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1df', name: 'Not Healthy' }, { id: '6cea3c8b-ae0c-44a8-ad6d-4f2ff7f7e1dc', name: 'Wrong ID' }, { id: '4', name: 'Very Hot' });
-    this.hello();
+    this.tagsOptions.push(    
+      { id: '0', name: 'Koshry' },
+      { id: '1', name: 'SeaFood' },
+      { id: '2', name: 'Deep Fried' },
+      { id: '3', name: 'Vegan' },
+      { id: '4', name: 'Diet Friendly' },
+      { id: '5', name: 'Keto Friendly' },
+      { id: '6', name: 'Natural Butter' },
+      { id: '7', name: 'Sweats' },
+      { id: '8', name: 'Gluten Free' },
+      { id: '9', name: 'Slow Cooked' },
+      { id: '10', name: 'Natural Colors' },
+      { id: '11', name: 'Biscuits' },
+      { id: '12', name: 'Cookies' },
+      { id: '13', name: 'Cake' },
+      { id: '14', name: 'Beef' },
+      { id: '15', name: 'Lamb' },
+      { id: '16', name: 'Ribs' },);
+      this.hello();
   }
 
   // this method will be called on scrolling the page
@@ -202,7 +221,7 @@ export class MenuComponent implements OnInit {
         mealCardOptions: request.getMealOptionsRequest?.map(option => ({
           mealOptionID: option.mealOptionID || '',
           mealOptionSize: option.mealSizeOption || 0, // Assuming MealSizeOption is a number
-          mealOptionImage: option.image || '',
+          mealOptionImage: option.thumbnailImage || '',
           mealOptionPrice: option.price || 0,
           IsAvailable: option.isAvailable || false
         })).sort((a, b) => a.mealOptionSize - b.mealOptionSize) || []

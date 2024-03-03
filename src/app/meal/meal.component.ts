@@ -129,7 +129,11 @@ export class MealComponent implements OnInit {
       mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
       mealStyle: this.styleOptions.find(x => +x.id == (mealStyleIndex)),
       description: getMealRequest.description ?? '',
-      tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)),
+      //error
+      tagsID: this.tagsOptions.filter(
+        tagOption => getMealRequest.mealTags?.some(mealTag => mealTag.toFixed() === tagOption.id) // Check for matching IDs
+    ),
+      // tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)),
       mealOptions: []
     }
     getMealRequest.getMealOptionsRequest?.forEach(mealOption => {

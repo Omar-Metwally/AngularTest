@@ -14,7 +14,7 @@ Control value: {{control.value || 'empty'}}
   <mat-label>{{label}}</mat-label>
   <input #input [placeholder]="placeholder" [type]="type" matInput [formControl]="control" [matAutocomplete]="auto"
     (input)="filter()" (focus)="filter()">
-  <mat-autocomplete (optionSelected)="optionSelected" #auto="matAutocomplete" requireSelection="true" [displayWith]="displayFn">
+  <mat-autocomplete (optionSelected)="optionSelected()" #auto="matAutocomplete" requireSelection="true" [displayWith]="displayFn">
     @for (option of filteredOptions; track option) {
     <mat-option [value]="option">{{option.name}}</mat-option>
     }

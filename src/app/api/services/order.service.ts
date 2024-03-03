@@ -9,6 +9,8 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { orderCashinCallbackPost } from '../fn/order/order-cashin-callback-post';
+import { OrderCashinCallbackPost$Params } from '../fn/order/order-cashin-callback-post';
 import { orderPost } from '../fn/order/order-post';
 import { OrderPost$Params } from '../fn/order/order-post';
 import { orderPost$Plain } from '../fn/order/order-post-plain';
@@ -64,6 +66,31 @@ export class OrderService extends BaseService {
   orderPost(params?: OrderPost$Params, context?: HttpContext): Observable<string> {
     return this.orderPost$Response(params, context).pipe(
       map((r: StrictHttpResponse<string>): string => r.body)
+    );
+  }
+
+  /** Path part for operation `orderCashinCallbackPost()` */
+  static readonly OrderCashinCallbackPostPath = '/Order/cashin-callback';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `orderCashinCallbackPost()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  orderCashinCallbackPost$Response(params?: OrderCashinCallbackPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return orderCashinCallbackPost(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `orderCashinCallbackPost$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  orderCashinCallbackPost(params?: OrderCashinCallbackPost$Params, context?: HttpContext): Observable<void> {
+    return this.orderCashinCallbackPost$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
