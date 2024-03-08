@@ -1,0 +1,136 @@
+<div class="container">
+    <div class="container p-5 ">
+        <div class="row">
+            <div class="col-md-6 align-items-center align-self-center">
+                <h4 class="fw-bold">Add a New Side Dish</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-success px-4">Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
+                labelPosition="bottom">
+                <mat-step [optional]="true" [completed]="isSideDishAdded" label="Dish Profile" state="dish">
+                    <ng-template matStepContent>
+                        <form [formGroup]="addSideDishForm" (ngSubmit)="sideDishForm()">
+                            <div class="py-5 container">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <div class="row justify-content-center">
+                                            <div class="col">
+
+                                                <app-input class="mb-2" [control]="nameControl" type="text"
+                                                    label="Dish Title"></app-input>
+
+                                                <app-file-input [fileHandle]="fileHandle"
+                                                    [control]="imageControl"></app-file-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <section class="mt-5 pb-3">
+                                <div class=" text-center justify-content-center mb-3">
+                                    <div class=" text-center justify-content-center mb-3">
+                                        <button type="submit" style="width:  306px;
+                                        height:  56px;
+                                        padding: 8px 40px 8px 40px;
+                                        border-radius: 10px;
+                                        gap: 10px;
+                                        background: #31AC18;
+                                        border: none;
+                                        color: #F8F9F8;
+                                        font-family: Roboto;
+                                        font-size: 24px;
+                                        font-weight: 700;
+                                        letter-spacing: 0em;" *ngIf="!isSideDishAdded">Add
+                                            Meal</button>
+                                        <button type="submit" style="width:  306px;
+                                        height:  56px;
+                                        padding: 8px 40px 8px 40px;
+                                        border-radius: 10px;
+                                        gap: 10px;
+                                        background: #31AC18;
+                                        border: none;
+                                        color: #F8F9F8;
+                                        font-family: Roboto;
+                                        font-size: 24px;
+                                        font-weight: 700;
+                                        letter-spacing: 0em;" class="btn btn-success" matStepperNext
+                                            *ngIf="isSideDishAdded">Edit
+                                            Meal</button>
+                                    </div>
+                                    <h6 class="fw-bold">Copyright &copy; 2024 <span style="color: green;">Logo
+                                            name</span> All rights reserved</h6>
+                                </div>
+                            </section>
+                        </form>
+                    </ng-template>
+                </mat-step>
+
+                <!--Page 2-->
+
+                <mat-step [stepControl]="addSideDishOptionForm" label="Dish Options" state="dish-option">
+                    <ng-template matStepContent>
+                        <form [formGroup]="addSideDishOptionForm" (ngSubmit)="sideDishOptionForm()">
+                            <div class="py-5 container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row justify-content-center">
+                                            <div class="col">
+                                                <h3 class="ms-2">Size</h3>
+
+                                                    <div class="d-flex justify-content-start">
+                                                        <mat-radio-group [formControl]="sideDishSizeControl"
+                                                            aria-label="Select an option">
+                                                            <mat-radio-button [color]="'primary'"
+                                                                [value]="0">Small</mat-radio-button>
+                                                            <mat-radio-button [color]="'primary'"
+                                                                [value]="1">Medium</mat-radio-button>
+                                                            <mat-radio-button [color]="'primary'"
+                                                                [value]="2">Large</mat-radio-button>
+                                                        </mat-radio-group>
+                                                </div>
+                                                <app-input class="me-1 mt-5" [control]="priceControl"
+                                                    placeholder="Enter The Price" type="number" format="9999"
+                                                    label="Price"></app-input>
+
+                                                <div class="mt-5 my-5">
+                                                    <app-input class="me-1 mt-5 my-5" class="me-1"
+                                                        [control]="quantityControl" type="number" format="999"
+                                                        label="Quantity (if Yes)"></app-input>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <section class="mt-5 pb-3">
+                                    <div class="text-center justify-content-center mb-3">
+                                        <button type="submit" class="btn btn-success" matStepperNext
+                                            *ngIf="!isSideDishAdded">{{AddOrEdit}} Side Dish Option</button>
+                                        <button type="submit" class="btn btn-success" matStepperNext
+                                            *ngIf="isSideDishAdded">Save</button>
+                                    </div>
+                                </section>
+                            </div>
+                            <div>
+                                <button mat-button matStepperNext>{{AddOrEdit}} Side Dish Option</button>
+                                <button mat-button matStepperPrevious>Back</button>
+                            </div>
+                        </form>
+                    </ng-template>
+                </mat-step>
+            </mat-stepper>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <img src="/assets/images/add-meal-chef.png" style="height: auto; width: 100%;" alt="" id="chef"
+                class="rounded float-end">
+        </div>
+    </div>
+</div>

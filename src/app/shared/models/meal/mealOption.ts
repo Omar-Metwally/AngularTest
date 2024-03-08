@@ -9,18 +9,18 @@ export interface mealOption{
     availableQuantity: number;
     saveQuantitySetting: boolean;
     image?: FileHandle
-    sideDishes? :sideDish[]
+    sideDishes? :mealSideDish[]
     // imagePath: string;
     // imageFile?: Blob;
 }
 
-export interface sideDish{
+export interface mealSideDish{
     isFree: boolean;
     isTopping: boolean;
-    sideDishOptions: sideDishOption[]
+    sideDishOptions: mealSideDishOption[]
 }
 
-export interface sideDishOption{
+export interface mealSideDishOption{
     sideDishID: string;
     sideDishSizeOption: MealSizeOption;
     price: number;

@@ -192,8 +192,8 @@ $my-app-theme: mat.define-light-theme(
 // }
 
 .mat-horizontal-stepper-header-container{
-  margin-right: 15rem;
-  margin-left: 15rem;
+  margin-right: 5rem;
+  margin-left: 5rem;
 }
 
 .accordion-button:not(.collapsed)::after{
@@ -263,8 +263,15 @@ $my-app-theme: mat.define-light-theme(
              border-top-color: #5ABD46;
   }
 }
-
-
+.form-check-input:checked{
+  background-color: #5ABD46;
+  border-color: #31AC18 !important;
+}
+.form-check-input{
+  width: 20px;
+  height: 20px;
+  box-shadow: none !important;
+}
 // .mat-mdc-dialog-container .mdc-dialog__surface {
 //   background-color: transparent !important;
 //   box-shadow: none !important;

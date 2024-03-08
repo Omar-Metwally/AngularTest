@@ -61,175 +61,135 @@
             <mat-icon>menu-book</mat-icon>
         </ng-template>
 
-        <mat-step [optional]="true" label="Dish Profile" state="cart">
+        <mat-step [optional]="true" label="Checkout" state="cart">
             <ng-template matStepContent>
                 <div class="row">
                     <div class="col-xl-8">
 
-                        <div class="card border shadow-none">
-                            <div class="card-body">
-
-                                <div class="d-flex align-items-start border-bottom pb-3">
-                                    <div class="me-4">
-                                        <img src="/assests/images/empty.png" alt="" class="avatar-lg rounded">
-                                    </div>
-                                    <div class="flex-grow-1 align-self-center overflow-hidden">
-                                        <div>
-                                            <h5 class="text-truncate font-size-18"><a href="#"
-                                                    class="text-dark">Burger</a></h5>
-                                            <p class="text-muted mb-0">
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star-half text-warning"></i>
-                                            </p>
-                                            <p class="mb-0 mt-1">Size : <span
-                                                    class="fw-medium">Large</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex-shrink-0 ms-2">
-                                        <ul class="list-inline mb-0 font-size-16">
-                                            <li class="list-inline-item">
-                                                <a href="#" class="text-muted px-1">
-                                                    <i class="mdi mdi-trash-can-outline"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="#" class="text-muted px-1">
-                                                    <i class="mdi mdi-heart-outline"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="mt-3">
-                                                <p class="text-muted mb-2">Price</p>
-                                                <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
-                                                            class="font-size-16 fw-normal">$500</del></span>350
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="mt-3">
-                                                <p class="text-muted mb-2">Quantity</p>
-                                                <div class="d-inline-flex">
-                                                    <select class="form-select form-select-sm w-xl">
-                                                        <option value="1">1</option>
-                                                        <option value="2" selected="">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="mt-3">
-                                                <p class="text-muted mb-2">Total</p>
-                                                <h5>6518</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                        <div class="row">
+                            <div class="col">
+                                <h6 class="text-dark"><input type="checkbox" class="mx-2" id="Cbox"> Select All</h6>
+                            </div>
+                            <div class="col">
+                                <h6 class="text-dark text-end">
+                                    <div class="list-inline-item">
+                                        <a href="#" class="text-muted px-1">
+                                            <i class="mdi mdi-trash-can-outline"></i>
+                                        </a>
+                                    </div>Delete
+                                </h6>
                             </div>
                         </div>
 
-
-
-                        @for (mealOption of mealOptions; track mealOption) {
-                        <div class="card border shadow-none">
-                            <div class="card-body">
-
-                                <div class="d-flex align-items-start border-bottom pb-3">
-                                    <div class="me-4">
-                                        <img [src]="mealOption.image" alt="" class="avatar-lg rounded">
-                                    </div>
-                                    <div class="flex-grow-1 align-self-center overflow-hidden">
-                                        <div>
-                                            <h5 class="text-truncate font-size-18"><a href="#"
-                                                    class="text-dark">{{mealOption.title}}</a></h5>
-                                            <p class="text-muted mb-0">
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star text-warning"></i>
-                                                <i class="bx bxs-star-half text-warning"></i>
-                                            </p>
-                                            <p class="mb-0 mt-1">Size : <span
-                                                    class="fw-medium">{{mealOption.mealSpiceLevel}}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex-shrink-0 ms-2">
-                                        <ul class="list-inline mb-0 font-size-16">
-                                            <li class="list-inline-item">
-                                                <a href="#" class="text-muted px-1">
-                                                    <i class="mdi mdi-trash-can-outline"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="#" class="text-muted px-1">
-                                                    <i class="mdi mdi-heart-outline"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="row">
-                                                    <ngb-timepicker [(ngModel)]="time" [hourStep]="hourStep"
-                                                        [minuteStep]="minuteStep" />
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="mt-3">
-                                                <p class="text-muted mb-2">Price</p>
-                                                <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
-                                                            class="font-size-16 fw-normal">$500</del></span>${{mealOption.price}}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="mt-3">
-                                                <p class="text-muted mb-2">Quantity</p>
-                                                <div class="d-inline-flex">
-                                                    <select class="form-select form-select-sm w-xl">
-                                                        <option value="1">1</option>
-                                                        <option value="2" selected="">{{mealOption.quantity}}</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="mt-3">
-                                                <p class="text-muted mb-2">Total</p>
-                                                <h5>${{(mealOption.quantity ?? 0 )* mealOption.price}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
+                        @for (cartItem of mealOptions; track cartItem) {
+                        <!--First card-->
+                        <div class="row my-2" id="square">
+                            <img [src]="cartItem.image" id="avatar">
+                            <div class="col">
+                                <div class="d-flex justify-content-between align-content-center">
+                                    <h5 class="text-dark">{{cartItem.title}} (M)</h5>
+                                    <h5 style="color: #31AC18;">{{cartItem.price}} EGP</h5>
                                 </div>
 
+                                <div class="d-flex justify-content-between align-content-center my-1 ">
+                                    <div class="button-container d-flex justify-content-start">
+                                        <input
+                                        [id]="cartItem.mealOptionID"
+                                          type="radio" class="btn-check">
+                                        <label class="btn btn-outline-success fixed-size p-1 me-1"
+                                          [for]="cartItem.mealOptionID">
+                                          Small
+                                        </label>
+                                
+                                        <input
+                                        [id]="cartItem.mealOptionID"
+                                          type="radio" class="btn-check">
+                                        <label class="btn btn-outline-success fixed-size p-1 me-1"
+                                          [for]="cartItem.mealOptionID">                                          Medium
+                                        </label>
+                                
+                                        <input
+                                        [id]="cartItem.mealOptionID"
+                                          type="radio" class="btn-check">
+                                        <label class="btn btn-outline-success fixed-size p-1 me-1"
+                                          [for]="cartItem.mealOptionID">                                          Large
+                                        </label>
+                                      </div>
+                                    <div class=" justify-content-between align-content-center ">
+                                        <span class="minus">-</span>
+                                        <input type="text" class="vlue" value="1" />
+                                        <span class="plus">+</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-content-center">
+                                    <div class="list-inline-item mt-4">
+                                        <a href="#" class="text-muted">
+                                            <div class="mdi mdi-heart-outline"><span class="px-1">Add to
+                                                    favourite</span></div>
+                                        </a>
+                                    </div>
+                                    <div class="list-inline-item">
+                                        <a href="#" class="text-muted px-1">
+                                            <div class="mdi mdi-trash-can-outline d-flex justify-content-end"><span
+                                                    class="px-1">Delete</span></div>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        }
+                    }
+
+                        <!--Second card-->
+                        <div class="row my-3" id="square">
+                            <img src="/assets/images/pizza.jpeg" id="avatar">
+                            <div class="col">
+                                <div class="d-flex justify-content-between align-content-center">
+                                    <h5 class="text-dark">Pizza (L)</h5>
+                                    <h5 style="color: #31AC18;">100 EGP</h5>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-content-center">
+                                    <div>
+                                        <label class="btn btn-outline-success fixed-size mx-1" (mouseover)="(0)"
+                                            [for]="[0] ? [0] : 'option-0'" id="customize" style="line-height: 26px;">
+                                            Small
+                                        </label>
+                                        <label class="btn btn-outline-success fixed-size  mx-1" (mouseover)="(0)"
+                                            [for]="[0] ? [0] : 'option-0'" id="customize">
+                                            Medium
+                                        </label>
+                                        <label class="btn btn-outline-success fixed-size mx-1" (mouseover)="(0)"
+                                            [for]="[0] ? [0] : 'option-0'" id="customize">
+                                            Large
+                                        </label>
+                                    </div>
+                                    <div class=" justify-content-between align-content-center ">
+                                        <span class="minus">-</span>
+                                        <input type="text" class="vlue" value="1" />
+                                        <span class="plus">+</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-content-center">
+                                    <div class="list-inline-item mt-4">
+                                        <a href="#" class="text-muted">
+                                            <div class="mdi mdi-heart-outline"><span class="px-14">Add to
+                                                    favourite</span></div>
+                                        </a>
+                                    </div>
+
+                                    <div class="list-inline-item">
+                                        <a href="#" class="text-muted px-1">
+                                            <div class="mdi mdi-trash-can-outline d-flex justify-content-end"><span
+                                                    class="px-1">Delete</span></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- end card -->
+
+
 
                         <div class="row my-4">
                             <div class="col-sm-6">
@@ -245,63 +205,69 @@
                         </div> <!-- end row-->
                     </div>
 
-                    <div class="col-xl-4">
-                        <div class="mt-5 mt-lg-0">
-                            <div class="card border shadow-none">
-                                <div class="card-header bg-transparent border-bottom py-3 px-4">
-                                    <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span>
-                                    </h5>
-                                </div>
-                                <div class="card-body p-4 pt-2">
+                    <!--order suammry-->
+                    <div class="col-xl-4 mt-5">
+                        <div class="mt-5 mt-lg-0" id="square2">
+                            <h5 text-dark>Order summary</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td colspan="2">Pizza(M) x2</td>
 
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Sub Total :</td>
-                                                    <td class="text-end">$ {{total}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Shipping Charge :</td>
-                                                    <td class="text-end">$ 25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Discount : </td>
-                                                    <td class="text-end">$ {{discount}}</td>
-                                                </tr>
-                                                <tr class="bg-light">
-                                                    <th>Total :</th>
-                                                    <td class="text-end">
-                                                        <span class="fw-bold">
-                                                            {{total - discount}}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <div class="d-flex flex-row"
-                                                        style="border-radius: 10px; border: 1px; border-style: solid; border-color:#65656591;">
-                                                        <input [formControl]="promoCodeInput" class="m-1"
-                                                            style="border: 0px; height: 100%;" id="typeahead-basic"
-                                                            placeholder="Promo Code" type="text" class="form-control" />
-                                                        <button (click)="applyPromoCode()"
-                                                            class="btn btn-primary">Apply</button>
-                                                        <span *ngIf="promoCodeInput.errors && promoCodeInput.touched">
-                                                            hello</span>
-                                                    </div>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- end table-responsive -->
+                                        <td class="text-end" id="F-n">200 EGP</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td colspan="2">Pizza(L)</td>
+                                        <td class="text-end" id="F-n">300 EGP</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td colspan="2">Delivery fee</td>
+                                        <td class="text-end" id="F-n">20 EGP</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td colspan="2">Subtotal</td>
+                                        <td class="text-end" id="diff1">300 EGP</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div class="custom-search">
+                                <input type="text" class="custom-search-input" placeholder="Promocode">
+                                <button class="custom-search-botton" type="submit">Apply</button>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="my-2" style="margin-left: 35px;" id="diff2">Subtotal</p>
                                 </div>
+                                <div class="col my-2">
+                                    <p class="text-end" id="diff3">250 EGP</p>
+                                </div>
+                                <button type="button" class="btn"
+                                    style="background-color: #31AC18; color:#FDFFFC; width: 391px;height: 51px; border-radius: 10px;">Checkout</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- end row -->
+                <!-- end row --> <!-- end row -->
             </ng-template>
         </mat-step>
-        <mat-step label="Dish Options" state="shipping-info">
+        <mat-step label="Shipping information" state="shipping-info">
             <ng-template matStepContent>
                 <div class="row">
 
@@ -336,18 +302,20 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text" placeholder="District"
-                                    label="District" [options]="districts"></app-select-input>
+                                <app-select-input [control]="district" [optionSelected]="districtOptionSelected"
+                                    type="text" placeholder="District" label="District"
+                                    [options]="districts"></app-select-input>
                             </div>
                             <div class="col">
-                                <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text" placeholder="Street" label="Street"
-                                    [options]="streets"></app-select-input>
+                                <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text"
+                                    placeholder="Street" label="Street" [options]="streets"></app-select-input>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <app-select-input [control]="building" [optionSelected]="buildingOptionSelected" type="text" placeholder="Building"
-                                    label="Building" [options]="buildings"></app-select-input>
+                                <app-select-input [control]="building" [optionSelected]="buildingOptionSelected"
+                                    type="text" placeholder="Building" label="Building"
+                                    [options]="buildings"></app-select-input>
                             </div>
                             <div class="col">
                                 <app-input [control]="floor" type="text" placeholder="Floor No"
@@ -404,7 +372,7 @@
                         </div>
                     </div>
                     <div class="col-12 d-flex justify-content-center pt-5">
-                        <button style="width: 391px;
+                        <button (click)="confirmOrder()" matStepperNext style="width: 391px; 
                     height: 51px;
                     padding: 14px 0px 13px 0px;
                     border-radius: 10px;
@@ -423,7 +391,7 @@
                 </div>
             </ng-template>
         </mat-step>
-        <mat-step label="Dish Options" state="payment-method">
+        <mat-step label="Payment method" state="payment-method">
             <ng-template matStepContent>
                 <div class="container py-5">
                     <div class="row">
@@ -443,7 +411,7 @@
                                         <tr>
                                             <th scope="row"></th>
                                             <td colspan="5">Pizza(M) x2</td>
-                
+
                                             <td id="F-n">200</td>
                                             <td>EGP</td>
                                         </tr>
@@ -487,7 +455,8 @@
                                     <tbody>
                                         <th scope="row"></th>
                                         <tr>
-                                            <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio" checked></td>
+                                            <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio"
+                                                    checked></td>
                                             <td><img src="/assets/images/Mastercard.webp" id="mastercard"></td>
                                             <td><img src="/assets/images/visa.webp" id="visa" class="mx-2"></td>
                                             <td><img src="/assets/images/Paypal.jpg" id="mastercard"></td>
@@ -505,46 +474,15 @@
                                     </thead>
                                     <tbody>
                                         <th scope="row"></th>
-                                        <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio" checked
-                                                class="my-4"></td>
+                                        <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio"
+                                                checked class="my-4"></td>
                                         <td><img src="/assets/images/cash.jpg" id="cash"></td>
                                         <td>Cash on delivery</td>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-md-12" id="cont2">
-                            <div class="d-flex justify-content-center"><img src="/assets/images/card.jpg" alt=".." id="card"></div>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <select class="form-select" aria-label="Default select example" id="method">
-                                        <option selected>Mastercard</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-12"><label for="exampleInputEmail1" class="form-label"></label>
-                                            <input type="email" class="form-control" id="method1" aria-describedby="emailHelp"
-                                                placeholder="Name on card">
-                                        </div>
-                                        <div class="col-md-6 col-sm-12"><label for="exampleInputEmail1" class="form-label"></label>
-                                            <input type="email" class="form-control" id="method1" aria-describedby="emailHelp"
-                                                placeholder="Card number">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-12">
-                                            <label form="date"></label>
-                                            <input type="date" class="form-control" id="method1" aria-describedby="date">
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <label for="exampleInputPassword1" class="form-label"></label>
-                                            <input type="password" class="form-control" id="method1" placeholder="CVV">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <iframe class="col-lg-8 col-md-12" id="cont2" [src]="iframeLink | safe">
+                        </iframe>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 mt-5 d-flex justify-content-center">
@@ -554,7 +492,7 @@
                 </div>
             </ng-template>
         </mat-step>
-        <mat-step label="Dish Options" state="review-order">
+        <mat-step label="Review order" state="review-order">
             <ng-template matStepContent>
             </ng-template>
         </mat-step>

@@ -3,10 +3,207 @@ body{
     background-color: #f1f3f7;
 }
 
-.avatar-lg {
-    height: 5rem;
-    width: 5rem;
+#avatar {
+    width: 192px;
+    height: 165px;
+    top: 24px;
+    padding: 0px;
+    left: 16px;
+    border-radius: 20px;
+    gap: 10px;
 }
+
+#square{
+    border-radius: 10px;
+    padding: 20px;
+    flex-direction: row;
+    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+            0 5px 12px -2px rgb(0,0,0,0.1),
+            0 18px 36px -6px rgb(0,0,0,0.1);
+}
+
+#square2{
+    border-radius: 10px;
+    padding: 20px;
+    flex-direction: row;
+    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+            0 5px 12px -2px rgb(0,0,0,0.1),
+            0 18px 36px -6px rgb(0,0,0,0.1);
+}
+
+#diff1{
+    color: black;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+#diff2{
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0em;
+}
+
+#diff3{
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    color: #31AC18;
+}
+
+#prome{
+    top: 261px;
+    left: 16px;
+    padding: 0px, 0px, 0px, 16px;
+    border-radius: 10px ;
+    border: 1px g;
+}
+
+.input-p{
+    position: relative;
+}
+
+.btn-p{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#Cbox{
+    width: 16px;
+    height: 16px;
+    border-radius: 2px ;
+    border: 1px #31AC18;
+}
+
+.card{
+    flex-direction: row;
+}
+
+
+.btn-group button {
+    border-radius: 5px;
+}
+
+.button-container .btn {
+    margin: 0px;
+    padding: 0px;
+    line-height: none;
+    border: 1px solid #31AC18;
+    border-radius:10px;
+    font-size: 13px;
+    color: grey;
+}
+
+.btn-check:checked + .fixed-size {
+    color: black;
+
+}
+
+.btn-check:disabled + .fixed-size {
+    background-color: rgb(155, 149, 149);
+    color: white;
+    border: none;
+
+}
+
+.btn-check + .fixed-size {
+    color: #656565;
+
+}
+
+.btn-outline-success{
+    --bs-btn-hover-color:black !important;
+    --bs-btn-active-color: black !important;
+    --bs-btn-active-bg: #9EE392 !important;
+}
+
+label{
+    color: gray;
+}
+
+span {cursor:pointer; }
+
+.minus, .plus{
+	width: 18.66px;
+    height: 25.52px;
+	background:#f2f2f2;
+	border-radius:8px;
+	border:1px solid #31AC18;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* input{
+	width: 71px;
+    height: 35px;
+    font-size: 16.76px;
+	border:1px solid #31AC18;
+	border-radius:10px;
+    display: inline-block;
+} */
+
+.vlue{
+    text-align: center;
+}
+
+td , th{
+    padding: 10px;
+    margin: auto;
+    border: none;
+}
+
+.custom-search {
+    position: relative;
+    height: 50px;
+}
+.custom-search-input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    outline: none;
+    height: 48px;
+}
+.custom-search-botton {
+    position: absolute;
+    right: 3px; 
+    top: 3px;
+    bottom: 3px;
+    border: 0;
+    background: #31AC18;
+    color: #fff;
+    outline: none;
+    margin: 0;
+    padding: 0 10px;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+#customize{
+    width: 82px;
+    height: 38px;
+}
+#customize1{
+    height: 38px;
+}
+#customize2{
+    width: 85px;
+    height: 38px;
+}
+
+#button-addon2{
+    height: 48px;
+    border-radius: 9px;
+}
+
 
 .font-size-18 {
     font-size: 18px!important;
@@ -101,6 +298,7 @@ box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
     text-align: center;
 }
 
+
 #subTfont{
     family: Roboto;
     font-size: 16px;
@@ -173,3 +371,48 @@ box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
                 0 18px 36px -6px rgb(0,0,0,0.1);
     justify-content: center;
 }
+.fixed-size {
+    width: 64px; 
+    height: 30px; 
+    text-align: center; 
+    overflow: hidden; 
+    white-space: nowrap; 
+  }
+.button-container .btn {
+    margin: 0px;
+    padding: 0px;
+    line-height: none;
+    border: 1px solid #31AC18;
+    border-radius:10px;
+    font-size: 13px;
+    color: grey;
+  }
+
+  .btn-check:checked + .fixed-size {
+    color: black;
+
+  }
+
+  .btn-check:disabled + .fixed-size {
+    background-color: rgb(155, 149, 149);
+    color: white;
+    border: none;
+
+  }
+
+  .btn-check + .fixed-size {
+    color: #656565;
+
+  }
+  .btn-outline-success{
+    --bs-btn-hover-color:black !important;
+    --bs-btn-active-color: black !important;
+    --bs-btn-active-bg: #9EE392 !important;
+  }
+  label{
+    color: gray;
+  }
+  .d-flex .btn-success{
+    background: #31AC18;
+    border: none;
+  }

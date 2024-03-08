@@ -16,6 +16,7 @@ import { SelectInputComponent } from "../shared/select-input/select-input.compon
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { SharedService } from '../shared/shared.service';
 import { OrderPost$Params } from '../api/fn/order/order-post';
+import { SafePipe } from '../safe-url.pipe';
 
 
 
@@ -26,7 +27,7 @@ import { OrderPost$Params } from '../api/fn/order/order-post';
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
-  imports: [CommonModule, SharedModule, NgbTimepickerModule, FormsModule, MatStepperModule, MatIcon, SelectInputComponent],
+  imports: [SafePipe,CommonModule, SharedModule, NgbTimepickerModule, FormsModule, MatStepperModule, MatIcon, SelectInputComponent],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },
@@ -65,6 +66,7 @@ export class CartComponent implements OnInit {
   districts: Option[] = []
   streets: Option[] = []
   buildings: Option[] = []
+  iframeLink: string = ''
 
   items = ['First', 'Second', 'Third', 'Forth'];
 
@@ -116,10 +118,10 @@ export class CartComponent implements OnInit {
 
 
   async ngOnInit() {
-    this.cartItems = await this.accountService.updateCartItemsFromAPI() ?? []
-    if (this.cartItems) {
+   this.cartItems = await this.accountService.updateCartItemsFromAPI() ?? []
+     if (this.cartItems) {
       const mealOptionIDs: MealsMealOptionCartPost$Params = { body: this.cartItems.map(x => x.mealOptionID) }
-      this.mealService.mealsMealOptionCartPost(mealOptionIDs).subscribe({
+       this.mealService.mealsMealOptionCartPost(mealOptionIDs).subscribe({
         next: (response) => {
           this.mealOptions = response
           this.mealOptions.forEach(mealOption => {
@@ -157,7 +159,8 @@ export class CartComponent implements OnInit {
   }
 
   confirmOrder(){
-    if(this.shippingInformationForm.valid){
+    console.log(this.shippingInformationForm.errors)
+    if(true){
       // const createOrderRequest: CreateOrderRequest = {
       //   apartmentNo: this.apartment.value,
       //   buildingID?: this.building.value.id.
@@ -169,11 +172,23 @@ export class CartComponent implements OnInit {
       // }
       const orderPost$Params: OrderPost$Params = {
         body: {
-
+          apartmentNo: this.apartment.value,
+          buildingID: this.building.value.id,
+          floorNo: this.floor.value,
+          paymentOption: 1,
+          phoneNumber: this.phone.value,
+          promoCodeID: this.promoCodeInput.value,
         }
       }
-      this.orderService.orderPost().subscribe({
-
+      this.orderService.orderPost(orderPost$Params).subscribe({
+        next: (response : any) => {
+          console.log(response)
+          this.iframeLink = `https://accept.paymob.com/api/acceptance/iframes/807851?payment_token=${response.token}`
+          console.log(this.iframeLink)
+        },
+        error: error => {
+          console.log(error.error)
+        }
       })
     }
   }

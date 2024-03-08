@@ -19,7 +19,7 @@ import { MealOptionPost$Params } from 'src/app/api/fn/meal-option/meal-option-po
 import { MealOptionService } from 'src/app/api/services/meal-option.service';
 import { MealsPut$Params } from 'src/app/api/fn/meals/meals-put';
 import { Meal } from 'src/app/shared/models/meal/meal';
-import { mealOption, sideDish, sideDishOption } from 'src/app/shared/models/meal/mealOption';
+import { mealOption, mealSideDish, mealSideDishOption } from 'src/app/shared/models/meal/mealOption';
 import { MatIconModule } from '@angular/material/icon';
 import { MealOptionPut$Params } from 'src/app/api/fn/meal-option/meal-option-put';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -30,14 +30,17 @@ import { GetMealRequest } from 'src/app/api/models/get-meal-request';
 import { AddMealSideDish, AddMealSideDishOption, GetMealSideDishOptionRequest, MealCategory, MealSpiceLevel, MealStyle, MealTag } from 'src/app/api/models';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import { FileHandle } from 'src/app/shared/file-input/file-handle.model';
+import { SharedService } from 'src/app/shared/shared.service';
+import {MatRadioModule} from '@angular/material/radio';
+import { SideDishOptionService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-add-meal',
   standalone: true,
   templateUrl: './add-meal.component.html',
   styleUrl: './add-meal.component.css',
-  imports: [MatCheckboxModule, MatSelectModule, MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
+  imports: [MatRadioModule,MatCheckboxModule, MatSelectModule, MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
 })
 export class AddMealComponent implements OnInit {
 
@@ -91,7 +94,7 @@ export class AddMealComponent implements OnInit {
   imagePath: FormControl = new FormControl('');
 
   file: Blob | null = null
-  sideDishInputs: sideDish[] = []
+  sideDishInputs: mealSideDish[] = []
   //private mealId = inject(ActivatedRoute);
   addMealForm: FormGroup = new FormGroup({});
   addMealOptionForm: FormGroup = new FormGroup({});
@@ -113,6 +116,7 @@ export class AddMealComponent implements OnInit {
   isLargeMealOptionAdded: boolean = false;
   AddOrEdit: string = 'Add'
   selectedTags: Option[] = []
+  chiefSideDishOption: mealSideDishOption[] = []
   meal: Meal = {
     title: '',
     mealID: '',
@@ -129,6 +133,7 @@ export class AddMealComponent implements OnInit {
     saveQuantitySetting: false,
     sideDishes: []
   }
+  fileHandle: FileHandle = {}
   //imagePath: string = '';
   mealSpiceLevel = MealSpiceLevel
   mealCategory = MealCategory
@@ -156,14 +161,20 @@ export class AddMealComponent implements OnInit {
           } else {
             this.errorMessages.push(error.error);
           }
+          this.sharedService.showSnackBar(this.errorMessages[0])
         }
       })
+    }
+    else{
+      this.toggleQuantityInput(false)
     }
   }
   constructor(private mealsService: MealsService,
     private mealOptionService: MealOptionService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
+    private sharedService: SharedService,
+    private sideDishOptionService: SideDishOptionService,
     breakpointObserver: BreakpointObserver) {
 
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
@@ -228,12 +239,18 @@ export class AddMealComponent implements OnInit {
         this.mealSize.setValue(currentMealSize, {emitEvent: false})
         //this.mealSize.setValue(this.currentMealOption.MealSizeOption)
         this.price.setValue(this.currentMealOption.price)
-        this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
+        // this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
         this.isAvailable.setValue(this.currentMealOption.isAvailable)
         this.quantity.setValue(this.currentMealOption.availableQuantity)
-        this.image.setValue(this.currentMealOption.image)
-        this.sideDishControl.setValue(this.currentMealOption.sideDishes)
-        console.log(this.mealSize.value, false)
+        this.image.setValue(this.currentMealOption.image);
+        this.sideDishControl.setValue(this.currentMealOption.sideDishes);
+        if(!this.currentMealOption.isAvailable){
+          this.toggleQuantityInput(false)
+        }
+        else{
+          this.toggleQuantityInput(true)
+        }
+        this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
         // this.imagePath.setValue(this.currentMealOption.imagePath)
       }
       else {
@@ -242,11 +259,32 @@ export class AddMealComponent implements OnInit {
         this.isAvailable.reset()
         this.quantity.reset()
         this.image.reset()
-        this.quantity.disable()
-        this.saveQuantitySetting.disable()
         this.sideDishControl.reset()
+        this.toggleQuantityInput(false)
       }
       this.ChangeAddOrEdit()
+    });
+
+    this.sideDishOptionService.sideDishOptionChiefIdGet().subscribe({
+      next: (response) => {
+        response.forEach(sideDishOption => {
+          this.chiefSideDishOption.push({
+            sideDishID: sideDishOption.sideDishID ?? '',
+            sideDishSizeOption: sideDishOption.sideDishSizeOption ?? 0,
+            price: sideDishOption.price ?? 0,
+            availableQuantity: sideDishOption.availableQuantity ?? 0
+          });
+        })
+        
+      },
+      error: error => {
+        if (error.error.errors) {
+          this.errorMessages = error.error.errors;
+        } else {
+          this.errorMessages.push(error.error);
+        }
+        this.sharedService.showSnackBar(this.errorMessages[0])
+      }
     });
   }
 
@@ -299,27 +337,7 @@ export class AddMealComponent implements OnInit {
 
     getMealRequest.getMealOptionsRequest?.forEach(mealOption => {
 
-      //const sideDishes: sideDish[] = [];
-      //const sideDishOptions: sideDishOption[] = [];
-
-      // Loop through each side dish and push them into the `sideDishes` array
-      // mealOption.getMealSideDishesRequest?.forEach(mealSideDish => {
-      //   sideDishes.push({
-      //     isFree: mealSideDish.isFree ?? false,
-      //     isTopping: mealSideDish.isTopping ?? false,
-      //     sideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.forEach(mealSideDishOption => {
-      //       sideDishOptions.push({
-      //         sideDishID: mealSideDishOption.mealSideDishID ?? '',
-      //         sideDishSizeOption: mealSideDishOption.sideDishSizeOption ?? 0,
-      //         price: mealSideDishOption.price ?? 0,
-      //         availableQuantity: mealSideDishOption.quantity ??0
-      //       })
-      //       return sideDishOptions;
-      //     })
-      //   }); 
-      // });
-
-      const sideDishes: sideDish[] = [];
+      const sideDishes: mealSideDish[] = [];
 
       mealOption.getMealSideDishesRequest?.forEach(mealSideDish => {
         sideDishes.push({
@@ -341,13 +359,12 @@ export class AddMealComponent implements OnInit {
         MealSizeOption: mealOption.mealSizeOption ?? 0,
         isAvailable: mealOption.isAvailable ?? false,
         price: mealOption.price ?? 0,
-        availableQuantity: 5,
+        availableQuantity: mealOption.quantity ?? 0,
         saveQuantitySetting: mealOption.saveQuantity ?? false,
-        sideDishes,
+        sideDishes: sideDishes
       })
     })
 
-    console.log(this.meal)
     this.loadForm(this.meal)
   }
 
@@ -375,6 +392,8 @@ export class AddMealComponent implements OnInit {
       this.mealSize.setValue(mealOption.MealSizeOption)
       this.isAvailable.setValue(mealOption.isAvailable)
       this.sideDishControl.setValue(mealOption.sideDishes)
+      this.sideDishInputs = mealOption.sideDishes??[]
+      //this.sideDishInputs.
     }
 
   }
@@ -388,7 +407,7 @@ export class AddMealComponent implements OnInit {
       availableQuantity: this.quantity.value,
       saveQuantitySetting: this.saveQuantitySetting.value,
       image: this.image.value,
-      sideDishes: this.sideDishControl.value
+      sideDishes: this.sideDishInputs
     }
     let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == this.previousMealSize);
 
@@ -431,6 +450,7 @@ export class AddMealComponent implements OnInit {
           } else {
             this.errorMessages.push(error.error);
           }
+          this.sharedService.showSnackBar(this.errorMessages[0])
         }
       });
     }
@@ -456,6 +476,7 @@ export class AddMealComponent implements OnInit {
           } else {
             this.errorMessages.push(error.error);
           }
+          this.sharedService.showSnackBar(this.errorMessages[0])
         }
       })
     }
@@ -480,29 +501,27 @@ export class AddMealComponent implements OnInit {
 
   postMealOption() {
     const addMealSideDish: AddMealSideDish[] = [];
-
-    console.log(JSON.stringify(addMealSideDish))
-
     this.sideDishInputs.forEach(sideDish => {
       addMealSideDish.push({
         isFree: sideDish.isFree,
         isTopping: sideDish.isTopping,
-        sideDishOptions: sideDish.sideDishOptions.map((option: sideDishOption) => ({
+        sideDishOptions: sideDish.sideDishOptions.map((option: mealSideDishOption) => ({
           sideDishID: option.sideDishID,
           sideDishSizeOption: option.sideDishSizeOption,
         }))
       });
     });
+
     const createMealOptionRequest: MealOptionPost$Params = {
       body: {
-        'MealID': this.mealID ?? '',
-        'MealSizeOption': this.mealSize.value,
-        'IsAvailable': this.isAvailable.value,
-        'Price': this.price.value,
-        'AvailableQuantity': this.quantity.value,
-        'SaveQuantitySetting': this.saveQuantitySetting.value,
-        'Image': this.image.value.file,
-        'MealSideDishes': addMealSideDish
+        'mealID': this.mealID ?? '',
+        'mealSizeOption': this.mealSize.value,
+        'isAvailable': this.isAvailable.value,
+        'price': this.price.value,
+        'availableQuantity': this.quantity.value,
+        'saveQuantitySetting': this.saveQuantitySetting.value,
+        'image': this.fileHandle.file,
+        'mealSideDishes': addMealSideDish
       }
     }
     console.log(createMealOptionRequest)
@@ -540,19 +559,33 @@ export class AddMealComponent implements OnInit {
         } else {
           this.errorMessages.push(error.error);
         }
+        this.sharedService.showSnackBar(this.errorMessages[0])
       }
     })
   }
 
   putMealOption() {
+        const addMealSideDish: AddMealSideDish[] = [];
+    this.sideDishInputs.forEach(sideDish => {
+      addMealSideDish.push({
+        isFree: sideDish.isFree,
+        isTopping: sideDish.isTopping,
+        sideDishOptions: sideDish.sideDishOptions.map((option: mealSideDishOption) => ({
+          sideDishID: option.sideDishID,
+          sideDishSizeOption: option.sideDishSizeOption,
+        }))
+      });
+    });
+
     const updateMealOptionRequest: MealOptionPut$Params = {
       body: {
-        'MealOptionID': this.currentMealOption.mealOptionID ?? '',
-        'IsAvailable': this.isAvailable.value,
-        'Price': this.price.value,
-        'AvailableQuantity': this.quantity.value,
-        'SaveQuantitySetting': this.saveQuantitySetting.value,
-        'Image': this.image.value.file
+        'mealOptionID': this.currentMealOption.mealOptionID[0] ?? '',
+        'isAvailable': this.isAvailable.value,
+        'price': this.price.value,
+        'availableQuantity': this.quantity.value,
+        'saveQuantitySetting': this.saveQuantitySetting.value,
+        'image': this.fileHandle.file,
+        'mealSideDishes': addMealSideDish
       }
     }
     this.mealOptionService.mealOptionPut(updateMealOptionRequest).subscribe({
@@ -573,6 +606,7 @@ export class AddMealComponent implements OnInit {
         } else {
           this.errorMessages.push(error.error);
         }
+        this.sharedService.showSnackBar(this.errorMessages[0])
       }
     })
   }
@@ -596,9 +630,8 @@ export class AddMealComponent implements OnInit {
     this.sideDishInputs.push({
       isFree: false,
       isTopping: false,
-      sideDishOptions: [{sideDishID: "dfhfgjh", sideDishSizeOption: 1, price: 5, availableQuantity: 3}]
+      sideDishOptions: []
     })
-    console.log(this.sideDishInputs)
   }
 
   removeSideDish(index: number){

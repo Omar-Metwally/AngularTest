@@ -7,5 +7,7 @@ export { MealReviewService } from './services/meal-review.service';
 export { MealsService } from './services/meals.service';
 export { OrderService } from './services/order.service';
 export { PromoCodeService } from './services/promo-code.service';
+export { SideDishService } from './services/side-dish.service';
+export { SideDishOptionService } from './services/side-dish-option.service';
 export { SubscriptionService } from './services/subscription.service';
 export { SubscriptionDayDataService } from './services/subscription-day-data.service';

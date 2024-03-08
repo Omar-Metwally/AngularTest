@@ -11,10 +11,11 @@ import { PopupComponent } from './popup/popup.component';
 export class SharedService {
   bsModalRef?: BsModalRef;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: BsModalService,
+    private snackBar: MatSnackBar) { }
 
-  showSnackBar(){
-
+  showSnackBar(message: string){
+    this.snackBar.open(message, "Close");
   }
   showPopUp(type: string, message: string){
     const initialState: ModalOptions = {

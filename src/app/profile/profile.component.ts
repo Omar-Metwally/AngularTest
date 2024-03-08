@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { SideNavComponent } from '../side-nav/side-nav.component';
 import { MealsTableComponent } from "./meals-table/meals-table.component";
 
 @Component({
@@ -9,7 +8,7 @@ import { MealsTableComponent } from "./meals-table/meals-table.component";
     standalone: true,
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',
-    imports: [CommonModule, SharedModule, SideNavComponent, MealsTableComponent]
+    imports: [CommonModule, SharedModule, MealsTableComponent]
 })
 export class ProfileComponent {
 

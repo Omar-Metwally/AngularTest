@@ -9,7 +9,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from '../shared/shared.module';
-import { SideNavComponent } from "../side-nav/side-nav.component";
 import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
@@ -17,7 +16,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     standalone: true,
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css'],
-    imports: [MatBadgeModule ,MatDividerModule, MatButtonModule, MatMenuModule, MatIconModule, CommonModule, LoginPopUpComponent, SignupPopupComponent, SharedModule, SideNavComponent]
+    imports: [MatBadgeModule ,MatDividerModule, MatButtonModule, MatMenuModule, MatIconModule, CommonModule, LoginPopUpComponent, SignupPopupComponent, SharedModule]
 })
 export class NavbarComponent {
 

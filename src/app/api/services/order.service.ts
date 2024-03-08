@@ -9,6 +9,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { CashInPaymentKeyResponse } from '../models/cash-in-payment-key-response';
 import { orderCashinCallbackPost } from '../fn/order/order-cashin-callback-post';
 import { OrderCashinCallbackPost$Params } from '../fn/order/order-cashin-callback-post';
 import { orderPost } from '../fn/order/order-post';
@@ -31,7 +32,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  orderPost$Plain$Response(params?: OrderPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  orderPost$Plain$Response(params?: OrderPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<CashInPaymentKeyResponse>> {
     return orderPost$Plain(this.http, this.rootUrl, params, context);
   }
 
@@ -41,9 +42,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  orderPost$Plain(params?: OrderPost$Plain$Params, context?: HttpContext): Observable<string> {
+  orderPost$Plain(params?: OrderPost$Plain$Params, context?: HttpContext): Observable<CashInPaymentKeyResponse> {
     return this.orderPost$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<string>): string => r.body)
+      map((r: StrictHttpResponse<CashInPaymentKeyResponse>): CashInPaymentKeyResponse => r.body)
     );
   }
 
@@ -53,7 +54,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  orderPost$Response(params?: OrderPost$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  orderPost$Response(params?: OrderPost$Params, context?: HttpContext): Observable<StrictHttpResponse<CashInPaymentKeyResponse>> {
     return orderPost(this.http, this.rootUrl, params, context);
   }
 
@@ -63,9 +64,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  orderPost(params?: OrderPost$Params, context?: HttpContext): Observable<string> {
+  orderPost(params?: OrderPost$Params, context?: HttpContext): Observable<CashInPaymentKeyResponse> {
     return this.orderPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<string>): string => r.body)
+      map((r: StrictHttpResponse<CashInPaymentKeyResponse>): CashInPaymentKeyResponse => r.body)
     );
   }
 

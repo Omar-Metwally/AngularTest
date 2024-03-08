@@ -6,26 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { AddMealSideDish } from '../../models/add-meal-side-dish';
-import { MealSizeOption } from '../../models/meal-size-option';
+import { CreateMealOptionRequest } from '../../models/create-meal-option-request';
 
 export interface MealOptionPost$Plain$Params {
-      body?: {
-'MealID'?: string;
-'MealSizeOption'?: MealSizeOption;
-'IsAvailable'?: boolean;
-'Price'?: number;
-'AvailableQuantity'?: number;
-'SaveQuantitySetting'?: boolean;
-'Image'?: Blob;
-'MealSideDishes'?: Array<AddMealSideDish>;
-}
+      body?: CreateMealOptionRequest
 }
 
 export function mealOptionPost$Plain(http: HttpClient, rootUrl: string, params?: MealOptionPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
   const rb = new RequestBuilder(rootUrl, mealOptionPost$Plain.PATH, 'post');
   if (params) {
-    rb.body(params.body, 'multipart/form-data');
+    rb.body(params.body, 'application/*+json');
   }
 
   return http.request(

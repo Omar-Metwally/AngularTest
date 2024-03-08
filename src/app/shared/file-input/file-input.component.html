@@ -8,7 +8,8 @@
      (mouseleave)="isDragover = false"
      (drop)="storeFile($event)"
      class="m-1 my-auto w-100 p-5 rounded text-center"
-     style="cursor: pointer; border: 1px lined #f7f8fa; transition: all 0.5s ease-in-out;">
+     style="cursor: pointer; border: 1px lined #f7f8fa; transition: all 0.5s ease-in-out;"
+     [ngStyle]="control.value.url">
      <h4 class="my-auto text-muted">Drag and Drop your image here or 
       <a class="text-reset" (click)="fileInput.click()">Browse</a>
        it</h4>

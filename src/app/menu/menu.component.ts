@@ -16,6 +16,8 @@ import { Cart } from '../api/models/cart'
 import { AccountService } from '../account/account.service';
 import { CartPost$Params } from '../api/fn/cart/cart-post';
 import { MealTag, UpsertCartRequest } from '../api/models';
+import { Router } from '@angular/router';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -31,7 +33,7 @@ import { MealTag, UpsertCartRequest } from '../api/models';
       ]),
     ]),
   ],
-  imports: [MealCardComponent, CommonModule, SharedModule, InfiniteScrollModule, SelectInputComponent, ChipsAutoCompleteInputComponent, MatSliderModule]
+  imports: [NgbAccordionModule,MealCardComponent, CommonModule, SharedModule, InfiniteScrollModule, SelectInputComponent, ChipsAutoCompleteInputComponent, MatSliderModule]
 })
 export class MenuComponent implements OnInit {
   categoryOptions: Option[] = [];
@@ -87,6 +89,12 @@ export class MenuComponent implements OnInit {
       MealStyle: this.style.value.id,
       PageNumber: this.currentPage,
       PageSize: this.itemsPerPage
+    }
+  }
+
+  redirectToMeal = (event: Event,mealID: string) => {
+    if ((event.target as HTMLElement).tagName === 'DIV') {
+      this.router.navigate(['/meal', mealID]);
     }
   }
 
@@ -241,7 +249,8 @@ export class MenuComponent implements OnInit {
   constructor(private mealsService: MealsService,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private cartService: CartService) {
+    private cartService: CartService,
+    private router: Router) {
     this.filterForm = this.formBuilder.group({
       CategoryFilter: this.category,
       SpiceLevelFilter: this.spiceLevel,

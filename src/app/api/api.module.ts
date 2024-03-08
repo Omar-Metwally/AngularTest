@@ -13,6 +13,8 @@ import { MealReviewService } from './services/meal-review.service';
 import { MealsService } from './services/meals.service';
 import { OrderService } from './services/order.service';
 import { PromoCodeService } from './services/promo-code.service';
+import { SideDishService } from './services/side-dish.service';
+import { SideDishOptionService } from './services/side-dish-option.service';
 import { SubscriptionService } from './services/subscription.service';
 import { SubscriptionDayDataService } from './services/subscription-day-data.service';
 
@@ -33,6 +35,8 @@ import { SubscriptionDayDataService } from './services/subscription-day-data.ser
     MealsService,
     OrderService,
     PromoCodeService,
+    SideDishService,
+    SideDishOptionService,
     SubscriptionService,
     SubscriptionDayDataService,
     ApiConfiguration

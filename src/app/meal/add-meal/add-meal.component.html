@@ -1,5 +1,4 @@
-<div class="container">
-    <div class="container p-5 ">
+    <div class="container-fluid p-5 ">
         <div class="row">
             <div class="col-md-6 align-items-center align-self-center">
                 <h4 class="fw-bold">Add a New Dish</h4>
@@ -11,7 +10,285 @@
             </div>
         </div>
     </div>
-    <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
+                labelPosition="bottom">
+                <mat-step [optional]="true" [completed]="isMealAdded" label="Dish Profile" state="dish">
+                    <ng-template matStepContent>
+
+
+
+                        <form [formGroup]="addMealForm" (ngSubmit)="mealForm()">
+                            <div class="py-5 container">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <div class="row justify-content-center">
+                                            <div class="col">
+
+                                                <app-input class="mb-2" [control]="title" type="text"
+                                                    label="Dish Title"></app-input>
+                                                <app-select-input class="mb-2" [control]="category" type="text"
+                                                    placeholder="Category" label="Category"
+                                                    [options]="categoryOptions"></app-select-input>
+                                                <app-select-input class="mb-2" [control]="spiceLevel" type="text"
+                                                    placeholder="Spice Level" label="Spice Level"
+                                                    [options]="spiceLevelOptions"></app-select-input>
+                                                <app-select-input class="mb-2" [control]="style" type="text"
+                                                    placeholder="Dish Style" label="Dish Style"
+                                                    [options]="styleOptions"></app-select-input>
+                                                <app-chips-auto-complete-input class="mb-2"
+                                                    [SelectedOptions]="selectedTags" [control]="tags" type="text"
+                                                    label="Tags"
+                                                    [options]="tagsOptions"></app-chips-auto-complete-input>
+                                                <mat-form-field style="width: 100%;" appearance="outline">
+                                                    <mat-label>Description</mat-label>
+                                                    <textarea [formControl]="description" matInput #message
+                                                        maxlength="256"
+                                                        placeholder="Ex. I need help with..."></textarea>
+                                                    <mat-hint align="start"><strong>Don't disclose personal
+                                                            info</strong>
+                                                    </mat-hint>
+                                                    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                                                </mat-form-field>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <section class="mt-5 pb-3">
+                                <div class=" text-center justify-content-center mb-3">
+                                    <div class=" text-center justify-content-center mb-3">
+                                        <button type="submit" style="width:  306px;
+                                        height:  56px;
+                                        padding: 8px 40px 8px 40px;
+                                        border-radius: 10px;
+                                        gap: 10px;
+                                        background: #31AC18;
+                                        border: none;
+                                        color: #F8F9F8;
+                                        font-family: Roboto;
+                                        font-size: 24px;
+                                        font-weight: 700;
+                                        letter-spacing: 0em;" *ngIf="!isMealAdded">Add
+                                            Meal</button>
+                                        <button type="submit" style="width:  306px;
+                                        height:  56px;
+                                        padding: 8px 40px 8px 40px;
+                                        border-radius: 10px;
+                                        gap: 10px;
+                                        background: #31AC18;
+                                        border: none;
+                                        color: #F8F9F8;
+                                        font-family: Roboto;
+                                        font-size: 24px;
+                                        font-weight: 700;
+                                        letter-spacing: 0em;" class="btn btn-success" matStepperNext
+                                            *ngIf="isMealAdded">Edit
+                                            Meal</button>
+                                    </div>
+                                    <h6 class="fw-bold">Copyright &copy; 2024 <span style="color: green;">Logo
+                                            name</span> All rights reserved</h6>
+                                </div>
+                            </section>
+                        </form>
+                    </ng-template>
+                </mat-step>
+
+                <!--Page 2-->
+
+                <mat-step [stepControl]="addMealOptionForm" label="Dish Options" state="dish-option">
+                    <ng-template matStepContent>
+                        <form [formGroup]="addMealOptionForm" (ngSubmit)="mealOptionForm()">
+                            <div class="py-5 container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row justify-content-center">
+                                            <div class="col">
+                                                <h3 class="ms-2">Size</h3>
+                                                <div class="d-flex justify-content-start">
+                                                    <mat-radio-group [formControl]="mealSize"
+                                                        aria-label="Select an option">
+                                                        <mat-radio-button [color]="'primary'"
+                                                            [value]="0">Small</mat-radio-button>
+                                                        <mat-radio-button [color]="'primary'"
+                                                            [value]="1">Medium</mat-radio-button>
+                                                        <mat-radio-button [color]="'primary'"
+                                                            [value]="2">Large</mat-radio-button>
+                                                    </mat-radio-group>
+                                                    <!-- <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                                      </div>
+
+                                                      <div class="form-check form-check-inline">
+                                                        <input style="color:#31AC18" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                                      </div>
+
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                                      </div>
+                                                      
+                                                    <div class="form-check">
+                                                        <input [value]="0" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Small
+                                                        </label>
+                                                      </div>
+
+                                                      <div class="form-check">
+                                                        <input [value]="1" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Medium
+                                                        </label>
+                                                      </div>
+
+                                                      <div class="form-check">
+                                                        <input [value]="2" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Large
+                                                        </label>
+                                                      </div>
+                                                      
+                                                    <input [formControl]="mealSize" [value]="0" type="radio"
+                                                        class="btn-check" name="meal-size" id="small" #small
+                                                        autocomplete="off" checked>
+                                                    <label class="btn btn-outline-success" for="small"
+                                                        id="btn-S">S</label>
+
+                                                    <input [formControl]="mealSize" [value]="1" type="radio"
+                                                        class="btn-check" name="meal-size" id="medium" #medium
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-success" for="medium"
+                                                        id="btn-m">M</label>
+
+                                                    <input [formControl]="mealSize" [value]="2" type="radio"
+                                                        class="btn-check" name="meal-size" id="large" #large
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-success" for="large"
+                                                        id="btn-L">L</label> -->
+                                                </div>
+                                                <app-input class="me-1 mt-3" [control]="price"
+                                                    placeholder="Enter The Price" type="number" format="9999"
+                                                    label="Price"></app-input>
+
+                                                <h3 class="ms-1">Available now</h3>
+                                                <div class="row justify-content-start">
+                                                    <mat-radio-group [formControl]="isAvailable"
+                                                        aria-label="Select an option">
+                                                        <mat-radio-button [color]="'primary'"
+                                                            (change)="toggleQuantityInput(true)"
+                                                            [value]="true">Yes</mat-radio-button>
+                                                        <mat-radio-button [color]="'primary'"
+                                                            (change)="toggleQuantityInput(false)"
+                                                            [value]="false">No</mat-radio-button>
+                                                    </mat-radio-group>
+                                                    <!-- <div class="col-xl-12 col-lg-8 col-md-10 col-sm-10">
+                                                        <div class="d-flex justify-content-between">
+                                                            <input class="me-1 my-5" [formControl]="saveQuantitySetting"
+                                                                [value]="true" type="radio" class="btn-check"
+                                                                name="save-quantity-setting" id="save-quantity-setting"
+                                                                autocomplete="off">
+                                                            <label class="btn btn-outline-success"
+                                                                for="save-quantity-setting" id="btn-y">Yes</label>
+
+                                                            <input [formControl]="saveQuantitySetting" [value]="false"
+                                                                type="radio" class="btn-check"
+                                                                name="save-quantity-setting"
+                                                                id="not-save-quantity-setting" autocomplete="off">
+                                                            <label class="btn btn-outline-success mx-2"
+                                                                for="not-save-quantity-setting" id="btn-n">No</label>
+
+                                                            <input class="me-1" [formControl]="isAvailable"
+                                                                (click)="toggleQuantityInput(true)" [value]="true"
+                                                                type="radio" class="btn-check" name="is-available"
+                                                                id="available" autocomplete="off">
+                                                            <label class="btn btn-outline-success mx-2" for="available"
+                                                                id="btn-yy">Yes</label>
+
+                                                            <input [formControl]="isAvailable"
+                                                                (click)="toggleQuantityInput(false)" [value]="false"
+                                                                type="radio" class="btn-check" name="is-available"
+                                                                id="not-available" autocomplete="off">
+                                                            <label class="btn btn-outline-success " for="not-available"
+                                                                id="btn-nn">No</label>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                                <div>
+                                                    <app-input class="me-1 mt-5 my-5" class="me-1" [control]="quantity"
+                                                        type="number" format="999"
+                                                        label="Quantity (if Yes)"></app-input>
+                                                </div>
+                                                <h3 class="ms-1">Daily Refreshed Quantity</h3>
+                                                <div class="row justify-content-start">
+                                                    <mat-radio-group [formControl]="saveQuantitySetting"
+                                                        aria-label="Select an option">
+                                                        <mat-radio-button [color]="'primary'"
+                                                            [value]="true">Yes</mat-radio-button>
+                                                        <mat-radio-button [color]="'primary'"
+                                                            [value]="false">No</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+                                                <div class="row justify-content-start mb-2">
+                                                    <div class="col-auto">
+                                                        <button type="button" (click)="addNewSideDish()" mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
+                                                    </div>
+                                                    <div class="col-auto" style="align-self: center; padding: 0px;">
+                                                        Add Side Dish
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-start"
+                                                    *ngFor="let sideDish of sideDishInputs; let i = index">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Toppings</mat-label>
+                                                        <mat-select [(ngModel)]="sideDish.sideDishOptions"
+                                                            [ngModelOptions]="{standalone: true}" multiple>
+                                                            @for (sideDishOption of chiefSideDishOption; track sideDishOption) {
+                                                                <mat-option [value]="sideDishOption">{{sideDishOption.sideDishID}}</mat-option>
+                                                              }
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-checkbox [(ngModel)]="sideDish.isFree" color="primary"
+                                                        [ngModelOptions]="{standalone: true}">is free</mat-checkbox>
+                                                    <mat-checkbox [(ngModel)]="sideDish.isTopping" color="primary"
+                                                        [ngModelOptions]="{standalone: true}">is topping</mat-checkbox> 
+                                                        <button type="button" (click)="removeSideDish(i)" mat-mini-fab color="warn"><mat-icon>remove</mat-icon></button>
+
+                                                </div>
+                                                <app-file-input [fileHandle]="fileHandle"
+                                                    [control]="image"></app-file-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <section class="mt-5 pb-3">
+                                    <div class="text-center justify-content-center mb-3">
+                                        <button type="submit" class="btn btn-success" matStepperNext
+                                            *ngIf="!isMealAdded">{{AddOrEdit}} Meal Option</button>
+                                        <button type="submit" class="btn btn-success" matStepperNext
+                                            *ngIf="isMealAdded">Save</button>
+                                    </div>
+                                </section>
+                            </div>
+                            <div>
+                                <button mat-button matStepperNext>{{AddOrEdit}} Meal Option</button>
+                                <button mat-button matStepperPrevious>Back</button>
+                            </div>
+                        </form>
+                    </ng-template>
+                </mat-step>
+            </mat-stepper>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <img src="/assets/images/add-meal-chef.png" style="height: auto; width: 100%;" alt="" id="chef"
+                class="rounded float-end">
+        </div>
+    </div>
+    <!-- <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
         labelPosition="bottom">
         <mat-step [optional]="true" [completed]="isMealAdded" label="Dish Profile" state="dish">
             <ng-template matStepContent>
@@ -149,7 +426,7 @@
                                                 type="number" format="999" label="Quantity (if Yes)"></app-input>
                                         </div>
 
-                                        <app-file-input [control]="image"></app-file-input>
+                                        <app-file-input [fileHandle]="fileHandle" [control]="image"></app-file-input>
 
                                     </div>
 
@@ -180,5 +457,4 @@
                 </form>
             </ng-template>
         </mat-step>
-    </mat-stepper>
-</div>
+    </mat-stepper> -->

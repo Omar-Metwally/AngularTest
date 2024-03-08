@@ -3,7 +3,7 @@ import { Component, Input, computed, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list'
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -92,7 +92,7 @@ export interface MenuItem {
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css',
   standalone: true,
-    imports: [RouterModule,MatButtonModule, MatMenuModule, CommonModule,SharedModule, CommonModule ,MatListModule ,
+    imports: [RouterModule,MatButtonModule, MatMenuModule,SharedModule, CommonModule ,MatListModule ,
     MatButtonModule,
     MatSidenavModule,
     MatSlideToggleModule,
@@ -111,7 +111,7 @@ export class SideNavComponent {
     {
       icon: 'dashboard',
       label:'Dashboard',
-      route:'dashboard'
+      route:'meal-add'
     },
     {
       icon: 'video_library',

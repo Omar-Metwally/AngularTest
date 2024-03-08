@@ -29,7 +29,7 @@ export class MealOptionService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `mealOptionPut()` instead.
    *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   mealOptionPut$Response(params?: MealOptionPut$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
     return mealOptionPut(this.http, this.rootUrl, params, context);
@@ -39,7 +39,7 @@ export class MealOptionService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `mealOptionPut$Response()` instead.
    *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   mealOptionPut(params?: MealOptionPut$Params, context?: HttpContext): Observable<void> {
     return this.mealOptionPut$Response(params, context).pipe(
@@ -54,7 +54,7 @@ export class MealOptionService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `mealOptionPost$Plain()` instead.
    *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   mealOptionPost$Plain$Response(params?: MealOptionPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
     return mealOptionPost$Plain(this.http, this.rootUrl, params, context);
@@ -64,7 +64,7 @@ export class MealOptionService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `mealOptionPost$Plain$Response()` instead.
    *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   mealOptionPost$Plain(params?: MealOptionPost$Plain$Params, context?: HttpContext): Observable<string> {
     return this.mealOptionPost$Plain$Response(params, context).pipe(
@@ -76,7 +76,7 @@ export class MealOptionService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `mealOptionPost()` instead.
    *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   mealOptionPost$Response(params?: MealOptionPost$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
     return mealOptionPost(this.http, this.rootUrl, params, context);
@@ -86,7 +86,7 @@ export class MealOptionService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `mealOptionPost$Response()` instead.
    *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   mealOptionPost(params?: MealOptionPost$Params, context?: HttpContext): Observable<string> {
     return this.mealOptionPost$Response(params, context).pipe(

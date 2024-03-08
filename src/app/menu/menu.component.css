@@ -1,14 +1,57 @@
-.dish-style-box{
+.category-box{
     width: 202px;
     height: 136px;
     top: 61px;
     left: 288px;
-    border-radius: 10px;
-    background-color:  #989696;
     margin: 10px;
-    cursor: pointer;
 }
 .gfg {
     /* position: sticky !important; */
     top: 10px !important; /* Adjust this value to control the distance from the top of the viewport */
   }
+
+  .form-check-label {
+    color: #656565;
+  }
+
+
+  .form-check-input {
+    width: 16px;
+    height: 16px;
+    border: 0.15rem solid rgba(120, 120, 120, 0.700);
+  }
+  .form-check-input:checked {
+    background-color: #31AC18;
+    border: 0.15rem solid rgba(120, 120, 120, 0.500);
+}
+
+.form-check-input:focus {
+    box-shadow: none;
+}
+
+.accordion-item {
+    border: #31AC18 0.14rem solid;
+}
+
+.accordion-button {
+    color: #31AC18;
+}
+
+.accordion-button:focus {
+    outline: none;
+  box-shadow: none;
+    background-color: white;
+    border-color: white;
+    color: #31AC18;
+}
+
+.accordion-button:hover {
+    background-color: white;
+    border-color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: white;
+    box-shadow: none;
+    color: #31AC18;
+}

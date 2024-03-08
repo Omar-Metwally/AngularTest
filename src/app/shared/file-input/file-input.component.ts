@@ -29,6 +29,7 @@ export class FileInputComponent {
   @Input() inSubmission = false;
   @Input() percentage = 0;
   @Input() showPercentage = false;
+  @Input() fileHandle!: FileHandle;
 
   // storeFile($event: Event) {
   //   this.isDragover = false;
@@ -63,16 +64,54 @@ export class FileInputComponent {
     const file = ($event as DragEvent).dataTransfer
       ? ($event as DragEvent).dataTransfer?.files.item(0) ?? null
       : ($event.target as HTMLInputElement).files?.item(0) ?? null;
-      console.log($event,file)
+      // console.log($event,file)
     if (!file || file.type !== 'image/jpeg') {
       this.control.reset();
     } else {
-      console.log(true)
+      const reader = new FileReader();
       const fileHandle: FileHandle = {
-        file: file,
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
-      }
-      console.log(fileHandle)
+      };
+
+      reader.onload = () => {
+        // this.control.setValue(reader.result); // This will log the base64 string
+        this.fileHandle.file = reader.result as string; // Store the base64 string in the fileHandle object
+        this.control.setValue(fileHandle); // Set the control's value to the base64 string
+        console.log(fileHandle.file, this.control);
+      };
+
+      reader.readAsDataURL(file);
+
+    //   const reader = new FileReader();
+    // reader.onload = () => {
+    //   console.log(reader.result); // This will log the base64 string
+    // };
+    // reader.readAsDataURL(file);
+
+    //   // const reader = new FileReader();
+    //   // // reader.readAsArrayBuffer(file);
+    //   // // console.log(file)
+    //   // reader.onloadend = () => {
+    //   //   // if (reader.readyState === FileReader.DONE) {
+    //   //   //   const fileString = reader.result as string
+    //   //   //   reader.readAsDataURL(fileString)
+    //   //   //   console.log(fileString)
+    //   //   //   const blob = new Blob([reader.result as ArrayBuffer], { type: file.type });
+    //   //   //   this.control.setValue(blob)
+    //   //   //   // console.log(this.control.value,blob)
+    //   //   //   // Process the blob data here, e.g., display filename, upload to server
+    //   //   // }
+    //   //   reader.readAsDataURL(file);
+    //   //   reader.onload = () => {
+    //   //       console.log(reader.result);
+    //   //   };
+    //   // };
+    //   // console.log(true)
+    //   const fileHandle: FileHandle = {
+    //     file: file,
+    //     url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
+    //   }
+      // console.log(fileHandle)
 
 
       // const reader = new FileReader();
@@ -81,7 +120,7 @@ export class FileInputComponent {
       //   resolve(this.imagePath);
       // };
       // reader.readAsDataURL(file); // read file as data URL
-      this.control.setValue(fileHandle)
+      //this.control.setValue(fileHandle)
     }
     //console.log(this.file, this.control)
   }
