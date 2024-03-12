@@ -23,6 +23,7 @@ export interface mealSideDish{
 export interface mealSideDishOption{
     sideDishID: string;
     sideDishSizeOption: MealSizeOption;
+    name: string;
     price: number;
     availableQuantity: number;
 }

@@ -374,13 +374,13 @@
               letter-spacing: 0em;
               text-align: left;
               ">Our Most popular Dishes</div>
-          <div @fadeIn class="row d-flex justify-content-center">
+          <div @fadeIn class="row d-flex justify-content-start">
             @for (mealCard of mealsCard; track mealCard) {
             <div class="col-10 col-sm-7 col-md-6 col-lg-5 col-xl-5 col-xxl-4">
                 <app-meal-card [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMeal]="redirectToMeal"></app-meal-card>
             </div>
             }
-            <div *ngIf="isLoading">Loading...</div>
+            <div *ngIf="isLoading"><img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"></div>
           </div>
         </div>
       </div>

@@ -248,7 +248,7 @@
                                                         <mat-select [(ngModel)]="sideDish.sideDishOptions"
                                                             [ngModelOptions]="{standalone: true}" multiple>
                                                             @for (sideDishOption of chiefSideDishOption; track sideDishOption) {
-                                                                <mat-option [value]="sideDishOption">{{sideDishOption.sideDishID}}</mat-option>
+                                                                <mat-option [value]="sideDishOption">{{sideDishOption.name}}</mat-option>
                                                               }
                                                         </mat-select>
                                                     </mat-form-field>

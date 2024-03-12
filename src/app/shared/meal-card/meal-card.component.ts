@@ -2,14 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { mealCard, mealCardOption } from './meal-card';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared.module';
-import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @Component({
   selector: 'app-meal-card',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, NgbDropdownModule],
   templateUrl: './meal-card.component.html',
   styleUrl: './meal-card.component.css'
 })
@@ -33,7 +33,8 @@ export class MealCardComponent implements OnInit {
     mealOptionSize: 0,
     mealOptionImage: '',
     mealOptionPrice: 0,
-    IsAvailable: false
+    IsAvailable: false,
+    mealSideDishes: []
   }
 
   // constructor(private router: Router) { }
@@ -54,6 +55,7 @@ export class MealCardComponent implements OnInit {
     this.displayedImage = this.currentMealOption.mealOptionImage
     this.displayedPrice = this.currentMealOption.mealOptionPrice
     this.currentMealOptionID = this.currentMealOption.mealOptionID
+    console.log(this.mealCardData)
   }
   changeCurrentMealOption(mealOptionIndex: number){
     this.currentMealOption = this.mealCardData.mealCardOptions[mealOptionIndex]

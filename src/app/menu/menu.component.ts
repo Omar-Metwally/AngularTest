@@ -167,7 +167,19 @@ export class MenuComponent implements OnInit {
             mealOptionSize: option.mealSizeOption || 0,
             mealOptionImage: option.thumbnailImage || '',
             mealOptionPrice: option.price || 0,
-            IsAvailable: option.isAvailable || false
+            IsAvailable: option.isAvailable || false,
+            mealSideDishes: option.getMealSideDishesRequest?.map(mealSideDish => ({
+              mealSideDishID: mealSideDish.mealSideDishID || '',
+              isFree: mealSideDish.isFree || false,
+              isTopping: mealSideDish.isTopping || false,
+              mealSideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map(sideDishOption => ({
+                sideDishID: sideDishOption.mealSideDishID || '',
+                sideDishSizeOption: sideDishOption.sideDishSizeOption || 0,
+                name: sideDishOption.name || '',
+                price: sideDishOption.price || 0,
+                quantity: sideDishOption.quantity || 0
+              })).sort((a, b) => a.sideDishSizeOption - b.sideDishSizeOption) || []
+            })) || []
           })).sort((a, b) => a.mealOptionSize - b.mealOptionSize) || []
         }));
       },
@@ -214,7 +226,6 @@ export class MenuComponent implements OnInit {
       this.hello();
   }
 
-  // this method will be called on scrolling the page
   appendData = () => {
     this.toggleLoading();
     this.mealsService.mealsGet(this.mealGetRequest).subscribe({
@@ -231,7 +242,20 @@ export class MenuComponent implements OnInit {
           mealOptionSize: option.mealSizeOption || 0, // Assuming MealSizeOption is a number
           mealOptionImage: option.thumbnailImage || '',
           mealOptionPrice: option.price || 0,
-          IsAvailable: option.isAvailable || false
+          IsAvailable: option.isAvailable || false,
+          mealSideDishes: option.getMealSideDishesRequest?.map(mealSideDish => ({
+            mealSideDishID: mealSideDish.mealSideDishID || '',
+            isFree: mealSideDish.isFree || false,
+            isTopping: mealSideDish.isTopping || false,
+            mealSideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map(sideDishOption => ({
+              sideDishID: sideDishOption.mealSideDishID || '',
+              sideDishSizeOption: sideDishOption.sideDishSizeOption || 0,
+              name: sideDishOption.name || '',
+              price: sideDishOption.price || 0,
+              quantity: sideDishOption.quantity || 0
+            })).sort((a, b) => a.sideDishSizeOption - b.sideDishSizeOption) || []
+          })) || []
+
         })).sort((a, b) => a.mealOptionSize - b.mealOptionSize) || []
       }))],
       error: err => console.log(err),

@@ -8,6 +8,7 @@ import { MenuComponent } from './menu/menu.component';
 import { DashboardComponent } from './chief/dashboard/dashboard.component';
 import { AddMealComponent } from './meal/add-meal/add-meal.component';
 import { AddSideDishComponent } from './side-dish/add-side-dish/add-side-dish.component';
+import { DefaultComponent } from './chief/dashboard/default/default.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'meal/:mealID', loadComponent: () => import('./meal/meal.component').then(module => module.MealComponent) },
   { path: 'meal', redirectTo: 'menu', pathMatch: 'full' },
   { path: 'dashboard' , component: DashboardComponent,children:[
+    {path:'', component: DefaultComponent},
     {path:'meal-add', component: AddMealComponent},
     {path:'side-dish-add', component: AddSideDishComponent},
   ]},

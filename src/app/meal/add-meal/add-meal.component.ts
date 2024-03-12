@@ -28,11 +28,11 @@ import { MealsMealIdGet$Params } from 'src/app/api/fn/meals/meals-meal-id-get';
 import { Option } from 'src/app/shared/models/address/option';
 import { GetMealRequest } from 'src/app/api/models/get-meal-request';
 import { AddMealSideDish, AddMealSideDishOption, GetMealSideDishOptionRequest, MealCategory, MealSpiceLevel, MealStyle, MealTag } from 'src/app/api/models';
-import {MatSelectModule} from '@angular/material/select';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FileHandle } from 'src/app/shared/file-input/file-handle.model';
 import { SharedService } from 'src/app/shared/shared.service';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { SideDishOptionService } from 'src/app/api/services';
 
 @Component({
@@ -40,7 +40,7 @@ import { SideDishOptionService } from 'src/app/api/services';
   standalone: true,
   templateUrl: './add-meal.component.html',
   styleUrl: './add-meal.component.css',
-  imports: [MatRadioModule,MatCheckboxModule, MatSelectModule, MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
+  imports: [MatRadioModule, MatCheckboxModule, MatSelectModule, MatIconModule, CommonModule, MatButtonToggleModule, AsyncPipe, MatButtonModule, MatStepperModule, FormsModule, MatFormFieldModule, MatInputModule, SharedModule, SelectInputComponent, ChipsAutoCompleteInputComponent, FileInputComponent]
 })
 export class AddMealComponent implements OnInit {
 
@@ -140,7 +140,7 @@ export class AddMealComponent implements OnInit {
   mealStyle = MealStyle
 
   ngOnInit() {
-    if(this.mealID != null){
+    if (this.mealID != null) {
       const mealsMealIdGet$Params: MealsMealIdGet$Params = {
         MealID: this.mealID
       }
@@ -165,7 +165,7 @@ export class AddMealComponent implements OnInit {
         }
       })
     }
-    else{
+    else {
       this.toggleQuantityInput(false)
     }
   }
@@ -179,24 +179,24 @@ export class AddMealComponent implements OnInit {
 
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
-    this.tagsOptions.push(    
-    { id: '0', name: 'Koshry' },
-    { id: '1', name: 'SeaFood' },
-    { id: '2', name: 'Deep Fried' },
-    { id: '3', name: 'Vegan' },
-    { id: '4', name: 'Diet Friendly' },
-    { id: '5', name: 'Keto Friendly' },
-    { id: '6', name: 'Natural Butter' },
-    { id: '7', name: 'Sweats' },
-    { id: '8', name: 'Gluten Free' },
-    { id: '9', name: 'Slow Cooked' },
-    { id: '10', name: 'Natural Colors' },
-    { id: '11', name: 'Biscuits' },
-    { id: '12', name: 'Cookies' },
-    { id: '13', name: 'Cake' },
-    { id: '14', name: 'Beef' },
-    { id: '15', name: 'Lamb' },
-    { id: '16', name: 'Ribs' },);
+    this.tagsOptions.push(
+      { id: '0', name: 'Koshry' },
+      { id: '1', name: 'SeaFood' },
+      { id: '2', name: 'Deep Fried' },
+      { id: '3', name: 'Vegan' },
+      { id: '4', name: 'Diet Friendly' },
+      { id: '5', name: 'Keto Friendly' },
+      { id: '6', name: 'Natural Butter' },
+      { id: '7', name: 'Sweats' },
+      { id: '8', name: 'Gluten Free' },
+      { id: '9', name: 'Slow Cooked' },
+      { id: '10', name: 'Natural Colors' },
+      { id: '11', name: 'Biscuits' },
+      { id: '12', name: 'Cookies' },
+      { id: '13', name: 'Cake' },
+      { id: '14', name: 'Beef' },
+      { id: '15', name: 'Lamb' },
+      { id: '16', name: 'Ribs' },);
     this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Syrian' }, { id: '2', name: 'Lebanese' }, { id: '3', name: 'Western' }, { id: '4', name: 'Asian' }, { id: '5', name: 'Indian' })
 
     this.addMealForm = this.formBuilder.group({
@@ -236,7 +236,7 @@ export class AddMealComponent implements OnInit {
 
       if (index !== -1 && index !== undefined) {
         this.currentMealOption = this.meal.mealOptions[index]
-        this.mealSize.setValue(currentMealSize, {emitEvent: false})
+        this.mealSize.setValue(currentMealSize, { emitEvent: false })
         //this.mealSize.setValue(this.currentMealOption.MealSizeOption)
         this.price.setValue(this.currentMealOption.price)
         // this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
@@ -244,10 +244,10 @@ export class AddMealComponent implements OnInit {
         this.quantity.setValue(this.currentMealOption.availableQuantity)
         this.image.setValue(this.currentMealOption.image);
         this.sideDishControl.setValue(this.currentMealOption.sideDishes);
-        if(!this.currentMealOption.isAvailable){
+        if (!this.currentMealOption.isAvailable) {
           this.toggleQuantityInput(false)
         }
-        else{
+        else {
           this.toggleQuantityInput(true)
         }
         this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
@@ -271,11 +271,12 @@ export class AddMealComponent implements OnInit {
           this.chiefSideDishOption.push({
             sideDishID: sideDishOption.sideDishID ?? '',
             sideDishSizeOption: sideDishOption.sideDishSizeOption ?? 0,
+            name: sideDishOption.name ?? '',
             price: sideDishOption.price ?? 0,
             availableQuantity: sideDishOption.availableQuantity ?? 0
           });
         })
-        
+
       },
       error: error => {
         if (error.error.errors) {
@@ -288,7 +289,7 @@ export class AddMealComponent implements OnInit {
     });
   }
 
-  ChangeAddOrEdit(){
+  ChangeAddOrEdit() {
     switch (this.mealSize.value) {
       case 0:
         this.AddOrEdit = this.isSmallMealOptionAdded ? 'Edit' : 'Add';
@@ -317,18 +318,18 @@ export class AddMealComponent implements OnInit {
     }
   }
 
-  loadMeal(getMealRequest: GetMealRequest ){
+  loadMeal(getMealRequest: GetMealRequest) {
     let mealCategoryIndex = getMealRequest.mealCategory ?? 0
     let mealSpiceLevelIndex = getMealRequest.mealSpiceLevel ?? 0
     let mealStyleIndex = getMealRequest.mealStyle ?? 0
 
     this.meal = {
       title: getMealRequest.title ?? '',
-      mealID: getMealRequest.mealID?? '',
+      mealID: getMealRequest.mealID ?? '',
       mealCategory: this.categoryOptions.find(x => +x.id == (mealCategoryIndex)),
       mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
       mealStyle: this.styleOptions.find(x => +x.id == (mealStyleIndex)),
-      description: getMealRequest.description ?? '', 
+      description: getMealRequest.description ?? '',
       //error
       tagsID: this.tagsOptions.filter(tagOption => getMealRequest.mealTags?.some(mealTag => mealTag.toFixed() === tagOption.id)),
       //tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)), //getMealRequest.mealTags?.flatMap(x => x.tagID !== undefined ? [x.tagID] : []),
@@ -345,13 +346,14 @@ export class AddMealComponent implements OnInit {
           isTopping: mealSideDish.isTopping ?? false,
           sideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map((option: GetMealSideDishOptionRequest) => ({
             sideDishID: option.mealSideDishID ?? '',
+            sideDishSizeOption: option.sideDishSizeOption ?? 0,
+            name: option.name ?? '',
             price: option.price ?? 0,
             availableQuantity: option.quantity ?? 0,
-            sideDishSizeOption: option.sideDishSizeOption ?? 0
           })) ?? [],
         });
       });
-    
+
 
 
       this.meal.mealOptions.push({
@@ -368,31 +370,31 @@ export class AddMealComponent implements OnInit {
     this.loadForm(this.meal)
   }
 
-  loadForm(meal: Meal){
-    this.smallMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 0)?.mealOptionID ??''
-    if(this.smallMealOptionID) this.isSmallMealOptionAdded = true
-    this.mediumMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 1)?.mealOptionID ??''
-    if(this.mediumMealOptionID) this.isMediumMealOptionAdded = true
-    this.largeMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 2)?.mealOptionID ??''
-    if(this.largeMealOptionID) this.isLargeMealOptionAdded = true
+  loadForm(meal: Meal) {
+    this.smallMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 0)?.mealOptionID ?? ''
+    if (this.smallMealOptionID) this.isSmallMealOptionAdded = true
+    this.mediumMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 1)?.mealOptionID ?? ''
+    if (this.mediumMealOptionID) this.isMediumMealOptionAdded = true
+    this.largeMealOptionID = meal.mealOptions.find(x => x.MealSizeOption == 2)?.mealOptionID ?? ''
+    if (this.largeMealOptionID) this.isLargeMealOptionAdded = true
     this.title.setValue(meal.title)
     this.description.setValue(meal.description)
     this.category.setValue(meal.mealCategory)
     this.spiceLevel.setValue(meal.mealSpiceLevel)
     this.style.setValue(meal.mealStyle)
     this.tags.setValue(meal.tagsID)
-    this.selectedTags = meal.tagsID?? []
+    this.selectedTags = meal.tagsID ?? []
 
     let mealOption: mealOption | undefined = meal.mealOptions.at(0)
 
-    if(mealOption){
+    if (mealOption) {
       this.price.setValue(mealOption.price)
       this.quantity.setValue(mealOption.availableQuantity)
       this.saveQuantitySetting.setValue(mealOption.saveQuantitySetting)
       this.mealSize.setValue(mealOption.MealSizeOption)
       this.isAvailable.setValue(mealOption.isAvailable)
       this.sideDishControl.setValue(mealOption.sideDishes)
-      this.sideDishInputs = mealOption.sideDishes??[]
+      this.sideDishInputs = mealOption.sideDishes ?? []
       //this.sideDishInputs.
     }
 
@@ -429,7 +431,7 @@ export class AddMealComponent implements OnInit {
           'mealCategory': +this.addMealForm.value.category.id,
           'mealSpiceLevel': +this.addMealForm.value.spiceLevel.id,
           'mealStyle': +this.addMealForm.value.style.id,
-          'tagsID': this.addMealForm.value.tags.map((o: {id: number, name:string}) => +o.id),
+          'tagsID': this.addMealForm.value.tags.map((o: { id: number, name: string }) => +o.id),
         }
       }
       let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
@@ -565,7 +567,7 @@ export class AddMealComponent implements OnInit {
   }
 
   putMealOption() {
-        const addMealSideDish: AddMealSideDish[] = [];
+    const addMealSideDish: AddMealSideDish[] = [];
     this.sideDishInputs.forEach(sideDish => {
       addMealSideDish.push({
         isFree: sideDish.isFree,
@@ -626,7 +628,7 @@ export class AddMealComponent implements OnInit {
     }
   }
 
-  addNewSideDish(){
+  addNewSideDish() {
     this.sideDishInputs.push({
       isFree: false,
       isTopping: false,
@@ -634,8 +636,25 @@ export class AddMealComponent implements OnInit {
     })
   }
 
-  removeSideDish(index: number){
-    this.sideDishInputs.splice(index, 1);
+  // removeSideDish(index: number){
+  //   const sideDishIndex = this.chiefSideDishOption.indexOf(this.sideDishInputs[index].sideDishOptions);
+  //   this.options.push(option);
+  //   if (index >= 0) {
+  //     this.SelectedOptions.splice(index, 1);
+  //   }
+  //   this.sideDishInputs.splice(index, 1);
+  // }
+  removeSideDish(index: number) {
+
+    this.sideDishInputs.splice(index, 1)
   }
+
+  // selectSideDish(event: MatSelectChange){
+  //   event.value.forEach((sideDish: mealSideDishOption) => {
+  //     const index = this.chiefSideDishOption.indexOf(sideDish);
+  //     if (index >= 0) this.chiefSideDishOption.splice(index, 1);
+  //     console.log(this.chiefSideDishOption)
+  //   })
+  // }
 
 }

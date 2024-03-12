@@ -1,3 +1,5 @@
+import { MealSizeOption } from "src/app/api/models"
+
 export interface mealCard {
     mealID: string,
     chiefID: string,
@@ -16,4 +18,21 @@ export interface mealCardOption {
     mealOptionImage: string,
     mealOptionPrice: number
     IsAvailable: boolean
+    mealSideDishes: mealSideDish[]
+}
+
+export interface mealSideDish{
+    mealSideDishID: string,
+    isFree: boolean,
+    isTopping: boolean,
+    mealSideDishOptions: mealSideDishOption[]
+
+}
+
+export interface mealSideDishOption{
+    sideDishID: string,
+    sideDishSizeOption: MealSizeOption,
+    name: string,
+    price: number,
+    quantity: number
 }
