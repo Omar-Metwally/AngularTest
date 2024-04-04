@@ -156,6 +156,7 @@ export class MealComponent implements OnInit {
     if(this.currentQuantity > 1) {
       this.currentQuantity--
     }
+
   }
   incrementQuantity() {
     if(this.currentQuantity < this.currentMealOption.availableQuantity){

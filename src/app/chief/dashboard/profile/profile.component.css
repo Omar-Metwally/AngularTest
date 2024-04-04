@@ -1,0 +1,100 @@
+.img1 img{
+    width: 1082px;
+    height: 336px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    
+}
+
+.profile{
+    position: relative;
+    background-image: url("/assets/images/akl.jpg");
+    height: 336px;
+    margin-bottom: 100px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.img2 img{
+    position: absolute;
+    bottom: -90px;
+    height: 180px;
+    left: 25px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    
+}
+
+.btnn{
+    position: absolute;
+    width: 139px;
+    height: 39px;
+    right: 100px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    border: #f1f1f1;
+    top: 5%;
+    
+}
+
+
+
+.btun {
+    position: absolute;
+    background: #5ABD46; 
+    border: none; 
+    color: #f1f1f1; 
+    padding: 12px 16px; 
+    font-size: 16px; 
+    cursor: pointer;
+    border-radius: 164px;
+    bottom: -24px;
+    right: 37px;
+    
+}
+
+.btun1{
+    position: absolute;
+    background: #5ABD46; 
+    border: none; 
+    color: #f1f1f1; 
+    padding: 12px 16px; 
+    font-size: 16px; 
+    cursor: pointer;
+    border-radius: 164px;
+    top:340px;
+    left:150px;
+    
+}
+
+
+
+.square{
+    border-radius: 10px;
+    height: 270px;
+    padding: 20px;
+    flex-direction: row;
+    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+            0 5px 12px -2px rgb(0,0,0,0.1),
+            0 18px 36px -6px rgb(0,0,0,0.1);
+}
+
+.btn {
+    background-color: #31AC18;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: inline-block;
+    width: 306px;
+    
+}
+
+
+
+
+
+
+
+
+

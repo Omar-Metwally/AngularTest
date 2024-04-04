@@ -9,7 +9,7 @@ import { ConfirmEmail } from '../shared/models/account/confirmEmail';
 import { ResetPassword } from '../shared/models/account/resetPassword';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
-import { AbstractControl, AsyncValidator, FormControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, AsyncValidator, FormControl, ValidationErrors, Validator } from '@angular/forms';
 import jwtDecode from 'jwt-decode';
 import { CartService } from '../api/services';
 import { Cart } from '../api/models/cart'
@@ -99,9 +99,9 @@ export class AccountService {
           if (user) {
             let decodedJWT: any = jwtDecode(user.jwt);
             user.firstName = decodedJWT.given_name,
-            user.lastName = decodedJWT.family_name,
-            user.username = decodedJWT.unique_name,
-            this.setUser(user);
+              user.lastName = decodedJWT.family_name,
+              user.username = decodedJWT.unique_name,
+              this.setUser(user);
             this.addItemToCart();
           }
         })
@@ -125,10 +125,10 @@ export class AccountService {
       );
   }
 
-  setCart(){
+  setCart() {
     let cartItemsString = localStorage.getItem('cart')
     let cartItems: Cart[] = []
-    if(cartItemsString){
+    if (cartItemsString) {
       cartItems = JSON.parse(cartItemsString)
     }
     this.cartSource.next(cartItems)
@@ -372,5 +372,18 @@ export class UniqueEmailValidator implements AsyncValidator {
       map((isTaken) => (isTaken ? null : { uniqueEmail: true })),
       catchError(() => of(null)),
     );
+  }
+}
+@Injectable({ providedIn: 'root' })
+export class PhoneValidator implements Validator {
+  validate(control: AbstractControl): ValidationErrors | null {
+    const validAreaCodes = ['010', '011', '012', '015'];
+    const inputValue = control.value;
+
+    if (inputValue.length < 3) {
+      return null
+    }
+    const areaCode = inputValue.substring(0, 3);
+    return validAreaCodes.indexOf(areaCode) === -1 ? { phone: true } : null;
   }
 }

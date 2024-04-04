@@ -62,7 +62,8 @@
     </a>
 </mat-nav-list> -->
 
-<div style="background: #31AC18; border-top-right-radius: 10px; border-bottom-right-radius: 10px;" [style.width]="sidenavWidth">
+<div style="background: #31AC18; border-top-right-radius: 10px; border-bottom-right-radius: 10px;"
+    [style.width]="sidenavWidth">
     <div class="sidenav-header">
         <button mat-icon-button class="menu-button" (click)="toggleCollapse()">
             <mat-icon>menu</mat-icon>
@@ -79,10 +80,34 @@
     <mat-nav-list>
         <mat-nav-list>
             <a mat-list-item class="menu-item" *ngFor="let item of menuItems" [routerLink]="item.route"
+                [routerLinkActiveOptions]={exact:true}
                 routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
-                <mat-icon style="color: #F8F9F8;" [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+                <mat-icon style="color: #F8F9F8;"
+                    [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
                     matListItemIcon>{{item.icon}}</mat-icon>
                 <span matListItemTitle style="color:#F8F9F8" *ngIf="!collapsed">{{item.label}}</span>
+            </a>
+            <hr style="border: 1px solid rgba(19, 24, 19, 0.53); margin-right: 14px; margin-left: 14px;">
+            <a mat-list-item class="menu-item" routerLink="notification-center"
+                routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
+                <mat-icon style="color: #F8F9F8;"
+                    [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+                    matListItemIcon>notifications</mat-icon>
+                <span matListItemTitle style="color:#F8F9F8" *ngIf="!collapsed">Notification Center</span>
+            </a>
+            <a mat-list-item class="menu-item" routerLink="help-center"
+                routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
+                <mat-icon style="color: #F8F9F8;"
+                    [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+                    matListItemIcon>contact_support</mat-icon>
+                <span matListItemTitle style="color:#F8F9F8" *ngIf="!collapsed">Help Center</span>
+            </a>
+            <a mat-list-item class="menu-item" routerLink="notification-center"
+                routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
+                <mat-icon style="color: #F8F9F8; transform: rotate(180deg)"
+                    [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+                    matListItemIcon>logout</mat-icon>
+                <span matListItemTitle style="color:#F8F9F8" *ngIf="!collapsed">Log Out</span>
             </a>
         </mat-nav-list>
     </mat-nav-list>

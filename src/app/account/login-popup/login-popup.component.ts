@@ -45,6 +45,8 @@ export class LoginPopUpComponent implements OnInit {
   errorMessages: string[] = [];
   returnUrl: string | null = null;
   hide: any;
+  isLoading:boolean=false;
+
 
   constructor(public dialogRef: MatDialogRef<LoginPopUpComponent>,
     private formBuilder: FormBuilder,
@@ -84,6 +86,7 @@ export class LoginPopUpComponent implements OnInit {
 
 
     if (this.loginForm.valid) {
+      this.isLoading=true;
       this.accountService.login(this.loginForm.value).subscribe({
         next: _ => {
           if (this.returnUrl) {
@@ -91,6 +94,7 @@ export class LoginPopUpComponent implements OnInit {
           } else {
             this.router.navigateByUrl('/');
           }
+          this.isLoading=false;
           this.dialogRef.close();
         },
         
@@ -100,6 +104,7 @@ export class LoginPopUpComponent implements OnInit {
           } else {
             this.errorMessages.push(error.error);
           }
+          this.isLoading=false;
         }
       })
     }

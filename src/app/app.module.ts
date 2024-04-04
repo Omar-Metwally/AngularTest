@@ -16,7 +16,7 @@ import { SelectInputComponent } from "./shared/select-input/select-input.compone
 import { ChiefSignupComponent } from './account/chief-signup/chief-signup.component';
 import { AddMealComponent } from './meal/add-meal/add-meal.component';
 import { SideNavComponent } from './chief/dashboard/side-nav/side-nav.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './chief/dashboard/profile/profile.component';
 import { MenuComponent } from './menu/menu.component';
 import { MealComponent } from './meal/meal.component';
 

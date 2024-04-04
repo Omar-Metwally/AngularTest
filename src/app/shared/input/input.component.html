@@ -22,6 +22,8 @@
   <mat-error *ngIf="control.errors?.['min']">The {{label}} must be more than {{control.errors?.['min'].min}}</mat-error>
   <mat-error *ngIf="control.errors?.['max']">The {{label}} must be less than {{control.errors?.['max'].max}}</mat-error>
 
+  <mat-error *ngIf="control.errors?.['phone']">Invalid phone number</mat-error>
+
   <mat-error *ngIf="control.errors?.['required']">Please enter your {{label}}</mat-error>
   <mat-error *ngIf="control.errors?.['uniqueEmail']">This email is taken</mat-error>
 </mat-form-field>

@@ -4,6 +4,7 @@ import { MealCategory } from '../models/meal-category';
 import { MealSpiceLevel } from '../models/meal-spice-level';
 import { MealSizeOption } from './meal-size-option';
 export interface GetMealTableRequest {
+
   category?: MealCategory;
   mealId?: string;
   isAvailable?: boolean;
@@ -11,7 +12,15 @@ export interface GetMealTableRequest {
   spiceLevel?: MealSpiceLevel;
   title?: string | null;
   totalSold?: number;
-  GetMealOptionsTable: GetMealOptionTable[]
+  getMealOptionsTable: GetMealOptionTable[]
+
+  selectedSize:MealSizeOption;
+  price?:number;
+  availableQuantity:number;
+  saveQuantity:boolean;
+  thumbnailImage?:string;
+  selectedImage?:string;
+  quantity :number;
 }
 
 export interface GetMealOptionTable{
@@ -21,4 +30,5 @@ export interface GetMealOptionTable{
   price?: number
   sold?: number
   thumbnailImage?: string
+  saveQuantity:boolean; 
 }

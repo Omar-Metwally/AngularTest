@@ -32,8 +32,6 @@ export class ChiefSignupComponent {
   streets: Option[] = []
   buildings: Option[] = []
   
-  items = ['First', 'Second', 'Third', 'Forth'];
-
   district: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator],
   });

@@ -9,6 +9,7 @@ import { DashboardComponent } from './chief/dashboard/dashboard.component';
 import { AddMealComponent } from './meal/add-meal/add-meal.component';
 import { AddSideDishComponent } from './side-dish/add-side-dish/add-side-dish.component';
 import { DefaultComponent } from './chief/dashboard/default/default.component';
+import { ProfileComponent } from './chief/dashboard/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -31,15 +32,17 @@ const routes: Routes = [
   { path: 'side-dish/add', loadComponent: () => import('./side-dish/add-side-dish/add-side-dish.component').then(module => module.AddSideDishComponent ) },
   { path: 'cart', loadComponent: () => import('./cart/cart.component').then(module => module.CartComponent ) },
   { path: 'account', loadChildren: () => import('./account/account.module').then(module => module.AccountModule) },
-  { path: 'profile', loadComponent: () => import('./profile/profile.component').then(module => module.ProfileComponent) },
+  // { path: 'profile', loadComponent: () => import('./profile/profile.component').then(module => module.ProfileComponent) },
   //{ path: 'dashboard', loadComponent: () => import('./chief/dashboard/dashboard.component').then(module => module.DashboardComponent) },
   { path: 'test', loadComponent: () => import('./test/test.component').then(module => module.TestComponent) },
   { path: 'meal/:mealID', loadComponent: () => import('./meal/meal.component').then(module => module.MealComponent) },
   { path: 'meal', redirectTo: 'menu', pathMatch: 'full' },
   { path: 'dashboard' , component: DashboardComponent,children:[
     {path:'', component: DefaultComponent},
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     {path:'meal-add', component: AddMealComponent},
     {path:'side-dish-add', component: AddSideDishComponent},
+    {path:'profile', component: ProfileComponent},
   ]},
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' }

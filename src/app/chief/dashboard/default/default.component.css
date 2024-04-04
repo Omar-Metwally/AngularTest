@@ -5,7 +5,7 @@
  .input-group::before {
     content: "";
 
-    background-image: url('../../assets/svg images/search-normal.svg');
+    background-image: url('../../../../assets/svg images/search-normal.svg');
     background-size: 20px;  
     background-repeat: no-repeat;
     position: absolute;

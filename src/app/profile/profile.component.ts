@@ -10,6 +10,6 @@ import { MealsTableComponent } from "./meals-table/meals-table.component";
     styleUrl: './profile.component.css',
     imports: [CommonModule, SharedModule, MealsTableComponent]
 })
-export class ProfileComponent {
+export class ProfileaComponent {
 
 }

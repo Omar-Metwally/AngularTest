@@ -109,23 +109,28 @@ export class SideNavComponent {
 
   menuItems: MenuItem[] = [
     {
-      icon: 'dashboard',
-      label:'Dashboard',
-      route:'meal-add'
+      icon: 'person',
+      label:'My Profile',
+      route:'profile'
     },
     {
-      icon: 'video_library',
-      label:'Content',
-      route:'content'
+      icon: 'ramen_dining',
+      label:'My Menu',
+      route:''
+    },
+    {
+      icon: 'local_shipping',
+      label:'Orders',
+      route:'analytics'
+    },
+    {
+      icon: 'history',
+      label:'History',
+      route:'comments'
     },
     {
       icon: 'analytics',
       label:'Analytics',
-      route:'analytics'
-    },
-    {
-      icon: 'comments',
-      label:'Comments',
       route:'comments'
     }
   ];
@@ -135,6 +140,6 @@ export class SideNavComponent {
   }
 
   get sidenavWidth(): string {
-    return this.collapsed ? '65px' : '200px';
+    return this.collapsed ? '65px' : '250px';
   }
 }

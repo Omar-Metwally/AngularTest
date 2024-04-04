@@ -1,0 +1,117 @@
+<div class="profile">
+  <button type="button" class="btn btn-light" class="btnn">Preview</button>
+  <div class="img1"><button class="btun"><i class="fa fa-camera"></i></button></div>
+
+  <div class="img2"><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+      alt=""></div>
+  <button class="btun1"><i class="fa fa-camera"></i></button>
+</div>
+
+
+<div class="container ">
+  <div class="row my-5">
+    <div class="col">
+      <h5 class="fw-bolder">Personal Information</h5>
+      <div class="row">
+        <div class="col my-3">
+          <app-input [control]="firstName" label="First Name" type="text" placeholder="E.g: Ahmed"></app-input>
+        </div>
+        <div class="col my-3" id="lastname">
+          <app-input [control]="lastName" label="Last Name" type="text" placeholder="E.g: Ibrahim"></app-input>
+        </div>
+      </div>
+      <div class="row">
+        <app-input [control]="phone" style="width: 100%;" type="number" prefix="01" format="0 0000 0000"
+          label="Phone number"></app-input>
+          <div *ngIf="phone.errors?.['pattern']">{{phone.value}}</div>
+      </div>
+      <label for="exampleFormControlTextarea1" class="form-label mt-3">Description</label>
+      <textarea class="form-control " id="exampleFormControlTextarea1" rows="5"></textarea>
+      <ul>
+        <li class="my-2">Ensure your description is inviting and charming to draw in users.</li>
+        <li class="my-1">Highlight your unique offerings, be it delectable bakery items or exquisite Italian
+        </li>
+        <div>cuisine. Remember, a well-crafted description can make all the difference!</div>
+      </ul>
+      <h5 class="mt-5 my-4 fw-bolder">Ready to work Details</h5>
+
+      <div class="row">
+        <div class="col">
+          <h6>Daily Shift avaliable</h6>
+          <div class="row">
+            <div class="col-1">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="" id="flexCheckDefault"
+                  style="border-radius: 20px;">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Yes
+                </label>
+              </div>
+            </div>
+            <div class="col-11">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="" id="flexCheckDefault"
+                  style="border-radius: 20px;">
+                <label class="form-check-label" for="flexCheckDefault">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h6>Shift Details</h6>
+
+        </div>
+      </div>
+      <h5 class="mt-5 fw-bolder">Location Details</h5>
+        <div class="row">
+          <div class="col">
+            <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text"
+              placeholder="District" label="District" [options]="districts"></app-select-input>
+          </div>
+          <div class="col">
+            <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text"
+              placeholder="Street" label="Street" [options]="streets"></app-select-input>
+          </div>
+        <div class="row">
+          <div class="col">
+            <app-select-input [control]="building" [optionSelected]="buildingOptionSelected" type="text"
+              placeholder="Building" label="Building" [options]="buildings"></app-select-input>
+          </div>
+          <div class="col">
+            <app-input [control]="floor" type="text" placeholder="Floor No" label="Floor No"></app-input>
+          </div>
+          <div class="col">
+            <app-input [control]="apartment" type="text" placeholder="Apartment No" label="Apartment No"></app-input>
+          </div>
+        </div>
+      </div>
+      <h5 class="mt-5 fw-bolder">Legal Information</h5>
+      <label for="exampleFormControlInput1" class="form-label fw-bold mt-4">National ID Number</label>
+      <input type="email" class="form-control " id="exampleInput2" placeholder="E.g: 30120420284513"
+        style="height: 67px;">
+      <h5 class=" mt-5 fw-bolder">Health Certificate</h5>
+      <div class="square text-center mt-5">
+        <div class=" justify-content-center my-4">
+          <span><i class="fa fa-cloud-upload-alt text-center fa-4x text-secondary"></i></span>
+        </div>
+        <div class="text-muted">Upload an image or drag and drop</div>
+        <div class="text-muted">Max image size: 1MB</div>
+      </div>
+      <div>
+        <ul>
+          <li class="mt-2">Make sure to upload your health certificate so you can be able to upload Live dishes</li>
+          <li>The Certificate will be reviewed within 2 workdays</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-12 d-flex justify-content-center pt-5">
+    <button class="btn">Next</button>
+  </div>
+</div>
