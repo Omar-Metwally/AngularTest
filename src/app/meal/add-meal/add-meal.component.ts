@@ -345,7 +345,7 @@ export class AddMealComponent implements OnInit {
           isFree: mealSideDish.isFree ?? false,
           isTopping: mealSideDish.isTopping ?? false,
           sideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map((option: GetMealSideDishOptionRequest) => ({
-            sideDishID: option.mealSideDishID ?? '',
+            sideDishID: option.sideDishID ?? '',
             sideDishSizeOption: option.sideDishSizeOption ?? 0,
             name: option.name ?? '',
             price: option.price ?? 0,

@@ -209,25 +209,10 @@ $my-app-theme: mat.define-light-theme(
 .transparent-dialog .mat-dialog-container {
   opacity: 1 !important;
 }
-
-// .mat-mdc-dialog-container.mdc-dialog__surface{
+// .mat-mdc-dialog-container .mdc-dialog__surface{
 //   background-color: transparent !important;
 //   box-shadow: none !important;
 // }
-
-// .mat-mdc-dialog-surface{
-//   background-color: transparent !important;
-//   box-shadow: none !important;
-// }
-// .mdc-dialog__surface{
-//   background-color: transparent !important;
-//   box-shadow: none !important;
-// }
-
-.mat-mdc-dialog-container .mdc-dialog__surface{
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
 .mat-mdc-snack-bar-container {
   &.my-snackbar-background {
     --mdc-snackbar-container-color: #31AC18;
@@ -271,6 +256,10 @@ $my-app-theme: mat.define-light-theme(
   width: 20px;
   height: 20px;
   box-shadow: none !important;
+}
+
+.ngb-tp .ngb-tp-input-container .btn-link {
+  color: #31AC18 !important;
 }
 // .mat-mdc-dialog-container .mdc-dialog__surface {
 //   background-color: transparent !important;

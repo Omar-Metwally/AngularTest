@@ -3,11 +3,12 @@ import { Component, EventEmitter, HostListener, Input, OnDestroy, Output, input 
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileHandle } from './file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SharedModule } from '../shared.module';
 
 @Component({
   selector: 'app-file-input',
   standalone: true,
-  imports: [ CommonModule ,FormsModule,ReactiveFormsModule,],
+  imports: [ CommonModule, SharedModule ,FormsModule ,ReactiveFormsModule ],
   templateUrl: './file-input.component.html',
   styleUrl: './file-input.component.css'
 })
@@ -29,6 +30,7 @@ export class FileInputComponent {
   @Input() inSubmission = false;
   @Input() percentage = 0;
   @Input() showPercentage = false;
+  @Input() showDragAndDrop = true;
   @Input() fileHandle!: FileHandle;
 
   // storeFile($event: Event) {
@@ -128,12 +130,14 @@ export class FileInputComponent {
   @HostListener('dragover', ['$event'])
   onDragOver(event: DragEvent) {
     event.preventDefault();
+    console.log('hello')
     this.isDragover = true;
   }
 
   @HostListener('dragleave', ['$event'])
   onDragLeave(event: DragEvent) {
     event.preventDefault();
+    console.log('welcome')
     this.isDragover = false;
   }
 

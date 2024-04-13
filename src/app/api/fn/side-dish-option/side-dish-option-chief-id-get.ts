@@ -28,4 +28,4 @@ export function sideDishOptionChiefIdGet(http: HttpClient, rootUrl: string, para
   );
 }
 
-sideDishOptionChiefIdGet.PATH = '/SideDishOption';
+sideDishOptionChiefIdGet.PATH = '/SideDishOption/{ChiefID}';

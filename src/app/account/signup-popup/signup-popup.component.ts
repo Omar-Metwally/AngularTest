@@ -59,7 +59,8 @@ throw new Error('Method not implemented.');
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private uniqueEmailValidator: UniqueEmailValidator,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
     ) {
 
   }
@@ -120,6 +121,20 @@ throw new Error('Method not implemented.');
       return forbidden ? { forbiddenName: { value: control.value } } : null;
     };
   }
+
+  openLoginPopUp() {
+    this.dialogRef.close();
+    this.dialog.open(LoginPopUpComponent, {
+      width: 'min-content',
+      height: 'min-content',
+      minWidth: '25%',
+      maxWidth: '100%',
+      maxHeight: '80%',
+      enterAnimationDuration: '500mx',
+      exitAnimationDuration: '250ms'
+    });
+  }
+
 }
 
 

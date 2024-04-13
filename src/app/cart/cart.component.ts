@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cart, CreateOrderRequest, DiscountCalculateRequest, GetMealOptionCartRequest, MealData } from '../api/models';
+import { Cart, CreateOrderRequest, DiscountCalculateRequest, GetMealOptionRequest, MealData } from '../api/models';
 import { AccountService } from '../account/account.service';
 import { MealsService, OrderService, PromoCodeService } from '../api/services';
 import { MealsMealOptionCartPost$Params } from '../api/fn/meals/meals-meal-option-cart-post';
@@ -104,7 +104,7 @@ export class CartComponent implements OnInit {
   shippingInformationForm: FormGroup = new FormGroup({});
 
   cartItems: Cart[] = []
-  mealOptions: GetMealOptionCartRequest[] = [];
+  mealOptions: GetMealOptionRequest[] = [];
   discount = 0;
   total = 0
   promoCodeInput: FormControl = new FormControl('', {
@@ -126,7 +126,7 @@ export class CartComponent implements OnInit {
           this.mealOptions = response
           this.mealOptions.forEach(mealOption => {
             mealOption.quantity = this.cartItems.find(x => x.mealOptionID === mealOption.mealOptionID)?.quantity ?? 0
-            mealOption.timeOfDelivery = this.cartItems.find(x => x.mealOptionID === mealOption.mealOptionID)?.timeOfDelivery ?? "00:00:00"
+            //mealOption.timeOfDelivery = this.cartItems.find(x => x.mealOptionID === mealOption.mealOptionID)?.timeOfDelivery ?? "00:00:00"
           });
           this.total = this.calculateTotal()
         },
@@ -153,7 +153,7 @@ export class CartComponent implements OnInit {
 
   calculateTotal(): number {
     this.mealOptions.forEach(mealOption => {
-      this.total += mealOption.price * (mealOption.quantity ?? 0)
+      this.total += (mealOption.price ?? 0) * (mealOption.quantity ?? 0)
     });
     return this.total
   }
@@ -201,7 +201,7 @@ export class CartComponent implements OnInit {
 
       for (const cartItem of this.cartItems) {
         const mealData: MealData = {
-          mealOptionIDs: cartItem.mealOptionID,
+          mealOptionID: cartItem.mealOptionID,
           quantities: cartItem.quantity,
         };
         mealsData.push(mealData);

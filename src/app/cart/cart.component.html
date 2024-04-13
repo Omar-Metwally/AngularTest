@@ -84,10 +84,10 @@
                         @for (cartItem of mealOptions; track cartItem) {
                         <!--First card-->
                         <div class="row my-2" id="square">
-                            <img [src]="cartItem.image" id="avatar">
+                            <img [src]="cartItem.fullScreenImage" id="avatar">
                             <div class="col">
                                 <div class="d-flex justify-content-between align-content-center">
-                                    <h5 class="text-dark">{{cartItem.title}} (M)</h5>
+                                    <h5 class="text-dark">{{cartItem.mealOptionID}} (M)</h5>
                                     <h5 style="color: #31AC18;">{{cartItem.price}} EGP</h5>
                                 </div>
 

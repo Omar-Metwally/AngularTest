@@ -9,13 +9,15 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { GetMealOptionCartRequest } from '../models/get-meal-option-cart-request';
+import { GetCartMealRequest } from '../models/get-cart-meal-request';
 import { GetMealRequest } from '../models/get-meal-request';
 import { GetMealTableRequest } from '../models/get-meal-table-request';
 import { mealsChiefMealsGet } from '../fn/meals/meals-chief-meals-get';
 import { MealsChiefMealsGet$Params } from '../fn/meals/meals-chief-meals-get';
 import { mealsChiefMealsGet$Plain } from '../fn/meals/meals-chief-meals-get-plain';
 import { MealsChiefMealsGet$Plain$Params } from '../fn/meals/meals-chief-meals-get-plain';
+import { mealsDelete } from '../fn/meals/meals-delete';
+import { MealsDelete$Params } from '../fn/meals/meals-delete';
 import { mealsGet } from '../fn/meals/meals-get';
 import { MealsGet$Params } from '../fn/meals/meals-get';
 import { mealsGet$Plain } from '../fn/meals/meals-get-plain';
@@ -160,6 +162,31 @@ export class MealsService extends BaseService {
     );
   }
 
+  /** Path part for operation `mealsDelete()` */
+  static readonly MealsDeletePath = '/Meals';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsDelete()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsDelete$Response(params?: MealsDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return mealsDelete(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsDelete$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsDelete(params?: MealsDelete$Params, context?: HttpContext): Observable<void> {
+    return this.mealsDelete$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
   /** Path part for operation `mealsChiefMealsGet()` */
   static readonly MealsChiefMealsGetPath = '/Meals/ChiefMeals';
 
@@ -216,7 +243,7 @@ export class MealsService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  mealsMealOptionCartPost$Plain$Response(params?: MealsMealOptionCartPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealOptionCartRequest>>> {
+  mealsMealOptionCartPost$Plain$Response(params?: MealsMealOptionCartPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetCartMealRequest>>> {
     return mealsMealOptionCartPost$Plain(this.http, this.rootUrl, params, context);
   }
 
@@ -226,9 +253,9 @@ export class MealsService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  mealsMealOptionCartPost$Plain(params?: MealsMealOptionCartPost$Plain$Params, context?: HttpContext): Observable<Array<GetMealOptionCartRequest>> {
+  mealsMealOptionCartPost$Plain(params?: MealsMealOptionCartPost$Plain$Params, context?: HttpContext): Observable<Array<GetCartMealRequest>> {
     return this.mealsMealOptionCartPost$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<GetMealOptionCartRequest>>): Array<GetMealOptionCartRequest> => r.body)
+      map((r: StrictHttpResponse<Array<GetCartMealRequest>>): Array<GetCartMealRequest> => r.body)
     );
   }
 
@@ -238,7 +265,7 @@ export class MealsService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  mealsMealOptionCartPost$Response(params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealOptionCartRequest>>> {
+  mealsMealOptionCartPost$Response(params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetCartMealRequest>>> {
     return mealsMealOptionCartPost(this.http, this.rootUrl, params, context);
   }
 
@@ -248,9 +275,9 @@ export class MealsService extends BaseService {
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  mealsMealOptionCartPost(params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<Array<GetMealOptionCartRequest>> {
+  mealsMealOptionCartPost(params?: MealsMealOptionCartPost$Params, context?: HttpContext): Observable<Array<GetCartMealRequest>> {
     return this.mealsMealOptionCartPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<GetMealOptionCartRequest>>): Array<GetMealOptionCartRequest> => r.body)
+      map((r: StrictHttpResponse<Array<GetCartMealRequest>>): Array<GetCartMealRequest> => r.body)
     );
   }
 

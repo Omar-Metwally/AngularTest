@@ -7,6 +7,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 import { AddressService } from './services/address.service';
 import { AuthService } from './services/auth.service';
 import { CartService } from './services/cart.service';
+import { ChiefService } from './services/chief.service';
 import { ImageService } from './services/image.service';
 import { MealOptionService } from './services/meal-option.service';
 import { MealReviewService } from './services/meal-review.service';
@@ -29,6 +30,7 @@ import { SubscriptionDayDataService } from './services/subscription-day-data.ser
     AddressService,
     AuthService,
     CartService,
+    ChiefService,
     ImageService,
     MealOptionService,
     MealReviewService,

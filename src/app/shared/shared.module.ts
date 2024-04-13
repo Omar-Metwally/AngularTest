@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { provideEnvironmentNgxMask, NgxMaskDirective } from 'ngx-mask';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { EventBlockerDirective } from './directives/event-blocker.directive';
 
 
 
@@ -24,6 +25,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ValidationMessagesComponent,
     NotificationComponent,
     UserHasRoleDirective,
+    EventBlockerDirective,
     InputComponent,
     //SelectInputComponent,
   ],
@@ -45,6 +47,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ReactiveFormsModule,
     HttpClientModule,
     ValidationMessagesComponent,
+    EventBlockerDirective,
     UserHasRoleDirective,
     InputComponent,
     //SelectInputComponent,

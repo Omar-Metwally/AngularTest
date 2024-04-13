@@ -1,6 +1,7 @@
 export { AddressService } from './services/address.service';
 export { AuthService } from './services/auth.service';
 export { CartService } from './services/cart.service';
+export { ChiefService } from './services/chief.service';
 export { ImageService } from './services/image.service';
 export { MealOptionService } from './services/meal-option.service';
 export { MealReviewService } from './services/meal-review.service';

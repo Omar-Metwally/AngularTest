@@ -14,12 +14,13 @@ import { SharedModule } from "../../shared/shared.module";
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { take } from 'rxjs';
 import { User } from 'src/app/shared/models/account/user';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatCardModule} from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { SignupPopupComponent } from '../signup-popup/signup-popup.component';
 
 
 
@@ -29,7 +30,7 @@ import {MatCardModule} from '@angular/material/card';
   templateUrl: 'login-popup.component.html',
   styleUrl: 'login-popup.component.css',
   standalone: true,
-  imports: [MatButtonModule,MatCardModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, SharedModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule ]
+  imports: [MatButtonModule, MatCardModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, SharedModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule]
 })
 export class LoginPopUpComponent implements OnInit {
   email: FormControl = new FormControl('', {
@@ -37,7 +38,8 @@ export class LoginPopUpComponent implements OnInit {
     updateOn: 'blur'
   });
   password: FormControl = new FormControl('', {
-    validators: [Validators.required, Validators.nullValidator, Validators.minLength(8)],});
+    validators: [Validators.required, Validators.nullValidator, Validators.minLength(8)],
+  });
 
 
   loginForm: FormGroup = new FormGroup({});
@@ -45,14 +47,15 @@ export class LoginPopUpComponent implements OnInit {
   errorMessages: string[] = [];
   returnUrl: string | null = null;
   hide: any;
-  isLoading:boolean=false;
+  isLoading: boolean = false;
 
 
   constructor(public dialogRef: MatDialogRef<LoginPopUpComponent>,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog) {
     this.accountService.user$.pipe(take(1)).subscribe({
       next: (user: User | null) => {
         if (user) {
@@ -86,7 +89,7 @@ export class LoginPopUpComponent implements OnInit {
 
 
     if (this.loginForm.valid) {
-      this.isLoading=true;
+      this.isLoading = true;
       this.accountService.login(this.loginForm.value).subscribe({
         next: _ => {
           if (this.returnUrl) {
@@ -94,17 +97,17 @@ export class LoginPopUpComponent implements OnInit {
           } else {
             this.router.navigateByUrl('/');
           }
-          this.isLoading=false;
+          this.isLoading = false;
           this.dialogRef.close();
         },
-        
+
         error: error => {
           if (error.error.errors) {
             this.errorMessages = error.error.errors;
           } else {
             this.errorMessages.push(error.error);
           }
-          this.isLoading=false;
+          this.isLoading = false;
         }
       })
     }
@@ -112,7 +115,19 @@ export class LoginPopUpComponent implements OnInit {
   resendEmailConfirmationLink() {
     this.router.navigateByUrl('/account/send-email/resend-email-confirmation-link');
   }
-  closeLoginPopUp(){
+  closeLoginPopUp() {
     this.dialogRef.close();
+  }
+  openSignupPopUp() {
+    this.dialogRef.close();
+    this.dialog.open(SignupPopupComponent, {
+      width: 'min-content',
+      height: 'min-content',
+      minWidth: '25%',
+      maxWidth: '100%',
+      maxHeight: '80%',
+      enterAnimationDuration: '500mx',
+      exitAnimationDuration: '250ms'
+    });
   }
 }

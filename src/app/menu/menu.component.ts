@@ -173,7 +173,7 @@ export class MenuComponent implements OnInit {
               isFree: mealSideDish.isFree || false,
               isTopping: mealSideDish.isTopping || false,
               mealSideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map(sideDishOption => ({
-                sideDishID: sideDishOption.mealSideDishID || '',
+                sideDishID: sideDishOption.sideDishID || '',
                 sideDishSizeOption: sideDishOption.sideDishSizeOption || 0,
                 name: sideDishOption.name || '',
                 price: sideDishOption.price || 0,
@@ -248,7 +248,7 @@ export class MenuComponent implements OnInit {
             isFree: mealSideDish.isFree || false,
             isTopping: mealSideDish.isTopping || false,
             mealSideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map(sideDishOption => ({
-              sideDishID: sideDishOption.mealSideDishID || '',
+              sideDishID: sideDishOption.sideDishID || '',
               sideDishSizeOption: sideDishOption.sideDishSizeOption || 0,
               name: sideDishOption.name || '',
               price: sideDishOption.price || 0,

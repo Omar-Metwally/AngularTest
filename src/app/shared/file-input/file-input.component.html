@@ -1,19 +1,42 @@
-<ng-container>
-   <div 
-     app-event-blocker
-     (dragend)="isDragover = false"
-     (dragover)="isDragover = true"
-     (dragenter)="isDragover = true"
-     (dragleave)="isDragover = false"
-     (mouseleave)="isDragover = false"
-     (drop)="storeFile($event)"
-     class="m-1 my-auto w-100 p-5 rounded text-center"
-     style="cursor: pointer; border: 1px lined #f7f8fa; transition: all 0.5s ease-in-out;"
-     [ngStyle]="control.value.url">
-     <h4 class="my-auto text-muted">Drag and Drop your image here or 
+<!-- <ng-container>
+  <div app-event-blocker (dragend)="isDragover = false" (dragover)="isDragover = true" (dragenter)="isDragover = true"
+    (dragleave)="isDragover = false" (mouseleave)="isDragover = false" (drop)="storeFile($event)"
+    class="m-1 my-auto w-100 p-5 rounded text-center"
+    style="cursor: pointer; border: 1px lined #f7f8fa; transition: all 0.5s ease-in-out;" [ngStyle]="control.value.url">
+    <h4 class="my-auto text-muted">Drag and Drop your image here or
       <a class="text-reset" (click)="fileInput.click()">Browse</a>
-       it</h4>
-   </div>
- </ng-container>
- <input style="display: none;" #fileInput type="file" [formControl]="control" (change)="storeFile($event)">
- <img [src]="control.value.url" width="500" height="500">
+      it
+    </h4>
+  </div>
+</ng-container> -->
+<input style="display: none;" #fileInput type="file" [formControl]="control" (change)="storeFile($event)">
+<!-- <img [src]="control.value.url" width="500" height="500"> -->
+<ng-container *ngIf="showDragAndDrop">
+  <div [style]="style" [class]="class" app-event-blocker (dragend)="isDragover = false" (dragover)="isDragover = true" (dragenter)="isDragover = true"
+    (dragleave)="isDragover = false" (mouseleave)="isDragover = false" (drop)="storeFile($event)"
+    [ngStyle]="control.value.url" class="square text-center mt-5">
+    <div class="inside mt-5">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M41.9457 38.2402L33.9457 30.1069C33.4213 29.607 32.7235 29.3298 31.999 29.3335C31.648 29.3315 31.3001 29.3988 30.9752 29.5315C30.6503 29.6642 30.3548 29.8597 30.1057 30.1069L21.5723 38.6135C21.0757 39.1132 20.7969 39.789 20.7969 40.4935C20.7969 41.198 21.0757 41.8739 21.5723 42.3735C22.072 42.8702 22.7478 43.149 23.4523 43.149C24.1568 43.149 24.8327 42.8702 25.3323 42.3735L29.3323 38.3735V56.4802C29.3323 57.1875 29.6133 57.8657 30.1134 58.3658C30.6135 58.8659 31.2917 59.1469 31.999 59.1469C32.7062 59.1469 33.3845 58.8659 33.8846 58.3658C34.3847 57.8657 34.6657 57.1875 34.6657 56.4802V38.5069L38.159 42.0002C38.4069 42.2501 38.7018 42.4485 39.0268 42.5839C39.3517 42.7193 39.7003 42.789 40.0523 42.789C40.4044 42.789 40.7529 42.7193 41.0779 42.5839C41.4028 42.4485 41.6978 42.2501 41.9457 42.0002C42.4423 41.5006 42.7211 40.8247 42.7211 40.1202C42.7211 39.4157 42.4423 38.7398 41.9457 38.2402Z"
+          fill="#989696" />
+        <path
+          d="M58.667 32C58.667 35.5362 57.2623 38.9276 54.7618 41.4281C52.2613 43.9286 48.8699 45.3333 45.3337 45.3333H41.1203C42.1298 45.1213 43.0561 44.6211 43.787 43.8933C44.2829 43.398 44.6763 42.8098 44.9447 42.1623C45.2131 41.5149 45.3512 40.8209 45.3512 40.12C45.3512 39.4191 45.2131 38.7251 44.9447 38.0776C44.6763 37.4302 44.2829 36.842 43.787 36.3467L35.6537 28.3467C35.1584 27.8508 34.5701 27.4574 33.9227 27.189C33.2752 26.9206 32.5812 26.7825 31.8803 26.7825C31.1795 26.7825 30.4854 26.9206 29.838 27.189C29.1905 27.4574 28.6023 27.8508 28.107 28.3467L19.6803 36.72C19.1845 37.2153 18.7911 37.8035 18.5227 38.451C18.2543 39.0984 18.1161 39.7924 18.1161 40.4933C18.1161 41.1942 18.2543 41.8882 18.5227 42.5357C18.7911 43.1831 19.1845 43.7713 19.6803 44.2667L20.1337 44.64C16.7932 43.76 13.7376 42.0298 11.2645 39.6179C8.79145 37.2059 6.98528 34.1946 6.02193 30.8772C5.05859 27.5598 4.97093 24.0494 5.76749 20.688C6.56405 17.3267 8.21767 14.2289 10.5673 11.6966C12.9169 9.16425 15.8823 7.28366 19.1747 6.23803C22.4671 5.1924 25.9742 5.01737 29.3544 5.73C32.7345 6.44263 35.8725 8.01862 38.4625 10.3044C41.0526 12.5903 43.0064 15.508 44.1337 18.7733C44.507 18.7733 44.8803 18.7733 45.2537 18.7733C48.7853 18.752 52.1812 20.1327 54.6959 22.6125C57.2106 25.0922 58.6388 28.4684 58.667 32Z"
+          fill="#989696" />
+      </svg>
+    </div>
+    <div class="mt-2 text-muted"><a class="text-reset" style="cursor: pointer;" (click)="fileInput.click()">Upload</a>
+      an image or drag and drop</div>
+    <div class="text-muted">Max image size: 10 MB</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!showDragAndDrop">
+  <button [style]="style" [class]="class" style="width: 36px; height: 36px; border-radius: 100%; background: rgba(90, 189, 70, 1); border: none;" (click)="fileInput.click()">
+    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+      style="vertical-align: baseline;">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M12.08 2.6773C12.11 2.72974 12.1625 2.7672 12.23 2.7672C14.03 2.7672 15.5 4.23557 15.5 6.03357V10.4836C15.5 12.2816 14.03 13.75 12.23 13.75H3.77C1.9625 13.75 0.5 12.2816 0.5 10.4836V6.03357C0.5 4.23557 1.9625 2.7672 3.77 2.7672C3.83 2.7672 3.89 2.73724 3.9125 2.6773L3.9575 2.5874C3.98335 2.53298 4.00989 2.47709 4.03683 2.42035C4.2287 2.01621 4.44097 1.5691 4.5725 1.30633C4.9175 0.632075 5.5025 0.257492 6.23 0.25H9.7625C10.49 0.257492 11.0825 0.632075 11.4275 1.30633C11.5456 1.5423 11.7256 1.92241 11.899 2.28877C11.9348 2.36439 11.9704 2.43942 12.005 2.51249L12.08 2.6773ZM11.5325 5.55411C11.5325 5.92869 11.8325 6.22836 12.2075 6.22836C12.5825 6.22836 12.89 5.92869 12.89 5.55411C12.89 5.17952 12.5825 4.87236 12.2075 4.87236C11.8325 4.87236 11.5325 5.17952 11.5325 5.55411ZM6.7025 6.71532C7.055 6.36321 7.5125 6.17592 8 6.17592C8.4875 6.17592 8.945 6.36321 9.29 6.70782C9.635 7.05244 9.8225 7.50943 9.8225 7.99639C9.815 9.00028 9.005 9.81687 8 9.81687C7.5125 9.81687 7.055 9.62958 6.71 9.28496C6.365 8.94034 6.1775 8.48335 6.1775 7.99639V7.9889C6.17 7.51693 6.3575 7.05993 6.7025 6.71532ZM10.0775 10.0791C9.545 10.611 8.81 10.9406 8 10.9406C7.2125 10.9406 6.4775 10.6335 5.915 10.0791C5.36 9.5172 5.0525 8.78302 5.0525 7.99639C5.045 7.21726 5.3525 6.48307 5.9075 5.9212C6.47 5.35932 7.2125 5.05216 8 5.05216C8.7875 5.05216 9.53 5.35932 10.085 5.91371C10.64 6.47558 10.9475 7.21726 10.9475 7.99639C10.94 8.81299 10.61 9.54717 10.0775 10.0791Z"
+        fill="white" />
+    </svg>
+  </button>
+</ng-container>

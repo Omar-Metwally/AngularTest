@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export { AddIngredient } from './models/add-ingredient';
 export { AddMealSideDish } from './models/add-meal-side-dish';
 export { AddMealSideDishOption } from './models/add-meal-side-dish-option';
 export { AddRoleModel } from './models/add-role-model';
@@ -22,10 +23,12 @@ export { DeleteCartRequest } from './models/delete-cart-request';
 export { DeleteSubscriptionDayDataRequest } from './models/delete-subscription-day-data-request';
 export { DiscountCalculateRequest } from './models/discount-calculate-request';
 export { Email } from './models/email';
+export { FoodIngredient } from './models/food-ingredient';
 export { GetBuildingRequest } from './models/get-building-request';
+export { GetCartMealRequest } from './models/get-cart-meal-request';
 export { GetDistrictRequest } from './models/get-district-request';
-export { GetMealOptionCartRequest } from './models/get-meal-option-cart-request';
 export { GetMealOptionRequest } from './models/get-meal-option-request';
+export { GetMealOptionTable } from './models/get-meal-option-table';
 export { GetMealRequest } from './models/get-meal-request';
 export { GetMealReviewRequest } from './models/get-meal-review-request';
 export { GetMealSideDishOptionRequest } from './models/get-meal-side-dish-option-request';
@@ -57,4 +60,5 @@ export { UpdateSubscriptionDayDataRequest } from './models/update-subscription-d
 export { UpdateSubscriptionMealOptionQuantityRequest } from './models/update-subscription-meal-option-quantity-request';
 export { UpdateSubscriptionStatusRequest } from './models/update-subscription-status-request';
 export { UpsertCartRequest } from './models/upsert-cart-request';
+export { UpsertChiefDataRequest } from './models/upsert-chief-data-request';
 export { UpsertPromoCodeRequest } from './models/upsert-promo-code-request';

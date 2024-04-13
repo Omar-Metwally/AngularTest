@@ -62,32 +62,32 @@
                   <ng-template>
                     <div class="sortby">
                       <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="bestseller">
+                        <input class="form-check-input" type="checkbox" (click)="hello()" [value]="sortByOptions[0]" id="bestseller">
                         <label class="form-check-label fw-medium" for="bestseller">
                           Best Seller
                         </label>
                       </div>
                       <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="newarrivals">
+                        <input class="form-check-input" type="checkbox" (click)="hello()" [value]="sortByOptions[1]" id="newarrivals">
                         <label class="form-check-label fw-medium" for="newarrivals">
                           New Arrivals
                         </label>
                       </div>
                       <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="highlyrated">
+                        <input class="form-check-input" type="checkbox" (click)="hello()" [value]="sortByOptions[0]" id="highlyrated">
                         <label class="form-check-label fw-medium" for="highlyrated">
                           Highly Rated
                         </label>
                       </div>
                       <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="pricelowhigh">
+                        <input class="form-check-input" type="checkbox" (click)="hello()" [value]="sortByOptions[2]"id="pricelowhigh">
                         <label class="form-check-label fw-medium" for="pricelowhigh">
                           Price From Low to High
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="pricehighlow">
-                        <label class="form-check-label fw-medium" for="pricehighlow">
+                        <input class="form-check-input" type="checkbox" (change)="hello()" [value]="sortByOptions[3]" id="pricehighlow">
+                        <label (change)="hello()" class="form-check-label fw-medium" for="pricehighlow">
                           Price From High to Low
                         </label>
                       </div>
@@ -211,31 +211,31 @@
                 Sort By</p>
             </div>
             <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="bestseller">
+              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[0]" id="bestseller">
               <label class="form-check-label fw-medium" for="bestseller">
                 Best Seller
               </label>
             </div>
             <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="newarrivals">
+              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[1]" id="newarrivals">
               <label class="form-check-label fw-medium" for="newarrivals">
                 New Arrivals
               </label>
             </div>
             <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="highlyrated">
+              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[0]" id="highlyrated">
               <label class="form-check-label fw-medium" for="highlyrated">
                 Highly Rated
               </label>
             </div>
             <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="pricelowhigh">
+              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[2]" id="pricelowhigh">
               <label class="form-check-label fw-medium" for="pricelowhigh">
                 Price From Low to High
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="pricehighlow">
+              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[3]" id="pricehighlow">
               <label class="form-check-label fw-medium" for="pricehighlow">
                 Price From High to Low
               </label>

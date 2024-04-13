@@ -8,7 +8,8 @@
 
 .profile{
     position: relative;
-    background-image: url("/assets/images/akl.jpg");
+    /* background-image: url("/assets/images/akl.jpg"); */
+    background-size: cover;
     height: 336px;
     margin-bottom: 100px;
     border-bottom-left-radius: 30px;
@@ -19,6 +20,7 @@
     position: absolute;
     bottom: -90px;
     height: 180px;
+    width: 180px;
     left: 25px;
     border: 8px solid #fff;
     border-radius: 50%;
@@ -79,6 +81,18 @@
             0 18px 36px -6px rgb(0,0,0,0.1);
 }
 
+.square:hover {
+    background-color: #F5F5F4;
+    transition: 0.7s;
+}
+
+.inside{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn {
     background-color: #31AC18;
     border: none;
@@ -89,12 +103,3 @@
     width: 306px;
     
 }
-
-
-
-
-
-
-
-
-

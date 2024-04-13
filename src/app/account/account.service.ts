@@ -15,6 +15,7 @@ import { CartService } from '../api/services';
 import { Cart } from '../api/models/cart'
 import { CartPost$Params, cartPost } from '../api/fn/cart/cart-post';
 import { CartCartResult, UpsertCartRequest } from '../api/models';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -385,5 +386,71 @@ export class PhoneValidator implements Validator {
     }
     const areaCode = inputValue.substring(0, 3);
     return validAreaCodes.indexOf(areaCode) === -1 ? { phone: true } : null;
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class NationalIDValidator implements Validator {
+  validate(control: AbstractControl): ValidationErrors | null {
+    const inputValue = control.value as string;
+    if (inputValue.length !== 14) {
+      return { 'nationalID': 'invalid national id number' };
+    }
+
+    const yearsDigits = parseInt(inputValue.slice(0, 3), 10);
+    if (yearsDigits < 250 || yearsDigits > 302) {
+      return { 'nationalID': 'you must be born between 1950 and 2002' };
+    }
+
+    const nextTwoDigits = parseInt(inputValue.slice(3, 5), 10);
+    if (nextTwoDigits < 1 || nextTwoDigits > 12) {
+      return { 'nationalID': 'invalid month' };
+    }
+
+    const nextTwoDigitsAfterMonth = parseInt(inputValue.slice(5, 7), 10);
+    if (nextTwoDigitsAfterMonth < 1 || nextTwoDigitsAfterMonth > 31) {
+      return { 'nationalID': 'invalid day' };
+    }
+
+    const nextTwoDigitsAfterDay = parseInt(inputValue.slice(7, 9), 10);
+    if (nextTwoDigitsAfterDay < 1 || nextTwoDigitsAfterDay > 35) {
+      return { 'nationalID': 'invalid governorate number' };
+    }
+
+    return null;
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class StartTimeValidator implements Validator {
+  private startTime: NgbTimeStruct = {hour: 6, minute: 0 , second: 0};
+
+  setStartTime(startTime: NgbTimeStruct) {
+    this.startTime = startTime;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    console.log(this.startTime)
+    if (control.value.hour < this.startTime.hour || control.value.hour == this.startTime.hour && control.value.minute <= this.startTime.minute ) {
+      return { startTimeInvalid: `you cannot be early than ${this.startTime.hour} : ${this.startTime.minute}` };
+    }
+    return null;
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class EndTimeValidator implements Validator {
+  private endTime: NgbTimeStruct = {hour: 23, minute: 0 , second: 0};
+
+  setEndTime(endTime: NgbTimeStruct) {
+    this.endTime = endTime;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    console.log(this.endTime)
+    if (control.value.hour > this.endTime.hour || control.value.hour == this.endTime.hour && control.value.minute >= this.endTime.minute ) {
+      return { endTimeInvalid: `you cannot be late than ${this.endTime.hour} : ${this.endTime.minute}` };
+    }
+    return null;
   }
 }

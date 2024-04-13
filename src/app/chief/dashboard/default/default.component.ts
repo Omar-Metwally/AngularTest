@@ -1,55 +1,82 @@
 import { sideDish } from 'src/app/shared/models/side-dish/side-dish';
-import { GetMealOptionCartRequest } from './../../../api/models/get-meal-option-cart-request';
-import { GetMealOptionTable } from './../../../api/models/get-meal-table-request';
+// import { GetMealOptionCartRequest } from './../../../api/models/get-meal-option-cart-request';
+// import { GetMealOptionTable } from './../../../api/models/get-meal-table-request';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { GetMealTableRequest } from 'src/app/api/models';
+import { GetMealOptionTable, GetMealTableRequest, MealCategory, MealSizeOption, MealSpiceLevel, MealStyle } from 'src/app/api/models';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FilterPipe } from "../../../filter.pipe";
 import { MealsService } from 'src/app/api/services';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+
+interface MealTableRow {
+  category?: MealCategory;
+  getMealOptionsTable?: Array<GetMealOptionTable> | null;
+  isAvailable?: boolean;
+  mealID?: string;
+  mealStyle?: MealStyle;
+  rating?: number;
+  spiceLevel?: MealSpiceLevel;
+  title?: string | null;
+  selectedSize?: MealSizeOption,
+  totalSold?: number,
+  price?: number,
+  saveQuantity?: boolean,
+  selectedImage?: string | null
+
+
+
+}
 
 @Component({
-    selector: 'app-default',
-    standalone: true,
-    templateUrl: './default.component.html',
-    styleUrl: './default.component.css',
-    imports: [SharedModule, CommonModule, FilterPipe , ReactiveFormsModule ,FormsModule  ]
+  selector: 'app-default',
+  standalone: true,
+  templateUrl: './default.component.html',
+  styleUrl: './default.component.css',
+  imports: [SharedModule, CommonModule, FilterPipe, ReactiveFormsModule, FormsModule]
 })
 export class DefaultComponent {
   searchText: any;
-
-       meals: GetMealTableRequest[] = [];
-
+  meals: MealTableRow[] = [];
   loading: boolean = true;
-  constructor(private http: HttpClient,
-    private mealsService: MealsService) { }
+  isLoading: boolean = false;
+  activeButton: string = 'button1';
 
-  
+  constructor(private http: HttpClient,
+    private mealsService: MealsService,
+    private router: Router,
+    private dialog: MatDialog) { }
+
+
   ngOnInit() {
 
-   
-    
     this.mealsService.mealsChiefMealsGet().subscribe({
-      next: (response: GetMealTableRequest[])  => {
+      next: (response: GetMealTableRequest[]) => {
         this.meals = response;
-        console.log(this.meals)
-        console.log(response);
-        
+        // console.log(this.meals)
+        // console.log(response);
+
         this.calculateTotalSold();
-     // Set default price for each meal
-     this.meals.forEach(meal => {
-      meal.selectedSize = 0; // Set the selected size to the default size (0 for the first option)
-      this.selectSize(meal, 0); // Set the price and other relevant data based on the default size
-  });
+        // Set default price for each meal
+        this.meals.forEach(meal => {
+          meal.selectedSize = 0; // Set the selected size to the default size (0 for the first option)
+          this.selectSize(meal, 0); // Set the price and other relevant data based on the default size
+        });
       },
       error: error => {
         console.error(error);
         this.loading = false;
       }
     })
-          
+  }
+
+  redirectToMeal = (meal: any) => {
+    console.log(meal)
+    this.router.navigate(['/meal', meal.mealID]);
   }
 
   totalSold: number = 0;
@@ -58,33 +85,30 @@ export class DefaultComponent {
     this.totalSold = this.meals.reduce((total, meal) => total + (meal.totalSold || 0), 0);
   }
 
-//   selectSize(meal: GetMealTableRequest, size: number) {
-//     meal.selectedSize = size;
-//     meal.price = meal.getMealOptionsTable[size].price;
-//     meal.selectedImage = meal.getMealOptionsTable[size].thumbnailImage;
-//     // Update other relevant data as needed
-// }
+  //   selectSize(meal: GetMealTableRequest, size: number) {
+  //     meal.selectedSize = size;
+  //     meal.price = meal.getMealOptionsTable[size].price;
+  //     meal.selectedImage = meal.getMealOptionsTable[size].thumbnailImage;
+  //     // Update other relevant data as needed
+  // }
 
-selectSize(meal: GetMealTableRequest, size: number) {
-  meal.selectedSize = size;
-  meal.price = meal.getMealOptionsTable[size].price;
-  meal.saveQuantity = meal.getMealOptionsTable[size].saveQuantity;
-  meal.selectedImage = meal.getMealOptionsTable[size].thumbnailImage;
+  selectSize(meal: MealTableRow, size: number) {
+    if (!meal.getMealOptionsTable || !meal.getMealOptionsTable[size]) {
+      return;
+    }
 
-  // Update other relevant data as needed
-
-  // Iterate through meal.getMealOptionsTable to update isAvailable property
-//   meal.getMealOptionsTable.forEach(option => {
-//     option.isAvailable = option.mealSizeOption === size;
-// });
-}
+    meal.selectedSize = size;
+    meal.price = meal.getMealOptionsTable[size].price;
+    meal.saveQuantity = true;
+    meal.selectedImage = meal.getMealOptionsTable[size].thumbnailImage;
+  }
 
 
   isSizeAvailable(meal: GetMealTableRequest, sizeIndex: number): boolean {
-    if (meal.getMealOptionsTable.length > 0) {
+    if (meal.getMealOptionsTable != null && meal.getMealOptionsTable.length > 0) {
       return meal.getMealOptionsTable.some(option => option.mealSizeOption === sizeIndex && option.isAvailable);
     }
-          return false;
+    return false;
   }
 
   isDropdownOpen: boolean = true;
@@ -97,86 +121,37 @@ selectSize(meal: GetMealTableRequest, size: number) {
     this.isDropdownOpen = false;
 
   }
+
+  confirmMealDelete = () => {
+    console.log('deleted')
+  }
+  openConfirmMealDeleteDialog(mealOption: any) {
+    // this.mealOptionToDelete = mealOption; // Assign the meal option data
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: 'min-content',
+      height: 'min-content',
+      minWidth: '20%',
+      maxWidth: '100%',
+      maxHeight: '80%',
+      enterAnimationDuration: '500ms',
+      exitAnimationDuration: '250ms',
+      data: { // Pass data using `data` property
+        title: 'Confirm Meal Deletion',
+        content: `Are you sure you want to delete "${mealOption.name}"?`,
+        mealOptionID: mealOption.id
+      }
+    });
+
+    // Handle dialog close event (optional)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Meal option deleted:');
+      }
+    });
+  }
+  setActiveButton(buttonId: string) {
+    this.activeButton = buttonId;
+    this.isLoading = true;
+  }
 }
-
-
-
-    // ngOnInit() {
-    //   this.loading = true;
-  
-    //   this.http.get<GetMealTableRequest[]>('https://www.bl-hana.somee.com/meals/ChiefMeals')
-    //     .subscribe(data => {
-    //       this.meals = data;
-    //     console.log(this.meals);
-    //     this.loading = false; // Set loading to false once data is loaded
-  
-          
-    //     });
-    //   }
-
-  //           //  very important  
-  // selectSize(meal: GetMealTableRequest, size: number) {
-  //   // Assuming meal.getMealOptionsRequest[size] contains the selected size option
-  //     // meal.price = meal.getMealOptionsRequest[0].price;
-  //   // this.come=true;
-  //   meal.selectedSize = size;
-  //   // meal.price = meal.GetMealOptionsTable[size].price;
-  //   meal.price = meal.GetMealOptionsTable[size].price;
-    
-  //   meal.saveQuantity = meal.GetMealOptionsTable[size].saveQuantity;
-  //   // meal.selectedImage = meal.GetMealOptionsTable[size].thumbnailImage
-  //   meal.selectedImage = meal.GetMealOptionsTable[size].thumbnailImage;
-
-
-  //      // Update other relevant data as needed
-  //     //  meal.mealCategory = this.getMealCategory(meal); // Example: Update meal category
-  //     //  meal.mealSpiceLevel = this.getMealSpiceLevel(meal); // Example: Update meal spice level
-  //     //  meal.totalSold = this.getTotalSold(meal); // Example: Update total sold
-  // }
-
-  
-
-
-  // selectSize(meal: any, size: number) {
-  //   // Assuming meal.getMealOptionsRequest[size] contains the selected size option
-  //     // meal.price = meal.getMealOptionsRequest[0].price;
-  //   // this.come=true;
-  //   meal.selectedSize = size;
-  //   meal.price = meal.GetMealOptionsTable[size].price;
-  //   // meal.saveQuantity = meal.GetMealOptionsTable[size].saveQuantity;
-  //   // meal.selectedImage = meal.GetMealOptionsTable[size].thumbnailImage
-
-  //      // Update other relevant data as needed
-  //     //  meal.mealCategory = this.getMealCategory(meal); // Example: Update meal category
-  //     //  meal.mealSpiceLevel = this.getMealSpiceLevel(meal); // Example: Update meal spice level
-  //     //  meal.totalSold = this.getTotalSold(meal); // Example: Update total sold
-  // }
-
-
-
-
-
-
-
-  // selectSize(meal: any, size: number) {
-  //   // Assuming meal.getMealOptionsRequest[size] contains the selected size option
-  //     // meal.price = meal.getMealOptionsRequest[0].price;
-  //   // this.come=true;
-  //   meal.selectedSize = size;
-  //   meal.price = meal.getMealOptionsRequest[size].price;
-  //   meal.availableQuantity = meal.getMealOptionsRequest[size].saveQuantity;
-
-  //      // Update other relevant data as needed
-  //     //  meal.mealCategory = this.getMealCategory(meal); // Example: Update meal category
-  //     //  meal.mealSpiceLevel = this.getMealSpiceLevel(meal); // Example: Update meal spice level
-  //     //  meal.totalSold = this.getTotalSold(meal); // Example: Update total sold
-  // }
-
-
-  // selectSize(meal: GetMealTableRequest, size: number) {
-  //   meal.GetMealOptionsTable[0].mealSizeOption = size ?? 0;
-  //   meal.GetMealOptionsTable[0].price = meal.GetMealOptionsTable[size].price;
-  //   meal.GetMealOptionsTable[0].sold = meal.GetMealOptionsTable[size].sold;
-  // }
-
-

@@ -26,5 +26,7 @@
 
   <mat-error *ngIf="control.errors?.['required']">Please enter your {{label}}</mat-error>
   <mat-error *ngIf="control.errors?.['uniqueEmail']">This email is taken</mat-error>
+
+  <mat-error *ngIf="control.errors?.['nationalID']">{{control.errors?.['nationalID']}}</mat-error>
 </mat-form-field>
 </div>

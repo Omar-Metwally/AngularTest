@@ -1,4 +1,4 @@
-div {
+/* div {
     color: #fff;
     background-color: #cdcdcf;
     border-color: #cdcdcf;
@@ -9,4 +9,26 @@ div:hover {
     background-color: #b0afb3;
     border-color: #b0afb3;
     border-style: solid;
+} */
+
+.square{
+    border-radius: 10px;
+    height: 270px;
+    padding: 20px;
+    flex-direction: row;
+    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
+            0 5px 12px -2px rgb(0,0,0,0.1),
+            0 18px 36px -6px rgb(0,0,0,0.1);
+}
+
+.square:hover {
+    background-color: #F5F5F4;
+    transition: 0.7s;
+}
+
+.inside{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

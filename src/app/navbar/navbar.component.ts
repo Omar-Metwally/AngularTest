@@ -37,7 +37,6 @@ export class NavbarComponent {
       enterAnimationDuration,
       exitAnimationDuration,
     });
-    console.log(this.accountService.cart$)
   }
 
   signup(enterAnimationDuration: string, exitAnimationDuration: string): void {
