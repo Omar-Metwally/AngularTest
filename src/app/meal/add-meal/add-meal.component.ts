@@ -526,7 +526,6 @@ export class AddMealComponent implements OnInit {
         'mealSideDishes': addMealSideDish
       }
     }
-    console.log(createMealOptionRequest)
     let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
       panelClass: '',
       disableClose: true

@@ -6,10 +6,9 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { DiscountCalculateRequest } from '../../models/discount-calculate-request';
 
 export interface PromoCodeDiscountCalculatePost$Params {
-      body?: DiscountCalculateRequest
+      body?: string
 }
 
 export function promoCodeDiscountCalculatePost(http: HttpClient, rootUrl: string, params?: PromoCodeDiscountCalculatePost$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {

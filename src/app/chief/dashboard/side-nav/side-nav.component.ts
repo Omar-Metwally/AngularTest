@@ -9,6 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { AccountService } from 'src/app/account/account.service';
 
 // export type MenuItem =  {
 //   icon:string;
@@ -107,6 +108,10 @@ export interface MenuItem {
 export class SideNavComponent {
   collapsed = false;
 
+  constructor(public accountService: AccountService){
+
+  }
+
   menuItems: MenuItem[] = [
     {
       icon: 'person',
@@ -121,7 +126,7 @@ export class SideNavComponent {
     {
       icon: 'local_shipping',
       label:'Orders',
-      route:'analytics'
+      route:'orders'
     },
     {
       icon: 'history',
@@ -132,9 +137,14 @@ export class SideNavComponent {
       icon: 'analytics',
       label:'Analytics',
       route:'comments'
+    },
+    {
+      icon: 'kitchen',
+      label:'Ingredients',
+      route:'ingredients'
     }
   ];
-
+  
   toggleCollapse() {
     this.collapsed = !this.collapsed;
   }

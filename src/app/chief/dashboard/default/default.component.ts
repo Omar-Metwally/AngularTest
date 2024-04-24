@@ -27,9 +27,6 @@ interface MealTableRow {
   price?: number,
   saveQuantity?: boolean,
   selectedImage?: string | null
-
-
-
 }
 
 @Component({
@@ -48,7 +45,7 @@ export class DefaultComponent {
 
   constructor(private http: HttpClient,
     private mealsService: MealsService,
-    private router: Router,
+    public router: Router,
     private dialog: MatDialog) { }
 
 
@@ -138,7 +135,7 @@ export class DefaultComponent {
       exitAnimationDuration: '250ms',
       data: { // Pass data using `data` property
         title: 'Confirm Meal Deletion',
-        content: `Are you sure you want to delete "${mealOption.name}"?`,
+        content: `Are you sure you want to delete "${mealOption.title}"?`,
         mealOptionID: mealOption.id
       }
     });

@@ -57,11 +57,12 @@
 
 import {Component, ElementRef, Input, ViewChild, input} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, CommonModule} from '@angular/common';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Option } from 'src/app/shared/models/address/option';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-select-input',
@@ -75,6 +76,8 @@ import { Option } from 'src/app/shared/models/address/option';
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
+    MatIconModule,
+    CommonModule,
   ],
 })
 export class SelectInputComponent {

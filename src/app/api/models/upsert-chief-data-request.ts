@@ -9,6 +9,7 @@ export interface UpsertChiefDataRequest {
   description?: string | null;
   firstName?: string | null;
   floorNumber?: string | null;
+  governmentID?: string | null;
   healthCertImage?: string | null;
   lastName?: string | null;
   phoneNumber?: string | null;

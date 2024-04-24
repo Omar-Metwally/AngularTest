@@ -18,9 +18,9 @@ export interface MealsChiefMealsGet$Plain$Params {
   TagFilter?: Array<MealTag>;
   SizeFilter?: Array<MealSizeOption>;
   SortBy?: SortBy;
-  MealSpiceLevel?: MealSpiceLevel;
-  MealCategory?: MealCategory;
-  MealStyle?: MealStyle;
+  MealSpiceLevel?: Array<MealSpiceLevel>;
+  MealCategory?: Array<MealCategory>;
+  MealStyle?: Array<MealStyle>;
   ChiefFilter?: Array<string>;
   StartPrice?: number;
   EndPrice?: number;

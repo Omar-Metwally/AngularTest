@@ -1,0 +1,39 @@
+.headline {
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    text-align: left;
+}
+
+.content {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color
+    : rgba(101, 101, 101, 1);
+}
+.size-indicator {
+    display: inline-block;
+    white-space: nowrap;
+  }
+.btn-green{
+    background: rgba(42, 145, 21, 1);
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    border-style: none;
+    width: 100%;
+    aspect-ratio: 424 / 51;
+}
+::ng-deep .mat-icon{
+    position: absolute;
+  left: 12px;
+  top: 14px;
+}

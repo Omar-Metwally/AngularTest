@@ -10,12 +10,17 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { GetMealReviewRequest } from '../models/get-meal-review-request';
+import { GetMealReviewsRequest } from '../models/get-meal-reviews-request';
 import { mealReviewDelete } from '../fn/meal-review/meal-review-delete';
 import { MealReviewDelete$Params } from '../fn/meal-review/meal-review-delete';
 import { mealReviewGet } from '../fn/meal-review/meal-review-get';
 import { MealReviewGet$Params } from '../fn/meal-review/meal-review-get';
 import { mealReviewGet$Plain } from '../fn/meal-review/meal-review-get-plain';
 import { MealReviewGet$Plain$Params } from '../fn/meal-review/meal-review-get-plain';
+import { mealReviewGetMealReviewGet } from '../fn/meal-review/meal-review-get-meal-review-get';
+import { MealReviewGetMealReviewGet$Params } from '../fn/meal-review/meal-review-get-meal-review-get';
+import { mealReviewGetMealReviewGet$Plain } from '../fn/meal-review/meal-review-get-meal-review-get-plain';
+import { MealReviewGetMealReviewGet$Plain$Params } from '../fn/meal-review/meal-review-get-meal-review-get-plain';
 import { mealReviewPost } from '../fn/meal-review/meal-review-post';
 import { MealReviewPost$Params } from '../fn/meal-review/meal-review-post';
 import { mealReviewPut } from '../fn/meal-review/meal-review-put';
@@ -146,6 +151,53 @@ export class MealReviewService extends BaseService {
   mealReviewDelete(params?: MealReviewDelete$Params, context?: HttpContext): Observable<void> {
     return this.mealReviewDelete$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `mealReviewGetMealReviewGet()` */
+  static readonly MealReviewGetMealReviewGetPath = '/MealReview/GetMealReview';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealReviewGetMealReviewGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealReviewGetMealReviewGet$Plain$Response(params?: MealReviewGetMealReviewGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<GetMealReviewsRequest>> {
+    return mealReviewGetMealReviewGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealReviewGetMealReviewGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealReviewGetMealReviewGet$Plain(params?: MealReviewGetMealReviewGet$Plain$Params, context?: HttpContext): Observable<GetMealReviewsRequest> {
+    return this.mealReviewGetMealReviewGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetMealReviewsRequest>): GetMealReviewsRequest => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealReviewGetMealReviewGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealReviewGetMealReviewGet$Response(params?: MealReviewGetMealReviewGet$Params, context?: HttpContext): Observable<StrictHttpResponse<GetMealReviewsRequest>> {
+    return mealReviewGetMealReviewGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealReviewGetMealReviewGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealReviewGetMealReviewGet(params?: MealReviewGetMealReviewGet$Params, context?: HttpContext): Observable<GetMealReviewsRequest> {
+    return this.mealReviewGetMealReviewGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetMealReviewsRequest>): GetMealReviewsRequest => r.body)
     );
   }
 

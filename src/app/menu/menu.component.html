@@ -47,12 +47,11 @@
         </div>
     </div>
 </div> -->
-
 <div class="container">
-    <div class="row mt-4">
-      <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-        <div class="mt-4">
-          <div class="d-lg-none" ngbAccordion [closeOthers]="true">
+  <div class="row mt-4">
+    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+      <div class="mt-4">
+        <!-- <div class="d-lg-none" ngbAccordion [closeOthers]="true">
             <div ngbAccordionItem class="accordion-item mb-4">
               <h2 ngbAccordionHeader>
                 <button ngbAccordionButton class="accordion-button fw-bold">Sort By</button>
@@ -96,276 +95,256 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="d-lg-none d-md-block" ngbAccordion [closeOthers]="true">
-            <div ngbAccordionItem class="accordion-item mb-4">
-              <h2 ngbAccordionHeader>
-                <button ngbAccordionButton class="accordion-button fw-bold">Filter by</button>
-              </h2>
-              <div ngbAccordionCollapse>
-                <div ngbAccordionBody>
-                  <ng-template>
-                    <div class="filterby">
-                      <div>
-                        <p class="fw-semibold"
-                          style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">Dish Type</p>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="maindish">
-                        <label class="form-check-label fw-medium" for="maindish">
-                          Main Dish
-                        </label>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="sidedish">
-                        <label class="form-check-label fw-medium" for="sidedish">
-                          Side Dish
-                        </label>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="dessert">
-                        <label class="form-check-label fw-medium" for="dessert">
-                          Dessert
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="appetizer">
-                        <label class="form-check-label fw-medium" for="appetizer">
-                          Appetizer
-                        </label>
-                      </div>
+          </div> -->
+        <div class="d-lg-none d-md-block" ngbAccordion [closeOthers]="true">
+          <div ngbAccordionItem class="accordion-item mb-4">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="accordion-button fw-bold">Filter by</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <div class="filterby">
+                    <div>
+                      <p class="fw-semibold"
+                        style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">Dish Type</p>
                     </div>
-                    <div class="spiceslevel mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
-                      <div style="margin-bottom: 1rem;">
-                        <p class="fw-semibold"
-                          style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">Spice level
-                        </p>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="notspicy">
-                        <label class="form-check-label fw-medium" for="notspicy">
-                          Not Spicy
-                        </label>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="mild">
-                        <label class="form-check-label fw-medium" for="mild">
-                          Mild
-                        </label>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="spicymedium">
-                        <label class="form-check-label fw-medium" for="spicymedium">
-                          Medium
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="spicy">
-                        <label class="form-check-label fw-medium" for="spicy">
-                          Spicy
-                        </label>
-                      </div>
+                    <div class="d-flex row">
+                      <mat-checkbox color="primary" (change)="categoryFiltering($event)" [value]="categoryOptions[0].id"
+                        class="fw-medium col-12">Main Dish</mat-checkbox>
+                      <mat-checkbox color="primary" (change)="categoryFiltering($event)" [value]="categoryOptions[1].id"
+                        class="fw-medium col-12">Side Dish</mat-checkbox>
+                      <mat-checkbox color="primary" (change)="categoryFiltering($event)" [value]="categoryOptions[2].id"
+                        class="fw-medium col-12">Appetizer</mat-checkbox>
                     </div>
-                    <div class="mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid; padding-top: 1.5rem;">
-                      <app-chips-auto-complete-input [SelectedOptions]="selectedTags" [control]="tags" type="text"
-                        label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+                  </div>
+                  <div class="spiceslevel mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
+                    <div style="margin-bottom: 1rem;">
+                      <p class="fw-semibold"
+                        style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">Spice level
+                      </p>
                     </div>
-                    <div class="sizes" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
-                      <div style="margin-bottom: 1rem;">
-                        <p class="fw-semibold"
-                          style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">Sizes</p>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="small">
-                        <label class="form-check-label fw-medium" for="small">
-                          Small
-                        </label>
-                      </div>
-                      <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="sizemedium">
-                        <label class="form-check-label fw-medium" for="sizemedium">
-                          Medium
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="large">
-                        <label class="form-check-label fw-medium" for="large">
-                          Large
-                        </label>
-                      </div>
+                    <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[0].id"
+                      class="fw-medium col-12">Not Spicy</mat-checkbox>
+                    <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[1].id"
+                      class="fw-medium col-12">Mild</mat-checkbox>
+                    <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[2].id"
+                      class="fw-medium col-12">Medium</mat-checkbox>
+                    <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[3].id"
+                      class="fw-medium col-12">Spicy</mat-checkbox>
+                    <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[4].id"
+                      class="fw-medium col-12">Very spicy</mat-checkbox>
+                  </div>
+                  <div class="mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid; padding-top: 1.5rem;">
+                    <app-chips-auto-complete-input [SelectedOptions]="selectedTags" [control]="tags" type="text"
+                      label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+                  </div>
+                  <div class="sizes" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
+                    <div style="margin-bottom: 1rem;">
+                      <p class="fw-semibold"
+                        style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">Sizes</p>
                     </div>
-                    <div class="mt-3 pt-3" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
-                      <mat-slider style="width: 95%;" min="0" max="1000" step="true" discrete="true">
-                        <input [formControl]="startPrice" value="0" matSliderStartThumb>
-                        <input [formControl]="endPrice" value="1000" matSliderEndThumb>
-                      </mat-slider>
-                    </div>
-                  </ng-template>
-                </div>
+                    <mat-checkbox color="primary" (change)="sizeFiltering($event)" value="1"
+                      class="fw-medium col-12">Small</mat-checkbox>
+                    <mat-checkbox color="primary" (change)="sizeFiltering($event)" value="2"
+                      class="fw-medium col-12">Medium</mat-checkbox>
+                    <mat-checkbox color="primary" (change)="sizeFiltering($event)" value="3"
+                      class="fw-medium col-12">Large</mat-checkbox>
+                  </div>
+                  <div class="mt-3 pt-3" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
+                    <mat-slider style="width: 95%;" min="0" max="1000" step="true" discrete="true">
+                      <input [formControl]="startPrice" value="0" matSliderStartThumb>
+                      <input [formControl]="endPrice" value="1000" matSliderEndThumb>
+                    </mat-slider>
+                  </div>
+                </ng-template>
               </div>
             </div>
           </div>
-          <div class="sortby d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block">
-            <div style="border: 0.11rem #31AC18 solid; color: #31AC18; border-radius: 0.5rem; margin-bottom: 1rem;">
-              <p class="fw-semibold" style="text-align: left; font-size: 17px; padding-left: 1rem; padding-top: 1rem;">
-                Sort By</p>
-            </div>
-            <div class="form-check mb-2">
-              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[0]" id="bestseller">
-              <label class="form-check-label fw-medium" for="bestseller">
-                Best Seller
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[1]" id="newarrivals">
-              <label class="form-check-label fw-medium" for="newarrivals">
-                New Arrivals
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[0]" id="highlyrated">
-              <label class="form-check-label fw-medium" for="highlyrated">
-                Highly Rated
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[2]" id="pricelowhigh">
-              <label class="form-check-label fw-medium" for="pricelowhigh">
-                Price From Low to High
-              </label>
-            </div>
-            <div class="form-check">
-              <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox" [value]="sortByOptions[3]" id="pricehighlow">
-              <label class="form-check-label fw-medium" for="pricehighlow">
-                Price From High to Low
-              </label>
-            </div>
+        </div>
+        <!-- <div class="sortby d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block">
+          <div style="border: 0.11rem #31AC18 solid; color: #31AC18; border-radius: 0.5rem; margin-bottom: 1rem;">
+            <p class="fw-semibold" style="text-align: left; font-size: 17px; padding-left: 1rem; padding-top: 1rem;">
+              Sort By</p>
           </div>
-  
-          <div class="filterby mt-4 d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block">
-            <div style="border: 0.11rem #31AC18 solid; color: #31AC18; border-radius: 0.5rem; margin-bottom: 1rem;">
-              <p class="fw-semibold" style="text-align: left; font-size: 17px; padding-left: 1rem; padding-top: 1rem;">
-                Filter By</p>
-            </div>
-            <div>
+          <div class="form-check mb-2">
+            <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox"
+              [value]="sortByOptions[0]" id="bestseller">
+            <label class="form-check-label fw-medium" for="bestseller">
+              Best Seller
+            </label>
+          </div>
+          <div class="form-check mb-2">
+            <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox"
+              [value]="sortByOptions[1]" id="newarrivals">
+            <label class="form-check-label fw-medium" for="newarrivals">
+              New Arrivals
+            </label>
+          </div>
+          <div class="form-check mb-2">
+            <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox"
+              [value]="sortByOptions[0]" id="highlyrated">
+            <label class="form-check-label fw-medium" for="highlyrated">
+              Highly Rated
+            </label>
+          </div>
+          <div class="form-check mb-2">
+            <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox"
+              [value]="sortByOptions[2]" id="pricelowhigh">
+            <label class="form-check-label fw-medium" for="pricelowhigh">
+              Price From Low to High
+            </label>
+          </div>
+          <div class="form-check">
+            <input [formControl]="sortBy" (click)="hello()" class="form-check-input" type="checkbox"
+              [value]="sortByOptions[3]" id="pricehighlow">
+            <label class="form-check-label fw-medium" for="pricehighlow">
+              Price From High to Low
+            </label>
+          </div>
+        </div> -->
+        <app-select-input [optionSelected]="hello" class="mb-2" [control]="sortBy" type="text" placeholder="Sort By"
+          label="Sort By" [options]="sortByOptions" icon="sort"></app-select-input>
+        <div class="filterby mt-4 d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block">
+          <div style="border: 0.11rem #31AC18 solid; color: #31AC18; border-radius: 0.5rem; margin-bottom: 1rem;">
+            <p class="fw-semibold" style="text-align: left; font-size: 17px; padding-left: 1rem; padding-top: 1rem;">
+              Filter By</p>
+          </div>
+          <div>
+            <p class="fw-semibold" style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">
+              Dish Type</p>
+          </div>
+          <div class="d-flex row">
+            <mat-checkbox color="primary" (change)="categoryFiltering($event)" [value]="categoryOptions[0].id"
+              class="fw-medium col-12">Main Dish</mat-checkbox>
+            <mat-checkbox color="primary" (change)="categoryFiltering($event)" [value]="categoryOptions[1].id"
+              class="fw-medium col-12">Side Dish</mat-checkbox>
+            <mat-checkbox color="primary" (change)="categoryFiltering($event)" [value]="categoryOptions[2].id"
+              class="fw-medium col-12">Appetizer</mat-checkbox>
+          </div>
+          <div class="spiceslevel mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
+            <div style="margin-bottom: 1rem;">
               <p class="fw-semibold" style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">
-                Dish Type</p>
+                Spice level</p>
             </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="maindish">
-              <label class="form-check-label fw-medium" for="maindish">
-                Main Dish
-              </label>
+            <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[0].id"
+              class="fw-medium col-12">Not Spicy</mat-checkbox>
+            <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[1].id"
+              class="fw-medium col-12">Mild</mat-checkbox>
+            <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[2].id"
+              class="fw-medium col-12">Medium</mat-checkbox>
+            <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[3].id"
+              class="fw-medium col-12">Spicy</mat-checkbox>
+            <mat-checkbox color="primary" (change)="spiceFiltering($event)" [value]="spiceLevelOptions[4].id"
+              class="fw-medium col-12">Very spicy</mat-checkbox>
+          </div>
+          <div class="mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid; padding-top: 1.5rem;">
+            <app-chips-auto-complete-input [SelectedOptions]="selectedTags" [control]="tags" type="text" label="Tags"
+              [options]="tagsOptions"></app-chips-auto-complete-input>
+          </div>
+          <div class="sizes" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
+
+            <div style="margin-bottom: 1rem;">
+              <p class="fw-semibold" style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">
+                Sizes</p>
             </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="sidedish">
-              <label class="form-check-label fw-medium" for="sidedish">
-                Side Dish
-              </label>
-            </div>
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="checkbox" value="" id="dessert">
-              <label class="form-check-label fw-medium" for="dessert">
-                Dessert
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="appetizer">
-              <label class="form-check-label fw-medium" for="appetizer">
-                Appetizer
-              </label>
-            </div>
-            <div class="spiceslevel mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
-              <div style="margin-bottom: 1rem;">
-                <p class="fw-semibold" style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">
-                  Spice level</p>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" value="" id="notspicy">
-                <label class="form-check-label fw-medium" for="notspicy">
-                  Not Spicy
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" value="" id="mild">
-                <label class="form-check-label fw-medium" for="mild">
-                  Mild
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" value="" id="spicymedium">
-                <label class="form-check-label fw-medium" for="spicymedium">
-                  Medium
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="spicy">
-                <label class="form-check-label fw-medium" for="spicy">
-                  Spicy
-                </label>
-              </div>
-            </div>
-            <div class="mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid; padding-top: 1.5rem;">
-              <app-chips-auto-complete-input [SelectedOptions]="selectedTags" [control]="tags" type="text" label="Tags"
-                [options]="tagsOptions"></app-chips-auto-complete-input>
-            </div>
-            <div class="sizes" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
-              <div style="margin-bottom: 1rem;">
-                <p class="fw-semibold" style="text-align: left; font-size: 23px; padding-left: 0rem; padding-top: 1rem;">
-                  Sizes</p>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" value="" id="small">
-                <label class="form-check-label fw-medium" for="small">
-                  Small
-                </label>
-              </div>
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" value="" id="sizemedium">
-                <label class="form-check-label fw-medium" for="sizemedium">
-                  Medium
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="large">
-                <label class="form-check-label fw-medium" for="large">
-                  Large
-                </label>
-              </div>
-            </div>
-            <div class="mt-3 pt-3" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
-              <mat-slider style="width: 95%;" min="0" max="1000" step="true" discrete="true">
-                <input [formControl]="startPrice" value="0" matSliderStartThumb>
-                <input [formControl]="endPrice" value="1000" matSliderEndThumb>
-              </mat-slider>
-            </div>
+            <mat-checkbox color="primary" (change)="sizeFiltering($event)" value="0"
+              class="fw-medium col-12">Small</mat-checkbox>
+            <mat-checkbox color="primary" (change)="sizeFiltering($event)" value="1"
+              class="fw-medium col-12">Medium</mat-checkbox>
+            <mat-checkbox color="primary" (change)="sizeFiltering($event)" value="2"
+              class="fw-medium col-12">Large</mat-checkbox>
+          </div>
+          <div class="mt-3 pt-3" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
+            <mat-slider style="width: 95%;" min="0" max="1000" step="true" discrete="true">
+              <input (dragEnd)="hello()" [formControl]="startPrice" matSliderStartThumb>
+              <input (dragEnd)="hello()" [formControl]="endPrice" matSliderEndThumb>
+            </mat-slider>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-9 col-xl-19">
-        <div class="d-flex justify-content-center">
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/american.svg"
-              class="card-img-top" alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/indian.svg" class="card-img-top"
-              alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/latin-american.svg"
-              class="card-img-top" alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/chinese.svg" class="card-img-top"
-              alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/pakistania.svg"
-              class="card-img-top" alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/japanese.svg"
-              class="card-img-top" alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/egyption.svg"
-              class="card-img-top" alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/italian.svg" class="card-img-top"
-              alt="..."></div>
-          <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/maghrby.svg" class="card-img-top"
-              alt="..."></div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+      <div class="d-flex row justify-content-center gx-5">
+        <!-- <div class="col box-style-option" (click)="this.style.setValue(0)">
+          <img src="/assets/images/egyption-food.jpg">
+          <div class="">Egyptian</div>
         </div>
-        <div infiniteScroll [infiniteScrollDistance]="250" [infiniteScrollThrottle]="1" (scrolled)="onScroll()"
-          [scrollWindow]="true">
-          <div class="text-center" style="
+        <div class="col box-style-option">
+          <img src="/assets/images/italian-food.jpg">
+          <div class="">Italian</div>
+        </div>
+        <div class="col box-style-option">
+          <img src="/assets/images/moroccan-food.jpg">
+          <div class="">Moroccan</div>
+        </div>
+        <div class="col box-style-option">
+          <img src="/assets/images/american-food.jpg">
+          <div class="">American</div>
+        </div>
+        <div class="col box-style-option">
+          <img src="/assets/images/syrian-food.jpg">
+          <div class="">Syrian</div>
+        </div>
+        <div class="col box-style-option">
+          <img src="/assets/images/asian-food.jpg">
+          <div class="">Asian</div>
+        </div> -->
+        <div *ngFor="let item of [0, 1, 2, 3, 4, 5]; let i = index" class="col box-style-option" [class.active-box-style-option]="activeDivIndex === i" (click)="toggleBoxShadow($event, i)">
+          <img [src]="'/assets/images/' + ['egyption-food.jpg', 'italian-food.jpg', 'moroccan-food.jpg', 'american-food.jpg', 'syrian-food.jpg', 'asian-food.jpg'][i]">
+          <div>{{['Egyptian', 'Italian', 'Moroccan', 'American', 'Syrian', 'Asian'][i]}}</div>
+        </div>
+        
+        <!-- <div class="col box-style-option" (click)="toggleBoxShadow($event)">
+          <img src="/assets/images/egyption-food.jpg">
+          <div>Egyptian</div>
+        </div>
+        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
+          <img src="/assets/images/italian-food.jpg">
+          <div>Italian</div>
+        </div>
+        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
+          <img src="/assets/images/moroccan-food.jpg">
+          <div>Moroccan</div>
+        </div>
+        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
+          <img src="/assets/images/american-food.jpg">
+          <div>American</div>
+        </div>
+        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
+          <img src="/assets/images/syrian-food.jpg">
+          <div>Syrian</div>
+        </div>
+        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
+          <img src="/assets/images/asian-food.jpg">
+          <div>Asian</div>
+        </div> -->
+        
+
+
+
+        <!-- <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/american.svg"
+            class="card-img-top" alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/indian.svg" class="card-img-top"
+            alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/latin-american.svg"
+            class="card-img-top" alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/chinese.svg" class="card-img-top"
+            alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/pakistania.svg"
+            class="card-img-top" alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/japanese.svg"
+            class="card-img-top" alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/egyption.svg"
+            class="card-img-top" alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/italian.svg" class="card-img-top"
+            alt="..."></div>
+        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/maghrby.svg" class="card-img-top"
+            alt="..."></div> -->
+      </div>
+      <div infiniteScroll [infiniteScrollDistance]="250" [infiniteScrollThrottle]="1" (scrolled)="onScroll()"
+        [scrollWindow]="true">
+        <div class="text-center" style="
               margin-top: 2rem;
               font-family: Roboto;
               font-size: 24px;
@@ -374,15 +353,16 @@
               letter-spacing: 0em;
               text-align: left;
               ">Our Most popular Dishes</div>
-          <div @fadeIn class="row d-flex justify-content-start">
-            @for (mealCard of mealsCard; track mealCard) {
-            <div class="col-10 col-sm-7 col-md-6 col-lg-5 col-xl-5 col-xxl-4">
-                <app-meal-card [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMeal]="redirectToMeal"></app-meal-card>
-            </div>
-            }
-            <div *ngIf="isLoading"><img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"></div>
+        <div @fadeIn class="row d-flex justify-content-start">
+          @for (mealCard of mealsCard; track mealCard) {
+          <div class="col-10 col-sm-7 col-md-6 col-lg-5 col-xl-5 col-xxl-4">
+            <app-meal-card [mealCardData]="mealCard" [addToCart]="addToCart"
+              [redirectToMeal]="redirectToMeal"></app-meal-card>
           </div>
+          }
+          <div *ngIf="isLoading"><img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"></div>
         </div>
       </div>
     </div>
   </div>
+</div>

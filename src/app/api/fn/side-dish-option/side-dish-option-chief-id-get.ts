@@ -13,7 +13,12 @@ export interface SideDishOptionChiefIdGet$Params {
 }
 
 export function sideDishOptionChiefIdGet(http: HttpClient, rootUrl: string, params?: SideDishOptionChiefIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetSideDishOptionRequest>>> {
-  const rb = new RequestBuilder(rootUrl, sideDishOptionChiefIdGet.PATH, 'get');
+  if(!params){
+    sideDishOptionChiefIdGet.PATH = '/SideDishOption';
+  }
+  const rb = new RequestBuilder(rootUrl, 
+    sideDishOptionChiefIdGet.PATH
+    , 'get');
   if (params) {
     rb.path('ChiefID', params.ChiefID, {});
   }

@@ -10,6 +10,8 @@ import { AddMealComponent } from './meal/add-meal/add-meal.component';
 import { AddSideDishComponent } from './side-dish/add-side-dish/add-side-dish.component';
 import { DefaultComponent } from './chief/dashboard/default/default.component';
 import { ProfileComponent } from './chief/dashboard/profile/profile.component';
+import { OrdersComponent } from './chief/dashboard/orders/orders.component';
+import { IngredientsComponent } from './chief/dashboard/ingredients/ingredients.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,8 +43,12 @@ const routes: Routes = [
     {path:'', component: DefaultComponent},
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     {path:'meal-add', component: AddMealComponent},
+    {path:'meal-add/:mealID', component: AddMealComponent},
     {path:'side-dish-add', component: AddSideDishComponent},
     {path:'profile', component: ProfileComponent},
+    {path:'orders', component: OrdersComponent},
+    {path:'ingredients', component: IngredientsComponent},
+
   ]},
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' }

@@ -25,7 +25,7 @@ export class MealCardComponent implements OnInit {
     reviewsCount: 0,
     mealCardOptions: [],
   }
-  @Input() addToCart!: (mealOptionID: string) => void;
+  @Input() addToCart!: (mealOption: mealCardOption) => void;
   @Input() redirectToMeal!: (event: Event, mealOptionID: string) => void;
 
   currentMealOption: mealCardOption = {
@@ -55,7 +55,6 @@ export class MealCardComponent implements OnInit {
     this.displayedImage = this.currentMealOption.mealOptionImage
     this.displayedPrice = this.currentMealOption.mealOptionPrice
     this.currentMealOptionID = this.currentMealOption.mealOptionID
-    console.log(this.mealCardData)
   }
   changeCurrentMealOption(mealOptionIndex: number){
     this.currentMealOption = this.mealCardData.mealCardOptions[mealOptionIndex]

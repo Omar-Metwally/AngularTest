@@ -1,0 +1,103 @@
+/* orders */
+.tab-content >h1{
+    color: #000000;  
+      padding-top: 50px;
+      padding-bottom: 24px;
+      font-family: Roboto;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 41.6px;
+      text-align: left;
+      
+  }
+  /* tab buttons */
+  .btn-orders{
+      background-color: #E1E1E1 !important;
+      width: Hug (104px)px;
+              height: Hug (35px)px;
+              padding: 10px 24px 10px 24px;
+              margin-right: 12px;
+              border-radius: 10px;
+              opacity: 0px;
+              border: none;
+              color: white;
+  }
+  .btn-orders.active{
+      background-color: #9EE392 !important;
+      transition: 1s ease-in-out;
+       transition-duration: 1s;
+  }
+  
+  .search-orders{
+      width: 326px;
+          height: 44px;
+          top: 113px;
+          gap: 0px;
+          opacity: 0px;
+          margin-right: 53px;
+          border-radius: 10px;
+          border: 1px solid #D4D4D4;
+          margin-right: -314px;
+          border-radius: 10px;
+          border: 1px solid #D4D4D4;
+          padding-left: 40px;
+          align-content: center !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          align-self: center;
+  }
+  #searchIcon{
+      position: relative; margin-right: -26px; left: 10px;top: -36px;
+  }
+
+  .table-body-line{
+      border-top:#9EE392 solid 1px;
+  }
+  tbody tr {
+      justify-content: center;
+      align-items: center;
+      vertical-align: middle;
+      box-shadow: 1px 1px 9.6px 0px #31AC1833;
+      width: 1026px;
+      height: 145px;
+      top: 244px;
+      left: 382px;
+      gap: 0px;
+      border-radius: 10px 0px 0px 0px;
+      opacity: 0px;
+      border: 1px 1px 9.6px 0px #31AC1833;
+      border-radius: 10px;
+  
+  }
+  tbody tr td img{
+    width: 93px; height: 78px; align-items: center;border-radius: 9.56px;
+  
+  }
+  .price-color{
+      color: green; padding-top: 32px;
+  }
+  .btn-refuse{
+      background-color: #B02323;
+  }
+  .btn-accept{
+      background-color: #31AC18;
+  }
+  
+  .button-row button {
+      width: 100px;
+      padding: 7px;
+      margin-right: 12px;
+      border-radius: 10px;
+      font-family: Roboto;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
+      color: white;
+      text-align: center;
+      border: none;
+      margin-top: 31px;
+      margin-bottom: 23px;
+  }
+  
+  /* end table */

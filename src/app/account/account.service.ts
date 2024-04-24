@@ -12,9 +12,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { AbstractControl, AsyncValidator, FormControl, ValidationErrors, Validator } from '@angular/forms';
 import jwtDecode from 'jwt-decode';
 import { CartService } from '../api/services';
-import { Cart } from '../api/models/cart'
 import { CartPost$Params, cartPost } from '../api/fn/cart/cart-post';
-import { CartCartResult, UpsertCartRequest } from '../api/models';
+import { GetCartItemOptionRequest, GetCartItemRequest, GetCartRequest, UpsertCartItemRequest } from '../api/models';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
@@ -22,7 +21,7 @@ import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AccountService {
   private userSource = new ReplaySubject<User | null>(1);
-  private cartSource = new ReplaySubject<Cart[]>(1);
+  private cartSource = new ReplaySubject<GetCartRequest | null>(1);
   user$ = this.userSource.asObservable()
   cart$ = this.cartSource.asObservable()
 
@@ -120,34 +119,99 @@ export class AccountService {
   getCartItems(cartPost$Params: CartPost$Params) {
     return this.cartService.cartPost(cartPost$Params)
       .pipe(
-        map((cart: Cart[]) => {
+        map((cart: GetCartRequest) => {
           this.cartSource.next(cart);
         })
       );
   }
 
-  setCart() {
-    let cartItemsString = localStorage.getItem('cart')
-    let cartItems: Cart[] = []
-    if (cartItemsString) {
-      cartItems = JSON.parse(cartItemsString)
+  setCart(existingCart?: GetCartRequest) {
+    let cart: GetCartRequest = {}
+    if(existingCart){
+      localStorage.setItem('cart', JSON.stringify(existingCart))
+      this.cartSource.next(existingCart)
     }
-    this.cartSource.next(cartItems)
+    let cartString = localStorage.getItem('cart')
+    if (cartString) {
+      cart = JSON.parse(cartString)
+      this.cartSource.next(cart)
+    }
   }
 
-  addOrUpdateCartItem(cart: Cart[], cartItemToAdd: Cart): Cart[] {
-    const index = cart.findIndex(x => x.mealOptionID === cartItemToAdd.mealOptionID)
-    if (index === -1) {
-      cart.push(cartItemToAdd);
+  // addOrUpdateCartItem(cart: GetCartRequest, cartItemToAdd: GetCartItemRequest): GetCartRequest {
+  //   if(cart.cartItems){
+  //     const index = cart.cartItems?.findIndex(x => x.mealOptionID === cartItemToAdd.mealOptionID)
+  //     if (index === -1) {
+  //       cart.cartItems.push(cartItemToAdd);
+  //     }
+  //     else {
+  //       cart.cartItems[index].quantity += cartItemToAdd.quantity
+  //     }
+  //     return cart
+  //   }
+  //   cart.cartItems = []
+  //   cart.cartItems.push(cartItemToAdd);
+  //   return cart
+  // }
+  arraysEqual(a: GetCartItemOptionRequest[], b: GetCartItemOptionRequest[]): boolean {
+    if (a.length !== b.length) {
+        return false;
     }
-    else {
-      cart[index].quantity = cart[index].quantity + cartItemToAdd.quantity
-    }
-    return cart
-  }
 
-  setCartItems(cartItem: Cart) {
-    const upsertCartRequest: UpsertCartRequest[] = [{ mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity, timeOfDelivery: cartItem.timeOfDelivery }]
+    for (let i = 0; i < a.length; i++) {
+        const objA = a[i];
+        const objB = b[i];
+
+        if (objA.mealSideDishID !== objB.mealSideDishID ||
+            objA.mealSideDishOptionID !== objB.mealSideDishOptionID ||
+            objA.sideDishSizeOption !== objB.sideDishSizeOption) {
+            return false;
+        }
+    }
+
+    return true;
+}
+  // arraysEqual(a: GetCartItemOptionRequest[], b: GetCartItemOptionRequest[]): boolean {
+  //   return a.length === b.length && a.every((val, index) => val == b[index]);
+  // }
+  
+  addOrUpdateCartItem(cart: GetCartRequest, cartItemToAdd: GetCartItemRequest): GetCartRequest {
+    if (cart.cartItems) {
+      const index = cart.cartItems.findIndex(cartItem => {
+        if (cartItem.mealOptionID !== cartItemToAdd.mealOptionID) {
+          return false;
+        }
+  
+        // Sort the side dishes for consistent comparison
+        const sortedCartItemSideDishes = cartItem.cartItemOptions 
+        ? [...cartItem.cartItemOptions].sort() 
+        : [];
+        const sortedCartItemToAddSideDishes = cartItemToAdd.cartItemOptions 
+        ? [...cartItemToAdd.cartItemOptions].sort() 
+        : [];
+
+            // const sortedCartItemToAddSideDishes = [...cartItemToAdd.cartItemOptions].sort();
+  
+        // Check if the side dishes are the same
+        return this.arraysEqual(sortedCartItemSideDishes, sortedCartItemToAddSideDishes);
+      });
+  
+      if (index === -1) {
+        cart.cartItems.push(cartItemToAdd);
+      } else {
+        cart.cartItems[index].quantity += cartItemToAdd.quantity;
+      }
+  
+      return cart;
+    }
+  
+    cart.cartItems = [cartItemToAdd];
+    return cart;
+  }
+  
+
+  setCartItems(cartItem: GetCartItemRequest) {
+    const upsertCartRequest: UpsertCartItemRequest[] = [{ mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity }]
     const cartGetParams: CartPost$Params = {
       body: upsertCartRequest
     }
@@ -166,7 +230,7 @@ export class AccountService {
     localStorage.removeItem(environment.userKey);
     localStorage.removeItem('cart');
     this.userSource.next(null);
-    this.cartSource.closed
+    this.cartSource.next(null)
     this.router.navigateByUrl('/');
 
     return this.http.get(`${environment.appUrl}Auth/RevokeToken`, { withCredentials: true })
@@ -222,70 +286,113 @@ export class AccountService {
     this.userSource.next(user);
   }
 
-  async addItemToCart(cartItem?: Cart) {
-    let cartItems: Cart[] = []
+  async addItemToCart(cartItem?: GetCartItemRequest) {
+    console.log(cartItem, true)
+    let cart: GetCartRequest = {}
     if (cartItem) {
-      cartItems = this.addOrUpdateCart(cartItem)
+      cart = this.addOrUpdateCart(cartItem)
+      console.log(cart, 'addItemToCart')
     }
     if (this.isUserLoggedIn()) {
-      cartItems = await this.updateCartItemsFromAPI(cartItems) ?? cartItems
-      this.cartSource.next(cartItems)
+      cart = await this.updateCartItemsFromAPI(cart) ?? cart
+      this.cartSource.next(cart)
     }
     else {
-      this.cartSource.next(cartItems)
+      this.cartSource.next(cart)
     }
-    localStorage.setItem('cart', JSON.stringify(cartItems))
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
-  addOrUpdateCart(cartItem: Cart) {
-    let cartItems: Cart[] = this.getCart();
+  addOrUpdateCart(cartItemToAdd: GetCartItemRequest) {
+    let cart: GetCartRequest = this.getCart();
 
-    const index = cartItems.findIndex(x => x.mealOptionID === cartItem.mealOptionID)
-    if (index === -1) {
-      cartItems.push(cartItem);
+    if (cart.cartItems) {
+      const index = cart.cartItems.findIndex(cartItem => {
+        if (cartItem.mealOptionID !== cartItem.mealOptionID) {
+          return false;
+        }
+  
+        // Sort the side dishes for consistent comparison
+        const sortedCartItemSideDishes = cartItem.cartItemOptions 
+        ? [...cartItem.cartItemOptions].sort() 
+        : [];
+        const sortedCartItemToAddSideDishes = cartItemToAdd.cartItemOptions 
+        ? [...cartItemToAdd.cartItemOptions].sort() 
+        : [];
+
+
+            // const sortedCartItemToAddSideDishes = [...cartItemToAdd.cartItemOptions].sort();
+  
+        // Check if the side dishes are the same
+        return this.arraysEqual(sortedCartItemSideDishes, sortedCartItemToAddSideDishes);
+      });
+  
+      if (index === -1) {
+        cart.cartItems.push(cartItemToAdd);
+      } else {
+        cart.cartItems[index].quantity += cartItemToAdd.quantity;
+      }
+  
+      return cart;
     }
-    else {
-      cartItems[index].quantity = cartItems[index].quantity + cartItem.quantity
-    }
-    return cartItems
+  
+    cart.cartItems = [cartItemToAdd];
+    return cart
+
+    // const index = cart.cartItems.findIndex(x => x.mealOptionID === cartItem.mealOptionID)
+    // if (index === -1) {
+    //   cart.cartItems.push(cartItem);
+    // }
+    // else {
+    //   cart.cartItems[index].quantity = cart.cartItems[index].quantity + cartItem.quantity
+    // }
+    // return cart
   }
 
   getCart() {
     const key = localStorage.getItem('cart');
     if (key) {
-      const cart: Cart[] = JSON.parse(key);
+      const cart: GetCartRequest = JSON.parse(key);
       return cart;
     }
-    const cart: Cart[] = []
+    const cart: GetCartRequest = {}
     localStorage.setItem('cart', JSON.stringify(cart))
     this.cartSource.next(cart)
     return cart
   }
 
-  updateCartItemsFromAPI(cartItems?: Cart[]): Promise<Cart[] | undefined> {
+  updateCartItemsFromAPI(cart?: GetCartRequest): Promise<GetCartRequest | undefined> {
     return new Promise((resolve, reject) => {
-      if (cartItems) {
-        const upsertCartRequest: UpsertCartRequest[] = []
+      if (cart) {
+        const upsertCartRequest: UpsertCartItemRequest[] = []
 
-        for (const cartItem of cartItems) {
-          const upsertRequest: UpsertCartRequest = {
-            mealOptionID: cartItem.mealOptionID,
-            quantity: cartItem.quantity,
-            timeOfDelivery: cartItem.timeOfDelivery
-          };
-          upsertCartRequest.push(upsertRequest);
+        if(cart.cartItems){
+
+          for (const cartItem of cart.cartItems) {
+            const upsertRequest: UpsertCartItemRequest = {
+              mealOptionID: cartItem.mealOptionID,
+              quantity: cartItem.quantity,
+              sideDishes: cartItem.cartItemOptions ? cartItem.cartItemOptions.map(option => ({
+                mealSideDishID: option.mealSideDishID,
+                mealSideDishOptionID: option.mealSideDishOptionID,
+                sideDishSizeOption: option.sideDishSizeOption
+              })) : [],
+            };
+            upsertCartRequest.push(upsertRequest);
+          }
         }
-        const cartPost$Params: CartPost$Params = { body: upsertCartRequest }
+
+        const cartPost$Params: CartPost$Params = { body: upsertCartRequest, TimeOfDelivery: cart.timeOfDelivery?? undefined }
 
         this.cartService.cartPost$Response(cartPost$Params).subscribe({
           next: (response: HttpResponse<any>) => {
             if (response.status === 200) {
-              cartItems = response.body as Cart[]
+              cart = response.body as GetCartRequest
             } else if (response.status === 202) {
-              cartItems = response.body.data as Cart[]
+              cart = response.body.data as GetCartRequest
             }
-            console.log(cartItems, 'from api call')
-            resolve(cartItems)
+            console.log(cart, 'from api call')
+            resolve(cart)
           },
           error: error => {
             reject(error)
@@ -297,11 +404,11 @@ export class AccountService {
         this.cartService.cartPost$Response().subscribe({
           next: (response: HttpResponse<any>) => {
             if (response.status === 200) {
-              cartItems = response.body as Cart[]
+              cart = response.body as GetCartRequest
             } else if (response.status === 202) {
-              cartItems = response.body.data as Cart[]
+              cart = response.body.data as GetCartRequest
             }
-            resolve(cartItems)
+            resolve(cart)
           },
           error: error => {
             reject(error)
@@ -431,6 +538,9 @@ export class StartTimeValidator implements Validator {
 
   validate(control: AbstractControl): ValidationErrors | null {
     console.log(this.startTime)
+    if(!this.startTime){
+      this.startTime = {hour: 6, minute: 0 , second: 0};
+    }
     if (control.value.hour < this.startTime.hour || control.value.hour == this.startTime.hour && control.value.minute <= this.startTime.minute ) {
       return { startTimeInvalid: `you cannot be early than ${this.startTime.hour} : ${this.startTime.minute}` };
     }
@@ -448,6 +558,9 @@ export class EndTimeValidator implements Validator {
 
   validate(control: AbstractControl): ValidationErrors | null {
     console.log(this.endTime)
+    if(!this.endTime){
+      this.endTime = {hour: 24, minute: 0 , second: 0};
+    }
     if (control.value.hour > this.endTime.hour || control.value.hour == this.endTime.hour && control.value.minute >= this.endTime.minute ) {
       return { endTimeInvalid: `you cannot be late than ${this.endTime.hour} : ${this.endTime.minute}` };
     }

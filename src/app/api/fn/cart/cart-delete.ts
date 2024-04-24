@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { DeleteCartRequest } from '../../models/delete-cart-request';
+import { DeleteCartItemRequest } from '../../models/delete-cart-item-request';
 
 export interface CartDelete$Params {
-      body?: DeleteCartRequest
+      body?: DeleteCartItemRequest
 }
 
 export function cartDelete(http: HttpClient, rootUrl: string, params?: CartDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

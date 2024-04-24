@@ -19,5 +19,6 @@ Control value: {{control.value || 'empty'}}
     <mat-option [value]="option">{{option.name}}</mat-option>
     }
   </mat-autocomplete>
+  <mat-icon *ngIf="icon" mat-icon matSuffix color="primary" style="transform: scaleX(-1)">{{icon}}</mat-icon>
   <mat-error>You have to select an Option</mat-error>
 </mat-form-field>

@@ -9,18 +9,62 @@ import { Option } from 'src/app/shared/models/address/option';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 import { environment } from 'src/environments/environment';
-import { mealOption } from '../shared/models/meal/mealOption';
+import { mealOption, mealSideDishOption } from '../shared/models/meal/mealOption';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { AccountService } from '../account/account.service';
-import { Cart } from '../api/models/cart';
+import { GetCartItemRequest, MealCategory, MealSizeOption, MealSpiceLevel, MealStyle } from '../api/models';
+import { MatRadioModule } from '@angular/material/radio';
+import { mealSideDish } from '../shared/meal-card/meal-card';
+import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule } from '@angular/forms';
+import { NgbRating } from '@ng-bootstrap/ng-bootstrap';
 
+interface Meal1{
+  mealID: string;
+  title: string;
+  description: string;
+  rating: number;
+  chiefImage: string;
+  mealCategory?: MealCategory;
+  mealSpiceLevel?: MealSpiceLevel;
+  mealStyle?: MealStyle,
+  tagsID?: Array<Option>;
+  mealOptions: Array<MealOption>;
+  mealReviews: Array<MealReview>;
+}
+interface MealReview{
+  title: string;
+  customerName: string;
+  customerRating: number
+  date: string
+}
+interface MealOption {
+  mealOptionID: string
+  image: string;
+  MealSizeOption: MealSizeOption;
+  price: number;
+  availableQuantity: number;
+  mealSideDishes?: Array<MealSideDish>;
+  mealToppings?: Array<MealSideDish>;
+
+}
+interface MealSideDish{
+  mealSideDishID: string
+  sideDishOptions: Array<MealSideDishOption>
+}
+interface MealSideDishOption{
+  sideDishOptionID: string;
+  sideDishSizeOption: MealSizeOption;
+  name: string;
+  price: number;
+}
 
 @Component({
   selector: 'app-meal',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, MatRadioModule, MatDividerModule,FormsModule, NgbRating],
   templateUrl: './meal.component.html',
   styleUrl: './meal.component.css'
 })
@@ -31,25 +75,31 @@ export class MealComponent implements OnInit {
   spiceLevelOptions: Option[] = [];
   styleOptions: Option[] = [];
   tagsOptions: Option[] = [];
-  meal: Meal = {
+  meal: Meal1 = {
     title: '',
     mealID: '',
     description: '',
-    mealOptions: []
+    rating: 0,
+    mealOptions: [],
+    mealReviews: [],
+    chiefImage: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
   }
   errorMessages: string[] = [];
   displayedImage: string = ''
   displayedPrice: number = 0
   currentMealOptionID: string = ''
   currentQuantity: number = 1
-  currentMealOption: mealOption = {
+  currentMealOption: MealOption = {
     mealOptionID: '',
     MealSizeOption: 0,
-    isAvailable: false,
     price: 0,
     availableQuantity: 0,
-    saveQuantitySetting: false
+    image: ''
   }
+  mealSideDishes: mealSideDish[] = [];
+  mealToppings: mealSideDish[] = [];
+  selectedSideDishes: { [key: string]: [string, number ] } = {};
+
 
   constructor(private mealsService: MealsService,
     private dialog: MatDialog,
@@ -91,9 +141,10 @@ export class MealComponent implements OnInit {
       disableClose: true
     });
     this.meal.mealOptions.fill(this.currentMealOption)
-    console.log(this.meal)
+    // console.log(this.meal)
     this.mealsService.mealsMealIdGet(mealsMealIdGetParams).subscribe({
       next: (body) => {
+        console.log(body)
         dialogRef.close()
         this.loadMeal(body)
       },
@@ -105,7 +156,7 @@ export class MealComponent implements OnInit {
   }
 
   addToCart(mealOptionID: string) {
-    const cartItem : Cart = { mealOptionID: mealOptionID, quantity: 1 }
+    const cartItem : GetCartItemRequest = { mealOptionID: mealOptionID, quantity: 1 }
     this.accountService.addItemToCart(cartItem)
   }
 
@@ -115,8 +166,43 @@ export class MealComponent implements OnInit {
     this.displayedPrice = this.currentMealOption.price;
     this.currentQuantity = 1;
     this.currentMealOptionID = this.currentMealOption.mealOptionID;
+    console.log(this.currentMealOption)
   }
 
+  // loadMeal(getMealRequest: GetMealRequest) {
+  //   let mealCategoryIndex = getMealRequest.mealCategory ?? 0
+  //   let mealSpiceLevelIndex = getMealRequest.mealSpiceLevel ?? 0
+  //   let mealStyleIndex = getMealRequest.mealStyle ?? 0
+
+  //   this.meal = {
+  //     title: getMealRequest.title ?? '',
+  //     mealID: getMealRequest.mealID ?? '',
+  //     mealCategory: this.categoryOptions.find(x => +x.id == (mealCategoryIndex)),
+  //     mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
+  //     mealStyle: this.styleOptions.find(x => +x.id == (mealStyleIndex)),
+  //     description: getMealRequest.description ?? '',
+  //     //error
+  //     tagsID: this.tagsOptions.filter(
+  //       tagOption => getMealRequest.mealTags?.some(mealTag => mealTag.toFixed() === tagOption.id) // Check for matching IDs
+  //   ),
+  //     // tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)),
+  //     mealOptions: []
+  //   }
+  //   getMealRequest.getMealOptionsRequest?.forEach(mealOption => {
+  //     this.meal.mealOptions.push({
+  //       mealOptionID: mealOption.mealOptionID ?? '',
+  //       MealSizeOption: mealOption.mealSizeOption ?? 0,
+  //       isAvailable: mealOption.isAvailable ?? false,
+  //       price: mealOption.price ?? 0,
+  //       availableQuantity: 5,
+  //       saveQuantitySetting: mealOption.saveQuantity ?? false
+  //     })
+  //   })
+  //   this.displayedImage = `${environment.appUrl}images/meal/FullScreen_${this.meal.mealOptions[0].mealOptionID}.jpg`
+  //   this.currentMealOption = this.meal.mealOptions[0]
+  //   this.displayedPrice = this.meal.mealOptions[0].price
+  //   this.currentMealOptionID = this.meal.mealOptions[0].mealOptionID
+  // }
   loadMeal(getMealRequest: GetMealRequest) {
     let mealCategoryIndex = getMealRequest.mealCategory ?? 0
     let mealSpiceLevelIndex = getMealRequest.mealSpiceLevel ?? 0
@@ -125,26 +211,70 @@ export class MealComponent implements OnInit {
     this.meal = {
       title: getMealRequest.title ?? '',
       mealID: getMealRequest.mealID ?? '',
-      mealCategory: this.categoryOptions.find(x => +x.id == (mealCategoryIndex)),
-      mealSpiceLevel: this.spiceLevelOptions.find(x => +x.id == (mealSpiceLevelIndex)),
-      mealStyle: this.styleOptions.find(x => +x.id == (mealStyleIndex)),
+      rating: getMealRequest.rating ?? 0,
+      mealCategory: getMealRequest.mealCategory,
+      mealSpiceLevel: getMealRequest.mealSpiceLevel,
+      mealStyle: getMealRequest.mealStyle,
       description: getMealRequest.description ?? '',
+      chiefImage: getMealRequest.chiefImage ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
       //error
       tagsID: this.tagsOptions.filter(
         tagOption => getMealRequest.mealTags?.some(mealTag => mealTag.toFixed() === tagOption.id) // Check for matching IDs
     ),
       // tagsID: this.tagsOptions.filter(x => getMealRequest.mealTags?.map(y => y.tagID).includes(x.id)),
-      mealOptions: []
+      mealOptions: [],
+      mealReviews: []
     }
     getMealRequest.getMealOptionsRequest?.forEach(mealOption => {
+      let sideDishes: MealSideDish[] = [];
+      let toppings: MealSideDish[] = [];
+      mealOption.getMealSideDishesRequest?.forEach(sideDish => {
+        if(sideDish.isTopping){
+          toppings.push({
+            mealSideDishID: sideDish.mealSideDishID ?? '',
+            sideDishOptions: sideDish.getMealSideDishOptionsRequest?.map(sideDishOption => {
+              return {
+                sideDishOptionID: sideDishOption.sideDishID ?? '',
+                sideDishSizeOption: sideDishOption.sideDishSizeOption ?? 1,
+                name: sideDishOption.name ?? '',
+                price: sideDishOption.price ?? 0
+              };
+            }) || [],
+          })
+        }
+        else{
+          sideDishes.push({
+            mealSideDishID: sideDish.mealSideDishID ?? '',
+            sideDishOptions: sideDish.getMealSideDishOptionsRequest?.map(sideDishOption => {
+              return {
+                sideDishOptionID: sideDishOption.sideDishID ?? '',
+                sideDishSizeOption: sideDishOption.sideDishSizeOption ?? 1,
+                name: sideDishOption.name ?? '',
+                price: sideDishOption.price ?? 0
+              };
+            }) || [],
+          })
+        }
+      })
       this.meal.mealOptions.push({
         mealOptionID: mealOption.mealOptionID ?? '',
         MealSizeOption: mealOption.mealSizeOption ?? 0,
-        isAvailable: mealOption.isAvailable ?? false,
         price: mealOption.price ?? 0,
-        availableQuantity: 5,
-        saveQuantitySetting: mealOption.saveQuantity ?? false
+        availableQuantity: mealOption.quantity ?? 5,
+        image: mealOption.fullScreenImage ?? "",
+        mealSideDishes: sideDishes,
+        mealToppings: toppings
+      }),
+      getMealRequest.getMealReviewsRequest?.forEach(mealReview => {
+        this.meal.mealReviews.push({
+          title: mealReview.reviewText ?? '',
+          customerName: mealReview.customerName ?? '',
+          customerRating: mealReview.rating ?? 0,
+          date: mealReview.reviewDate ?? ''
+          
+        })
       })
+
     })
     this.displayedImage = `${environment.appUrl}images/meal/FullScreen_${this.meal.mealOptions[0].mealOptionID}.jpg`
     this.currentMealOption = this.meal.mealOptions[0]
@@ -168,5 +298,8 @@ export class MealComponent implements OnInit {
         panelClass: 'my-snackbar-background'
       });
     }
+  }
+  trackByFunction(index: number, item: any) {
+    return index;
   }
 }

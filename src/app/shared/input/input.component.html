@@ -1,10 +1,11 @@
 <div [ngSwitch]="type">
 <mat-form-field style="width: 100%;" *ngSwitchDefault [class]="class" [style]="style" appearance="outline" >
   <mat-label>{{label}}</mat-label>
-  <input matInput [formControl]="control" [type]="type" [placeholder]="placeholder" [suffix]="suffix" [prefix]="prefix" [mask]="format" 
+  <input (blur)="blurMethod()" [ngModel]="ngModel" (ngModelChange)="onInputChange($event)" matInput [formControl]="control" [type]="type" [placeholder]="placeholder" [suffix]="suffix" [prefix]="prefix" [mask]="format" 
     
     [dropSpecialCharacters]="false" [class.is-invalid]="control.errors"
     [ngClass]="{'valid-input': !control.errors}" [type]="hide ? 'password' : 'text'">
+    <div *ngIf="endText" matSuffix style="margin-right: 18px;">{{endText}}</div>
 
   <button *ngIf="type === 'password'" type="button" mat-icon-button matSuffix (click)="hide = !hide"
     [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">

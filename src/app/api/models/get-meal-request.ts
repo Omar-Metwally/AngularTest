@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import { GetMealOptionRequest } from '../models/get-meal-option-request';
+import { GetMealReview } from '../models/get-meal-review';
 import { MealCategory } from '../models/meal-category';
 import { MealSpiceLevel } from '../models/meal-spice-level';
 import { MealStyle } from '../models/meal-style';
@@ -11,6 +12,7 @@ export interface GetMealRequest {
   chiefName?: string | null;
   description?: string | null;
   getMealOptionsRequest?: Array<GetMealOptionRequest> | null;
+  getMealReviewsRequest?: Array<GetMealReview> | null;
   mealCategory?: MealCategory;
   mealID?: string;
   mealSpiceLevel?: MealSpiceLevel;

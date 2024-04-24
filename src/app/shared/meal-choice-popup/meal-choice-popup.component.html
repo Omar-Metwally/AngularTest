@@ -1,0 +1,43 @@
+<div class="m-4">
+    <button (click)="close()" mat-icon-button color="basic" tabindex="-1" aria-label="Example icon button with a heart icon" style="position: absolute; top: 1rem; right: 1rem;">
+        <mat-icon>close</mat-icon>
+      </button>
+    <div class="headline mb-1" *ngIf="mealToppings.length > 0">Toppings</div>
+    @for (mealTopping of mealToppings; track mealTopping) {
+        <mat-radio-group [name]="mealTopping.mealSideDishID" [(ngModel)]="selectedSideDishes[mealTopping.mealSideDishID]">
+            <ng-container *ngFor="let option of mealTopping.mealSideDishOptions; trackBy: trackByFunction; let i = index">
+                <mat-radio-button [color]="'primary'" labelPosition="before" [value]="[option.sideDishID, option.sideDishSizeOption]">
+                    <div class="content" [ngSwitch]="option.sideDishSizeOption">
+                        {{ option.name }}
+                        <div *ngSwitchCase="0" class="size-indicator">(S)</div>
+                        <div *ngSwitchCase="1" class="size-indicator">(M)</div>
+                        <div *ngSwitchCase="2" class="size-indicator">(L)</div>
+                        <div *ngIf="mealTopping.isFree">+{{ option.price }} EGP</div>
+                        
+                    </div>
+                </mat-radio-button>
+            </ng-container>
+        </mat-radio-group>
+        <mat-divider></mat-divider>
+    }
+    
+    <div class="headline mb-1 mt-2">Side Dishes</div>
+    @for (mealSideDish of mealSideDishes; track mealSideDish) {
+        <mat-radio-group [name]="mealSideDish.mealSideDishID" [(ngModel)]="selectedSideDishes[mealSideDish.mealSideDishID]">
+            <ng-container *ngFor="let option of mealSideDish.mealSideDishOptions; trackBy: trackByFunction; let i = index">
+                <mat-radio-button [color]="'primary'" labelPosition="before" [value]="[option.sideDishID, option.sideDishSizeOption]">
+                    <div class="content" [ngSwitch]="option.sideDishSizeOption">
+                        {{ option.name }}
+                        <div *ngSwitchCase="0" class="size-indicator">(S)</div>
+                        <div *ngSwitchCase="1" class="size-indicator">(M)</div>
+                        <div *ngSwitchCase="2" class="size-indicator">(L)</div>
+                        <div *ngIf="mealSideDish.isFree">+{{ option.price }} EGP</div>
+                    </div>
+                </mat-radio-button>
+            </ng-container>
+        </mat-radio-group>
+        <hr>
+    }
+    <div class="headline">Meal Subtotal: {{ calculateTotal() }} EGP</div>
+    <button (click)="addToCart()" class="btn-green" style="width: 300px;">Add to Cart</button>
+</div>

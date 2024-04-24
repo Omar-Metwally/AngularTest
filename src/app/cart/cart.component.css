@@ -17,18 +17,16 @@ body{
     border-radius: 10px;
     padding: 20px;
     flex-direction: row;
-    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
-            0 5px 12px -2px rgb(0,0,0,0.1),
-            0 18px 36px -6px rgb(0,0,0,0.1);
+    box-shadow: 1px 1px 9.6px 0px rgba(49, 172, 24, 0.2);
+
 }
 
 #square2{
     border-radius: 10px;
     padding: 20px;
     flex-direction: row;
-    box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
-            0 5px 12px -2px rgb(0,0,0,0.1),
-            0 18px 36px -6px rgb(0,0,0,0.1);
+    box-shadow: 1px 1px 9.6px 0px rgba(49, 172, 24, 0.2);
+
 }
 
 #diff1{
@@ -165,6 +163,7 @@ td , th{
     height: 50px;
 }
 .custom-search-input {
+    padding-left: 10px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -174,9 +173,9 @@ td , th{
 }
 .custom-search-botton {
     position: absolute;
-    right: 3px; 
-    top: 3px;
-    bottom: 3px;
+    right: 0px; 
+    top: 0px;
+    bottom: 2px;
     border: 0;
     background: #31AC18;
     color: #fff;

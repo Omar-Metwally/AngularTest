@@ -1,11 +1,13 @@
 <!-- [ngStyle]="coverImage.value.url" [style.background]="'url('+[(coverImage.value.url)]+')'" -->
-<div class="profile" >
-  <img [src]="coverImage.value.url" style="position: absolute; height: 336px; width: 100%; object-fit: cover; z-index: -1;">
-    <button type="button" class="btn btn-light" class="btnn">Preview</button>
+<div class="profile">
+  <img [src]="coverImage.value.url"
+    style="position: absolute; height: 336px; width: 100%; object-fit: cover; z-index: -1;
+    border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+  <button type="button" class="btn btn-light" class="btnn">Preview</button>
   <app-file-input style="position: absolute; bottom: -10px; right: 32px;" [control]="coverImage"
     [fileHandle]="coverImageFileHandle" [showDragAndDrop]="false"></app-file-input>
 
-  <div class="img2"><img [src]="chiefImage.value.url" alt=""></div>
+  <div class="img2"><img style="object-fit: cover;" [src]="chiefImage.value.url" alt=""></div>
   <!-- <button class="btun1"><i class="fa fa-camera"></i></button> -->
   <app-file-input style="position: absolute; top: 180px; left: 85px;" [control]="chiefImage"
     [fileHandle]="chiefImageFileHandle" [showDragAndDrop]="false"></app-file-input>
@@ -28,7 +30,16 @@
           label="Phone number"></app-input>
       </div>
       <label for="exampleFormControlTextarea1" class="form-label mt-3">Description</label>
-      <textarea class="form-control " id="exampleFormControlTextarea1" rows="5"></textarea>
+      <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea [formControl]="description" matInput #message
+            maxlength="256"
+            placeholder="Ex. I need help with..."></textarea>
+        <mat-hint align="start"><strong>Don't disclose personal
+                info</strong>
+        </mat-hint>
+        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+    </mat-form-field>
       <ul>
         <li class="my-2">Ensure your description is inviting and charming to draw in users.</li>
         <li class="my-1">Highlight your unique offerings, be it delectable bakery items or exquisite Italian
@@ -51,25 +62,29 @@
           <div class="row d-flex justify-content-start">
             <h6>Shift Details</h6>
             <ngb-timepicker class="col-auto" [formControl]="startTime" [(ngModel)]="startTimeStruct" [hourStep]="1"
-              [minuteStep]="30" (ngModelChange)="validateTimes()" />
+              [minuteStep]="30"/>
             <div class="col-auto d-flex" style="align-items:center; justify-content:center;" (mouseover)="display()">To
             </div>
             <ngb-timepicker class="col-auto" [formControl]="endTime" [(ngModel)]="endTimeStruct" [hourStep]="1"
-              [minuteStep]="30" (ngModelChange)="validateTimes()" />
-            <div class="small form-text text-danger" *ngIf="startTime.errors?.['invalidTime']">
-              {{startTime.errors?.['invalidTime']}}</div>
+              [minuteStep]="30"/>
+            <div class="small form-text text-danger" *ngIf="startTime.errors?.['startTimeInvalid']">
+              {{startTime.errors?.['startTimeInvalid']}}</div>
+              <div class="small form-text text-danger" *ngIf="endTime.errors?.['endTimeInvalid']">
+                {{endTime.errors?.['endTimeInvalid']}}</div>
           </div>
         </div>
       </div>
       <h5 class="mt-5 fw-bolder">Location Details</h5>
       <div class="row">
-        <div class="col">
-          <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text"
-            placeholder="District" label="District" [options]="districts"></app-select-input>
-        </div>
-        <div class="col">
-          <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text" placeholder="Street"
-            label="Street" [options]="streets"></app-select-input>
+        <div class="row">
+          <div class="col">
+            <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text"
+              placeholder="District" label="District" [options]="districts"></app-select-input>
+          </div>
+          <div class="col">
+            <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text"
+              placeholder="Street" label="Street" [options]="streets"></app-select-input>
+          </div>
         </div>
         <div class="row">
           <div class="col">
@@ -102,6 +117,6 @@
 </div>
 <div class="row">
   <div class="col-12 d-flex justify-content-center pt-5">
-    <button class="btn">Next</button>
+    <button class="btn" (click)="UpsertForm()">Next</button>
   </div>
 </div>

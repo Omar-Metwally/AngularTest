@@ -1,16 +1,4 @@
-<!-- <ng-container>
-  <div app-event-blocker (dragend)="isDragover = false" (dragover)="isDragover = true" (dragenter)="isDragover = true"
-    (dragleave)="isDragover = false" (mouseleave)="isDragover = false" (drop)="storeFile($event)"
-    class="m-1 my-auto w-100 p-5 rounded text-center"
-    style="cursor: pointer; border: 1px lined #f7f8fa; transition: all 0.5s ease-in-out;" [ngStyle]="control.value.url">
-    <h4 class="my-auto text-muted">Drag and Drop your image here or
-      <a class="text-reset" (click)="fileInput.click()">Browse</a>
-      it
-    </h4>
-  </div>
-</ng-container> -->
 <input style="display: none;" #fileInput type="file" [formControl]="control" (change)="storeFile($event)">
-<!-- <img [src]="control.value.url" width="500" height="500"> -->
 <ng-container *ngIf="showDragAndDrop">
   <div [style]="style" [class]="class" app-event-blocker (dragend)="isDragover = false" (dragover)="isDragover = true" (dragenter)="isDragover = true"
     (dragleave)="isDragover = false" (mouseleave)="isDragover = false" (drop)="storeFile($event)"
