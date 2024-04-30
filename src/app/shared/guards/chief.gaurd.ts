@@ -9,7 +9,7 @@ import jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard {
+export class ChiefGuard {
 
   constructor(private accountService: AccountService,
     private sharedService: SharedService,
@@ -21,12 +21,12 @@ export class AdminGuard {
 
         if (user) {
           const decodedToken: any = jwt_decode(user.jwt);
-          if (decodedToken.roles.includes('Admin')) {
+          if (decodedToken.roles.includes('Chief')) {
             return true;
           }
         }
 
-        this.sharedService.showPopUp('danger', 'Admin Area');
+        this.sharedService.showPopUp('danger', 'Chief Area');
         this.router.navigateByUrl('/');
 
         return false;

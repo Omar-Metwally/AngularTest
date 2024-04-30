@@ -61,26 +61,10 @@
             <mat-icon>menu-book</mat-icon>
         </ng-template>
 
-        <mat-step [optional]="true" label="Checkout" state="cart">
+        <mat-step [optional]="false" label="Checkout" state="cart" [completed]="(this.cart.cartItems?.length ?? 0) > 0">
             <ng-template matStepContent>
                 <div class="row">
                     <div class="col-xl-8">
-
-                        <!-- <div class="row">
-                            <div class="col">
-                                <h6 class="text-dark"><input type="checkbox" class="mx-2" id="Cbox"> Select All</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="text-dark text-end">
-                                    <div class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
-                                            <i class="mdi mdi-trash-can-outline"></i>
-                                        </a>
-                                    </div>Delete
-                                </h6>
-                            </div>
-                        </div> -->
-
                         @for (cartItem of this.cart.cartItems; track cartItem) {
                         <!--Second card-->
                         <div class="row my-3" id="square">
@@ -147,28 +131,6 @@
                                     </div>
                                 </div>
 
-
-                                <!-- <div class="d-flex justify-content-between align-content-center">
-                                    <div>
-                                        <label class="btn btn-outline-success fixed-size mx-1" (mouseover)="(0)"
-                                            [for]="[0] ? [0] : 'option-0'" id="customize" style="line-height: 26px;">
-                                            Small
-                                        </label>
-                                        <label class="btn btn-outline-success fixed-size  mx-1" (mouseover)="(0)"
-                                            [for]="[0] ? [0] : 'option-0'" id="customize">
-                                            Medium
-                                        </label>
-                                        <label class="btn btn-outline-success fixed-size mx-1" (mouseover)="(0)"
-                                            [for]="[0] ? [0] : 'option-0'" id="customize">
-                                            Large
-                                        </label>
-                                    </div>
-                                    <div class=" justify-content-between align-content-center ">
-                                        <span class="minus">-</span>
-                                        <input type="text" class="vlue" value="1" />
-                                        <span class="plus">+</span>
-                                    </div>
-                                </div> -->
                                 <div class="mt-4" style="font-family: Roboto;
                                 font-size: 16px;
                                 font-weight: 500;
@@ -184,179 +146,11 @@
                                     </svg>
                                     Delete
                                 </div>
-                                <!-- 
-                                <div class="d-flex justify-content-between align-content-center">
-                                    <div class="list-inline-item mt-4">
-                                        <a href="#" class="text-muted">
-                                            <div class="mdi mdi-heart-outline"><span class="px-14">Add to
-                                                    favourite</span></div>
-                                        </a>
-                                    </div>
 
-                                    <div class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
-                                            <div class="mdi mdi-trash-can-outline d-flex justify-content-end"><span
-                                                    class="px-1">Delete</span></div>
-                                        </a>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
-                        <!-- First card
-                        <div class="row my-2" id="square">
-                            <img [src]="cartItem.fullScreenImage" id="avatar">
-                            <div class="col">
-                                <div class="d-flex justify-content-between align-content-center">
-                                    <h5 class="text-dark">{{cartItem.mealOptionID}} (M)</h5>
-                                    <h5 style="color: #31AC18;">{{cartItem.price}} EGP</h5>
-                                </div>
 
-                                <div class="d-flex justify-content-between align-content-center my-1 ">
-                                    <div class="button-container d-flex justify-content-start">
-                                        <input [id]="cartItem.mealOptionID" type="radio" class="btn-check">
-                                        <label class="btn btn-outline-success fixed-size p-1 me-1"
-                                            [for]="cartItem.mealOptionID">
-                                            Small
-                                        </label>
-
-                                        <input [id]="cartItem.mealOptionID" type="radio" class="btn-check">
-                                        <label class="btn btn-outline-success fixed-size p-1 me-1"
-                                            [for]="cartItem.mealOptionID"> Medium
-                                        </label>
-
-                                        <input [id]="cartItem.mealOptionID" type="radio" class="btn-check">
-                                        <label class="btn btn-outline-success fixed-size p-1 me-1"
-                                            [for]="cartItem.mealOptionID"> Large
-                                        </label>
-                                    </div>
-                                    <div class=" justify-content-between align-content-center ">
-                                        <span class="minus">-</span>
-                                        <input type="text" class="vlue" value="1" />
-                                        <span class="plus">+</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-content-center">
-                                    <div class="list-inline-item mt-4">
-                                        <a href="#" class="text-muted">
-                                            <div class="mdi mdi-heart-outline"><span class="px-1">Add to
-                                                    favourite</span></div>
-                                        </a>
-                                    </div>
-                                    <div class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
-                                            <div class="mdi mdi-trash-can-outline d-flex justify-content-end"><span
-                                                    class="px-1">Delete</span></div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         }
-
-                        <!--Second card-->
-                        <!-- <div class="row my-3" id="square">
-                            <img src="/assets/images/pizza.jpeg" id="avatar">
-                            <div class="col">
-                                <div class="d-flex justify-content-between align-content-center" style="font-family: Lato;
-                                font-size: 22px;
-                                font-weight: 700;
-                                line-height: 26.4px;
-                                text-align: center;
-                                color: rgba(50, 47, 47, 1);
-                                ">
-                                    <h5 class="text-dark">Pizza (L)</h5>
-                                    <h5>100 EGP</h5>
-                                </div>
-                                <div class="d-flex justify-content-between align-content-center">
-                                    <div style="
-                                    font-family: Roboto;
-                                    font-weight: 400;
-                                    color: rgba(101, 101, 101, 1);
-                                    ">
-                                        <div style="font-size: 16px;">
-                                            Medium Size
-                                        </div>
-                                        <div style="font-size: 14px;">
-                                            Toppings:
-
-                                        </div>
-                                        <div style="font-size: 14px;">
-                                            Side dish:
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex justify-content-between align-content-center me-2 mt-4"
-                                            style="position: relative;">
-                                            <div style="width: 18px; height: 18px; border-radius: 50%; border: 0.76px solid rgba(101, 101, 101, 1);line-height: 1; text-align: center;
-                                            position: absolute; right: -27px; top: 9px;">+</div>
-                                            <div
-                                                style="width: 71px; height: 35px; border-radius: 10px; border: 0.76px solid rgba(101, 101, 101, 1);line-height: 35px; text-align: center;">
-                                                1
-                                            </div>
-                                            <div style="width: 18px; height: 18px; border-radius: 50%; border: 0.76px solid rgba(101, 101, 101, 1);line-height: 1; text-align: center;
-                                            position: absolute; left: -27px; top: 9px;">-</div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-
-                                <!-- <div class="d-flex justify-content-between align-content-center">
-                                    <div>
-                                        <label class="btn btn-outline-success fixed-size mx-1" (mouseover)="(0)"
-                                            [for]="[0] ? [0] : 'option-0'" id="customize" style="line-height: 26px;">
-                                            Small
-                                        </label>
-                                        <label class="btn btn-outline-success fixed-size  mx-1" (mouseover)="(0)"
-                                            [for]="[0] ? [0] : 'option-0'" id="customize">
-                                            Medium
-                                        </label>
-                                        <label class="btn btn-outline-success fixed-size mx-1" (mouseover)="(0)"
-                                            [for]="[0] ? [0] : 'option-0'" id="customize">
-                                            Large
-                                        </label>
-                                    </div>
-                                    <div class=" justify-content-between align-content-center ">
-                                        <span class="minus">-</span>
-                                        <input type="text" class="vlue" value="1" />
-                                        <span class="plus">+</span>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="mt-4" style="font-family: Roboto;
-                                font-size: 16px;
-                                font-weight: 500;
-                                color: rgba(101, 101, 101, 1);
-                                cursor: pointer;
-                                ">
-                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="14.9213" cy="14.9204" r="14.9213" fill="#EBEBEB" />
-                                        <path
-                                            d="M18.0272 13.5213V21.2929H11.81V13.5213H18.0272ZM16.8615 8.8584H12.9757L12.1986 9.63555H9.47852V11.1899H20.3587V9.63555H17.6386L16.8615 8.8584ZM19.5815 11.967H10.2557V21.2929C10.2557 22.1477 10.9551 22.8472 11.81 22.8472H18.0272C18.8821 22.8472 19.5815 22.1477 19.5815 21.2929V11.967Z"
-                                            fill="#F03C3C" />
-                                    </svg>
-                                    Delete
-                                </div> -->
-                                <!-- 
-                                <div class="d-flex justify-content-between align-content-center">
-                                    <div class="list-inline-item mt-4">
-                                        <a href="#" class="text-muted">
-                                            <div class="mdi mdi-heart-outline"><span class="px-14">Add to
-                                                    favourite</span></div>
-                                        </a>
-                                    </div>
-
-                                    <div class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
-                                            <div class="mdi mdi-trash-can-outline d-flex justify-content-end"><span
-                                                    class="px-1">Delete</span></div>
-                                        </a>
-                                    </div>
-                                </div> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- end card -->
-
-
 
                         <div class="row my-4">
                             <div class="col-sm-6">
@@ -391,14 +185,6 @@
                                         <td class="text-end" id="F-n">{{(cartItem.totalPrice ?? 0) * cartItem.quantity}}
                                             EGP</td>
                                     </tr>
-                                    <!-- <tr>
-                                        <td colspan="3">Pizza(M) x2</td>
-                                        <td class="text-end" id="F-n">200 EGP</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">Pizza(L)</td>
-                                        <td class="text-end" id="F-n">300 EGP</td>
-                                    </tr> -->
                                     <tr>
                                         <td colspan="3">Delivery fee</td>
                                         <td class="text-end" id="F-n">20 EGP</td>
@@ -415,7 +201,7 @@
                             <div class="custom-search">
                                 <input [formControl]="promoCodeInput" type="text" class="custom-search-input"
                                     placeholder="Promocode">
-                                <button (click)="applyPromoCode()" class="custom-search-botton"
+                                <button (click)="openPopUp()" class="custom-search-botton"
                                     type="submit">Apply</button>
                             </div>
 
@@ -428,7 +214,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button type="button" class="btn"
+                                <button type="button" class="btn" matStepperNext (click)="showNoItemError()"
                                     style="background-color: #31AC18; color:#FDFFFC; width: 100%;height: 51px; border-radius: 10px;">Checkout</button>
 
                             </div>
@@ -438,84 +224,85 @@
                 <!-- end row --> <!-- end row -->
             </ng-template>
         </mat-step>
-        <mat-step label="Shipping information" state="shipping-info">
+        <mat-step label="Shipping information" state="shipping-info" optional="false" [completed]="isShippingStepValid">
             <ng-template matStepContent>
                 <div class="row">
-
-                    <div class="col-12 container p-4" style="background-color: #FDFFFC; border: 1px solid #0C0B0B1C; border-radius: 8px;
+                    <div class="pe-4 col-lg-8 col-md-12">
+                        <div class="container p-4" style="background-color: #FDFFFC; border: 1px solid #0C0B0B1C; border-radius: 8px;
                         max-width: 869px;">
-                        <div class="row" style="font-family: Roboto;
+                            <div class="row" style="font-family: Roboto;
                     font-size: 18px;
                     font-weight: 700;
                     line-height: 21px;
                     letter-spacing: 0em;
                     text-align: left;
                     ">
-                            <div class="col pb-3 pt-4">
-                                Shopping Address
+                                <div class="col pb-3">
+                                    Shipping Address
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <app-input [control]="firstName" type="text" placeholder="Hoda"
-                                    label="First Name"></app-input>
+                            <div class="row">
+                                <div class="col">
+                                    <app-input [control]="firstName" type="text" placeholder="Hoda"
+                                        label="First Name"></app-input>
+                                </div>
+                                <div class="col">
+                                    <app-input [control]="lastName" type="text" placeholder="Khaled"
+                                        label="Last Name"></app-input>
+                                </div>
                             </div>
-                            <div class="col">
-                                <app-input [control]="lastName" type="text" placeholder="Khaled"
-                                    label="Last Name"></app-input>
+                            <div class="row">
+                                <div class="col">
+                                    <app-input [control]="phone" style="width: 100%;" type="number" prefix="01"
+                                        format="0 0000 0000" label="Phone number"></app-input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <app-input [control]="phone" style="width: 100%;" type="number" prefix="01"
-                                    format="0 0000 0000" label="Phone number"></app-input>
+                            <div class="row">
+                                <div class="col">
+                                    <app-select-input [control]="district" [optionSelected]="districtOptionSelected"
+                                        type="text" placeholder="District" label="District"
+                                        [options]="districts"></app-select-input>
+                                </div>
+                                <div class="col">
+                                    <app-select-input [control]="street" [optionSelected]="streetOptionSelected"
+                                        type="text" placeholder="Street" label="Street"
+                                        [options]="streets"></app-select-input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <app-select-input [control]="district" [optionSelected]="districtOptionSelected"
-                                    type="text" placeholder="District" label="District"
-                                    [options]="districts"></app-select-input>
+                            <div class="row">
+                                <div class="col">
+                                    <app-select-input [control]="building" [optionSelected]="buildingOptionSelected"
+                                        type="text" placeholder="Building" label="Building"
+                                        [options]="buildings"></app-select-input>
+                                </div>
+                                <div class="col">
+                                    <app-input [control]="floor" type="text" placeholder="Floor No"
+                                        label="Floor No"></app-input>
+                                </div>
+                                <div class="col">
+                                    <app-input [control]="apartment" type="text" placeholder="Apartment No"
+                                        label="Apartment No"></app-input>
+                                </div>
                             </div>
-                            <div class="col">
-                                <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text"
-                                    placeholder="Street" label="Street" [options]="streets"></app-select-input>
+                            <div class="row">
+                                <div class="col">
+                                    <app-input [control]="deliveryNotes" type="text" placeholder="Notes for delivery"
+                                        label="Notes for delivery"></app-input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <app-select-input [control]="building" [optionSelected]="buildingOptionSelected"
-                                    type="text" placeholder="Building" label="Building"
-                                    [options]="buildings"></app-select-input>
-                            </div>
-                            <div class="col">
-                                <app-input [control]="floor" type="text" placeholder="Floor No"
-                                    label="Floor No"></app-input>
-                            </div>
-                            <div class="col">
-                                <app-input [control]="apartment" type="text" placeholder="Apartment No"
-                                    label="Apartment No"></app-input>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <app-input [control]="deliveryNotes" type="text" placeholder="Notes for delivery"
-                                    label="Notes for delivery"></app-input>
-                            </div>
-                        </div>
-                        <div class="row container justify-content-center d-flex align-items-center">
-                            <div class="col-auto d-flex align-items-center px-1">
-                                <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.4987 16.6654V8.33203H15.4987V9.16536C16.082 9.16536 16.6404 9.2487 17.1654 9.40703V8.33203C17.1654 7.41536 16.4154 6.66536 15.4987 6.66536H14.6654V4.9987C14.6654 2.6987 12.7987 0.832031 10.4987 0.832031C8.1987 0.832031 6.33203 2.6987 6.33203 4.9987V6.66536H5.4987C4.58203 6.66536 3.83203 7.41536 3.83203 8.33203V16.6654C3.83203 17.582 4.58203 18.332 5.4987 18.332H10.7154C10.3654 17.832 10.0904 17.2654 9.90703 16.6654H5.4987ZM7.9987 4.9987C7.9987 3.61536 9.11536 2.4987 10.4987 2.4987C11.882 2.4987 12.9987 3.61536 12.9987 4.9987V6.66536H7.9987V4.9987Z"
-                                        fill="#31AC18" />
-                                    <path
-                                        d="M15.4987 10.832C13.1987 10.832 11.332 12.6987 11.332 14.9987C11.332 17.2987 13.1987 19.1654 15.4987 19.1654C17.7987 19.1654 19.6654 17.2987 19.6654 14.9987C19.6654 12.6987 17.7987 10.832 15.4987 10.832ZM15.4987 12.4987C16.1904 12.4987 16.7487 13.057 16.7487 13.7487C16.7487 14.4404 16.1904 14.9987 15.4987 14.9987C14.807 14.9987 14.2487 14.4404 14.2487 13.7487C14.2487 13.057 14.807 12.4987 15.4987 12.4987ZM15.4987 17.4987C14.6404 17.4987 13.882 17.0654 13.432 16.3987C14.0404 16.0487 14.7404 15.832 15.4987 15.832C16.257 15.832 16.957 16.0487 17.5654 16.3987C17.1154 17.0654 16.357 17.4987 15.4987 17.4987Z"
-                                        fill="#31AC18" />
-                                </svg>
-                            </div>
-                            <div class="col-auto px-1" style="
+                            <div class="row container justify-content-center d-flex align-items-center">
+                                <div class="col-auto d-flex align-items-center px-1">
+                                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.4987 16.6654V8.33203H15.4987V9.16536C16.082 9.16536 16.6404 9.2487 17.1654 9.40703V8.33203C17.1654 7.41536 16.4154 6.66536 15.4987 6.66536H14.6654V4.9987C14.6654 2.6987 12.7987 0.832031 10.4987 0.832031C8.1987 0.832031 6.33203 2.6987 6.33203 4.9987V6.66536H5.4987C4.58203 6.66536 3.83203 7.41536 3.83203 8.33203V16.6654C3.83203 17.582 4.58203 18.332 5.4987 18.332H10.7154C10.3654 17.832 10.0904 17.2654 9.90703 16.6654H5.4987ZM7.9987 4.9987C7.9987 3.61536 9.11536 2.4987 10.4987 2.4987C11.882 2.4987 12.9987 3.61536 12.9987 4.9987V6.66536H7.9987V4.9987Z"
+                                            fill="#31AC18" />
+                                        <path
+                                            d="M15.4987 10.832C13.1987 10.832 11.332 12.6987 11.332 14.9987C11.332 17.2987 13.1987 19.1654 15.4987 19.1654C17.7987 19.1654 19.6654 17.2987 19.6654 14.9987C19.6654 12.6987 17.7987 10.832 15.4987 10.832ZM15.4987 12.4987C16.1904 12.4987 16.7487 13.057 16.7487 13.7487C16.7487 14.4404 16.1904 14.9987 15.4987 14.9987C14.807 14.9987 14.2487 14.4404 14.2487 13.7487C14.2487 13.057 14.807 12.4987 15.4987 12.4987ZM15.4987 17.4987C14.6404 17.4987 13.882 17.0654 13.432 16.3987C14.0404 16.0487 14.7404 15.832 15.4987 15.832C16.257 15.832 16.957 16.0487 17.5654 16.3987C17.1154 17.0654 16.357 17.4987 15.4987 17.4987Z"
+                                            fill="#31AC18" />
+                                    </svg>
+                                </div>
+                                <div class="col-auto px-1" style="
                         font-family: Roboto;
                         font-size: 14px;
                         font-weight: 700;
@@ -524,10 +311,10 @@
                         text-align: left;
                         color: #31AC18;
                         ">
-                                Security & Privacy
+                                    Security & Privacy
+                                </div>
                             </div>
-                        </div>
-                        <div class="row container d-flex justify-content-center mt-3" style="font-family: Roboto;
+                            <div class="row container d-flex justify-content-center mt-3" style="font-family: Roboto;
                     font-size: 10px;
                     font-weight: 700;
                     line-height: 12px;
@@ -535,13 +322,83 @@
                     text-align: center;
                     color: #656565;
                     ">
-                            <div class="col-auto pb-4">
-                                We Maintain industry-Standard Physical ,Administration Measures To Safeguard Your
-                                personal Information
+                                <div class="col-auto pb-4">
+                                    We Maintain industry-Standard Physical ,Administration Measures To Safeguard Your
+                                    personal Information
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row p-4"
+                            style="background-color: #FDFFFC; border: 1px solid #0C0B0B1C; border-radius: 8px;">
+                            <div class="row" style="font-family: Roboto;
+                    font-size: 18px;
+                    font-weight: 700;
+                    line-height: 21px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    ">
+                                <div class="col pb-3">
+                                    Time of Delivery
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h6>Deliver now?</h6>
+                                    <div class="row d-flex justify-content-between" style="position: relative;">
+                                        <mat-radio-group (ngModelChange)="ChangeDeliveryStatus()"
+                                            [(ngModel)]="DeliverNow" color="primary" class="col-auto">
+                                            <mat-radio-button class="row" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button class="row" [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                        <ngb-timepicker class="col-auto" [formControl]="timeOfDeliveryCTRL"
+                                            style="position: absolute; right: 0px; top: -20px;"
+                                            [(ngModel)]="timeOfDeliveryStruct" (ngModelChange)="validateOrderTime()"
+                                            [hourStep]="1" [minuteStep]="30" />
+                                        <!-- <div class="small form-text text-danger"
+                                            *ngIf="timeOfDeliveryCTRL.errors?.['invalidTime']">
+                                            {{timeOfDeliveryCTRL.errors?.['invalidTime']}}</div> -->
+                                        <div class="small form-text text-danger" style="text-align: center;"
+                                            *ngIf="timeOfDeliveryCTRL.hasError('tooLate')">
+                                            {{ timeOfDeliveryCTRL.getError('tooLate').message }}
+                                        </div>
+
+                                        <div class="small form-text text-danger" style="text-align: center;"
+                                            *ngIf="timeOfDeliveryCTRL.hasError('tooEarly')">
+                                            {{ timeOfDeliveryCTRL.getError('tooEarly').message }}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-4 mt-4"
+                            style="background-color: #FDFFFC; border: 1px solid #0C0B0B1C; border-radius: 8px;">
+                            <div class="row" style="font-family: Roboto;
+                            font-size: 18px;
+                            font-weight: 700;
+                            line-height: 21px;
+                            letter-spacing: 0em;
+                            text-align: left;
+                            ">
+                                <div class="col pb-3">
+                                    Payment methods
+                                </div>
+                            </div>
+                            <div class="row">
+                                <mat-radio-group [(ngModel)]="PayOnline" color="primary" class="col-auto">
+                                    <mat-radio-button class="row" [value]="true">Visa</mat-radio-button>
+                                    <mat-radio-button class="row" [value]="false">Cash On Delivery</mat-radio-button>
+                                </mat-radio-group>
                             </div>
 
                         </div>
                     </div>
+
+                </div>
+                <div class="row">
                     <div class="col-12 d-flex justify-content-center pt-5">
                         <button (click)="confirmOrder()" matStepperNext style="width: 391px; 
                     height: 51px;
@@ -565,95 +422,199 @@
         <mat-step label="Payment method" state="payment-method">
             <ng-template matStepContent>
                 <div class="container py-5">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-12">
-                            <div id="cont">
-                                <h4>Order summary</h4>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td colspan="5">Pizza(M) x2</td>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col p-4 payment-step-background">
 
-                                            <td id="F-n">200</td>
-                                            <td>EGP</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td colspan="5">Pizza(L)</td>
-                                            <td id="F-n">300</td>
-                                            <td>EGP</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td colspan="5">Delivery fee</td>
-                                            <td id="F-n">20</td>
-                                            <td>EGP</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td colspan="5">Promo code</td>
-                                            <td id="F-n">-70</td>
-                                            <td>EGP</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td colspan="5">Subtotal After Promo Code</td>
-                                            <td id="diff">300</td>
-                                            <td>EGP</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                                    <div class="row d-flex justify-content-between" style="font-family: Roboto;
+                            font-size: 20px;
+                            font-weight: 600;
+                            line-height: 30px;
+                            letter-spacing: 0em;
+                            text-align: left;
+                            ">
+                                        <div class="col pb-3">
+                                            Review Information
+                                        </div>
+                                        <div class="col-auto" style="
+                                    font-family: Roboto;
+                                    font-size: 18px;
+                                    font-weight: 500;
+                                    line-height: 27px;
+                                    color: rgba(101, 101, 101, 1);
+                                    ">
+                                            <button style="position: relative; margin-right: 15px;
+                                            background: none;
+                                            border: none;" matStepperPrevious>
+                                                Edit
+                                                <svg style="position: absolute; right: -15px;
+                                        top: 6px;" width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M5.29246 14.8644C5.10499 14.6769 4.99968 14.4226 4.99968 14.1574C4.99968 13.8923 5.10499 13.638 5.29246 13.4504L10.2425 8.50044L5.29246 3.55044C5.11031 3.36184 5.00951 3.10923 5.01179 2.84704C5.01407 2.58484 5.11924 2.33403 5.30465 2.14862C5.49005 1.96321 5.74087 1.85804 6.00306 1.85577C6.26526 1.85349 6.51786 1.95428 6.70646 2.13644L12.3635 7.79344C12.5509 7.98097 12.6562 8.23528 12.6562 8.50044C12.6562 8.7656 12.5509 9.01991 12.3635 9.20744L6.70646 14.8644C6.51894 15.0519 6.26463 15.1572 5.99946 15.1572C5.7343 15.1572 5.47999 15.0519 5.29246 14.8644Z"
+                                                        fill="#656565" />
+                                                </svg>
+                                            </button>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2" style="
+                            font-family: Roboto;
+                            font-size: 18px;
+                            font-weight: 500;
+                            line-height: 27px;
+                            text-align: left;                            
+                            letter-spacing: 0em;
+                            ">
+                                        <div class="col-auto pe-0">
+                                            Personal Information:
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{" " + this.firstName.value + " " + this.lastName.value}}
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{" "+ this.phone.value}}
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2" style="
+                            font-family: Roboto;
+                            font-size: 18px;
+                            font-weight: 500;
+                            line-height: 27px;
+                            text-align: left;                            
+                            letter-spacing: 0em;
+                            ">
+                                        <div class="col-auto pe-0">
+                                            Location Address:
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{this.district.value.name + ", "}}
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{this.street.value.name +" Street"+ ", "}}
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{this.building.value.name +" Building"+ ", "}}
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{this.floor.value +" Floor"+ ", "}}
+                                        </div>
+                                        <div class="col-auto p-0 ps-2" style="
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-weight: 400;
+                                line-height: 24px;
+                                text-align: left;
+                                ">
+                                            {{this.apartment.value +" Apartment"}}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mt-4" id="cont1">
-                                <h4>Payment method</h4>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <th scope="row"></th>
-                                        <tr>
-                                            <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio"
-                                                    checked></td>
-                                            <td><img src="/assets/images/Mastercard.webp" id="mastercard"></td>
-                                            <td><img src="/assets/images/visa.webp" id="visa" class="mx-2"></td>
-                                            <td><img src="/assets/images/Paypal.jpg" id="mastercard"></td>
-                                        </tr>
-                                        <tr>
-                                    </tbody>
-                                </table>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <th scope="row"></th>
-                                        <td><input type="radio" id="lang-1" name="lang" cvalues="HTML" class="radio"
-                                                checked class="my-4"></td>
-                                        <td><img src="/assets/images/cash.jpg" id="cash"></td>
-                                        <td>Cash on delivery</td>
-                                </table>
+                            <div class="row pt-3">
+                                <div class="col pe-1 ps-0">
+                                    <div class="payment-step-background p-4">
+                                        <div>
+                                            <h5 text-dark>Order summary</h5>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="border-style: none; padding-right: 0px !important;">
+                                                    <tr *ngFor="let cartItem of cart.cartItems">
+                                                        <td colspan="3" [ngSwitch]="cartItem.mealSizeOption">
+                                                            {{cartItem.name}}
+                                                            <span *ngSwitchCase="0">(S)</span>
+                                                            <span *ngSwitchCase="1">(M)</span>
+                                                            <span *ngSwitchCase="2">(L)</span>
+                                                            x{{cartItem.quantity}}
+                                                        </td>
+                                                        <td class="text-end" id="F-n">{{(cartItem.totalPrice ?? 0) *
+                                                            cartItem.quantity}}
+                                                            EGP</td>
+                                                    </tr>
+                                                    <!-- <tr>
+                                                    <td colspan="3">Pizza(M) x2</td>
+                                                    <td class="text-end" id="F-n">200 EGP</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">Pizza(L)</td>
+                                                    <td class="text-end" id="F-n">300 EGP</td>
+                                                </tr> -->
+                                                    <tr>
+                                                        <td colspan="3">Delivery fee</td>
+                                                        <td class="text-end" id="F-n">20 EGP</td>
+                                                    </tr>
+                                                    <tr style="border-top: 1px solid rgba(152, 150, 150, 1)">
+                                                        <td colspan="3">Total</td>
+                                                        <td class="text-end" id="diff1">
+                                                            {{this.cartSubTotalAfterDiscount |
+                                                                number}} EGP
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <div class="row">
+                                                <button type="button" class="btn"
+                                                    style="background-color: #31AC18; color:#FDFFFC; width: 100%;height: 51px; border-radius: 10px;">Place Order</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-12 pe-1" style="height: auto;" *ngIf="PayOnline">
+                                    <div class="payment-step-background" style="height: 100%;">
+                                        <iframe [src]="iframeLink | safe" style="height: 100%; width: 100%;">
+                                        </iframe>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <iframe class="col-lg-8 col-md-12" id="cont2" [src]="iframeLink | safe">
-                        </iframe>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 mt-5 d-flex justify-content-center">

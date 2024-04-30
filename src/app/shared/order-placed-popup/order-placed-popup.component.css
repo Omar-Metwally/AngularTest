@@ -1,0 +1,18 @@
+.btn {
+    width: 160px;
+    height: 47px;
+    border-radius: 10px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+.btn-green{
+    background: rgba(42, 145, 21, 1);
+    color:rgba(255, 255, 255, 1);
+    border-style: none;
+}
+.btn-empty{
+    color: rgba(42, 145, 21, 1);
+    border: 1px solid rgba(42, 145, 21, 1)
+}

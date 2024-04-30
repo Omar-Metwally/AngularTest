@@ -131,12 +131,12 @@ export class SideNavComponent {
     {
       icon: 'history',
       label:'History',
-      route:'comments'
+      route:'history'
     },
     {
       icon: 'analytics',
       label:'Analytics',
-      route:'comments'
+      route:'analytics'
     },
     {
       icon: 'kitchen',

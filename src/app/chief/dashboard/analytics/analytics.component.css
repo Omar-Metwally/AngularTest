@@ -1,0 +1,109 @@
+ 
+
+ .card{
+    height: 144px;
+    border-radius: 10px;
+     color: #322F2F;
+     box-shadow: 1px 1px 9.6px 0px #31AC1833;
+    border: none;
+ }
+.card:hover{
+    background-color: #EAF7E8;
+}
+
+  
+ .money-number-span{
+    font-size: 24px; font-weight: bolder; color: #322F2F !important;
+ }
+.card-under-data >p{
+    position: relative; top: -50px;
+}
+ .card-under-data .one{
+    left: -15px; position: relative; color: #237A11;
+ }
+
+ .card-under-data .one >p{
+   position: relative; top: -50px; 
+ }
+
+ .card-under-data .two{
+    position: relative; left: 80px; top: -90px; color: #237A11;
+ }
+
+
+ .table-data {
+    width: 760px;
+    height: 915px;
+    top: 327px;
+    left: 515px;
+    opacity: 0px;
+    margin: 50px auto;
+    color: white;
+}
+ 
+
+.table tbody tr{
+    vertical-align: middle;
+    margin-bottom: 12px; 
+    box-shadow: 0px 2px 4px #31AC1833;
+    border-radius: 10px; 
+    height: 98px;
+}
+table thead tr th {
+    color: #322F2F;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+}
+
+ .margin{
+    margin: 12px 0; 
+ }
+
+
+ tbody .space{
+      margin: 12px;
+ }
+
+ .nav-pills {
+  display: flex;
+  justify-content: space-between;
+  width: 760px;
+  margin: 0 auto;
+  padding: 0;
+}
+.nav-item {
+  flex: 1;
+  margin-right: 12px;
+}
+.nav-pills .nav-link {
+  width: 100%;
+  text-align: center;
+  background-color: white;
+  color: #322F2F;
+  border-bottom: 2px solid transparent;
+}
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:active, .nav-pills .nav-link.active:focus {
+  color: #322F2F;
+  border-bottom: 2px solid #5ABD46;
+}
+.nav-pills .nav-link:not(.active) {
+  color: #BFE5B7;
+  border-bottom: 2px solid transparent;
+}
+.spinner-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+.loaded-content {
+  display: block;
+}
+
+
+.spinner {
+  margin: auto;
+}

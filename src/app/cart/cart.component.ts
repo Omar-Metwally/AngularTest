@@ -21,6 +21,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartDelete$Params } from '../api/fn/cart/cart-delete';
 import { CartPatch$Params } from '../api/fn/cart/cart-patch';
 import { HttpResponse } from '@angular/common/http';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderPlacedPopupComponent } from '../shared/order-placed-popup/order-placed-popup.component';
 
 
 
@@ -31,7 +34,7 @@ import { HttpResponse } from '@angular/common/http';
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
-  imports: [SafePipe, CommonModule, SharedModule, NgbTimepickerModule, FormsModule, MatStepperModule, MatIcon, SelectInputComponent],
+  imports: [SafePipe, CommonModule, SharedModule, NgbTimepickerModule, FormsModule, MatStepperModule, MatIcon, SelectInputComponent, MatRadioModule],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },
@@ -40,6 +43,13 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class CartComponent implements OnInit {
 
+
+  timeOfDeliveryCTRL: FormControl = new FormControl('');
+  timeOfDeliveryStruct: NgbTimeStruct = {
+    hour: 0,
+    minute: 0,
+    second: 0
+  };
   constructor(private accountService: AccountService,
     private mealService: MealsService,
     private promoCodeService: PromoCodeService,
@@ -47,10 +57,12 @@ export class CartComponent implements OnInit {
     private sharedService: SharedService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private cartService: CartService,
   ) {
-     this.cartService.cartPost$Response().subscribe({
+    this.timeOfDeliveryCTRL.disable()
+    this.cartService.cartPost$Response().subscribe({
       next: (response: HttpResponse<any>) => {
         if (response.status === 200) {
           this.cart = response.body as GetCartRequest
@@ -71,7 +83,8 @@ export class CartComponent implements OnInit {
       apartmentNo: this.apartment,
       promoCodeID: this.promoCodeInput,
       phoneNumber: this.phone,
-      paymentOption: 1
+      paymentOption: this.PayOnline,
+      deliverNow: this.DeliverNow,
     })
 
     this.floor.valueChanges.subscribe((newValue) => {
@@ -88,6 +101,9 @@ export class CartComponent implements OnInit {
   iframeLink: string = ''
   cartSubTotalBeforeDiscount: number = 0;
   cartSubTotalAfterDiscount = 20
+  PayOnline: boolean = true;
+  DeliverNow: boolean = true;
+  isShippingStepValid: boolean = false;
 
   items = ['First', 'Second', 'Third', 'Forth'];
 
@@ -137,8 +153,20 @@ export class CartComponent implements OnInit {
   minuteStep = 15;
   secondStep = 30;
 
+  openPopUp(){
+    const dialogRef = this.dialog.open(OrderPlacedPopupComponent, {
+      width: 'min-content',
+      height: 'min-content',
+      minWidth: '20%',
+      maxWidth: '100%',
+      maxHeight: '80%',
+      enterAnimationDuration: '500ms',
+      exitAnimationDuration: '250ms',
+    });
+  }
 
-   ngOnInit() {
+
+  ngOnInit() {
     // this.cart = await this.accountService.updateCartItemsFromAPI() ?? { cartItems: [] };
     this.calculateTotal();
     this.district.disable();
@@ -168,17 +196,7 @@ export class CartComponent implements OnInit {
   }
 
   confirmOrder() {
-    console.log(this.shippingInformationForm.errors)
-    if (true) {
-      // const createOrderRequest: CreateOrderRequest = {
-      //   apartmentNo: this.apartment.value,
-      //   buildingID?: this.building.value.id.
-      //   customerID?: string;
-      //   floorNo?: string | null;
-      //   paymentOption?: PaymentOption;
-      //   phoneNumber?: string | null;
-      //   promoCodeID?: string | null;
-      // }
+    if (this.validatingShippingStep()) {
       const orderPost$Params: OrderPost$Params = {
         body: {
           apartmentNo: this.apartment.value,
@@ -191,9 +209,7 @@ export class CartComponent implements OnInit {
       }
       this.orderService.orderPost(orderPost$Params).subscribe({
         next: (response: any) => {
-          console.log(response)
           this.iframeLink = `https://accept.paymob.com/api/acceptance/iframes/807851?payment_token=${response.token}`
-          console.log(this.iframeLink)
         },
         error: error => {
           console.log(error.error)
@@ -230,11 +246,7 @@ export class CartComponent implements OnInit {
         },
         error: error => {
           this.promoCodeInput.setValue('')
-          console.log(error.error)
-          this.sharedService.showPopUp('danger', error)
-          this.sharedService.showPopUp('danger', error)
-          this.sharedService.showPopUp('danger', error)
-          this.sharedService.showPopUp('danger', error)
+          this.sharedService.showPopUp('danger', 'your promo code is not valid')
         }
       })
     }
@@ -309,5 +321,94 @@ export class CartComponent implements OnInit {
       });
     }
   }
+  ChangeDeliveryStatus() {
+    if (!this.DeliverNow) {
+      this.timeOfDeliveryCTRL.disable()
+    }
+    else {
+      this.timeOfDeliveryCTRL.enable()
+    }
+  }
+  // validateOrderTime(){
+  //   if(!this.DeliverNow){
+  //     const startTimeStruct = this.convertToNgbTime(this.cart.startTime ?? '')
+  //     const endTimeStruct = this.convertToNgbTime(this.cart.endTime ?? '')
+  //     if(this.convertToMinutes(endTimeStruct) > this.convertToMinutes(this.timeOfDeliveryStruct) &&  this.convertToMinutes(startTimeStruct) < this.convertToMinutes(this.timeOfDeliveryStruct)){
+  //       this.timeOfDeliveryCTRL.setErrors(null)
+  //     }
+  //     else if(this.convertToMinutes(endTimeStruct) < this.convertToMinutes(this.timeOfDeliveryStruct)){
+  //       this.timeOfDeliveryCTRL.setErrors('tooLate', 'your time of delivery is too late')
+  //     }
+  //     else if(this.convertToMinutes(startTimeStruct) > this.convertToMinutes(this.timeOfDeliveryStruct)){
+  //       this.timeOfDeliveryCTRL.setErrors('tooEarly', 'your time of delivery is too early')
+  //     }
+  //   }
+  // }
+  validateOrderTime() {
+    console.log(this.timeOfDeliveryStruct)
+    if (!this.DeliverNow) {
+      console.log(this.timeOfDeliveryStruct)
+      const startTimeStruct = this.convertToNgbTime(this.cart.startTime ?? '');
+      const endTimeStruct = this.convertToNgbTime(this.cart.endTime ?? '');
+      const deliveryTimeMinutes = this.convertToMinutes(this.timeOfDeliveryStruct);
+      const startTimeMinutes = this.convertToMinutes(startTimeStruct);
+      const endTimeMinutes = this.convertToMinutes(endTimeStruct);
 
+      if (endTimeMinutes > deliveryTimeMinutes && startTimeMinutes < deliveryTimeMinutes) {
+        this.timeOfDeliveryCTRL.setErrors(null);
+      } else if (endTimeMinutes < deliveryTimeMinutes) {
+        this.timeOfDeliveryCTRL.setErrors({ tooLate: { message: 'Your time of delivery is too late' } });
+      } else if (startTimeMinutes > deliveryTimeMinutes) {
+        this.timeOfDeliveryCTRL.setErrors({ tooEarly: { message: 'Your time of delivery is too early' } });
+      }
+    }
+  }
+
+
+  convertToMinutes(time: NgbTimeStruct): number {
+    return time.hour * 60 + time.minute;
+  }
+
+  convertToApiTime(time: NgbTimeStruct): string {
+    let hour = time.hour.toString();
+    let minute = time.minute.toString();
+
+    if (time.hour < 10) {
+      hour = `0${time.hour}`
+    }
+    if (time.minute < 10) {
+      minute = `0${time.minute}`
+    }
+    return `${hour}:${minute}:00`
+  }
+
+  convertToNgbTime(time: string): NgbTimeStruct {
+    const [hourStr, minuteStr, secondStr] = time.split(':');
+
+    const hour = parseInt(hourStr, 10);
+    const minute = parseInt(minuteStr, 10);
+    const second = parseInt(secondStr, 10);
+
+
+    const angularTime: NgbTimeStruct = {
+      hour: hour,
+      minute: minute,
+      second: second
+    };
+
+    return angularTime;
+  }
+  showNoItemError() {
+    if((this.cart.cartItems?.length ?? 0) == 0){
+      this.sharedService.showPopUp('danger', 'you must a least have more than one meal')
+    }
+  }
+  validatingShippingStep(): boolean {
+    if(this.firstName.valid && this.lastName.valid && this.district.valid && this.street.valid && this.building.valid && this.floor.valid && this.apartment.valid){
+      this.isShippingStepValid = true
+      return true;
+    }
+    this.isShippingStepValid = false
+    return false;
+  }
 }

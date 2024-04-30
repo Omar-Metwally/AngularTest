@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { AddressService } from './services/address.service';
+import { AnalyticsService } from './services/analytics.service';
 import { AuthService } from './services/auth.service';
 import { CartService } from './services/cart.service';
 import { ChiefService } from './services/chief.service';
@@ -28,6 +29,7 @@ import { SubscriptionDayDataService } from './services/subscription-day-data.ser
   declarations: [],
   providers: [
     AddressService,
+    AnalyticsService,
     AuthService,
     CartService,
     ChiefService,
