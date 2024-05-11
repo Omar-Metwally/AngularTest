@@ -137,110 +137,109 @@
     </div>
 </div>
 
-<section class="table-data py-5">
-  <mat-tab-group (selectedTabChange)="tabChanged($event)" [(selectedIndex)]="selectedTab">
-      <mat-tab label="Dish Catalogue (5)">
-          <div *ngIf="isLoading; else dataContent" class="text-center">
-              <mat-spinner diameter="50" class="spinner"></mat-spinner>
-          </div>
-          <ng-template #dataContent>
-              <table *ngIf="selectedTab === 0" class="table table-hover text-center" style="color: #322F2F;">
-                  <!-- Table headers -->
-                  <thead style="margin-bottom: 50px;">
-                      <tr>
-                          <th>Product</th>
-                          <th>Name</th>
-                          <th>Profit</th>
-                          <th>Cost</th>
-                          <th>Revenue</th>
-                          <th>Orders Count</th>
-                      </tr>
-                  </thead>
-                  <!-- Table body -->
-                  <tbody style="border-top: none;vertical-align: middle;">
-                      <tr *ngFor="let item of dishCatalogueData">
-                          <!-- Table data -->
-                          <td scope="row">
-                              <img style="width: 100px; height: 80px; background-color: #e3eae2; border-radius: 50%;" src="{{ item.image }}" alt="">
-                          </td>
-                          <td>{{ item.name }}</td>
-                          <td>{{ item.profit }}</td>
-                          <td>{{ item.cost }}</td>
-                          <td>{{ item.revenue }}</td>
-                          <td>{{ item.ordersCount }}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </ng-template>
-      </mat-tab>
-      <mat-tab label="Meals">
-          <div *ngIf="isLoading; else dataContent2" class="text-center">
-              <mat-spinner diameter="50" class="spinner"></mat-spinner>
-          </div>
-          <ng-template #dataContent2>
-              <table *ngIf="selectedTab === 1" class="table table-hover text-center" style="color: #322F2F;">
-                  <!-- Table headers -->
-                  <thead style="margin-bottom: 50px;">
-                      <tr>
-                          <th>Product</th>
-                          <th>Name</th>
-                          <th>Profit</th>
-                          <th>Cost</th>
-                          <th>Revenue</th>
-                          <th>Orders Count</th>
-                      </tr>
-                  </thead>
-                  <!-- Table body -->
-                  <tbody style="border-top: none;vertical-align: middle;">
-                      <tr *ngFor="let item of mealsData">
-                          <!-- Table data -->
-                          <td scope="row">
-                              <img style="width: 100px; height: 80px; background-color: #e3eae2; border-radius: 50%;" src="{{ item.image }}" alt="">
-                          </td>
-                          <td>{{ item.name }}</td>
-                          <td>{{ item.profit }}</td>
-                          <td>{{ item.cost }}</td>
-                          <td>{{ item.revenue }}</td>
-                          <td>{{ item.ordersCount }}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </ng-template>
-      </mat-tab>
-      <mat-tab class="mb-3" label="Customers">
-          <div *ngIf="isLoading; else dataContent3" class="text-center">
-              <mat-spinner diameter="50" class="spinner"></mat-spinner>
-          </div>
-          <ng-template #dataContent3>
-              <table *ngIf="selectedTab === 2" class="table table-hover text-center" style="color: #322F2F;">
-                  <!-- Table headers -->
-                  <thead style="margin-bottom: 50px;">
-                      <tr>
-                          <th>Product</th>
-                          <th>Name</th>
-                          <th>Profit</th>
-                          <th>Cost</th>
-                          <th>Revenue</th>
-                          <th>Orders Count</th>
-                      </tr>
-                  </thead>
-                  <!-- Table body -->
-                  <tbody style="border-top: none;vertical-align: middle;">
-                      <tr *ngFor="let item of customersData">
-                          <!-- Table data -->
-                          <td scope="row">
-                              <img style="width: 100px; height: 80px; background-color: #e3eae2; border-radius: 50%;" src="{{ item.image }}" alt="">
-                          </td>
-                          <td>{{ item.name }}</td>
-                          <td>{{ item.profit }}</td>
-                          <td>{{ item.cost }}</td>
-                          <td>{{ item.revenue }}</td>
-                          <td>{{ item.ordersCount }}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </ng-template>
-      </mat-tab>
-  </mat-tab-group>
-</section>
+<div class="page-orders d-flex mt-5">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="activeNav" class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li [ngbNavItem]="0" class="nav-item" role="presentation">
+            <button (click)="tabChanged()" ngbNavLink class="nav-link btn-orders" id="pills-Orders-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-Orders" type="button" role="tab" aria-controls="pills-Orders"
+                aria-selected="true">Meals</button>
+            <ng-template ngbNavContent>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>Profit</th>
+                                <th>Cost</th>
+                                <th>Revenue</th>
+                                <th>Orders Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="data-row" *ngFor="let item of meals">
+                                <td>
+                                    <img style="width: 100px; height: 100px; background-color: #e3eae2; border-radius: 10px;" [src]="item.image" alt="">
+                                </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ (item.totalRevenue ?? 0) - (item.totalCost ?? 0) }}</td>
+                                <td>{{ item.totalCost }}</td>
+                                <td>{{ item.totalRevenue }}</td>
+                                <td>{{ item.soldAmount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="1" class="nav-item" role="presentation">
+            <button (click)="tabChanged()" ngbNavLink class="nav-link btn-orders" id="pills-Pending-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-Pending" type="button" role="tab" aria-controls="pills-Pending"
+                aria-selected="false">Customers</button>
+            <ng-template ngbNavContent>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Profit</th>
+                                <th>Cost</th>
+                                <th>Revenue</th>
+                                <th>Orders Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="data-row" *ngFor="let item of customers">
+                                <!-- Table data -->
+                                <td scope="row">
+                                    <img style="width: 100px; height: 80px; background-color: #e3eae2; border-radius: 50%;" [src]="item.customerImage" alt="">
+                                </td>
+                                <td>{{ item.customerName }}</td>
+                                <td>{{ (item.totalRevenue ?? 0) - (item.totalCost ?? 0) }}</td>
+                                <td>{{ item.totalCost }}</td>
+                                <td>{{ item.totalRevenue }}</td>
+                                <td>{{ item.totalOrders }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2" class="nav-item" role="presentation">
+            <button (click)="tabChanged()" ngbNavLink class="nav-link btn-orders" id="pills-ongoing-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-ongoing" type="button" role="tab" aria-controls="pills-ongoing"
+                aria-selected="false" >Ingredients</button>
+            <ng-template ngbNavContent>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Cost Per Kilo</th>
+                                <th>Used Amount in Grams</th>
+                                <th>Total Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="data-row" *ngFor="let item of ingredients">
+                                <!-- Table data -->
+                                <td>{{ getEnumString(item.ingredient ?? 0) }}</td>
+                                <td>{{ item.costPerKilo }}</td>
+                                <td>{{ item.usedAmountInGrams }}</td>
+                                <td>{{ (item.costPerKilo ?? 0) * (item.usedAmountInGrams ?? 0) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-pane fade show active rounded-3 shadow-sm" [ngbNavOutlet]="nav" class="mt-2">
+
+</div>
+
+
 

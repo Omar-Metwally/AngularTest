@@ -23,8 +23,6 @@ import { mealReviewGetMealReviewGet$Plain } from '../fn/meal-review/meal-review-
 import { MealReviewGetMealReviewGet$Plain$Params } from '../fn/meal-review/meal-review-get-meal-review-get-plain';
 import { mealReviewPost } from '../fn/meal-review/meal-review-post';
 import { MealReviewPost$Params } from '../fn/meal-review/meal-review-post';
-import { mealReviewPut } from '../fn/meal-review/meal-review-put';
-import { MealReviewPut$Params } from '../fn/meal-review/meal-review-put';
 
 @Injectable({ providedIn: 'root' })
 export class MealReviewService extends BaseService {
@@ -76,31 +74,6 @@ export class MealReviewService extends BaseService {
   mealReviewGet(params?: MealReviewGet$Params, context?: HttpContext): Observable<Array<GetMealReviewRequest>> {
     return this.mealReviewGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<GetMealReviewRequest>>): Array<GetMealReviewRequest> => r.body)
-    );
-  }
-
-  /** Path part for operation `mealReviewPut()` */
-  static readonly MealReviewPutPath = '/MealReview';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `mealReviewPut()` instead.
-   *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
-   */
-  mealReviewPut$Response(params?: MealReviewPut$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return mealReviewPut(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `mealReviewPut$Response()` instead.
-   *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
-   */
-  mealReviewPut(params?: MealReviewPut$Params, context?: HttpContext): Observable<void> {
-    return this.mealReviewPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

@@ -13,6 +13,14 @@ import { chiefAddIngredientsPost } from '../fn/chief/chief-add-ingredients-post'
 import { ChiefAddIngredientsPost$Params } from '../fn/chief/chief-add-ingredients-post';
 import { chiefAddIngredientsPost$Plain } from '../fn/chief/chief-add-ingredients-post-plain';
 import { ChiefAddIngredientsPost$Plain$Params } from '../fn/chief/chief-add-ingredients-post-plain';
+import { chiefGetChiefMealsGet } from '../fn/chief/chief-get-chief-meals-get';
+import { ChiefGetChiefMealsGet$Params } from '../fn/chief/chief-get-chief-meals-get';
+import { chiefGetChiefMealsGet$Plain } from '../fn/chief/chief-get-chief-meals-get-plain';
+import { ChiefGetChiefMealsGet$Plain$Params } from '../fn/chief/chief-get-chief-meals-get-plain';
+import { chiefGetChiefOrdersGet } from '../fn/chief/chief-get-chief-orders-get';
+import { ChiefGetChiefOrdersGet$Params } from '../fn/chief/chief-get-chief-orders-get';
+import { chiefGetChiefOrdersGet$Plain } from '../fn/chief/chief-get-chief-orders-get-plain';
+import { ChiefGetChiefOrdersGet$Plain$Params } from '../fn/chief/chief-get-chief-orders-get-plain';
 import { chiefGetChiefProfileDataGet } from '../fn/chief/chief-get-chief-profile-data-get';
 import { ChiefGetChiefProfileDataGet$Params } from '../fn/chief/chief-get-chief-profile-data-get';
 import { chiefGetChiefProfileDataGet$Plain } from '../fn/chief/chief-get-chief-profile-data-get-plain';
@@ -27,8 +35,12 @@ import { chiefRemoveIngredientsDelete } from '../fn/chief/chief-remove-ingredien
 import { ChiefRemoveIngredientsDelete$Params } from '../fn/chief/chief-remove-ingredients-delete';
 import { chiefRemoveIngredientsDelete$Plain } from '../fn/chief/chief-remove-ingredients-delete-plain';
 import { ChiefRemoveIngredientsDelete$Plain$Params } from '../fn/chief/chief-remove-ingredients-delete-plain';
+import { chiefUpdateOrderItemStatusPatch } from '../fn/chief/chief-update-order-item-status-patch';
+import { ChiefUpdateOrderItemStatusPatch$Params } from '../fn/chief/chief-update-order-item-status-patch';
 import { GetChiefIngredientRequest } from '../models/get-chief-ingredient-request';
+import { GetChiefMealsRequest } from '../models/get-chief-meals-request';
 import { GetChiefProfileDataRequest } from '../models/get-chief-profile-data-request';
+import { GetOrderItem } from '../models/get-order-item';
 
 @Injectable({ providedIn: 'root' })
 export class ChiefService extends BaseService {
@@ -246,6 +258,125 @@ export class ChiefService extends BaseService {
   chiefRemoveIngredientsDelete(params?: ChiefRemoveIngredientsDelete$Params, context?: HttpContext): Observable<Array<boolean>> {
     return this.chiefRemoveIngredientsDelete$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<boolean>>): Array<boolean> => r.body)
+    );
+  }
+
+  /** Path part for operation `chiefGetChiefOrdersGet()` */
+  static readonly ChiefGetChiefOrdersGetPath = '/Chief/GetChiefOrders';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `chiefGetChiefOrdersGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefOrdersGet$Plain$Response(params?: ChiefGetChiefOrdersGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetOrderItem>>> {
+    return chiefGetChiefOrdersGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `chiefGetChiefOrdersGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefOrdersGet$Plain(params?: ChiefGetChiefOrdersGet$Plain$Params, context?: HttpContext): Observable<Array<GetOrderItem>> {
+    return this.chiefGetChiefOrdersGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetOrderItem>>): Array<GetOrderItem> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `chiefGetChiefOrdersGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefOrdersGet$Response(params?: ChiefGetChiefOrdersGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetOrderItem>>> {
+    return chiefGetChiefOrdersGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `chiefGetChiefOrdersGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefOrdersGet(params?: ChiefGetChiefOrdersGet$Params, context?: HttpContext): Observable<Array<GetOrderItem>> {
+    return this.chiefGetChiefOrdersGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetOrderItem>>): Array<GetOrderItem> => r.body)
+    );
+  }
+
+  /** Path part for operation `chiefUpdateOrderItemStatusPatch()` */
+  static readonly ChiefUpdateOrderItemStatusPatchPath = '/Chief/UpdateOrderItemStatus';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `chiefUpdateOrderItemStatusPatch()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefUpdateOrderItemStatusPatch$Response(params?: ChiefUpdateOrderItemStatusPatch$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return chiefUpdateOrderItemStatusPatch(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `chiefUpdateOrderItemStatusPatch$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefUpdateOrderItemStatusPatch(params?: ChiefUpdateOrderItemStatusPatch$Params, context?: HttpContext): Observable<void> {
+    return this.chiefUpdateOrderItemStatusPatch$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `chiefGetChiefMealsGet()` */
+  static readonly ChiefGetChiefMealsGetPath = '/Chief/GetChiefMeals';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `chiefGetChiefMealsGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefMealsGet$Plain$Response(params?: ChiefGetChiefMealsGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<GetChiefMealsRequest>> {
+    return chiefGetChiefMealsGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `chiefGetChiefMealsGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefMealsGet$Plain(params?: ChiefGetChiefMealsGet$Plain$Params, context?: HttpContext): Observable<GetChiefMealsRequest> {
+    return this.chiefGetChiefMealsGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetChiefMealsRequest>): GetChiefMealsRequest => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `chiefGetChiefMealsGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefMealsGet$Response(params?: ChiefGetChiefMealsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<GetChiefMealsRequest>> {
+    return chiefGetChiefMealsGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `chiefGetChiefMealsGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  chiefGetChiefMealsGet(params?: ChiefGetChiefMealsGet$Params, context?: HttpContext): Observable<GetChiefMealsRequest> {
+    return this.chiefGetChiefMealsGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetChiefMealsRequest>): GetChiefMealsRequest => r.body)
     );
   }
 

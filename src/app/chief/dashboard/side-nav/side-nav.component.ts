@@ -121,17 +121,12 @@ export class SideNavComponent {
     {
       icon: 'ramen_dining',
       label:'My Menu',
-      route:''
+      route:'menu'
     },
     {
       icon: 'local_shipping',
       label:'Orders',
       route:'orders'
-    },
-    {
-      icon: 'history',
-      label:'History',
-      route:'history'
     },
     {
       icon: 'analytics',

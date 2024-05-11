@@ -8,16 +8,16 @@ import { RequestBuilder } from '../../request-builder';
 
 import { GetCustomerAnalsis } from '../../models/get-customer-analsis';
 
-export interface AnalyticsGetCustomerAnalsisGet$Plain$Params {
+export interface AnalyticsGetCustomerAnalyticsGet$Params {
 }
 
-export function analyticsGetCustomerAnalsisGet$Plain(http: HttpClient, rootUrl: string, params?: AnalyticsGetCustomerAnalsisGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetCustomerAnalsis>>> {
-  const rb = new RequestBuilder(rootUrl, analyticsGetCustomerAnalsisGet$Plain.PATH, 'get');
+export function analyticsGetCustomerAnalyticsGet(http: HttpClient, rootUrl: string, params?: AnalyticsGetCustomerAnalyticsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetCustomerAnalsis>>> {
+  const rb = new RequestBuilder(rootUrl, analyticsGetCustomerAnalyticsGet.PATH, 'get');
   if (params) {
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: 'text/plain', context })
+    rb.build({ responseType: 'json', accept: 'text/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
@@ -26,4 +26,4 @@ export function analyticsGetCustomerAnalsisGet$Plain(http: HttpClient, rootUrl: 
   );
 }
 
-analyticsGetCustomerAnalsisGet$Plain.PATH = '/Analytics/GetCustomerAnalsis';
+analyticsGetCustomerAnalyticsGet.PATH = '/Analytics/GetCustomerAnalytics';

@@ -1,280 +1,218 @@
 <div class="orders w-100 vh-10 mt-1" style="margin: 0; width: 95% !important; background-color:#FDFFFC">
-    <div class="tab-content " id="pills-tabContent">
+    <div class="tab-content" id="pills-tabContent">
         <h1>My Orders</h1>
         <div class="page-orders d-flex">
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active btn-orders" id="pills-Orders-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-Orders" type="button" role="tab" aria-controls="pills-home"
-                        aria-selected="true">All Orders</button>
+            <ul ngbNav #nav="ngbNav" class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li ngbNavItem="1" class="nav-item" role="presentation">
+                    <button ngbNavLink class="nav-link btn-orders" id="pills-Orders-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-Orders" type="button" role="tab" aria-controls="pills-Orders"
+                        aria-selected="true" (click)="selectedTab = 'Orders'">Pending</button>
+                    <ng-template ngbNavContent>
+                        <div>
+                            <table *ngIf="pendingConfirmOrderItems && pendingConfirmOrderItems.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Name</th>
+                                        <th>Side Dish & Topping</th>
+                                        <th>Estimated time</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="data-row" *ngFor="let item of pendingConfirmOrderItems">
+                                        <td><img width="100px" height="100px"
+                                                style="object-fit: cover; border-radius: 10px;"
+                                                [src]="item.mealOptionImage" alt=""></td>
+                                        <td>{{ item.mealName }}</td>
+                                        <td>
+                                            <div *ngFor="let sideDish of item.getOrderItemOprions">
+                                                    {{ sideDish.sideDishName }}
+                                                    <ng-container [ngSwitch]="sideDish.sideDishSizeOption">
+                                                        <span *ngSwitchCase="0">(S)</span>
+                                                        <span *ngSwitchCase="1">(M)</span>
+                                                        <span *ngSwitchCase="2">(L)</span>
+                                                    </ng-container>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.expectedTimeOfDelivery }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td class="price-color">{{ item.totalAmount }} EGP</td>
+                                        <td>
+                                            <button (click)="changeOrderItemStatus(2,item)"
+                                                style="background-color: rgba(42, 145, 21, 1); margin-bottom:5px !important;"
+                                                class="button">Accept</button>
+                                            <button (click)="changeOrderItemStatus(4,item)"
+                                                style="background-color: rgba(176, 35, 35, 1); margin-top:5px !important;"
+                                                class="button">Refuse</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="!(pendingConfirmOrderItems && pendingConfirmOrderItems.length > 0)"
+                                class="text-center">
+                                No orders found.
+                            </div>
+                        </div>
+                    </ng-template>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn-orders" id="pills-Pending-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-Pending" type="button" role="tab" aria-controls="pills-profile"
-                        aria-selected="false">Pending</button>
+                <li ngbNavItem="2" class="nav-item" role="presentation">
+                    <button ngbNavLink class="nav-link btn-orders" id="pills-Pending-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-Pending" type="button" role="tab" aria-controls="pills-Pending"
+                        aria-selected="false" (click)="selectedTab = 'Pending'">On Fire</button>
+                    <ng-template ngbNavContent>
+                        <div>
+                            <table *ngIf="onFireOrderItems && onFireOrderItems.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Name</th>
+                                        <th>Topping & Side Dish</th>
+                                        <th>Estimated time</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="data-row" *ngFor="let item of onFireOrderItems">
+                                        <td><img width="100px" height="100px"
+                                                style="object-fit: cover; border-radius: 10px;"
+                                                [src]="item.mealOptionImage" alt=""></td>
+                                        <td>{{ item.mealName }}</td>
+                                        <td>
+                                            <div *ngFor="let sideDish of item.getOrderItemOprions">
+                                                    {{ sideDish.sideDishName }}
+                                                    <ng-container [ngSwitch]="sideDish.sideDishSizeOption">
+                                                        <span *ngSwitchCase="0">(S)</span>
+                                                        <span *ngSwitchCase="1">(M)</span>
+                                                        <span *ngSwitchCase="2">(L)</span>
+                                                    </ng-container>
+                                            </div>
+                                        </td>
+                                        <td>{{ 4 }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td class="price-color">{{ item.totalAmount }} EGP
+                                        </td>
+                                        <td><button (click)="changeOrderItemStatus(3,item)"
+                                                style="background-color: rgba(42, 145, 21, 1);"
+                                                class="button">Deliver</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="!(onFireOrderItems && onFireOrderItems.length > 0)" class="text-center">
+                                No orders found.
+                            </div>
+                        </div>
+                    </ng-template>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn-orders" id="pills-ongoing-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-ongoing" type="button" role="tab" aria-controls="pills-contact"
-                        aria-selected="false">ongoing</button>
+                <li ngbNavItem="3" class="nav-item" role="presentation">
+                    <button ngbNavLink class="nav-link btn-orders" id="pills-ongoing-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-ongoing" type="button" role="tab" aria-controls="pills-ongoing"
+                        aria-selected="false" (click)="selectedTab = 'Ongoing'">Delivered</button>
+                    <ng-template ngbNavContent>
+                        <div>
+                            <table *ngIf="DeliveredOrderItems && DeliveredOrderItems.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Name</th>
+                                        <th>Topping & Side Dish</th>
+                                        <th>Estimated time</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="data-row" *ngFor="let item of DeliveredOrderItems">
+                                        <td><img width="100px" height="100px"
+                                                style="object-fit: cover; border-radius: 10px;"
+                                                [src]="item.mealOptionImage" alt=""></td>
+                                        <td>{{ item.mealName }}</td>
+                                        <td>
+                                            <div *ngFor="let sideDish of item.getOrderItemOprions">
+                                                    {{ sideDish.sideDishName }}
+                                                    <ng-container [ngSwitch]="sideDish.sideDishSizeOption">
+                                                        <span *ngSwitchCase="0">(S)</span>
+                                                        <span *ngSwitchCase="1">(M)</span>
+                                                        <span *ngSwitchCase="2">(L)</span>
+                                                    </ng-container>
+                                            </div>
+                                        </td>
+                                        <td>{{ 4 }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td class="price-color">{{ item.totalAmount }} EGP
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="!(DeliveredOrderItems && DeliveredOrderItems.length > 0)" class="text-center">
+                                No orders found.
+                            </div>
+                        </div>
+                    </ng-template>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn-orders" id="pills-Cancelled-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-Cancelled" type="button" role="tab" aria-controls="pills-contact"
-                        aria-selected="false">Cancelled</button>
+                <li ngbNavItem="4" class="nav-item" role="presentation">
+                    <button ngbNavLink class="nav-link btn-orders" id="pills-Cancelled-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-Cancelled" type="button" role="tab" aria-controls="pills-Cancelled"
+                        aria-selected="false" (click)="selectedTab = 'Cancelled'">Cancelled</button>
+                    <ng-template ngbNavContent>
+                        <div>
+                            <table *ngIf="CancelledOrderItems && CancelledOrderItems.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Name</th>
+                                        <th>Topping & Side Dish</th>
+                                        <th>Estimated time</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="data-row" *ngFor="let item of CancelledOrderItems">
+                                        <td><img width="100px" height="100px"
+                                                style="object-fit: cover; border-radius: 10px;"
+                                                [src]="item.mealOptionImage" alt=""></td>
+                                        <td>{{ item.mealName }}</td>
+                                        <td>
+                                            <div *ngFor="let sideDish of item.getOrderItemOprions">
+                                                    {{ sideDish.sideDishName }}
+                                                    <ng-container [ngSwitch]="sideDish.sideDishSizeOption">
+                                                        <span *ngSwitchCase="0">(S)</span>
+                                                        <span *ngSwitchCase="1">(M)</span>
+                                                        <span *ngSwitchCase="2">(L)</span>
+                                                    </ng-container>
+                                            </div>
+                                        </td>
+                                        <td>{{ 4 }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td class="price-color">{{ item.totalAmount }} EGP</td>
+                                        <td><button style="background-color: rgba(42, 145, 21, 1);"
+                                                (click)="changeOrderItemStatus(2,item)" class="button">Accept</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="!(CancelledOrderItems && CancelledOrderItems.length > 0)" class="text-center">
+                                No orders found.
+                            </div>
+                        </div>
+                    </ng-template>
                 </li>
             </ul>
-
-            <div class="div-two  col-6" style="right: -185px; position: relative;">
-                <input class="search-orders d-flex;  margin:auto" type="text" id="searchInput" placeholder="Search">
+<!-- 
+            <div class="div-two col-6" style="right: -185px; position: relative;">
+                <input class="search-orders d-flex; margin:auto" type="text" id="searchInput" placeholder="Search">
                 <img id="searchIcon" src="../../../../assets/svg images/search-normal.svg" alt="">
-            </div>
+            </div> -->
         </div>
 
-        <div class="tab-pane fade show active rounded-3 shadow-sm" id="pills-Orders" role="tabpanel"
-            aria-labelledby="pills-Orders-tab">
+        <div class="tab-pane fade show active rounded-3 shadow-sm" [ngbNavOutlet]="nav" class="mt-2">
 
-            <div class="table-orders pt-1 w-100 text-center">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Name</th>
-                            <th>Topping</th>
-                            <th>Side Dish</th>
-                            <th>Estimated time</th>
-                            <th>Quantity</th>
-                            <th>Note From customer</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body-line">
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                     
-                      
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="pills-Pending" role="tabpanel" aria-labelledby="pills-Pending-tab">
-            <div class="table-orders pt-1 w-100 text-center">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Name</th>
-                            <th>Topping</th>
-                            <th>Side Dish</th>
-                            <th>Estimated time</th>
-                            <th>Quantity</th>
-                            <th>Note From customer</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body-line">
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                     
-                      
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="pills-ongoing" role="tabpanel" aria-labelledby="pills-ongoing-tab">
-            <div class="table-orders pt-1 w-100 text-center">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Name</th>
-                            <th>Topping</th>
-                            <th>Side Dish</th>
-                            <th>Estimated time</th>
-                            <th>Quantity</th>
-                            <th>Note From customer</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body-line">
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                      
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                      
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="pills-Cancelled" role="tabpanel" aria-labelledby="pills-Cancelled-tab">
-            <div class="table-orders pt-1 w-100 text-center">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Name</th>
-                            <th>Topping</th>
-                            <th>Side Dish</th>
-                            <th>Estimated time</th>
-                            <th>Quantity</th>
-                            <th>Note From customer</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body-line">
-                        <tr>
-                            <td scope="row"><img src="../../../../assets/images/add-meal-chef.png"alt=""></td>
-                            <td>Pancake</td>
-                            <td>Maple Syrup</td>
-                            <td>Coffee</td>
-                            <td>10 mins</td>
-                            <td>12</td>
-                            <td>زود شطه</td>
-                            <td class="price-color">300 EGP
-                                <div class="button-row d-flex">
-                                    <button class="btn btn-refuse" >Refuse</button>
-                                    <button class="btn btn-accept" >Accept</button>
-                                </div>
-                            </td>
-                        </tr>
-                      
-                     
-                      
-                        
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>

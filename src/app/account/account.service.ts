@@ -1,32 +1,33 @@
-import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CustomerSignUp } from '../shared/models/account/customerSignup';
 import { Login } from '../shared/models/account/login';
 import { User } from '../shared/models/account/user';
-import { BehaviorSubject, Observable, ReplaySubject, catchError, map, of } from 'rxjs';
+import { Observable, ReplaySubject, catchError, map, of, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmEmail } from '../shared/models/account/confirmEmail';
 import { ResetPassword } from '../shared/models/account/resetPassword';
 import { environment } from 'src/environments/environment';
-import { CookieService } from 'ngx-cookie-service';
-import { AbstractControl, AsyncValidator, FormControl, ValidationErrors, Validator } from '@angular/forms';
+import { AbstractControl, AsyncValidator, ValidationErrors, Validator } from '@angular/forms';
 import jwtDecode from 'jwt-decode';
 import { CartService } from '../api/services';
-import { CartPost$Params, cartPost } from '../api/fn/cart/cart-post';
+import { CartPost$Params } from '../api/fn/cart/cart-post';
 import { GetCartItemOptionRequest, GetCartItemRequest, GetCartRequest, UpsertCartItemRequest } from '../api/models';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { SharedService } from '../shared/shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class AccountService  {
   private userSource = new ReplaySubject<User | null>(1);
   private cartSource = new ReplaySubject<GetCartRequest | null>(1);
   user$ = this.userSource.asObservable()
   cart$ = this.cartSource.asObservable()
 
   constructor(private http: HttpClient, private router: Router,
-    private cartService: CartService) { }
+    private cartService: CartService,
+    private sharedService: SharedService) { }
 
   /*refreshUser(jwt: string) {
     let decodedJWT = jwtDecode(jwt)
@@ -43,6 +44,14 @@ export class AccountService {
       })
     )
   }*/
+
+  getCurrentUser(): User | null {
+    let currentUser: User | null = null;
+    this.userSource.pipe(take(1)).subscribe(user => {
+      currentUser = user;
+    });
+    return currentUser;
+  }
 
   isUserLoggedIn(): boolean {
     const key = localStorage.getItem(environment.userKey);
@@ -70,6 +79,8 @@ export class AccountService {
         firstName: decodedJWT.given_name,
         lastName: decodedJWT.family_name,
         username: decodedJWT.unique_name,
+        phoneNumber: decodedJWT.phone_number,
+        photo: decodedJWT.photo,
         jwt: jwt
       };
 
@@ -81,7 +92,13 @@ export class AccountService {
 
     return this.http.get<User>(`${environment.appUrl}Auth/refreshToken`, { withCredentials: true }).pipe(
       map((user: User) => {
-        if (user) {
+        if(user){
+          let newDecodedJWT: any = jwtDecode(user.jwt);
+          user.firstName = newDecodedJWT.given_name,
+          user.lastName = newDecodedJWT.family_name,
+          user.username = newDecodedJWT.unique_name,
+          user.photo = newDecodedJWT.photo,
+          user.phoneNumber = newDecodedJWT.phone_number
           this.setUser(user);
           this.addItemToCart();
         }
@@ -96,11 +113,14 @@ export class AccountService {
     return this.http.post<User>(`${environment.appUrl}Auth/Login`, model, options)
       .pipe(
         map((user: User) => {
+          console.log(user)
           if (user) {
             let decodedJWT: any = jwtDecode(user.jwt);
-            user.firstName = decodedJWT.given_name,
+              user.firstName = decodedJWT.given_name,
               user.lastName = decodedJWT.family_name,
               user.username = decodedJWT.unique_name,
+              user.photo = decodedJWT.photo,
+              user.phoneNumber = decodedJWT.phone_number
               this.setUser(user);
             this.addItemToCart();
           }
@@ -127,7 +147,7 @@ export class AccountService {
 
   setCart(existingCart?: GetCartRequest) {
     let cart: GetCartRequest = {}
-    if(existingCart){
+    if (existingCart) {
       localStorage.setItem('cart', JSON.stringify(existingCart))
       this.cartSource.next(existingCart)
     }
@@ -155,60 +175,60 @@ export class AccountService {
   // }
   arraysEqual(a: GetCartItemOptionRequest[], b: GetCartItemOptionRequest[]): boolean {
     if (a.length !== b.length) {
-        return false;
+      return false;
     }
 
     for (let i = 0; i < a.length; i++) {
-        const objA = a[i];
-        const objB = b[i];
+      const objA = a[i];
+      const objB = b[i];
 
-        if (objA.mealSideDishID !== objB.mealSideDishID ||
-            objA.mealSideDishOptionID !== objB.mealSideDishOptionID ||
-            objA.sideDishSizeOption !== objB.sideDishSizeOption) {
-            return false;
-        }
+      if (objA.mealSideDishID !== objB.mealSideDishID ||
+        objA.mealSideDishOptionID !== objB.mealSideDishOptionID ||
+        objA.sideDishSizeOption !== objB.sideDishSizeOption) {
+        return false;
+      }
     }
 
     return true;
-}
+  }
   // arraysEqual(a: GetCartItemOptionRequest[], b: GetCartItemOptionRequest[]): boolean {
   //   return a.length === b.length && a.every((val, index) => val == b[index]);
   // }
-  
+
   addOrUpdateCartItem(cart: GetCartRequest, cartItemToAdd: GetCartItemRequest): GetCartRequest {
     if (cart.cartItems) {
       const index = cart.cartItems.findIndex(cartItem => {
         if (cartItem.mealOptionID !== cartItemToAdd.mealOptionID) {
           return false;
         }
-  
-        // Sort the side dishes for consistent comparison
-        const sortedCartItemSideDishes = cartItem.cartItemOptions 
-        ? [...cartItem.cartItemOptions].sort() 
-        : [];
-        const sortedCartItemToAddSideDishes = cartItemToAdd.cartItemOptions 
-        ? [...cartItemToAdd.cartItemOptions].sort() 
-        : [];
 
-            // const sortedCartItemToAddSideDishes = [...cartItemToAdd.cartItemOptions].sort();
-  
+        // Sort the side dishes for consistent comparison
+        const sortedCartItemSideDishes = cartItem.cartItemOptions
+          ? [...cartItem.cartItemOptions].sort()
+          : [];
+        const sortedCartItemToAddSideDishes = cartItemToAdd.cartItemOptions
+          ? [...cartItemToAdd.cartItemOptions].sort()
+          : [];
+
+        // const sortedCartItemToAddSideDishes = [...cartItemToAdd.cartItemOptions].sort();
+
         // Check if the side dishes are the same
         return this.arraysEqual(sortedCartItemSideDishes, sortedCartItemToAddSideDishes);
       });
-  
+
       if (index === -1) {
         cart.cartItems.push(cartItemToAdd);
       } else {
         cart.cartItems[index].quantity += cartItemToAdd.quantity;
       }
-  
+
       return cart;
     }
-  
+
     cart.cartItems = [cartItemToAdd];
     return cart;
   }
-  
+
 
   setCartItems(cartItem: GetCartItemRequest) {
     const upsertCartRequest: UpsertCartItemRequest[] = [{ mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity }]
@@ -291,7 +311,6 @@ export class AccountService {
     let cart: GetCartRequest = {}
     if (cartItem) {
       cart = this.addOrUpdateCart(cartItem)
-      console.log(cart, 'addItemToCart')
     }
     if (this.isUserLoggedIn()) {
       cart = await this.updateCartItemsFromAPI(cart) ?? cart
@@ -301,6 +320,7 @@ export class AccountService {
       this.cartSource.next(cart)
     }
     localStorage.setItem('cart', JSON.stringify(cart))
+    this.sharedService.showPopUp('success' , 'Meal added to cart')
   }
 
   addOrUpdateCart(cartItemToAdd: GetCartItemRequest) {
@@ -311,31 +331,31 @@ export class AccountService {
         if (cartItem.mealOptionID !== cartItem.mealOptionID) {
           return false;
         }
-  
+
         // Sort the side dishes for consistent comparison
-        const sortedCartItemSideDishes = cartItem.cartItemOptions 
-        ? [...cartItem.cartItemOptions].sort() 
-        : [];
-        const sortedCartItemToAddSideDishes = cartItemToAdd.cartItemOptions 
-        ? [...cartItemToAdd.cartItemOptions].sort() 
-        : [];
+        const sortedCartItemSideDishes = cartItem.cartItemOptions
+          ? [...cartItem.cartItemOptions].sort()
+          : [];
+        const sortedCartItemToAddSideDishes = cartItemToAdd.cartItemOptions
+          ? [...cartItemToAdd.cartItemOptions].sort()
+          : [];
 
 
-            // const sortedCartItemToAddSideDishes = [...cartItemToAdd.cartItemOptions].sort();
-  
+        // const sortedCartItemToAddSideDishes = [...cartItemToAdd.cartItemOptions].sort();
+
         // Check if the side dishes are the same
         return this.arraysEqual(sortedCartItemSideDishes, sortedCartItemToAddSideDishes);
       });
-  
+
       if (index === -1) {
         cart.cartItems.push(cartItemToAdd);
       } else {
         cart.cartItems[index].quantity += cartItemToAdd.quantity;
       }
-  
+
       return cart;
     }
-  
+
     cart.cartItems = [cartItemToAdd];
     return cart
 
@@ -366,7 +386,7 @@ export class AccountService {
       if (cart) {
         const upsertCartRequest: UpsertCartItemRequest[] = []
 
-        if(cart.cartItems){
+        if (cart.cartItems) {
 
           for (const cartItem of cart.cartItems) {
             const upsertRequest: UpsertCartItemRequest = {
@@ -382,7 +402,7 @@ export class AccountService {
           }
         }
 
-        const cartPost$Params: CartPost$Params = { body: upsertCartRequest, TimeOfDelivery: cart.timeOfDelivery?? undefined }
+        const cartPost$Params: CartPost$Params = { body: upsertCartRequest, TimeOfDelivery: cart.timeOfDelivery ?? undefined }
 
         this.cartService.cartPost$Response(cartPost$Params).subscribe({
           next: (response: HttpResponse<any>) => {
@@ -530,7 +550,7 @@ export class NationalIDValidator implements Validator {
 
 @Injectable({ providedIn: 'root' })
 export class StartTimeValidator implements Validator {
-  private startTime: NgbTimeStruct = {hour: 6, minute: 0 , second: 0};
+  private startTime: NgbTimeStruct = { hour: 6, minute: 0, second: 0 };
 
   setStartTime(startTime: NgbTimeStruct) {
     this.startTime = startTime;
@@ -538,10 +558,10 @@ export class StartTimeValidator implements Validator {
 
   validate(control: AbstractControl): ValidationErrors | null {
     console.log(this.startTime)
-    if(!this.startTime){
-      this.startTime = {hour: 6, minute: 0 , second: 0};
+    if (!this.startTime) {
+      this.startTime = { hour: 6, minute: 0, second: 0 };
     }
-    if (control.value.hour < this.startTime.hour || control.value.hour == this.startTime.hour && control.value.minute <= this.startTime.minute ) {
+    if (control.value.hour < this.startTime.hour || control.value.hour == this.startTime.hour && control.value.minute <= this.startTime.minute) {
       return { startTimeInvalid: `you cannot be early than ${this.startTime.hour} : ${this.startTime.minute}` };
     }
     return null;
@@ -550,7 +570,7 @@ export class StartTimeValidator implements Validator {
 
 @Injectable({ providedIn: 'root' })
 export class EndTimeValidator implements Validator {
-  private endTime: NgbTimeStruct = {hour: 23, minute: 0 , second: 0};
+  private endTime: NgbTimeStruct = { hour: 23, minute: 0, second: 0 };
 
   setEndTime(endTime: NgbTimeStruct) {
     this.endTime = endTime;
@@ -558,10 +578,10 @@ export class EndTimeValidator implements Validator {
 
   validate(control: AbstractControl): ValidationErrors | null {
     console.log(this.endTime)
-    if(!this.endTime){
-      this.endTime = {hour: 24, minute: 0 , second: 0};
+    if (!this.endTime) {
+      this.endTime = { hour: 24, minute: 0, second: 0 };
     }
-    if (control.value.hour > this.endTime.hour || control.value.hour == this.endTime.hour && control.value.minute >= this.endTime.minute ) {
+    if (control.value.hour > this.endTime.hour || control.value.hour == this.endTime.hour && control.value.minute >= this.endTime.minute) {
       return { endTimeInvalid: `you cannot be late than ${this.endTime.hour} : ${this.endTime.minute}` };
     }
     return null;

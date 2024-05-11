@@ -1,0 +1,22 @@
+<div class="m-4">
+    <button (click)="close()" mat-icon-button color="basic" tabindex="-1" style="position: absolute; top: 1rem; right: 1rem;">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div class="headline mb-1">Review Meal</div>
+      <ngb-rating [(rate)]="rating" [max]="5">
+        <ng-template let-fill="fill" let-index="index">
+            <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100" [class.low]="index < 3"></i>
+        </ng-template>
+    </ngb-rating>
+
+    <mat-form-field appearance="outline" style="width: 100%;" class="mt-2">
+        <mat-label>Review</mat-label>
+        <textarea [(ngModel)]="text" matInput></textarea>
+      </mat-form-field>
+    <button (click)="submitReview()" class="btn-green" style="width: 300px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    ">Submit</button>
+</div>

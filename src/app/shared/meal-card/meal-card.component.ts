@@ -21,12 +21,16 @@ export class MealCardComponent implements OnInit {
     title: '',
     chiefName: '',
     chiefImage: '',
+    mealCategory: 0,
+    createdDate: '',
     rating: 0,
     reviewsCount: 0,
     mealCardOptions: [],
   }
   @Input() addToCart!: (mealOption: mealCardOption) => void;
+  @Input() redirectToMealReview!: (mealID: string) => void;
   @Input() redirectToMeal!: (event: Event, mealOptionID: string) => void;
+  @Input() redirectToChiefPage!: (chiefID: string) => void;
 
   currentMealOption: mealCardOption = {
     mealOptionID: '',
@@ -51,6 +55,7 @@ export class MealCardComponent implements OnInit {
   currentMealOptionID: string = ''
 
   ngOnInit(): void {
+    console.log(this.mealCardData)
     this.currentMealOption = this.mealCardData.mealCardOptions[0]
     this.displayedImage = this.currentMealOption.mealOptionImage
     this.displayedPrice = this.currentMealOption.mealOptionPrice

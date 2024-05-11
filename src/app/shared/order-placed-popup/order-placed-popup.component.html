@@ -21,7 +21,7 @@
     color: rgba(50, 47, 47, 1);
 
     ">
-        Arriving Today at 9:00 PM to 10:00 PM
+        Arriving Today at 9:00 PM to 10:00 PM {{data}}
     </div>
     <div class="col-12 mb-3" style="
     font-family: Roboto;
@@ -33,7 +33,7 @@
         You can Check it on your Orders page
     </div>
     <div class="col-12 d-flex justify-content-between px-2">
-        <button class="btn btn-green me-2">Continue Exploring</button>
-        <button class="btn btn-empty ms-2">Orders Page</button>
+        <button (click)="redirectToMenuPage()" class="btn btn-green me-2">Continue Exploring</button>
+        <button (click)="redirectToOrdersPage()" class="btn btn-empty ms-2">Orders Page</button>
     </div>
 </div>

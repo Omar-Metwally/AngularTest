@@ -1,4 +1,5 @@
 export { AddressService } from './services/address.service';
+export { AdminService } from './services/admin.service';
 export { AnalyticsService } from './services/analytics.service';
 export { AuthService } from './services/auth.service';
 export { CartService } from './services/cart.service';

@@ -1,0 +1,20 @@
+<div class="container d-flex justify-content-center">
+    <table>
+        <tr>
+            <th style="padding: 10px;">Name</th>
+            <th style="padding: 10px;">Email</th>
+            <th style="padding: 10px;">Phone Number</th>
+            <th style="padding: 10px;">Signup Date</th>
+            <th style="padding: 10px;"></th>
+        </tr>
+        @for (user of this.waitingUserList; track $index) {
+        <tr class="data-row">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phoneNumber}}</td>
+            <td>{{user.signedUpDate | date: 'longDate'}}</td>
+            <td><button (click)="acceptUser(user)" class="button-green" style="width: 75%; padding: 10px; margin-top: 15px; margin-bottom: 15px;">Accept</button></td>
+        </tr>
+        }
+    </table>
+</div>

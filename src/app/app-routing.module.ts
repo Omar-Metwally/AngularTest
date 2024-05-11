@@ -16,11 +16,12 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { AnalyticsComponent } from './chief/dashboard/analytics/analytics.component';
 import { ChiefsOverviewComponent } from './admin/chiefs-overview/chiefs-overview.component';
 import { ChiefApplicationComponent } from './admin/chief-application/chief-application.component';
-import { MealsOverviewComponent } from './shared/meals-overview/meals-overview.component';
 import { CustomerOverviewComponent } from './admin/customer-overview/customer-overview.component';
-import { CustomerProfileComponent } from './admin/customer-profile/customer-profile.component';
+import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { ChiefGuard } from './shared/guards/chief.gaurd';
+import { PendingChiefsComponent } from './admin/pending-chiefs/pending-chiefs.component';
+import { MealsOverviewComponent } from './admin/meals-overview/meals-overview.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,6 +45,9 @@ const routes: Routes = [
   { path: 'cart', loadComponent: () => import('./cart/cart.component').then(module => module.CartComponent ) },
   { path: 'account', loadChildren: () => import('./account/account.module').then(module => module.AccountModule) },
   { path: 'meal-review/:mealID', loadComponent: () => import('./meal/meal-review/meal-review.component').then(module => module.MealReviewComponent ) },
+  { path: 'order-history', loadComponent: () => import('./customer-orders-history/customer-orders-history.component').then(module => module.CustomerOrdersHistoryComponent ) },
+  { path: 'chief-page/:chiefID', loadComponent: () => import('./chief-page/chief-page.component').then(module => module.ChiefPageComponent ) },
+
 
   // { path: 'profile', loadComponent: () => import('./profile/profile.component').then(module => module.ProfileComponent) },
   //{ path: 'dashboard', loadComponent: () => import('./chief/dashboard/dashboard.component').then(module => module.DashboardComponent) },
@@ -51,8 +55,8 @@ const routes: Routes = [
   { path: 'meal/:mealID', loadComponent: () => import('./meal/meal.component').then(module => module.MealComponent) },
   { path: 'meal', redirectTo: 'menu', pathMatch: 'full' },
   { path: 'dashboard' , component: DashboardComponent, canActivate:[ChiefGuard],children:[
-    {path:'', component: DefaultComponent},
-    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    {path:'menu', component: DefaultComponent},
+    {path:'dashboard/menu', redirectTo: 'dashboard', pathMatch: 'full'},
     {path:'meal-add', component: AddMealComponent},
     {path:'meal-add/:mealID', component: AddMealComponent},
     {path:'side-dish-add', component: AddSideDishComponent},
@@ -63,12 +67,14 @@ const routes: Routes = [
   ]},
   {path: 'admin/dashboard',canActivate:[AdminGuard], component: AdminDashboardComponent,children:[
     {path:'chiefs' , component: ChiefsOverviewComponent},
-    {path:'chief/chiefID', component: ChiefApplicationComponent},
+    {path:'chief/:chiefID', component: ChiefApplicationComponent},
     {path:'meals', component: MealsOverviewComponent},
     {path:'customers', component: CustomerOverviewComponent},
-    {path:'customer/customerID', component: CustomerProfileComponent},
+    {path:'customer/:customerID', component: CustomerProfileComponent},
+    {path:'pending-chiefs' , component: PendingChiefsComponent},
   ]},
   { path: 'not-found', component: NotFoundComponent },
+  { path: 'profile', component: CustomerProfileComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' }
 ];
 

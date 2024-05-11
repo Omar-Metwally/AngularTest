@@ -1,0 +1,174 @@
+<div class="container">
+
+    <div class="profile" [style.background-image.url]="this.chief.coverImage">
+        <img [src]="this.chief.coverImage" style="position: absolute; height: 336px; width: 100%; object-fit: cover; z-index: -1;
+        border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+        <div class="img2"><img style="object-fit: cover; aspect-ratio: 1 / 1;" [src]="this.chief.prfileImage" alt="">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-5 col-xl-5 online align-items-center">
+                <p style="display: inline-block;" class="fs-3 fw-bolder text-body-emphasis">{{this.chief.chiefName}}</p>
+                <p *ngIf="this.chief.isOnline" class="fs-3 fw-bold"
+                    style="display: inline-block; margin-left: 1.5rem;color: #31AC18;">Online</p>
+                <p *ngIf="!this.chief.isOnline" class="fs-3 fw-bold"
+                    style="display: inline-block; margin-left: 1.5rem;color: red;">Offline</p>
+                <p class="" style="color: #656565;">{{this.chief.description}}</p>
+            </div>
+            <div class="justify-content-end d-flex col boxs">
+                <div class="box " style="margin-right: 1rem;">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M23.281 9.50475C23.167 9.15537 22.9529 8.84719 22.6652 8.61851C22.3775 8.38982 22.0289 8.25073 21.6629 8.2185L16.3191 7.75631L14.2285 2.77444C14.0847 2.43565 13.8443 2.14668 13.5374 1.94354C13.2305 1.7404 12.8706 1.63208 12.5025 1.63208C12.1345 1.63208 11.7746 1.7404 11.4677 1.94354C11.1608 2.14668 10.9204 2.43565 10.7766 2.77444L8.68317 7.75631L3.33942 8.2185C2.97135 8.24898 2.62047 8.38748 2.33082 8.61663C2.04117 8.84578 1.82564 9.15536 1.71128 9.50655C1.59693 9.85773 1.58883 10.2349 1.68802 10.5906C1.7872 10.9464 1.98924 11.2649 2.26879 11.5063L6.33004 15.0501L5.11129 20.3226C5.02771 20.6816 5.05181 21.0573 5.18058 21.4027C5.30936 21.7481 5.53709 22.0479 5.8353 22.2646C6.13352 22.4812 6.48899 22.6052 6.85728 22.621C7.22557 22.6367 7.59034 22.5436 7.90598 22.3532L12.4997 19.5632L17.0935 22.3532C17.4091 22.5433 17.7738 22.6362 18.1419 22.6203C18.51 22.6044 18.8653 22.4804 19.1633 22.2637C19.4614 22.0471 19.689 21.7474 19.8177 21.4022C19.9465 21.057 19.9706 20.6815 19.8872 20.3226L18.6685 15.0501L22.7297 11.5063C23.0085 11.2641 23.2096 10.9449 23.3077 10.5888C23.4057 10.2327 23.3965 9.85558 23.281 9.50475ZM17.0232 13.5004C16.7661 13.7241 16.5748 14.0136 16.4699 14.3378C16.365 14.6621 16.3505 15.0088 16.4279 15.3407L17.4957 19.9644L13.47 17.5194C13.1777 17.3414 12.842 17.2473 12.4997 17.2473C12.1574 17.2473 11.8218 17.3414 11.5294 17.5194L7.50379 19.9644L8.57161 15.3407C8.64899 15.0088 8.63445 14.6621 8.52957 14.3378C8.42468 14.0136 8.2334 13.7241 7.97629 13.5004L4.40536 10.3851L9.10598 9.97819C9.44637 9.94904 9.77225 9.82708 10.0481 9.62558C10.324 9.42408 10.5393 9.15076 10.6707 8.83538L12.4997 4.47694L14.3288 8.83538C14.4601 9.15076 14.6754 9.42408 14.9513 9.62558C15.2272 9.82708 15.5531 9.94904 15.8935 9.97819L20.5941 10.3851L17.0232 13.5004Z"
+                            fill="#322F2F" />
+                    </svg>
+                    <p style="display: inline-block; padding-left: .2rem; color: #322F2F; font-weight: bold;">
+                        {{this.chief.rating | number: '1.0-2'}}</p>
+                    <p style=""><a style="color: #656565;" href="#">{{this.chief.reviewCount}} Reviews</a></p>
+                </div>
+                <div class="box" style=" margin-right: 1rem;">
+                    <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17.511 21.7435C17.6169 21.5776 17.7683 21.4457 17.9471 21.3636C19.4613 20.6661 20.7654 19.5826 21.7287 18.2219C22.6602 16.906 23.2413 15.3756 23.4185 13.7749H4.57828C4.75575 15.3759 5.33728 16.9065 6.2694 18.2225C7.23326 19.5832 8.5381 20.6665 10.0529 21.3636C10.2317 21.4457 10.3831 21.5776 10.489 21.7435C10.5948 21.9093 10.6507 22.102 10.65 22.2987V22.2983H10.5L10.65 22.2989L17.511 21.7435ZM17.511 21.7435C17.4052 21.9093 17.3493 22.102 17.35 22.2987V22.2983H17.5L17.35 22.2989L17.511 21.7435ZM2.475 12.7499L2.475 12.7502C2.4789 14.8584 3.05908 16.9255 4.15282 18.7278C5.23082 20.5042 6.76725 21.9567 8.6 22.9335V23.2499C8.6 23.7538 8.80018 24.2371 9.1565 24.5934C9.51282 24.9497 9.99609 25.1499 10.5 25.1499H17.5C18.0039 25.1499 18.4872 24.9497 18.8435 24.5934C19.1998 24.2371 19.4 23.7538 19.4 23.2499V22.9335C21.2328 21.9568 22.7692 20.5042 23.8472 18.7278C24.9409 16.9255 25.5211 14.8584 25.525 12.7502V12.7499C25.525 12.4781 25.417 12.2173 25.2248 12.0251C25.0326 11.8329 24.7718 11.7249 24.5 11.7249H23.7204C23.4683 9.34959 22.3548 7.14691 20.5878 5.53498C18.787 3.89226 16.4375 2.98159 14 2.98159C11.5625 2.98159 9.21299 3.89226 7.41222 5.53498C5.64519 7.14691 4.53167 9.34959 4.2796 11.7249H3.5C3.22815 11.7249 2.96744 11.8329 2.77522 12.0251C2.58299 12.2173 2.475 12.4781 2.475 12.7499ZM21.6553 11.7249H16.4872C17.5038 10.3149 18.9687 9.28847 20.6449 8.81534C21.1752 9.70698 21.5189 10.6969 21.6553 11.7249ZM18.3751 6.7749C18.5548 6.7749 18.7352 6.78303 18.9158 6.7961C19.0384 6.89761 19.1577 7.00263 19.2739 7.11116C17.039 7.96001 15.1912 9.60024 14.0836 11.7227H11.1643C11.7151 10.3037 12.6722 9.07649 13.9179 8.19623C15.2219 7.27483 16.7785 6.77845 18.3751 6.7749ZM14 5.0249C14.4962 5.02523 14.9908 5.07347 15.4769 5.16867C14.0224 5.6233 12.691 6.41133 11.5905 7.47313C10.3761 8.6448 9.48481 10.1093 9.00183 11.7249H6.34502C6.59089 9.90174 7.47915 8.22378 8.85297 6.99475C10.2686 5.72837 12.1007 5.0272 14 5.0249ZM10.65 23.0999H10.5V23.2499H10.65V23.0999ZM17.5 23.2499H17.35V23.0999H17.5V23.2499ZM4.42737 13.7749C4.42192 13.725 4.41686 13.675 4.41219 13.6249H4.56285L4.42737 13.7749Z"
+                            fill="#322F2F" stroke="#322F2F" stroke-width="0.3" />
+                    </svg>
+                    <p style="display: inline-block; padding-left: .2rem; color: #322F2F; font-weight: bold;">
+                        {{this.chief.ordersDone}}</p>
+                    <p style="color: #656565;">Meals prepared</p>
+                </div>
+                <div class="box ">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_6449_5965)">
+                            <path
+                                d="M3 5.128L12.0045 2.5L21 5.128V10.517C20.9999 13.2788 20.1308 15.9707 18.5158 18.2111C16.9008 20.4515 14.6217 22.1269 12.0015 23C9.38048 22.127 7.10065 20.4514 5.48505 18.2105C3.86946 15.9696 3.00004 13.2771 3 10.5145V5.128Z"
+                                stroke="#322F2F" stroke-width="2.5" stroke-linejoin="round" />
+                            <path d="M7.5 12L11 15.5L17 9.5" stroke="#322F2F" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_6449_5965">
+                                <rect width="24" height="24" fill="white" transform="translate(0 0.5)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <p style="display: inline-block; padding-left: .2rem; color: #322F2F; font-weight: bold;">Certified
+                    </p>
+                    <p style="color: #656565;">food safety</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container justify-content-center" style="margin-top: 5rem;">
+        <div class="media">
+            <div *ngIf="this.mostPopularMeals.length > 0" class="container1 me-3" style="display: inline-block;">
+                <button class="button btn fw-semibold">Most Popular</button>
+            </div>
+            <div *ngIf="this.newArrivalsMeals.length > 0" class="container1 me-3" style="display: inline-block;">
+                <button class="button btn fw-semibold">New Arrivals</button>
+            </div>
+            <div *ngIf="this.mainDishMeals.length > 0" class="container1 me-3" style="display: inline-block;">
+                <button class="button btn fw-semibold">Main Dish</button>
+            </div>
+            <div *ngIf="this.sideDishMeals.length > 0" class="container1 me-3" style="display: inline-block;">
+                <button class="button btn fw-semibold">Side Dish</button>
+            </div>
+            <div *ngIf="this.dessertMeals.length > 0" class="container1" style="display: inline-block;">
+                <button class="button btn fw-semibold">Dessert</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="this.mostPopularMeals.length > 0">
+        <div class="text-center" style="
+              margin-top: 2rem;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 34px;
+              letter-spacing: 0em;
+              text-align: left;
+              ">Most popular</div>
+        <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
+            @for (mealCard of this.mostPopularMeals; track mealCard) {
+            <app-meal-card [redirectToChiefPage]="redirectToChiefPage" class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+                [redirectToMeal]="redirectToMeal"></app-meal-card>
+            }
+        </div>
+    </div>
+
+    <div *ngIf="this.newArrivalsMeals.length > 0">
+        <div class="text-center" style="
+              margin-top: 2rem;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 34px;
+              letter-spacing: 0em;
+              text-align: left;
+              ">New Arrivals</div>
+        <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
+            @for (mealCard of this.newArrivalsMeals; track mealCard) {
+            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+                [redirectToMeal]="redirectToMeal"></app-meal-card>
+            }
+        </div>
+    </div>
+
+    <div *ngIf="this.mainDishMeals.length > 0">
+        <div class="text-center" style="
+              margin-top: 2rem;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 34px;
+              letter-spacing: 0em;
+              text-align: left;
+              ">Main Dish</div>
+        <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
+            @for (mealCard of this.mainDishMeals; track mealCard) {
+            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+                [redirectToMeal]="redirectToMeal"></app-meal-card>
+            }
+        </div>
+    </div>
+
+    <div *ngIf="this.sideDishMeals.length > 0">
+        <div class="text-center" style="
+              margin-top: 2rem;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 34px;
+              letter-spacing: 0em;
+              text-align: left;
+              ">Side Dish</div>
+        <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
+            @for (mealCard of this.sideDishMeals; track mealCard) {
+            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+                [redirectToMeal]="redirectToMeal"></app-meal-card>
+            }
+        </div>
+    </div>
+
+    <div *ngIf="this.dessertMeals.length > 0">
+        <div class="text-center" style="
+              margin-top: 2rem;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 34px;
+              letter-spacing: 0em;
+              text-align: left;
+              ">Dessert</div>
+        <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
+            @for (mealCard of this.dessertMeals; track mealCard) {
+            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+                [redirectToMeal]="redirectToMeal"></app-meal-card>
+            }
+        </div>
+    </div>
+</div>

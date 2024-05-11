@@ -38,34 +38,24 @@ export class AdminSideNavComponent {
 
   menuItems: MenuItem[] = [
     {
+      icon: 'assignment_ind',
+      label:'Pending Chiefs',
+      route:'pending-chiefs'
+    },
+    {
       icon: 'person',
-      label:'My Profile',
-      route:'profile'
+      label:'Customers Overview',
+      route:'customers'
     },
     {
-      icon: 'ramen_dining',
-      label:'My Menu',
-      route:''
+      icon: 'person',
+      label:'Chiefs Overview',
+      route:'chiefs'
     },
     {
-      icon: 'local_shipping',
-      label:'Orders',
-      route:'orders'
-    },
-    {
-      icon: 'history',
-      label:'History',
-      route:'comments'
-    },
-    {
-      icon: 'analytics',
-      label:'Analytics',
-      route:'comments'
-    },
-    {
-      icon: 'kitchen',
-      label:'Ingredients',
-      route:'ingredients'
+      icon: 'rice_bowl',
+      label:'Meals Overview',
+      route:'meals'
     }
   ];
   

@@ -15,18 +15,19 @@ import { ChiefService } from 'src/app/api/services';
 import { ChiefPost$Params } from 'src/app/api/fn/chief/chief-post';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { raceWith } from 'rxjs';
+import { SharedService } from 'src/app/shared/shared.service';
+import { Router } from '@angular/router';
 
 
 
 @Component({
-    selector: 'app-profile',
-    standalone: true,
-    templateUrl: './profile.component.html',
-    styleUrl: './profile.component.css',
-    imports: [CommonModule, SharedModule, SelectInputComponent, NgbTimepickerModule, FormsModule, MatRadioButton, MatRadioModule, FileInputComponent, MatFormFieldModule, MatInputModule]
+  selector: 'app-profile',
+  standalone: true,
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css',
+  imports: [CommonModule, SharedModule, SelectInputComponent, NgbTimepickerModule, FormsModule, MatRadioButton, MatRadioModule, FileInputComponent, MatFormFieldModule, MatInputModule]
 })
-export class ProfileComponent{
+export class ProfileComponent {
 
 
   constructor(private formBuilder: FormBuilder,
@@ -35,7 +36,9 @@ export class ProfileComponent{
     private nationalIDValidator: NationalIDValidator,
     private startTimeValidator: StartTimeValidator,
     private endTimeValidator: EndTimeValidator,
-    private chiefService: ChiefService){
+    private chiefService: ChiefService,
+    private sharedService: SharedService,
+    private router: Router) {
     this.upsertChiefDataForm = this.formBuilder.group({
       firstName: this.firstName,
       lastName: this.lastName,
@@ -48,6 +51,7 @@ export class ProfileComponent{
       endTime: this.endTime
     })
 
+    
     // console.log(this.startTime.value,this.endTime.value)
     this.startTimeValidator.setStartTime(this.endTime.value)
     this.endTimeValidator.setEndTime(this.startTime.value)
@@ -73,11 +77,12 @@ export class ProfileComponent{
       if (newValue != '') this.apartment.enable();
     });
 
+    this.sharedService.showLoadingSpinner()
     this.chiefService.chiefGetChiefProfileDataGet().subscribe({
       next: async (response) => {
-        console.log(response);
-        this.coverImage.setValue({url: response.coverImage})
-        this.chiefImage.setValue({url: response.chiefImage})
+        this.chiefID = response.chiefID ?? null
+        this.coverImage.setValue({ url: response.coverImage })
+        this.chiefImage.setValue({ url: response.chiefImage })
         this.firstName.setValue(response.firstName);
         this.lastName.setValue(response.lastName);
         this.phone.setValue(response.phoneNumber);
@@ -94,15 +99,20 @@ export class ProfileComponent{
         this.floor.setValue(response.floorNumber);
         this.apartment.setValue(response.apartmentNumber);
         this.nationalID.setValue(response.governmentID)
+        this.sharedService.hideLoadingSpinner()
       },
       error: (error) => {
+        this.sharedService.hideLoadingSpinner()
+        this.sharedService.showPopUp('danger', 'please try refreshing your page')
       }
+
     });
 
   }
-  
-  
-  
+
+
+
+  chiefID: string | null = null;
   firstName: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator, Validators.minLength(3), Validators.maxLength(20)],
   });
@@ -114,7 +124,7 @@ export class ProfileComponent{
   });
   phone: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator, Validators.minLength(9), Validators.maxLength(13),
-      this.phoneValidator.validate.bind(this.phoneValidator)],
+    this.phoneValidator.validate.bind(this.phoneValidator)],
   });
   district: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator],
@@ -133,20 +143,20 @@ export class ProfileComponent{
   });
   nationalID: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator,
-      this.nationalIDValidator.validate.bind(this.nationalIDValidator)],
+    this.nationalIDValidator.validate.bind(this.nationalIDValidator)],
   });
-  
+
   startTime: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator,
-      this.startTimeValidator.validate.bind(this.startTimeValidator)],
+    this.startTimeValidator.validate.bind(this.startTimeValidator)],
   });
   endTime: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator,
-      this.endTimeValidator.validate.bind(this.endTimeValidator)],
+    this.endTimeValidator.validate.bind(this.endTimeValidator)],
   });
-  chiefImage: FormControl = new FormControl({url: ''});
-  coverImage: FormControl = new FormControl({url: ''});
-  healthCert: FormControl = new FormControl({url: ''});
+  chiefImage: FormControl = new FormControl({ url: '' });
+  coverImage: FormControl = new FormControl({ url: '' });
+  healthCert: FormControl = new FormControl({ url: '' });
   chiefImageFileHandle: FileHandle = {}
   coverImageFileHandle: FileHandle = {}
   healthCertImageFileHandle: FileHandle = {}
@@ -161,9 +171,8 @@ export class ProfileComponent{
   startTimeStruct: NgbTimeStruct = { hour: 8, minute: 0, second: 0 };
   endTimeStruct: NgbTimeStruct = { hour: 21, minute: 0, second: 0 };
 
-  UpsertForm(){
-    console.log(this.upsertChiefDataForm, this.startTime)
-    if(this.upsertChiefDataForm.valid && this.startTime.valid){
+  UpsertForm() {
+    if (this.upsertChiefDataForm.valid && this.startTime.valid) {
       const chiefPostPrams: ChiefPost$Params = {
         body: {
           apartmentNumber: this.apartment.value,
@@ -181,11 +190,16 @@ export class ProfileComponent{
           governmentID: this.nationalID.value
         }
       }
+      this.sharedService.showLoadingSpinner()
       this.chiefService.chiefPost(chiefPostPrams).subscribe({
-        next:(response) => {
+        next: (response) => {
+          this.sharedService.hideLoadingSpinner()
           console.log(response)
         },
         error: (error) => {
+          this.sharedService.hideLoadingSpinner()
+          this.sharedService.showPopUp('danger', 'please try refreshing your page')
+
           console.log(error)
         }
       })
@@ -236,7 +250,7 @@ export class ProfileComponent{
       }
     });
   };
-  
+
 
   buildingOptionSelected = () => {
     this.floor.setValue('')
@@ -244,7 +258,7 @@ export class ProfileComponent{
     if (this.building.value != null && this.building.value.id !== null) this.floor.enable();
   }
 
-  display(){
+  display() {
     console.log(this.startTime, this.endTime);
   }
 
@@ -256,15 +270,19 @@ export class ProfileComponent{
     let hour = time.hour.toString();
     let minute = time.minute.toString();
 
-    if (time.hour < 10){
-       hour = `0${time.hour}`
+    if (time.hour < 10) {
+      hour = `0${time.hour}`
     }
-    if (time.minute < 10){
-       minute = `0${time.minute}`
+    if (time.minute < 10) {
+      minute = `0${time.minute}`
     }
     return `${hour}:${minute}:00`
   }
-  
+
+  redirectToChiefPage(){
+    this.router.navigate(['/chief-page',this.chiefID]);
+  }
+
   convertToNgbTime(time: string): NgbTimeStruct {
     const [hourStr, minuteStr, secondStr] = time.split(':');
 
@@ -274,11 +292,11 @@ export class ProfileComponent{
 
 
     const angularTime: NgbTimeStruct = {
-        hour: hour,
-        minute: minute,
-        second: second
+      hour: hour,
+      minute: minute,
+      second: second
     };
 
     return angularTime;
-}
+  }
 }

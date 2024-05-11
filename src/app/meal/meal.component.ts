@@ -144,7 +144,6 @@ export class MealComponent implements OnInit {
     // console.log(this.meal)
     this.mealsService.mealsMealIdGet(mealsMealIdGetParams).subscribe({
       next: (body) => {
-        console.log(body)
         dialogRef.close()
         this.loadMeal(body)
       },

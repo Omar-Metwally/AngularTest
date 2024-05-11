@@ -1,0 +1,92 @@
+.arrow1{
+  cursor: pointer;
+}
+
+.man{
+  width: 91px;
+  height: 91px;
+  border-radius: 500px;
+}
+
+.pd{
+padding-left: 30%; 
+}
+
+.star-rating span {
+cursor: pointer;
+}
+
+
+.container1{
+padding-left:15%;
+}
+
+.side {
+  right:0%;
+  width: 15%;
+  
+}
+
+.middle {
+  margin-top:20px;
+  float: left;
+  width: 70%;
+}
+
+.bar-container1 {
+  width: 126px;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+  
+}
+.bar-container2 {
+  width: 92px;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+.bar-container3 {
+  width: 60px;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+.bar-container4 {
+  width: 32px;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+.bar-container5 {
+  width: 10px;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+
+
+/* Individual bars */
+.bar-5 { height: 3px; background-color: #65C055;border-radius: 4px; width: 100%;}
+.bar-4 { height: 3px; background-color:#76D56E;border-radius: 4px; width: 100%;}
+.bar-3 { height: 3px; background-color: #BAD56E;border-radius: 4px; width: 100%;}
+.bar-2 { height: 3px; background-color: #D5A66E;border-radius: 4px; width: 100%;}
+.bar-1 { height: 3px; background-color: #D56E6E;border-radius: 4px; width: 100%;}
+
+i {
+  font-size: 1.5rem;
+  padding-right: 0.1rem;
+  color: rgba(250, 130, 50, 1);
+}
+.review-rating{
+  font-size: 1rem !important;
+}
+.filled {
+  color: rgba(250, 130, 50, 1);
+}
+.low {
+  color: rgba(250, 130, 50, 1);
+}
+.filled.low {
+  color: rgba(250, 130, 50, 1);
+}

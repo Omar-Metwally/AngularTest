@@ -31,7 +31,7 @@
       <div class="overflow-hidden" #mealCards style="display: flex; overflow-x: auto;">
         <!-- <app-meal-card></app-meal-card> -->
         @for (mealCard of mealsCard; track mealCard) {
-            <app-meal-card [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card [redirectToChiefPage]="redirectToChiefPage" [mealCardData]="mealCard" [addToCart]="addToCart"
               [redirectToMeal]="redirectToMeal"></app-meal-card>
           }
       </div>

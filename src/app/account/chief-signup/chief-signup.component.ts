@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AccountService, UniqueEmailValidator } from '../account.service';
+import { AccountService, PhoneValidator, UniqueEmailValidator } from '../account.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { AddressService } from 'src/app/address/address.service';
@@ -18,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SelectInputComponent } from "../../shared/select-input/select-input.component";
 import { AuthChiefSignUpPost$Plain$Params } from 'src/app/api/fn/auth/auth-chief-sign-up-post-plain';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
     selector: 'app-chief-signup',
@@ -57,7 +58,8 @@ export class ChiefSignupComponent {
   });
 
   phone: FormControl = new FormControl('', {
-    validators: [Validators.required, Validators.nullValidator, Validators.minLength(9), Validators.maxLength(13)],
+    validators: [Validators.required, Validators.nullValidator, Validators.minLength(9), Validators.maxLength(13),
+      this.phoneValidator.validate.bind(this.phoneValidator)],
   });
 
   password: FormControl = new FormControl('', {
@@ -69,7 +71,9 @@ export class ChiefSignupComponent {
     private accountService: AuthService,
     private uniqueEmailValidator: UniqueEmailValidator,
     private router: Router,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private phoneValidator: PhoneValidator,
+    private sharedService: SharedService
   ) {
     this.district.valueChanges.subscribe((newValue) => {
       this.street.setValue('')
@@ -123,16 +127,16 @@ export class ChiefSignupComponent {
           'BuildingID': this.signupForm.value.building.id,
         }
       };
+      this.sharedService.showLoadingSpinner()
       this.accountService.authChiefSignUpPost(signupParams).subscribe({
-        next: _ => {
-          if (this.returnUrl) {
-            this.router.navigateByUrl(this.returnUrl);
-          } else {
-            this.router.navigateByUrl('/');
-          }
+        next: next => {
+          this.sharedService.hideLoadingSpinner()
+          this.sharedService.showPopUp('success','your application is under review, for support contact us at support@TaamBiet.com')
         },
         error: error => {
           if (error.error.errors) {
+            this.sharedService.hideLoadingSpinner()
+            this.sharedService.showPopUp('danger','error while your sign up, please refresh your page')
             this.errorMessages = error.error.errors;
           } else {
             this.errorMessages.push(error.error);

@@ -15,7 +15,7 @@
         " *ngFor="let usedIngredient of usedIngredientsList; let i = index">
             <app-input    
             [(ngModel)]="usedIngredient.PricePerKilo"
-            class="col-auto" format="0000" [label]="usedIngredient.name" endText="EGP Per Kilo"></app-input>
+            class="col-auto" [label]="usedIngredient.name" endText="EGP Per Kilo"></app-input>
                 <button class="col-auto" mat-mini-fab color="warn" style="border-radius: 10px !important; position: absolute;
                 right: -10%;
                 top: 10%;"

@@ -7,14 +7,14 @@
       <div class="d-flex justify-content-between flexs">
         <div>
           <h5 class="card-title" style="font-weight: 700; font-family: Roboto;">{{mealCardData.title}}</h5>
-          <p id="card-text" class="card-text" style="font-family: Roboto; font-weight: 400;">{{mealCardData.chiefName}}
+          <p (click)="redirectToChiefPage(mealCardData.chiefID)" id="card-text" class="card-text" style="font-family: Roboto; font-weight: 400; cursor: pointer;">{{mealCardData.chiefName}}
           </p>
         </div>
         <div class="card2">
           <img style="object-fit: cover;" [src]="mealCardData.chiefImage" class="chef-img" width="50px" height="50px">
         </div>
       </div>
-      <div class="d-flex justify-content-between">
+      <div (click)="redirectToMealReview(mealCardData.mealID)" class="d-flex justify-content-between" style="cursor: pointer;">
         <p id="card-text" class="card-text mb-0"><span class="text-warning">&#9733;</span> <u>{{mealCardData.rating}}
             ({{mealCardData.reviewsCount}})</u></p>
       </div>

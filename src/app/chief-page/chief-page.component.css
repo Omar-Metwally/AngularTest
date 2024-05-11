@@ -1,0 +1,327 @@
+.img1 img {
+    width: 1280px;
+    height: 336px;
+    border-radius: 30px;
+
+}
+
+.profile {
+    position: relative;
+    background-image: url("/assets/images/chef-cover.svg");
+    height: 350px;
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 30px;
+}
+
+.img2 img {
+    position: absolute;
+    bottom: -90px;
+    height: 180px;
+    left: 50px;
+    top: 15rem;
+    border: 8px solid #fff;
+    border-radius: 50%;
+
+}
+
+.btnn {
+    position: absolute;
+    width: 139px;
+    height: 39px;
+    right: 100px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    border: #f1f1f1;
+    top: 5%;
+
+}
+
+.fa-camera:before {
+    content: none;
+}
+
+
+
+.btun {
+    position: absolute;
+    background: #5ABD46;
+    border: none;
+    color: #f1f1f1;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 164px;
+    bottom: -24px;
+    right: 37px;
+
+}
+
+
+
+
+
+.square {
+    border-radius: 10px;
+    height: 270px;
+    padding: 20px;
+    flex-direction: row;
+    box-shadow: 0 0 0 1px rgb(0, 0, 0, 0.1),
+        0 5px 12px -2px rgb(0, 0, 0, 0.1),
+        0 18px 36px -6px rgb(0, 0, 0, 0.1);
+}
+
+.online {
+    margin-left: 14rem;
+}
+
+
+
+.box:hover {
+    background-color: #9EE392;
+    border: #9EE392 1px solid;
+}
+
+.container .box {
+    width: 140px;
+    height: 105px;
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    border: #ffffff 1px solid;
+    box-shadow: 1px 1px 20px #31ac1855;
+    border-radius: 1rem;
+}
+
+.media {
+    text-align: center;
+}
+
+
+.container .container1 {
+    text-align: center;
+    box-shadow: 1px 1px 10px #31ac1855;
+    border-radius: 10px;
+}
+
+.container .button {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    width: 14rem;
+    border-radius: 10px;
+    background-color: #FDFFFC;
+    color: #322F2F;
+    font-family: Roboto;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.container .button:active {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    width: 14rem;
+    border-radius: 10px;
+    background-color: #FDFFFC;
+    color: #322F2F;
+    font-family: Roboto;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+
+.container .button:hover {
+    background-color: #9EE392;
+}
+
+/* .container .button:active{
+    background-color: #9EE392;
+  } */
+
+@media screen and (max-width:1400px) {
+
+    .online {
+        margin-left: 2rem;
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-top: 5rem;
+        justify-content: start;
+    }
+
+    .container .button {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 12rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width:1200px) {
+
+    .online {
+        margin-left: 2rem;
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-top: 5rem;
+        justify-content: start;
+    }
+
+    .container .button {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 10rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width:991px) {
+
+    .online {
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-right: 7rem;
+        justify-content: center;
+    }
+
+    .container .button {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 7.5rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: .90rem;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width:768px) {
+
+    .online {
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-left: 2.2rem;
+        justify-content: center;
+    }
+
+
+    .container .button {
+        justify-content: center;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 5.9rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: .7rem;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width:650px) {
+
+    .online {
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-left: 2.2rem;
+        justify-content: center;
+    }
+
+    .container .button {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 4rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: .53rem;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width:536px) {
+
+    .online {
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-left: 1rem;
+        justify-content: center;
+    }
+
+    .container .box {
+        height: 90px;
+        font-size: .7rem;
+    }
+
+    .container .button {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 4rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: .350rem;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width:450px) {
+
+    .online {
+        margin-top: 5rem;
+    }
+
+    .boxs {
+        margin-left: 1rem;
+        justify-content: center;
+    }
+
+    .container .box {
+        height: 90px;
+        font-size: .7rem;
+    }
+
+    .container .button {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        width: 3.2rem;
+        border-radius: 10px;
+        background-color: #FDFFFC;
+        color: #322F2F;
+        font-family: Roboto;
+        font-size: .350rem;
+        text-align: center;
+    }
+
+}

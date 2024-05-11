@@ -19,6 +19,12 @@ import { authChiefSignUpPost } from '../fn/auth/auth-chief-sign-up-post';
 import { AuthChiefSignUpPost$Params } from '../fn/auth/auth-chief-sign-up-post';
 import { authChiefSignUpPost$Plain } from '../fn/auth/auth-chief-sign-up-post-plain';
 import { AuthChiefSignUpPost$Plain$Params } from '../fn/auth/auth-chief-sign-up-post-plain';
+import { authCustomerProfileGet } from '../fn/auth/auth-customer-profile-get';
+import { AuthCustomerProfileGet$Params } from '../fn/auth/auth-customer-profile-get';
+import { authCustomerProfileGet$Plain } from '../fn/auth/auth-customer-profile-get-plain';
+import { AuthCustomerProfileGet$Plain$Params } from '../fn/auth/auth-customer-profile-get-plain';
+import { authCustomerProfilePost } from '../fn/auth/auth-customer-profile-post';
+import { AuthCustomerProfilePost$Params } from '../fn/auth/auth-customer-profile-post';
 import { authCustomerSignUpPost } from '../fn/auth/auth-customer-sign-up-post';
 import { AuthCustomerSignUpPost$Params } from '../fn/auth/auth-customer-sign-up-post';
 import { authCustomerSignUpPost$Plain } from '../fn/auth/auth-customer-sign-up-post-plain';
@@ -42,6 +48,7 @@ import { authResendEmailConfirmationEmailPost$Plain } from '../fn/auth/auth-rese
 import { AuthResendEmailConfirmationEmailPost$Plain$Params } from '../fn/auth/auth-resend-email-confirmation-email-post-plain';
 import { authRevokeTokenGet } from '../fn/auth/auth-revoke-token-get';
 import { AuthRevokeTokenGet$Params } from '../fn/auth/auth-revoke-token-get';
+import { GetCustomerProfileDataRequest } from '../models/get-customer-profile-data-request';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
@@ -378,6 +385,78 @@ export class AuthService extends BaseService {
   authResendEmailConfirmationEmailPost(params: AuthResendEmailConfirmationEmailPost$Params, context?: HttpContext): Observable<boolean> {
     return this.authResendEmailConfirmationEmailPost$Response(params, context).pipe(
       map((r: StrictHttpResponse<boolean>): boolean => r.body)
+    );
+  }
+
+  /** Path part for operation `authCustomerProfileGet()` */
+  static readonly AuthCustomerProfileGetPath = '/Auth/CustomerProfile';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authCustomerProfileGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authCustomerProfileGet$Plain$Response(params?: AuthCustomerProfileGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<GetCustomerProfileDataRequest>> {
+    return authCustomerProfileGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authCustomerProfileGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authCustomerProfileGet$Plain(params?: AuthCustomerProfileGet$Plain$Params, context?: HttpContext): Observable<GetCustomerProfileDataRequest> {
+    return this.authCustomerProfileGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetCustomerProfileDataRequest>): GetCustomerProfileDataRequest => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authCustomerProfileGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authCustomerProfileGet$Response(params?: AuthCustomerProfileGet$Params, context?: HttpContext): Observable<StrictHttpResponse<GetCustomerProfileDataRequest>> {
+    return authCustomerProfileGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authCustomerProfileGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authCustomerProfileGet(params?: AuthCustomerProfileGet$Params, context?: HttpContext): Observable<GetCustomerProfileDataRequest> {
+    return this.authCustomerProfileGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetCustomerProfileDataRequest>): GetCustomerProfileDataRequest => r.body)
+    );
+  }
+
+  /** Path part for operation `authCustomerProfilePost()` */
+  static readonly AuthCustomerProfilePostPath = '/Auth/CustomerProfile';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authCustomerProfilePost()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  authCustomerProfilePost$Response(params?: AuthCustomerProfilePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return authCustomerProfilePost(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authCustomerProfilePost$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  authCustomerProfilePost(params?: AuthCustomerProfilePost$Params, context?: HttpContext): Observable<void> {
+    return this.authCustomerProfilePost$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateOrderRequest, GetCartItemRequest, GetCartRequest, GetMealOptionRequest } from '../api/models';
-import { AccountService } from '../account/account.service';
+import { CreateOrderRequest, GetCartItemRequest, GetCartRequest, GetMealOptionRequest, PaymentOption } from '../api/models';
+import { AccountService, PhoneValidator } from '../account/account.service';
 import { CartService, MealsService, OrderService, PromoCodeService } from '../api/services';
 import { MealsMealOptionCartPost$Params } from '../api/fn/meals/meals-meal-option-cart-post';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { PromoCodeDiscountCalculatePost$Params } from '../api/fn/promo-code/promo-code-discount-calculate-post';
 import { NgbTimepickerModule, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatIcon } from '@angular/material/icon';
 import { Option } from 'src/app/shared/models/address/option';
 import { AddressService } from 'src/app/address/address.service';
@@ -24,6 +24,7 @@ import { HttpResponse } from '@angular/common/http';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderPlacedPopupComponent } from '../shared/order-placed-popup/order-placed-popup.component';
+import { User } from '../shared/models/account/user';
 
 
 
@@ -43,6 +44,7 @@ import { OrderPlacedPopupComponent } from '../shared/order-placed-popup/order-pl
 })
 export class CartComponent implements OnInit {
 
+  user: User;
 
   timeOfDeliveryCTRL: FormControl = new FormControl('');
   timeOfDeliveryStruct: NgbTimeStruct = {
@@ -60,9 +62,19 @@ export class CartComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private cartService: CartService,
+    private phoneValidator: PhoneValidator,
   ) {
+    this.user = this.accountService.getCurrentUser() ?? {
+      firstName: '',
+      lastName: '',
+      username: '',
+      phoneNumber: '',
+      photo: '',
+      jwt: ''
+    };
+
     this.timeOfDeliveryCTRL.disable()
-    this.cartService.cartPost$Response().subscribe({
+    this.cartService.cartGet$Response().subscribe({
       next: (response: HttpResponse<any>) => {
         if (response.status === 200) {
           this.cart = response.body as GetCartRequest
@@ -101,7 +113,7 @@ export class CartComponent implements OnInit {
   iframeLink: string = ''
   cartSubTotalBeforeDiscount: number = 0;
   cartSubTotalAfterDiscount = 20
-  PayOnline: boolean = true;
+  PayOnline: PaymentOption = 0;
   DeliverNow: boolean = true;
   isShippingStepValid: boolean = false;
 
@@ -129,13 +141,12 @@ export class CartComponent implements OnInit {
   firstName: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator, Validators.minLength(3), Validators.maxLength(20)],
   });
-
   lastName: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.nullValidator, Validators.minLength(3), Validators.maxLength(20)],
   });
-
   phone: FormControl = new FormControl('', {
-    validators: [Validators.required, Validators.nullValidator, Validators.minLength(9), Validators.maxLength(13)],
+    validators: [Validators.required, Validators.nullValidator, Validators.minLength(9), Validators.maxLength(13),
+      this.phoneValidator.validate.bind(this.phoneValidator)],
   });
 
   shippingInformationForm: FormGroup = new FormGroup({});
@@ -162,6 +173,7 @@ export class CartComponent implements OnInit {
       maxHeight: '80%',
       enterAnimationDuration: '500ms',
       exitAnimationDuration: '250ms',
+      data: `${this.DeliverNow ? "your order will arrive in the next 30 minutes" : `Arriving Today at ${this.time.hour}:${this.time.minute}`}`,
     });
   }
 
@@ -179,10 +191,16 @@ export class CartComponent implements OnInit {
       next: (districts: Option[]) => {
         this.districts = districts;
         this.district.enable();
+
       },
       error: (error) => {
       }
     });
+    setTimeout(() => {
+      this.firstName.setValue(this.user.firstName)
+      this.lastName.setValue(this.user.lastName)
+      this.phone.setValue(this.user.phoneNumber)
+    }, 2000);
   }
 
   calculateTotal() {
@@ -195,26 +213,32 @@ export class CartComponent implements OnInit {
     this.cartSubTotalAfterDiscount.toPrecision(2)
   }
 
-  confirmOrder() {
-    if (this.validatingShippingStep()) {
-      const orderPost$Params: OrderPost$Params = {
-        body: {
-          apartmentNo: this.apartment.value,
-          buildingID: this.building.value.id,
-          floorNo: this.floor.value,
-          paymentOption: 1,
-          phoneNumber: this.phone.value,
-          promoCodeID: this.promoCodeInput.value,
+  confirmOrder(stepper?: MatStepper) {
+    if (this.validatingShippingStep(stepper)) {
+      if(this.PayOnline == 1 || stepper?.selectedIndex == 2){
+        const orderPost$Params: OrderPost$Params = {
+          body: {
+            apartmentNo: this.apartment.value,
+            buildingID: this.building.value.id,
+            floorNo: this.floor.value,
+            paymentOption: this.PayOnline,
+            phoneNumber: this.phone.value,
+            promoCodeID: this.promoCodeInput.value,
+          }
         }
+        this.orderService.orderPost(orderPost$Params).subscribe({
+          next: (response: any) => {
+            this.iframeLink = `https://accept.paymob.com/api/acceptance/iframes/807851?payment_token=${response.token}`
+            stepper?.next()
+          },
+          error: error => {
+            console.log(error.error)
+          }
+        })
       }
-      this.orderService.orderPost(orderPost$Params).subscribe({
-        next: (response: any) => {
-          this.iframeLink = `https://accept.paymob.com/api/acceptance/iframes/807851?payment_token=${response.token}`
-        },
-        error: error => {
-          console.log(error.error)
-        }
-      })
+    }
+    else{
+      stepper?.next()
     }
   }
 
@@ -329,32 +353,15 @@ export class CartComponent implements OnInit {
       this.timeOfDeliveryCTRL.enable()
     }
   }
-  // validateOrderTime(){
-  //   if(!this.DeliverNow){
-  //     const startTimeStruct = this.convertToNgbTime(this.cart.startTime ?? '')
-  //     const endTimeStruct = this.convertToNgbTime(this.cart.endTime ?? '')
-  //     if(this.convertToMinutes(endTimeStruct) > this.convertToMinutes(this.timeOfDeliveryStruct) &&  this.convertToMinutes(startTimeStruct) < this.convertToMinutes(this.timeOfDeliveryStruct)){
-  //       this.timeOfDeliveryCTRL.setErrors(null)
-  //     }
-  //     else if(this.convertToMinutes(endTimeStruct) < this.convertToMinutes(this.timeOfDeliveryStruct)){
-  //       this.timeOfDeliveryCTRL.setErrors('tooLate', 'your time of delivery is too late')
-  //     }
-  //     else if(this.convertToMinutes(startTimeStruct) > this.convertToMinutes(this.timeOfDeliveryStruct)){
-  //       this.timeOfDeliveryCTRL.setErrors('tooEarly', 'your time of delivery is too early')
-  //     }
-  //   }
-  // }
+
   validateOrderTime() {
-    console.log(this.timeOfDeliveryStruct)
     if (!this.DeliverNow) {
-      console.log(this.timeOfDeliveryStruct)
       const startTimeStruct = this.convertToNgbTime(this.cart.startTime ?? '');
       const endTimeStruct = this.convertToNgbTime(this.cart.endTime ?? '');
       const deliveryTimeMinutes = this.convertToMinutes(this.timeOfDeliveryStruct);
       const startTimeMinutes = this.convertToMinutes(startTimeStruct);
       const endTimeMinutes = this.convertToMinutes(endTimeStruct);
-
-      if (endTimeMinutes > deliveryTimeMinutes && startTimeMinutes < deliveryTimeMinutes) {
+      if (endTimeMinutes < deliveryTimeMinutes && deliveryTimeMinutes < startTimeMinutes) {
         this.timeOfDeliveryCTRL.setErrors(null);
       } else if (endTimeMinutes < deliveryTimeMinutes) {
         this.timeOfDeliveryCTRL.setErrors({ tooLate: { message: 'Your time of delivery is too late' } });
@@ -403,9 +410,14 @@ export class CartComponent implements OnInit {
       this.sharedService.showPopUp('danger', 'you must a least have more than one meal')
     }
   }
-  validatingShippingStep(): boolean {
+  validatingShippingStep(stepper?: MatStepper): boolean {
     if(this.firstName.valid && this.lastName.valid && this.district.valid && this.street.valid && this.building.valid && this.floor.valid && this.apartment.valid){
       this.isShippingStepValid = true
+      const currentStepIndex = stepper?.selectedIndex;
+      if (currentStepIndex !== -1 && stepper && currentStepIndex) { // Ensuring a step is selected
+        stepper.steps.toArray()[currentStepIndex].completed = true;
+      }
+      stepper?.next()
       return true;
     }
     this.isShippingStepValid = false

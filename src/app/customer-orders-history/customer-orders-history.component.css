@@ -1,0 +1,100 @@
+.container{
+    font-family: Roboto;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 41.6px;
+    text-align: left;
+    color: rgba(50, 47, 47, 1);
+}
+
+.order-outer-container{
+    padding-top: 20px;
+}
+
+.order-inner-container{
+    padding: 15px;
+    box-shadow: 1px 1px 9.6px 0px rgba(49, 172, 24, 0.2);
+    background: rgba(253, 255, 252, 1);
+    border-radius: 10px;
+}
+.order-table-header{
+    padding-right: 15px;
+    padding-left: 15px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: left;
+    color: rgba(50, 47, 47, 1);
+}
+.button-green{
+    background: rgba(253, 255, 252, 1);
+    border: 1px solid rgba(42, 145, 21, 1);
+    color:rgba(42, 145, 21, 1);
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: center;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+.button-green:hover{
+    background-color: rgba(42, 145, 21, 1);
+    color: rgba(253, 255, 252, 1);
+}
+.order-item-name{
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    text-align: left;
+    color: rgba(50, 47, 47, 1);
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.order-item-chief{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(101, 101, 101, 1);
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.order-item-side-dish{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(50, 47, 47, 1);
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.order-item-side-dish-item{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(101, 101, 101, 1);
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: 1rem;
+}

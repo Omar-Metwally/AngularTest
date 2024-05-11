@@ -11,6 +11,10 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { cartDelete } from '../fn/cart/cart-delete';
 import { CartDelete$Params } from '../fn/cart/cart-delete';
+import { cartGet } from '../fn/cart/cart-get';
+import { CartGet$Params } from '../fn/cart/cart-get';
+import { cartGet$Plain } from '../fn/cart/cart-get-plain';
+import { CartGet$Plain$Params } from '../fn/cart/cart-get-plain';
 import { cartPatch } from '../fn/cart/cart-patch';
 import { CartPatch$Params } from '../fn/cart/cart-patch';
 import { cartPatch$Plain } from '../fn/cart/cart-patch-plain';
@@ -25,6 +29,53 @@ import { GetCartRequest } from '../models/get-cart-request';
 export class CartService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `cartGet()` */
+  static readonly CartGetPath = '/Cart';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cartGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cartGet$Plain$Response(params?: CartGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<GetCartRequest>> {
+    return cartGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cartGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cartGet$Plain(params?: CartGet$Plain$Params, context?: HttpContext): Observable<GetCartRequest> {
+    return this.cartGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetCartRequest>): GetCartRequest => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cartGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cartGet$Response(params?: CartGet$Params, context?: HttpContext): Observable<StrictHttpResponse<GetCartRequest>> {
+    return cartGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cartGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cartGet(params?: CartGet$Params, context?: HttpContext): Observable<GetCartRequest> {
+    return this.cartGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<GetCartRequest>): GetCartRequest => r.body)
+    );
   }
 
   /** Path part for operation `cartPost()` */

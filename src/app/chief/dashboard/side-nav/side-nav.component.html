@@ -69,8 +69,8 @@
             <mat-icon>menu</mat-icon>
         </button>
         <div class="image-container">
-            <img [width]="collapsed ? '32' : '100'" [height]="collapsed ? '32' : '100'"
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
+            <img *ngIf="(accountService.user$ | async) as user" [width]="collapsed ? '32' : '100'" [height]="collapsed ? '32' : '100'"
+                [src]="user.photo" />
             <div class="header-text" *ngIf="!collapsed" style="transition: all 500ms ease-in-out;
 font-family: Roboto;
 font-weight: 500;

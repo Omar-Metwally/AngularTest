@@ -46,7 +46,7 @@
       </mat-stepper> -->
 
 
-    <mat-stepper class="example-stepper" [linear]="true" labelPosition="bottom">
+    <mat-stepper #stepper class="example-stepper" [linear]="true" labelPosition="bottom">
 
         <ng-template matStepperIcon="cart">
             <mat-icon>shopping_cart_checkout</mat-icon>
@@ -189,6 +189,10 @@
                                         <td colspan="3">Delivery fee</td>
                                         <td class="text-end" id="F-n">20 EGP</td>
                                     </tr>
+                                    <tr *ngIf="this.cartSubTotalAfterDiscount != (this.cartSubTotalBeforeDiscount + 20)">
+                                        <td colspan="3">Discount</td>
+                                        <td class="text-end" id="F-n">{{(this.cartSubTotalBeforeDiscount + 20) - this.cartSubTotalAfterDiscount}} EGP</td>
+                                    </tr>
                                     <tr style="border-top: 1px solid rgba(152, 150, 150, 1)">
                                         <td colspan="3">Subtotal</td>
                                         <td class="text-end" id="diff1">{{this.cartSubTotalBeforeDiscount + 20}} EGP
@@ -201,7 +205,7 @@
                             <div class="custom-search">
                                 <input [formControl]="promoCodeInput" type="text" class="custom-search-input"
                                     placeholder="Promocode">
-                                <button (click)="openPopUp()" class="custom-search-botton"
+                                <button  class="custom-search-botton" (click)="applyPromoCode()"
                                     type="submit">Apply</button>
                             </div>
 
@@ -389,8 +393,8 @@
                             </div>
                             <div class="row">
                                 <mat-radio-group [(ngModel)]="PayOnline" color="primary" class="col-auto">
-                                    <mat-radio-button class="row" [value]="true">Visa</mat-radio-button>
-                                    <mat-radio-button class="row" [value]="false">Cash On Delivery</mat-radio-button>
+                                    <mat-radio-button class="row" [value]="1">Visa</mat-radio-button>
+                                    <mat-radio-button class="row" [value]="0">Cash On Delivery</mat-radio-button>
                                 </mat-radio-group>
                             </div>
 
@@ -400,7 +404,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center pt-5">
-                        <button (click)="confirmOrder()" matStepperNext style="width: 391px; 
+                        <button (click)="confirmOrder(stepper)" matStepperNext style="width: 391px; 
                     height: 51px;
                     padding: 14px 0px 13px 0px;
                     border-radius: 10px;
@@ -589,6 +593,10 @@
                                                         <td colspan="3">Delivery fee</td>
                                                         <td class="text-end" id="F-n">20 EGP</td>
                                                     </tr>
+                                                    <tr *ngIf="this.cartSubTotalAfterDiscount != (this.cartSubTotalBeforeDiscount + 20)">
+                                                        <td colspan="3">Discount</td>
+                                                        <td class="text-end" id="F-n">{{(this.cartSubTotalBeforeDiscount + 20) - this.cartSubTotalAfterDiscount}} EGP</td>
+                                                    </tr>
                                                     <tr style="border-top: 1px solid rgba(152, 150, 150, 1)">
                                                         <td colspan="3">Total</td>
                                                         <td class="text-end" id="diff1">
@@ -600,9 +608,8 @@
                                                 </tbody>
                                             </table>
                                             <div class="row">
-                                                <button type="button" class="btn"
+                                                <button type="button" class="btn" (click)="openPopUp()"
                                                     style="background-color: #31AC18; color:#FDFFFC; width: 100%;height: 51px; border-radius: 10px;">Place Order</button>
-
                                             </div>
                                         </div>
                                     </div>
@@ -622,10 +629,6 @@
                         </div>
                     </div>
                 </div>
-            </ng-template>
-        </mat-step>
-        <mat-step label="Review order" state="review-order">
-            <ng-template matStepContent>
             </ng-template>
         </mat-step>
     </mat-stepper>

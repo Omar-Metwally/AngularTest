@@ -10,6 +10,7 @@ export interface GetMealRequest {
   chiefID?: string | null;
   chiefImage?: string | null;
   chiefName?: string | null;
+  createdDate?: string;
   description?: string | null;
   getMealOptionsRequest?: Array<GetMealOptionRequest> | null;
   getMealReviewsRequest?: Array<GetMealReview> | null;
@@ -18,6 +19,7 @@ export interface GetMealRequest {
   mealSpiceLevel?: MealSpiceLevel;
   mealStyle?: MealStyle;
   mealTags?: Array<MealTag> | null;
-  rating?: number | null;
+  rating?: number;
+  reviewCount?: number;
   title?: string | null;
 }

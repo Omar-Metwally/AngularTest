@@ -2,7 +2,7 @@
 <ng-container *ngIf="showDragAndDrop">
   <div [style]="style" [class]="class" app-event-blocker (dragend)="isDragover = false" (dragover)="isDragover = true" (dragenter)="isDragover = true"
     (dragleave)="isDragover = false" (mouseleave)="isDragover = false" (drop)="storeFile($event)"
-    [ngStyle]="control.value.url" class="square text-center mt-5">
+    [ngStyle]="control.value?.url ?? ''" class="square text-center mt-5">
     <div class="inside mt-5">
       <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

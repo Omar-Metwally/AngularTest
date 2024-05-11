@@ -55,6 +55,8 @@ export class HomeComponent {
           chiefName: request.chiefName || '',
           chiefImage: request.chiefImage || '',
           rating: request.rating || 0,
+          mealCategory: request.mealCategory || 0,
+          createdDate: request.createdDate || '',
           reviewsCount: 0,
           mealCardOptions: request.getMealOptionsRequest?.map(option => ({
             mealOptionID: option.mealOptionID || '',
@@ -85,6 +87,10 @@ export class HomeComponent {
         }
       }
     });
+  }
+
+  redirectToChiefPage = (chiefID: string) => {
+    this.router.navigate(['/chief-page', chiefID]);
   }
 
   loadMeals(){

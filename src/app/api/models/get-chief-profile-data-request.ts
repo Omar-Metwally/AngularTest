@@ -3,6 +3,7 @@
 export interface GetChiefProfileDataRequest {
   apartmentNumber?: string | null;
   buildingID?: string | null;
+  chiefID?: string | null;
   chiefImage?: string | null;
   closeTime?: string | null;
   coverImage?: string | null;

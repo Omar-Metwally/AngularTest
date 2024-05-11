@@ -10,9 +10,7 @@ import { RequestBuilder } from '../../request-builder';
 export interface MealReviewPost$Params {
       body?: {
 'MealID'?: string;
-'CustomerID'?: string;
-'Title'?: string;
-'Description'?: string;
+'Text'?: string;
 'Rating'?: number;
 'ReviewImage'?: Blob;
 }

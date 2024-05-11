@@ -1,4 +1,4 @@
-import { MealSizeOption } from "src/app/api/models"
+import { MealCategory, MealSizeOption } from "src/app/api/models"
 
 export interface mealCard {
     mealID: string,
@@ -6,6 +6,8 @@ export interface mealCard {
     title: string,
     chiefName: string,
     chiefImage: string,
+    createdDate: string,
+    mealCategory: MealCategory,
     rating: number,
     reviewsCount: number,
     mealCardOptions: mealCardOption[]

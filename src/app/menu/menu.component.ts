@@ -112,9 +112,16 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  redirectToChiefPage = (chiefID: string) => {
+    this.router.navigate(['/chief-page', chiefID]);
+  }
+
+  redirectToMealReview = (mealID: string) => {
+    this.router.navigate(['/meal-review', mealID]);
+  }
+
   addToCart = (mealOption: mealCardOption) => {
     if(mealOption.mealSideDishes.length > 0){
-      console.log(mealOption)
       const dialogRef = this.dialog.open(MealChoicePopupComponent, {
         width: 'min-content',
         height: 'min-content',
@@ -154,7 +161,6 @@ export class MenuComponent implements OnInit {
   }
 
   hello = () => {
-    console.log(this.mealGetRequest)
     this.toggleLoading();
     this.bindData()
     this.mealsService.mealsGet(this.mealGetRequest).subscribe({
@@ -166,8 +172,10 @@ export class MenuComponent implements OnInit {
           title: request.title || '',
           chiefName: request.chiefName || '',
           chiefImage: request.chiefImage || '',
+          mealCategory: request.mealCategory || 0,
+          createdDate: request.createdDate || '',
           rating: request.rating || 0,
-          reviewsCount: 0,
+          reviewsCount: request.reviewCount || 0,
           mealCardOptions: request.getMealOptionsRequest?.map(option => ({
             mealOptionID: option.mealOptionID || '',
             mealOptionSize: option.mealSizeOption || 0,
@@ -241,8 +249,10 @@ export class MenuComponent implements OnInit {
         title: request.title || '',
         chiefName: request.chiefName || '',
         chiefImage: request.chiefImage || '',
+        mealCategory: request.mealCategory || 0,
+        createdDate: request.createdDate || '',
         rating: request.rating || 0,
-        reviewsCount: 0, // You need to provide the source for reviewsCount
+        reviewsCount: request.reviewCount || 0, // You need to provide the source for reviewsCount
         mealCardOptions: request.getMealOptionsRequest?.map(option => ({
           mealOptionID: option.mealOptionID || '',
           mealOptionSize: option.mealSizeOption || 0, // Assuming MealSizeOption is a number

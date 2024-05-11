@@ -115,6 +115,7 @@ calculateTotal() {
       []
     });
     this.accountService.addItemToCart(itemToAdd)
+    this.dialogRef.close()
   }
   
 }

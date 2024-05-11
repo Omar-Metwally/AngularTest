@@ -6,22 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { PostCustomerProfileDataRequest } from '../../models/post-customer-profile-data-request';
 
-export interface MealReviewPut$Params {
-      body?: {
-'MealID'?: string;
-'CustomerID'?: string;
-'Title'?: string;
-'Description'?: string;
-'Rating'?: number;
-'ReviewImage'?: Blob;
-}
+export interface AuthCustomerProfilePost$Params {
+      body?: PostCustomerProfileDataRequest
 }
 
-export function mealReviewPut(http: HttpClient, rootUrl: string, params?: MealReviewPut$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, mealReviewPut.PATH, 'put');
+export function authCustomerProfilePost(http: HttpClient, rootUrl: string, params?: AuthCustomerProfilePost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, authCustomerProfilePost.PATH, 'post');
   if (params) {
-    rb.body(params.body, 'multipart/form-data');
+    rb.body(params.body, 'application/*+json');
   }
 
   return http.request(
@@ -34,4 +28,4 @@ export function mealReviewPut(http: HttpClient, rootUrl: string, params?: MealRe
   );
 }
 
-mealReviewPut.PATH = '/MealReview';
+authCustomerProfilePost.PATH = '/Auth/CustomerProfile';

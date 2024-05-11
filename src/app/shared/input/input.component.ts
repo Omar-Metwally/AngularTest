@@ -1,4 +1,4 @@
-import { Component, Input,EventEmitter, Output } from '@angular/core';
+import { Component, Input,EventEmitter, Output, input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 
@@ -9,7 +9,6 @@ import { FormControl } from '@angular/forms';
 })
 export class InputComponent  {
 
-  @Input() control: FormControl = new FormControl()
   @Input() type = 'text'
   @Input() placeholder = ''
   @Input() label = ''
@@ -23,7 +22,7 @@ export class InputComponent  {
   @Input() ngModel = ''
   @Input() hide: any = ''
   @Input() isDisabled: boolean = true
-  @Input() blurMethod!: () => void;
+  @Input() control: FormControl = new FormControl()
   @Output() ngModelChange: EventEmitter<any> = new EventEmitter<any>();
 
   onInputChange(newValue: any) {

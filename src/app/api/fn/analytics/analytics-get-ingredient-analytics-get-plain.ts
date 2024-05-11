@@ -8,16 +8,16 @@ import { RequestBuilder } from '../../request-builder';
 
 import { GetIngredientAnalysis } from '../../models/get-ingredient-analysis';
 
-export interface AnalyticsGetIngredientAnalysisGet$Params {
+export interface AnalyticsGetIngredientAnalyticsGet$Plain$Params {
 }
 
-export function analyticsGetIngredientAnalysisGet(http: HttpClient, rootUrl: string, params?: AnalyticsGetIngredientAnalysisGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetIngredientAnalysis>>> {
-  const rb = new RequestBuilder(rootUrl, analyticsGetIngredientAnalysisGet.PATH, 'get');
+export function analyticsGetIngredientAnalyticsGet$Plain(http: HttpClient, rootUrl: string, params?: AnalyticsGetIngredientAnalyticsGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetIngredientAnalysis>>> {
+  const rb = new RequestBuilder(rootUrl, analyticsGetIngredientAnalyticsGet$Plain.PATH, 'get');
   if (params) {
   }
 
   return http.request(
-    rb.build({ responseType: 'json', accept: 'text/json', context })
+    rb.build({ responseType: 'text', accept: 'text/plain', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
@@ -26,4 +26,4 @@ export function analyticsGetIngredientAnalysisGet(http: HttpClient, rootUrl: str
   );
 }
 
-analyticsGetIngredientAnalysisGet.PATH = '/Analytics/GetIngredientAnalysis';
+analyticsGetIngredientAnalyticsGet$Plain.PATH = '/Analytics/GetIngredientAnalytics';

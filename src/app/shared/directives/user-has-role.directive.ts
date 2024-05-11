@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 @Directive({
   selector: '[appUserHasRole]'
 })
-export class UserHasRoleDirective implements OnInit{
+export class UserHasRoleDirective implements OnInit {
   @Input() appUserHasRole: string[] = [];
 
   constructor(private viewContainerRef: ViewContainerRef,
@@ -19,13 +19,16 @@ export class UserHasRoleDirective implements OnInit{
       next: user => {
         if (user) {
           const decodedToken: any = jwt_decode(user.jwt);
-          this.appUserHasRole.includes(decodedToken.roles)
-          this.viewContainerRef.createEmbeddedView(this.templateRef);
+          if (this.appUserHasRole.includes(decodedToken.roles)) {
+            this.viewContainerRef.createEmbeddedView(this.templateRef);
+          }
+          else {
+            this.viewContainerRef.clear();
+          }
         } else {
           this.viewContainerRef.clear();
         }
       }
     })
   }
-
 }

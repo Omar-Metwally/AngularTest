@@ -19,7 +19,7 @@ import { MealOptionPost$Params } from 'src/app/api/fn/meal-option/meal-option-po
 import { MealOptionService } from 'src/app/api/services/meal-option.service';
 import { MealsPut$Params } from 'src/app/api/fn/meals/meals-put';
 import { Meal } from 'src/app/shared/models/meal/meal';
-import { mealOption, mealSideDish, mealSideDishOption } from 'src/app/shared/models/meal/mealOption';
+import { mealOption, mealSideDish, mealSideDishOption, usedIngredient } from 'src/app/shared/models/meal/mealOption';
 import { MatIconModule } from '@angular/material/icon';
 import { MealOptionPut$Params } from 'src/app/api/fn/meal-option/meal-option-put';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -27,13 +27,17 @@ import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-
 import { MealsMealIdGet$Params } from 'src/app/api/fn/meals/meals-meal-id-get';
 import { Option } from 'src/app/shared/models/address/option';
 import { GetMealRequest } from 'src/app/api/models/get-meal-request';
-import { AddMealSideDish, AddMealSideDishOption, GetMealSideDishOptionRequest, MealCategory, MealSpiceLevel, MealStyle, MealTag } from 'src/app/api/models';
+import { AddIngredient, AddMealSideDish, AddMealSideDishOption, FoodIngredient, GetChiefIngredientRequest, GetMealSideDishOptionRequest, MealCategory, MealSpiceLevel, MealStyle, MealTag, UsedIngredient } from 'src/app/api/models';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FileHandle } from 'src/app/shared/file-input/file-handle.model';
 import { SharedService } from 'src/app/shared/shared.service';
-import { MatRadioModule } from '@angular/material/radio';
-import { SideDishOptionService } from 'src/app/api/services';
+import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
+import { ChiefService, SideDishOptionService } from 'src/app/api/services';
+
+interface Ingredient extends Option {
+  pricePerKilo?: number
+}
 
 @Component({
   selector: 'app-add-meal',
@@ -110,10 +114,13 @@ export class AddMealComponent implements OnInit {
   spiceLevelOptions: Option[] = [];
   styleOptions: Option[] = [];
   tagsOptions: Option[] = [];
+  ingredientsList: usedIngredient[] = []
+  usedIngredientsList: usedIngredient[] = []
   isMealAdded: boolean = false;
   isSmallMealOptionAdded: boolean = false;
   isMediumMealOptionAdded: boolean = false;
   isLargeMealOptionAdded: boolean = false;
+  ingredientCTRL: FormControl = new FormControl('');
   AddOrEdit: string = 'Add'
   selectedTags: Option[] = []
   chiefSideDishOption: mealSideDishOption[] = []
@@ -168,8 +175,17 @@ export class AddMealComponent implements OnInit {
     else {
       this.toggleQuantityInput(false)
     }
+    this.chiefService.chiefGetIngredientsGet().subscribe({
+      next: (response) => {
+        this.fillIngredientList(response);
+      },
+      error: (error) => {
+        
+      }
+    })
   }
   constructor(private mealsService: MealsService,
+    private chiefService: ChiefService,
     private mealOptionService: MealOptionService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -199,6 +215,8 @@ export class AddMealComponent implements OnInit {
       { id: '16', name: 'Ribs' },);
     this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Syrian' }, { id: '2', name: 'Lebanese' }, { id: '3', name: 'Western' }, { id: '4', name: 'Asian' }, { id: '5', name: 'Indian' })
 
+
+
     this.addMealForm = this.formBuilder.group({
       title: this.title,
       category: this.category,
@@ -227,43 +245,8 @@ export class AddMealComponent implements OnInit {
 
 
 
-    this.previousMealSize = this.addMealOptionForm.get('SizeOption')?.value;
-    this.addMealOptionForm.get('SizeOption')?.valueChanges.subscribe((currentMealSize) => {
-      this.saveMealOption(this.currentMealOption.mealOptionID)
-      this.previousMealSize = currentMealSize;
+    this.previousMealSize = this.mealSize.value;
 
-      let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == currentMealSize);
-
-      if (index !== -1 && index !== undefined) {
-        this.currentMealOption = this.meal.mealOptions[index]
-        this.mealSize.setValue(currentMealSize, { emitEvent: false })
-        //this.mealSize.setValue(this.currentMealOption.MealSizeOption)
-        this.price.setValue(this.currentMealOption.price)
-        // this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
-        this.isAvailable.setValue(this.currentMealOption.isAvailable)
-        this.quantity.setValue(this.currentMealOption.availableQuantity)
-        this.image.setValue(this.currentMealOption.image);
-        this.sideDishControl.setValue(this.currentMealOption.sideDishes);
-        if (!this.currentMealOption.isAvailable) {
-          this.toggleQuantityInput(false)
-        }
-        else {
-          this.toggleQuantityInput(true)
-        }
-        this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
-        // this.imagePath.setValue(this.currentMealOption.imagePath)
-      }
-      else {
-        this.price.reset()
-        this.saveQuantitySetting.reset()
-        this.isAvailable.reset()
-        this.quantity.reset()
-        this.image.reset()
-        this.sideDishControl.reset()
-        this.toggleQuantityInput(false)
-      }
-      this.ChangeAddOrEdit()
-    });
 
     this.sideDishOptionService.sideDishOptionChiefIdGet().subscribe({
       next: (response) => {
@@ -354,6 +337,17 @@ export class AddMealComponent implements OnInit {
         });
       });
 
+      const usedIngredients: usedIngredient[] = []
+
+      mealOption.usedIngredients?.forEach(usedIngredient => {
+        usedIngredients.push({
+          id: usedIngredient.ingredient?.toString() ?? '',
+          usedGrams: usedIngredient.amountInGrams?.toString() ?? '',
+          name: FoodIngredient[usedIngredient.ingredient ?? 5],
+          pricePerKilo: this.ingredientsList.find(x => x.id == usedIngredient.ingredient?.toString())?.pricePerKilo ?? 0
+           ?? [],
+        });
+      });
 
 
       this.meal.mealOptions.push({
@@ -363,10 +357,12 @@ export class AddMealComponent implements OnInit {
         price: mealOption.price ?? 0,
         availableQuantity: mealOption.quantity ?? 0,
         saveQuantitySetting: mealOption.saveQuantity ?? false,
-        sideDishes: sideDishes
+        sideDishes: sideDishes,
+        usedIngredients: usedIngredients ?? []
       })
     })
 
+    console.log(this.meal)
     this.loadForm(this.meal)
   }
 
@@ -388,28 +384,33 @@ export class AddMealComponent implements OnInit {
     let mealOption: mealOption | undefined = meal.mealOptions.at(0)
 
     if (mealOption) {
-      this.price.setValue(mealOption.price)
-      this.quantity.setValue(mealOption.availableQuantity)
-      this.saveQuantitySetting.setValue(mealOption.saveQuantitySetting)
-      this.mealSize.setValue(mealOption.MealSizeOption)
-      this.isAvailable.setValue(mealOption.isAvailable)
-      this.sideDishControl.setValue(mealOption.sideDishes)
-      this.sideDishInputs = mealOption.sideDishes ?? []
-      //this.sideDishInputs.
+      setTimeout(() => {
+        this.mealSize.setValue(mealOption?.MealSizeOption);
+        this.price.setValue(mealOption?.price);
+        this.isAvailable.setValue(mealOption?.isAvailable);
+        this.toggleQuantityInput(mealOption?.isAvailable ?? false);
+        this.saveQuantitySetting.setValue(mealOption?.saveQuantitySetting);
+        this.sideDishControl.setValue(mealOption?.sideDishes);
+        this.sideDishInputs = mealOption?.sideDishes ?? [];
+        this.quantity.setValue(mealOption?.availableQuantity);
+        this.usedIngredientsList = mealOption?.usedIngredients ?? []
+      }, 2000);
     }
-
+    console.log(mealOption, this.usedIngredientsList)
+    
   }
 
   saveMealOption(mealOptionID: string | null) {
     this.currentMealOption = {
-      mealOptionID: this.currentMealOption.mealOptionID || mealOptionID || '',
+      mealOptionID: mealOptionID || this.meal.mealOptions[0].mealOptionID,
       MealSizeOption: this.previousMealSize,
       isAvailable: this.isAvailable.value,
       price: this.price.value,
       availableQuantity: this.quantity.value,
       saveQuantitySetting: this.saveQuantitySetting.value,
       image: this.image.value,
-      sideDishes: this.sideDishInputs
+      sideDishes: this.sideDishInputs,
+      usedIngredients: this.ingredientsList
     }
     let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == this.previousMealSize);
 
@@ -514,6 +515,14 @@ export class AddMealComponent implements OnInit {
       });
     });
 
+    const addIngredients: AddIngredient[] = []
+    this.usedIngredientsList.forEach(ingredient => {
+      addIngredients.push({
+        foodIngredient: +ingredient.id,
+        amountInGrams: +ingredient.usedGrams
+      })
+    })
+
     const createMealOptionRequest: MealOptionPost$Params = {
       body: {
         'mealID': this.mealID ?? '',
@@ -523,13 +532,17 @@ export class AddMealComponent implements OnInit {
         'availableQuantity': this.quantity.value,
         'saveQuantitySetting': this.saveQuantitySetting.value,
         'image': this.fileHandle.file,
-        'mealSideDishes': addMealSideDish
+        'mealSideDishes': addMealSideDish,
+        'addIngredients': addIngredients
       }
-    }
+    };
+    console.log(createMealOptionRequest)
+
     let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
       panelClass: '',
       disableClose: true
     });
+    
     this.mealOptionService.mealOptionPost(createMealOptionRequest).subscribe({
       next: (mealOptionID) => {
 
@@ -578,17 +591,27 @@ export class AddMealComponent implements OnInit {
       });
     });
 
+    const addIngredients: AddIngredient[] = []
+    this.usedIngredientsList.forEach(ingredient => {
+      addIngredients.push({
+        foodIngredient: +ingredient.id,
+        amountInGrams: +ingredient.usedGrams
+      })
+    })
+    console.log(this.currentMealOption)
     const updateMealOptionRequest: MealOptionPut$Params = {
       body: {
-        'mealOptionID': this.currentMealOption.mealOptionID[0] ?? '',
+        'mealOptionID': this.currentMealOption.mealOptionID ?? '',
         'isAvailable': this.isAvailable.value,
         'price': this.price.value,
         'availableQuantity': this.quantity.value,
         'saveQuantitySetting': this.saveQuantitySetting.value,
         'image': this.fileHandle.file,
-        'mealSideDishes': addMealSideDish
+        'mealSideDishes': addMealSideDish,
+        'addIngredients': addIngredients
       }
     }
+
     this.mealOptionService.mealOptionPut(updateMealOptionRequest).subscribe({
       next: () => {
         if (this.mealSize.value === 0) {
@@ -635,25 +658,107 @@ export class AddMealComponent implements OnInit {
     })
   }
 
-  // removeSideDish(index: number){
-  //   const sideDishIndex = this.chiefSideDishOption.indexOf(this.sideDishInputs[index].sideDishOptions);
-  //   this.options.push(option);
-  //   if (index >= 0) {
-  //     this.SelectedOptions.splice(index, 1);
-  //   }
-  //   this.sideDishInputs.splice(index, 1);
-  // }
   removeSideDish(index: number) {
-
     this.sideDishInputs.splice(index, 1)
   }
 
-  // selectSideDish(event: MatSelectChange){
-  //   event.value.forEach((sideDish: mealSideDishOption) => {
-  //     const index = this.chiefSideDishOption.indexOf(sideDish);
-  //     if (index >= 0) this.chiefSideDishOption.splice(index, 1);
-  //     console.log(this.chiefSideDishOption)
-  //   })
-  // }
+
+  changeCurrentMealOption(currentMealSize: MatRadioChange){
+    console.log(this.sideDishInputs)
+    this.previousMealSize = currentMealSize.value;
+
+    let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == currentMealSize.value);
+
+    if (index !== -1 && index !== undefined) {      
+      this.currentMealOption = this.meal.mealOptions[index]
+      console.log(this.currentMealOption)
+      this.mealSize.setValue(currentMealSize, { emitEvent: false })
+      this.price.setValue(this.currentMealOption.price)
+      this.isAvailable.setValue(this.currentMealOption.isAvailable)
+      this.image.setValue(this.currentMealOption.image);
+      this.sideDishInputs = this.currentMealOption.sideDishes ?? [];
+      this.usedIngredientsList = this.currentMealOption.usedIngredients ?? [];
+      this.sideDishControl.setValue(this.currentMealOption.sideDishes);
+      if (!this.currentMealOption.isAvailable) {
+        this.toggleQuantityInput(false)
+      }
+      else {
+        this.toggleQuantityInput(true)
+      }
+      this.saveQuantitySetting.setValue(this.currentMealOption.saveQuantitySetting)
+      this.quantity.setValue(this.currentMealOption.availableQuantity)
+    }
+    else {
+      this.price.reset()
+      this.saveQuantitySetting.reset()
+      this.isAvailable.reset()
+      this.quantity.reset()
+      this.image.reset()
+      this.sideDishControl.reset()
+      this.toggleQuantityInput(false)
+    }
+    this.ChangeAddOrEdit()
+  }
+
+  optionSelected = (ChiefIngredients?: GetChiefIngredientRequest[]) => {
+    if(!ChiefIngredients){
+      const selectedOption = this.ingredientCTRL.value;
+      const usedIngredient: usedIngredient = {
+        id: selectedOption.id,
+        name: selectedOption.name,
+        pricePerKilo: 0,
+        usedGrams: ''
+      }
+      this.ingredientCTRL.setValue('');
+  
+      const index = this.ingredientsList.indexOf(selectedOption);
+      if (index !== -1) {
+        this.ingredientsList.splice(index, 1);
+        this.usedIngredientsList.push(usedIngredient);
+      }
+    }
+    else{
+      ChiefIngredients.forEach(Ingredient => {
+        const IngredientListItem = this.ingredientsList.find(x => x.id == Ingredient.ingredient?.toString())
+        const usedIngredient: usedIngredient = {
+          id: Ingredient.ingredient?.toString() ?? '',
+          name: IngredientListItem?.name ?? '',
+          pricePerKilo: Ingredient.pricePerKilo ?? 0,
+          usedGrams: ''
+        }
+        this.ingredientCTRL.setValue('');
+    
+        if(IngredientListItem){
+          const index = this.ingredientsList.indexOf(IngredientListItem);
+          if (index !== -1) {
+            this.ingredientsList.splice(index, 1);
+            this.usedIngredientsList.push(usedIngredient);
+          }
+        }
+      })
+    }
+  };
+
+  fillIngredientList(ChiefIngredients?: GetChiefIngredientRequest[]){
+    if(ChiefIngredients){
+      ChiefIngredients.forEach(ingredient => {
+        this.ingredientsList.push({
+          id: ingredient.ingredient?.toString() ?? '',
+          name: FoodIngredient[ingredient.ingredient ?? 500],
+          usedGrams: '',
+          pricePerKilo: ingredient.pricePerKilo
+        })
+      })
+    }
+  }
+  removeIngredient(ingredient: usedIngredient){
+    const index = this.usedIngredientsList.indexOf(ingredient);
+    if (index !== -1) {
+      this.usedIngredientsList.splice(index, 1);
+      this.ingredientsList.push(ingredient);
+      this.ingredientsList.sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));
+    }
+  }
+
 
 }

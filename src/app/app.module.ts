@@ -23,12 +23,10 @@ import { MealComponent } from './meal/meal.component';
 @NgModule({
     declarations: [
         AppComponent,
-        FooterComponent,
-        //HomeComponent,
         PlayComponent,
     ],
-    providers: [ importProvidersFrom([BrowserModule, BrowserAnimationsModule]),
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true,  }
+    providers: [importProvidersFrom([BrowserModule, BrowserAnimationsModule]),
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true, }
     ],
     bootstrap: [AppComponent],
     imports: [
@@ -47,6 +45,7 @@ import { MealComponent } from './meal/meal.component';
         ProfileComponent,
         MenuComponent,
         MealComponent,
+        FooterComponent
     ]
 })
 export class AppModule { }

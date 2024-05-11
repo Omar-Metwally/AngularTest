@@ -19,26 +19,32 @@
     box-shadow: none !important;
   } */
 
-  .mat-mdc-dialog-container .mdc-dialog__surface{
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
 
-  .mat-mdc-dialog-surface{
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
-  .mdc-dialog__surface{
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
+.mat-mdc-dialog-surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
 
-  .mat-mdc-dialog-container .mdc-dialog__surface{
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
+.mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
 
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    }
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+::ng-deep.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
