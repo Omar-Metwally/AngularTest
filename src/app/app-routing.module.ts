@@ -60,7 +60,7 @@ const routes: Routes = [
     {path:'', redirectTo: 'menu', pathMatch: 'full'},
     {path:'meal-add', component: AddMealComponent},
     {path:'meal-add/:mealID', component: AddMealComponent},
-    {path:'side-dish-add', component: AddSideDishComponent},
+    {path:'side-dish-add/:sideDishID', component: AddSideDishComponent},
     {path:'profile', component: ProfileComponent},
     {path:'orders', component: OrdersComponent},
     {path:'analytics', component: AnalyticsComponent},

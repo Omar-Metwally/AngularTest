@@ -59,7 +59,6 @@ export class AddSideDishComponent implements OnInit {
 
     this.previousSideDishSize = this.addSideDishOptionForm.get('sideDishSize')?.value;
     this.addSideDishOptionForm.get('sideDishSize')?.valueChanges.subscribe((currentSideDishSize) => {
-      console.log(true)
       this.saveSideDishOption(this.currentSideDishOption.sideDishSizeOption)
       this.previousSideDishSize = currentSideDishSize;
 
