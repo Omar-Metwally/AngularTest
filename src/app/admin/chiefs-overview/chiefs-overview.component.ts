@@ -32,4 +32,19 @@ export class ChiefsOverviewComponent {
     })
   }
 
+
+  getTotalRevenue() {
+    return this.chiefs.reduce((acc, meal) => acc + (meal.totalRevenue ?? 0), 0);
+  }
+
+  getTotalProfit() {
+    return this.chiefs.reduce((acc, meal) => acc + ((meal.totalRevenue ?? 0) - (meal.totalCost ?? 0)) * .8, 0);
+  }
+
+
+
+
+getTotalCost() {
+    return this.chiefs.reduce((acc, meal) => acc + (meal.totalCost ?? 0), 0);
+  }
 }

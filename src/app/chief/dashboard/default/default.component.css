@@ -12,113 +12,51 @@
     position: relative;
     left: 107px;
 }
-
-
-
-
-
-/* start cards */
-.container-fluid {
-    position: relative;
-    width: 1026px !important;
-    justify-content: space-between;
-    align-items: center;
+.three-card {
+    margin-top: 20px;
 }
 
-
-.card-body {
-    margin-left: 30.5px;
-    width: 266px !important;
-    height: 103px !important;
+.button-table {
+    margin-bottom: 20px;
 }
 
-.card-one {
-    left: -15px !important;
-}
-
-.card-two {
-    left: -7px !important;
-}
-
-.card-text {
-    margin-left: 66px;
-    position: relative;
-    top: -59px;
-    font-weight: 500;
-    color: #322F2F;
-    margin-top: 9px;
-}
-
-.line-data {
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-    left: 33px;
-    padding-left: 15px;
-    top: -64px;
-}
-
-.line-data p {
-    color: #237A11;
-}
-
-.right-side p {
-    padding-top: 9px !important;
-}
-  
-
-
-
-
-
-
-
-.card {
-    height: 144px;
+.div-wither {
+    width: 327px;
+    height: 145px;
+    margin-right: 24px;
     border-radius: 10px;
-    color: #322F2F;
+    position: relative;
     box-shadow: 1px 1px 9.6px 0px #31AC1833;
-    border: none;
-    width: 326px !important;
-    margin-left: 24px !important;
-}
 
-.card:hover {
+}
+.div-wither:hover{
     background-color: #EAF7E8;
 }
 
 
-.money-number-span {
-    font-size: 24px;
-    font-weight: bolder;
-    color: #322F2F !important;
-}
-
-.card-under-data>p {
+.top-content{
+    top: 20px;
+     justify-content: center;
     position: relative;
-    top: -50px;
+    align-items: center;
+    left: 44px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+                
 }
-
-.card-under-data .one {
-    left: -15px;
-    position: relative;
-    color: #237A11;
+ 
+.contain-card-info{
+    position: absolute;
 }
+.div-content-center{
+    display: flex;
 
-.card-under-data .one>p {
-    position: relative;
-    top: -50px;
+
 }
-
-.card-under-data .two {
-    position: relative;
-    left: 80px;
-    top: -90px;
-    color: #237A11;
-}
-
-
-.tow-button .button-table{
+.two-button .button-table{
     width: 30%;
  font-family: Roboto;
 font-size: 18px;
@@ -183,14 +121,18 @@ text-align: left;
     position: absolute;
     left: 20px;  
     top: 50%;  
-    
-    margin-right:  20px;
     transform: translateY(-50%);  
     width: 20px;  
     height: 20px;  
     cursor: pointer;  
-    z-index: 1; 
+    z-index: 999999999; 
 }
+
+.input-group input{
+    left: -1px !important;
+    position: relative;
+    padding-left: 31px !important;}
+
 
 .main-content{
     width: 1024px;
@@ -320,13 +262,13 @@ background-color: #FDFFFC;
     left: 11px;
     margin: 5px;
 }
-.dots-button{
+/* .dots-button{
     border-bottom:solid 0.25px #989696 ;
     width: 111px;
     margin-right: 62px;
     top: 37px;
     text-align: start;
-}
+} */
 
 .frame1 span{
     width: 33px;
@@ -394,12 +336,43 @@ background-color: #FDFFFC;
        opacity: 0.4;
 }
 
+ 
+
+#btn-size{
+    background-color: yellow !important;
+}
+ .color-button-one{
+    margin-right: 12px !important;
+    width: 70px !important;
+    padding: 5px !important;
+    border: 0.67px solid #31AC18;
+    border-radius: 6.67px;
+ }
+.color-button-two{
+    margin-right: 12px !important;
+    width: 70px !important;
+    padding: 5px !important;
+    border: 0.67px solid #31AC18;
+    border-radius: 6.67px;
+ }
+.color-button-three{
+    margin-right: 12px !important;
+    width: 70px !important;
+    padding: 5px !important;
+    border: 0.67px solid #31AC18;
+    border-radius: 6.67px;
+ }
+
+ .color-button-one:hover , .color-button-two:hover ,  .color-button-three:hover{
+    background-color: #9EE392;
+}
 
 
-/* @media screen and (max-width:500px) {
+@media screen and (max-width:500px) {
     .logo{
         width: 100%;
-         text-align: center;
+        /* display: flex; */
+        text-align: center;
         justify-content: center;
         align-items: center;
     }
@@ -416,9 +389,9 @@ background-color: #FDFFFC;
     padding: 10px;
     border: 10px;
  }   
-} */
+}
 
-/* @media screen and (max-width:500px) {
+@media screen and (max-width:500px) {
     .terms-conditions{
         width: 100%;
         display: flex;
@@ -433,16 +406,17 @@ background-color: #FDFFFC;
         justify-content: center;
         align-items: center;
          margin-top: 10px;
-    } */
+    }
     /* for test */
-    /* .top-content{
+    .top-content{
          display: flex;
         flex-direction: column;
         position: absolute;
         text-align: center;
         justify-content: end;
         text-align: center;
-         left: 120px;
+        /* background-color: tan; */
+        left: 120px;
         top: 30px;
         width: auto;
     }
@@ -481,9 +455,9 @@ background-color: #FDFFFC;
         line-height: 21px;
         text-align: left;
 
-    } */
+    }
     
-    /* .button-table {
+    .button-table {
 
         margin-top: 0px;
     }
@@ -518,63 +492,28 @@ background-color: #FDFFFC;
             cursor: pointer;  
             z-index: 1; 
         }
-        
 
-} */
-/* @media screen and (max-width:500px) {
+#icon-place {
+    /* position: relative !important;
+    top: -31px !important;
+    left: 496px !important; */
+ 
+    /* position: relative;
+  top: -31px !important;
+  left: 263px !important;
+  width: 20px !important;
+  overflow: hidden; */
+
+  position: relative;
+  top: -31px !important;
+  width: 20px;
+  right: -262px !important;
+  overflow: hidden;
+}
+}
+@media screen and (max-width:500px) {
     .side-bar{
         width: 100%;
         height: 100%;
     }
 }
- */
-
- 
-
-
-
-
- /* table-data */
- .table-data {
-    width: 760px;
-    height: 915px;
-    top: 327px;
-    left: 515px;
-    opacity: 0px;
-    margin: 50px auto;
-    color: white;
-}
- 
-
-.table tbody tr{
-    vertical-align: middle;
-    margin-bottom: 12px;  
-    box-shadow: 0px 2px 4px #31AC1833;  
-    border-radius: 10px;  
-    height: 98px;
-}
-table thead tr th {
-    color: #322F2F;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    text-align: center;
-}
-.margin{
-    margin: 12px 0; 
- }
-
-
- tbody .space{
-      margin: 12px;
- }
-
-
-
-
-
-
-
-
-

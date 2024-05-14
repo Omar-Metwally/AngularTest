@@ -12,7 +12,7 @@ export interface SideDishGet$Params {
   ChiefID: string;
 }
 
-export function sideDishGet(http: HttpClient, rootUrl: string, params: SideDishGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetSideDishRequest>>> {
+export function sideDishGet(http: HttpClient, rootUrl: string, params?: SideDishGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetSideDishRequest>>> {
   const rb = new RequestBuilder(rootUrl, sideDishGet.PATH, 'get');
   if (params) {
     rb.path('ChiefID', params.ChiefID, {});

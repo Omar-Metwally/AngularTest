@@ -284,7 +284,6 @@ export class AccountService  {
   }
 
   async addItemToCart(cartItem?: GetCartItemRequest) {
-    console.log(cartItem, true)
     let cart: GetCartRequest = {}
     if (cartItem) {
       cart = this.addOrUpdateCart(cartItem)
@@ -297,7 +296,7 @@ export class AccountService  {
       this.cartSource.next(cart)
     }
     localStorage.setItem('cart', JSON.stringify(cart))
-    this.sharedService.showPopUp('success' , 'Meal added to cart')
+    if(cartItem)this.sharedService.showPopUp('success' , 'Meal added to cart')
   }
 
   addOrUpdateCart(cartItemToAdd: GetCartItemRequest) {

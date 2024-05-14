@@ -10,6 +10,7 @@ import { ChiefService } from 'src/app/api/services';
 import { ChiefAddIngredientsPost$Params } from 'src/app/api/fn/chief/chief-add-ingredients-post';
 import { FoodIngredient, GetChiefIngredientRequest, UpsertIngredientRequest } from 'src/app/api/models';
 import { ChiefRemoveIngredientsDelete$Params } from 'src/app/api/fn/chief/chief-remove-ingredients-delete';
+import { SharedService } from 'src/app/shared/shared.service';
 
 interface usedIngredient {
   id: string,
@@ -79,8 +80,11 @@ export class IngredientsComponent implements OnInit {
     this.chiefService.chiefRemoveIngredientsDelete(request).subscribe()
   }
 
-  constructor(private chiefService: ChiefService) {
+  constructor(private chiefService: ChiefService,
+    private sharedService: SharedService
+  ) {
 
+    this.sharedService.showLoadingSpinner()
     this.chiefService.chiefGetIngredientsGet().subscribe({
       next: (response) => {
         this.optionSelected(response);
@@ -89,6 +93,7 @@ export class IngredientsComponent implements OnInit {
 
       }
     })
+    this.sharedService.hideLoadingSpinner()
   }
   ngOnInit(): void {
     this.LoadIngredientsList()
@@ -119,7 +124,17 @@ export class IngredientsComponent implements OnInit {
     const request: ChiefAddIngredientsPost$Params = {
       body: ingredients
     }
-    this.chiefService.chiefAddIngredientsPost(request).subscribe()
+    this.sharedService.showLoadingSpinner()
+    this.chiefService.chiefAddIngredientsPost(request).subscribe({
+      next: (response) => {
+        this.sharedService.hideLoadingSpinner()
+        this.sharedService.showPopUp('success', 'Ingredient updated')
+      },
+      error: (error) => {
+        this.sharedService.hideLoadingSpinner()
+        this.sharedService.showPopUp('danger', 'Ingredient update failed, refresh your page')
+      }
+    })
   }
 
 

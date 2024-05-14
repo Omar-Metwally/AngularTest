@@ -1,36 +1,106 @@
- 
-
- .card{
-    height: 144px;
-    border-radius: 10px;
-     color: #322F2F;
-     box-shadow: 1px 1px 9.6px 0px #31AC1833;
-    border: none;
- }
-.card:hover{
-    background-color: #EAF7E8;
+ /* start cards */
+.container-fluid {
+  position: relative;
+  width: 1026px !important;
+  justify-content: space-between;
+  align-items: center;
+}
+.card {
+  height: 144px;
+  border-radius: 10px;
+  color: #322F2F;
+  box-shadow: 1px 1px 9.6px 0px #31AC1833;
+  border: none;
+  width: 326px !important;
+  margin-left: 24px !important;
+}
+.card:hover {
+  background-color: #EAF7E8;
 }
 
-  
- .money-number-span{
-    font-size: 24px; font-weight: bolder; color: #322F2F !important;
- }
-.card-under-data >p{
-    position: relative; top: -50px;
+.card-body {
+  margin-left: 30.5px;
+  width: 266px !important;
+  height: 103px !important;
 }
- .card-under-data .one{
-    left: -15px; position: relative; color: #237A11;
- }
 
- .card-under-data .one >p{
-   position: relative; top: -50px; 
- }
+.card-one {
+  left: -15px !important;
+}
 
- .card-under-data .two{
-    position: relative; left: 80px; top: -90px; color: #237A11;
- }
+.card-two {
+  left: -7px !important;
+}
+.card-title{
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+
+}
+.card-text {
+  margin-left: 66px;
+  position: relative;
+  top: -59px;
+  font-weight: 500;
+  color: #322F2F;
+  margin-top: 9px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+}
+
+.line-data {
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  left: 38px;
+  padding-left: 15px;
+  top: -71px;
+}
+
+.line-data p {
+  color: #237A11;
+}
+
+.right-side p {
+  padding-top: 9px !important;
+} 
+
+.money-number-span {
+  font-size: 24px;
+  font-weight: bolder;
+  color: #322F2F !important;
+}
+
+.card-under-data>p {
+  position: relative;
+  top: -50px;
+}
+
+.card-under-data .one {
+  left: -15px;
+  position: relative;
+  color: #237A11;
+}
+
+.card-under-data .one>p {
+  position: relative;
+  top: -50px;
+}
+
+.card-under-data .two {
+  position: relative;
+  left: 80px;
+  top: -90px;
+  color: #237A11;
+}
 
 
+/* table */
  th {
   font-family: Roboto;
   min-width: auto;
@@ -76,3 +146,16 @@ table {
   border-spacing: 0px 1em;
   width: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

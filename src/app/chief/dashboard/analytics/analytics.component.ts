@@ -72,9 +72,7 @@ export class AnalyticsComponent {
     this.isLoading = false
   }
 
-  getTotalCost() {
-    return this.meals.reduce((acc, meal) => acc + (meal.totalCost ?? 0), 0);
-  }
+
 
   getTotalRevenue() {
     return this.meals.reduce((acc, meal) => acc + (meal.totalRevenue ?? 0), 0);
@@ -83,6 +81,16 @@ export class AnalyticsComponent {
   getTotalProfit() {
     return this.meals.reduce((acc, meal) => acc + ((meal.totalRevenue ?? 0) - (meal.totalCost ?? 0)) * .8, 0);
   }
+
+
+
+
+getTotalCost() {
+    return this.meals.reduce((acc, meal) => acc + (meal.totalCost ?? 0), 0);
+  }
+
+
+
 
   // loadData(): void {
   //   this.isLoading = true;

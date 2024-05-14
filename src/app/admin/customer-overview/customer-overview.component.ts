@@ -30,4 +30,21 @@ export class CustomerOverviewComponent {
       }
     })
   }
+
+
+  getTotalRevenue() {
+    return this.customers.reduce((acc, meal) => acc + (meal.totalRevenue ?? 0), 0);
+  }
+
+  getTotalProfit() {
+    return this.customers.reduce((acc, meal) => acc + ((meal.totalRevenue ?? 0) - (meal.totalCost ?? 0)) * .8, 0);
+  }
+
+
+
+
+getTotalCost() {
+    return this.customers.reduce((acc, meal) => acc + (meal.totalCost ?? 0), 0);
+  }
+
 }

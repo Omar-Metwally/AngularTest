@@ -9,10 +9,10 @@
                 <mat-radio-button [color]="'primary'" labelPosition="before" [value]="[option.sideDishID, option.sideDishSizeOption]">
                     <div class="content" [ngSwitch]="option.sideDishSizeOption">
                         {{ option.name }}
-                        <div *ngSwitchCase="0" class="size-indicator">(S)</div>
-                        <div *ngSwitchCase="1" class="size-indicator">(M)</div>
-                        <div *ngSwitchCase="2" class="size-indicator">(L)</div>
-                        <div *ngIf="mealTopping.isFree">+{{ option.price }} EGP</div>
+                        <span *ngSwitchCase="0" class="size-indicator">(S)</span>
+                        <span *ngSwitchCase="1" class="size-indicator">(M)</span>
+                        <span *ngSwitchCase="2" class="size-indicator">(L)</span>
+                        <span *ngIf="mealTopping.isFree">+{{ option.price }} EGP</span>
                         
                     </div>
                 </mat-radio-button>
@@ -28,10 +28,10 @@
                 <mat-radio-button [color]="'primary'" labelPosition="before" [value]="[option.sideDishID, option.sideDishSizeOption]">
                     <div class="content" [ngSwitch]="option.sideDishSizeOption">
                         {{ option.name }}
-                        <div *ngSwitchCase="0" class="size-indicator">(S)</div>
-                        <div *ngSwitchCase="1" class="size-indicator">(M)</div>
-                        <div *ngSwitchCase="2" class="size-indicator">(L)</div>
-                        <div *ngIf="mealSideDish.isFree">+{{ option.price }} EGP</div>
+                        <span *ngSwitchCase="0" class="size-indicator">(S)</span>
+                        <span *ngSwitchCase="1" class="size-indicator">(M)</span>
+                        <span *ngSwitchCase="2" class="size-indicator">(L)</span>
+                        <span *ngIf="mealSideDish.isFree"> +{{ option.price }} EGP</span>
                     </div>
                 </mat-radio-button>
             </ng-container>

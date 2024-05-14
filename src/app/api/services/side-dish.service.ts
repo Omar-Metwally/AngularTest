@@ -181,7 +181,7 @@ export class SideDishService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  sideDishGet$Response(params: SideDishGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetSideDishRequest>>> {
+  sideDishGet$Response(params?: SideDishGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetSideDishRequest>>> {
     return sideDishGet(this.http, this.rootUrl, params, context);
   }
 
@@ -191,7 +191,7 @@ export class SideDishService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  sideDishGet(params: SideDishGet$Params, context?: HttpContext): Observable<Array<GetSideDishRequest>> {
+  sideDishGet(params?: SideDishGet$Params, context?: HttpContext): Observable<Array<GetSideDishRequest>> {
     return this.sideDishGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<GetSideDishRequest>>): Array<GetSideDishRequest> => r.body)
     );

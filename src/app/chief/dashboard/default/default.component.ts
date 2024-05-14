@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { GetMealOptionTable, GetMealTableRequest, MealCategory, MealSizeOption, MealSpiceLevel, MealStyle } from 'src/app/api/models';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FilterPipe } from "../../../filter.pipe";
-import { MealsService } from 'src/app/api/services';
+import { MealsService, SideDishService } from 'src/app/api/services';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -46,7 +46,8 @@ export class DefaultComponent {
   constructor(private http: HttpClient,
     private mealsService: MealsService,
     public router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private sideDishService: SideDishService) { }
 
 
   ngOnInit() {
@@ -54,14 +55,13 @@ export class DefaultComponent {
     this.mealsService.mealsChiefMealsGet().subscribe({
       next: (response: GetMealTableRequest[]) => {
         this.meals = response;
-        // console.log(this.meals)
-        // console.log(response);
+
 
         this.calculateTotalSold();
         // Set default price for each meal
         this.meals.forEach(meal => {
-          meal.selectedSize = 0; // Set the selected size to the default size (0 for the first option)
-          this.selectSize(meal, 0); // Set the price and other relevant data based on the default size
+          meal.selectedSize = 0; 
+          this.selectSize(meal, 0); 
         });
       },
       error: error => {
@@ -69,10 +69,18 @@ export class DefaultComponent {
         this.loading = false;
       }
     })
+
+    this.sideDishService.sideDishGet().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: error => {
+        this.loading = false;
+      }
+    })
   }
 
   redirectToMeal = (meal: any) => {
-    console.log(meal)
     this.router.navigate(['/meal', meal.mealID]);
   }
 

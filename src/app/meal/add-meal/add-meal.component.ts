@@ -146,44 +146,33 @@ export class AddMealComponent implements OnInit {
   mealCategory = MealCategory
   mealStyle = MealStyle
 
-  ngOnInit() {
-    if (this.mealID != null) {
-      const mealsMealIdGet$Params: MealsMealIdGet$Params = {
-        MealID: this.mealID
+  async ngOnInit() {
+    try {
+      const ingredientResponse = await this.chiefService.chiefGetIngredientsGet().toPromise();
+      this.fillIngredientList(ingredientResponse);
+      
+      if (this.mealID != null) {
+        const mealsMealIdGet$Params: MealsMealIdGet$Params = {
+          MealID: this.mealID
+        };
+        const dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
+          panelClass: '',
+          disableClose: true
+        });
+        const mealResponse = await this.mealsService.mealsMealIdGet(mealsMealIdGet$Params).toPromise();
+        dialogRef.close();
+        if(mealResponse)
+        this.loadMeal(mealResponse);
+        this.isMealAdded = true;
+      } else {
+        this.toggleQuantityInput(false);
       }
-      let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
-        panelClass: '',
-        disableClose: true
-      });
-      this.mealsService.mealsMealIdGet(mealsMealIdGet$Params).subscribe({
-        next: (body) => {
-          dialogRef.close()
-          this.loadMeal(body)
-          this.isMealAdded = true;
-        },
-        error: error => {
-          dialogRef.close()
-          if (error.error.errors) {
-            this.errorMessages = error.error.errors;
-          } else {
-            this.errorMessages.push(error.error);
-          }
-          this.sharedService.showSnackBar(this.errorMessages[0])
-        }
-      })
+  
+    } catch (error) {
+      this.sharedService.showSnackBar(this.errorMessages[0]);
     }
-    else {
-      this.toggleQuantityInput(false)
-    }
-    this.chiefService.chiefGetIngredientsGet().subscribe({
-      next: (response) => {
-        this.fillIngredientList(response);
-      },
-      error: (error) => {
-        
-      }
-    })
   }
+  
   constructor(private mealsService: MealsService,
     private chiefService: ChiefService,
     private mealOptionService: MealOptionService,
@@ -770,5 +759,11 @@ export class AddMealComponent implements OnInit {
     }
   }
 
-
+  convertSideDish(sideDishes: mealSideDishOption[]): [string, number]{
+    const newSideDishes: [string, number] = ['',0];
+    sideDishes.forEach(sideDish=> {
+      newSideDishes.push(sideDish.sideDishID,sideDish.sideDishSizeOption)
+    })
+    return newSideDishes;
+  }
 }
