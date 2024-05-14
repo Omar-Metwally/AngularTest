@@ -33,6 +33,10 @@ import { authEmailConfirmationGet } from '../fn/auth/auth-email-confirmation-get
 import { AuthEmailConfirmationGet$Params } from '../fn/auth/auth-email-confirmation-get';
 import { authEmailConfirmationGet$Plain } from '../fn/auth/auth-email-confirmation-get-plain';
 import { AuthEmailConfirmationGet$Plain$Params } from '../fn/auth/auth-email-confirmation-get-plain';
+import { authForgotPasswordEmailPost } from '../fn/auth/auth-forgot-password-email-post';
+import { AuthForgotPasswordEmailPost$Params } from '../fn/auth/auth-forgot-password-email-post';
+import { authForgotPasswordEmailPost$Plain } from '../fn/auth/auth-forgot-password-email-post-plain';
+import { AuthForgotPasswordEmailPost$Plain$Params } from '../fn/auth/auth-forgot-password-email-post-plain';
 import { authLoginPost } from '../fn/auth/auth-login-post';
 import { AuthLoginPost$Params } from '../fn/auth/auth-login-post';
 import { authLoginPost$Plain } from '../fn/auth/auth-login-post-plain';
@@ -46,6 +50,10 @@ import { authResendEmailConfirmationEmailPost } from '../fn/auth/auth-resend-ema
 import { AuthResendEmailConfirmationEmailPost$Params } from '../fn/auth/auth-resend-email-confirmation-email-post';
 import { authResendEmailConfirmationEmailPost$Plain } from '../fn/auth/auth-resend-email-confirmation-email-post-plain';
 import { AuthResendEmailConfirmationEmailPost$Plain$Params } from '../fn/auth/auth-resend-email-confirmation-email-post-plain';
+import { authResetPasswordPut } from '../fn/auth/auth-reset-password-put';
+import { AuthResetPasswordPut$Params } from '../fn/auth/auth-reset-password-put';
+import { authResetPasswordPut$Plain } from '../fn/auth/auth-reset-password-put-plain';
+import { AuthResetPasswordPut$Plain$Params } from '../fn/auth/auth-reset-password-put-plain';
 import { authRevokeTokenGet } from '../fn/auth/auth-revoke-token-get';
 import { AuthRevokeTokenGet$Params } from '../fn/auth/auth-revoke-token-get';
 import { GetCustomerProfileDataRequest } from '../models/get-customer-profile-data-request';
@@ -503,6 +511,100 @@ export class AuthService extends BaseService {
    */
   authEmailConfirmationGet(params?: AuthEmailConfirmationGet$Params, context?: HttpContext): Observable<boolean> {
     return this.authEmailConfirmationGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<boolean>): boolean => r.body)
+    );
+  }
+
+  /** Path part for operation `authResetPasswordPut()` */
+  static readonly AuthResetPasswordPutPath = '/Auth/ResetPassword';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authResetPasswordPut$Plain()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  authResetPasswordPut$Plain$Response(params?: AuthResetPasswordPut$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+    return authResetPasswordPut$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authResetPasswordPut$Plain$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  authResetPasswordPut$Plain(params?: AuthResetPasswordPut$Plain$Params, context?: HttpContext): Observable<boolean> {
+    return this.authResetPasswordPut$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<boolean>): boolean => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authResetPasswordPut()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  authResetPasswordPut$Response(params?: AuthResetPasswordPut$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+    return authResetPasswordPut(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authResetPasswordPut$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  authResetPasswordPut(params?: AuthResetPasswordPut$Params, context?: HttpContext): Observable<boolean> {
+    return this.authResetPasswordPut$Response(params, context).pipe(
+      map((r: StrictHttpResponse<boolean>): boolean => r.body)
+    );
+  }
+
+  /** Path part for operation `authForgotPasswordEmailPost()` */
+  static readonly AuthForgotPasswordEmailPostPath = '/Auth/ForgotPassword/{email}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authForgotPasswordEmailPost$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authForgotPasswordEmailPost$Plain$Response(params: AuthForgotPasswordEmailPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+    return authForgotPasswordEmailPost$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authForgotPasswordEmailPost$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authForgotPasswordEmailPost$Plain(params: AuthForgotPasswordEmailPost$Plain$Params, context?: HttpContext): Observable<boolean> {
+    return this.authForgotPasswordEmailPost$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<boolean>): boolean => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `authForgotPasswordEmailPost()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authForgotPasswordEmailPost$Response(params: AuthForgotPasswordEmailPost$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+    return authForgotPasswordEmailPost(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `authForgotPasswordEmailPost$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  authForgotPasswordEmailPost(params: AuthForgotPasswordEmailPost$Params, context?: HttpContext): Observable<boolean> {
+    return this.authForgotPasswordEmailPost$Response(params, context).pipe(
       map((r: StrictHttpResponse<boolean>): boolean => r.body)
     );
   }

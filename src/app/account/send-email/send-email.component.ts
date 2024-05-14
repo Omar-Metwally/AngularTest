@@ -5,6 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { User } from 'src/app/shared/models/account/user';
+import { AuthResendEmailConfirmationEmailPost$Params } from 'src/app/api/fn/auth/auth-resend-email-confirmation-email-post';
+import { AuthService } from 'src/app/api/services';
+import { AuthResetPasswordPut$Params } from 'src/app/api/fn/auth/auth-reset-password-put';
+import { AuthForgotPasswordEmailPost$Params } from 'src/app/api/fn/auth/auth-forgot-password-email-post';
 
 @Component({
   selector: 'app-send-email',
@@ -18,6 +22,7 @@ export class SendEmailComponent implements OnInit {
   errorMessages: string[] = [];
 
   constructor(private accountService: AccountService,
+    private authService: AuthService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -41,39 +46,35 @@ export class SendEmailComponent implements OnInit {
 
   initializeForm() {
     this.emailForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$')]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern('\\b\\S+@(gmail|hotmail|yahoo|outlook)\\.com\\b')]],
     })
   }
 
   sendEmail() {
     this.submitted = true;
     this.errorMessages = [];
-
     if (this.emailForm.valid && this.mode) {
       if (this.mode.includes('resend-email-confirmation-link')) {
-        this.accountService.resendEmailConfirmationLink(this.emailForm.get('email')?.value).subscribe({
+        const request: AuthResendEmailConfirmationEmailPost$Params = {
+          email: this.emailForm.get('email')?.value
+        }
+        this.authService.authResendEmailConfirmationEmailPost(request).subscribe({
           next: (response: any) => {
-            this.sharedService.showNotification(true, response.value.title, response.value.message);
-            this.router.navigateByUrl('/account/login');
+            this.sharedService.showPopUp('succuss','Email Sent, please check your email');
+            this.router.navigateByUrl('/');
           }, error: error => {
-            if (error.error.errors) {
-              this.errorMessages = error.error.errors;
-            } else {
-              this.errorMessages.push(error.error);
-            }
+            this.sharedService.showPopUp('danger','Failed, please try again later');
           }
         })
       } else if (this.mode.includes('forgot-username-or-password')) {
-        this.accountService.forgotUsernameOrPassword(this.emailForm.get('email')?.value).subscribe({
+        const request: AuthForgotPasswordEmailPost$Params = {
+          email: this.emailForm.get('email')?.value
+        }
+        this.authService.authForgotPasswordEmailPost(request).subscribe({
           next: (response: any) => {
-            this.sharedService.showNotification(true, response.value.title, response.value.message);
-            this.router.navigateByUrl('/account/login');
+            this.sharedService.showPopUp('succuss','Email Sent, please check your email');
           }, error: error => {
-            if (error.error.errors) {
-              this.errorMessages = error.error.errors;
-            } else {
-              this.errorMessages.push(error.error);
-            }
+            this.sharedService.showPopUp('danger',error[0]);
           }
         })
       }
@@ -83,4 +84,6 @@ export class SendEmailComponent implements OnInit {
   cancel() {
     this.router.navigateByUrl('/account/login');
   }
+
+
 }

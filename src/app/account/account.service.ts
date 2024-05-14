@@ -128,14 +128,6 @@ export class AccountService  {
       );
   }
 
-  // addItemToCart(cartItem: Cart){
-  //   let cart = this.cartSource.value ?? [];
-  //   cart = this.addOrUpdateCartItem(cart,cartItem)
-  //   this.setCartItems(cartItem)
-  //   this.cartSource.next(cart);
-  //   localStorage.setItem('cart',JSON.stringify(cart))
-  // }
-
   getCartItems(cartPost$Params: CartPost$Params) {
     return this.cartService.cartPost(cartPost$Params)
       .pipe(
@@ -158,21 +150,6 @@ export class AccountService  {
     }
   }
 
-  // addOrUpdateCartItem(cart: GetCartRequest, cartItemToAdd: GetCartItemRequest): GetCartRequest {
-  //   if(cart.cartItems){
-  //     const index = cart.cartItems?.findIndex(x => x.mealOptionID === cartItemToAdd.mealOptionID)
-  //     if (index === -1) {
-  //       cart.cartItems.push(cartItemToAdd);
-  //     }
-  //     else {
-  //       cart.cartItems[index].quantity += cartItemToAdd.quantity
-  //     }
-  //     return cart
-  //   }
-  //   cart.cartItems = []
-  //   cart.cartItems.push(cartItemToAdd);
-  //   return cart
-  // }
   arraysEqual(a: GetCartItemOptionRequest[], b: GetCartItemOptionRequest[]): boolean {
     if (a.length !== b.length) {
       return false;
@@ -352,21 +329,11 @@ export class AccountService  {
       } else {
         cart.cartItems[index].quantity += cartItemToAdd.quantity;
       }
-
       return cart;
     }
 
     cart.cartItems = [cartItemToAdd];
     return cart
-
-    // const index = cart.cartItems.findIndex(x => x.mealOptionID === cartItem.mealOptionID)
-    // if (index === -1) {
-    //   cart.cartItems.push(cartItem);
-    // }
-    // else {
-    //   cart.cartItems[index].quantity = cart.cartItems[index].quantity + cartItem.quantity
-    // }
-    // return cart
   }
 
   getCart() {
@@ -404,6 +371,8 @@ export class AccountService  {
 
         const cartPost$Params: CartPost$Params = { body: upsertCartRequest, TimeOfDelivery: cart.timeOfDelivery ?? undefined }
 
+        console.log(cartPost$Params)
+
         this.cartService.cartPost$Response(cartPost$Params).subscribe({
           next: (response: HttpResponse<any>) => {
             if (response.status === 200) {
@@ -438,57 +407,6 @@ export class AccountService  {
     })
   }
 
-
-  // updateCartItemsFromAPI(cartItems?: Cart[]):Promise<Cart[] | undefined> {
-  //   if (cartItems) {
-  //     const upsertCartRequest: UpsertCartRequest[] = []
-
-  //     for (const cartItem of cartItems) {
-  //       const upsertRequest: UpsertCartRequest = {
-  //         mealOptionID: cartItem.mealOptionID,
-  //         quantity: cartItem.quantity,
-  //         timeOfDelivery: cartItem.timeOfDelivery
-  //       };
-  //       upsertCartRequest.push(upsertRequest);
-  //     }
-  //     const cartPost$Params: CartPost$Params = { body: upsertCartRequest }
-
-  //     this.cartService.cartPost$Response(cartPost$Params).subscribe({
-  //       next: (response: HttpResponse<any>) => {
-  //         if (response.status === 200) {
-  //           cartItems = response.body as Cart[]
-  //           // Handle 200 status code response
-  //         } else if (response.status === 202) {
-  //           cartItems = response.body.data as Cart[]
-  //         }
-  //         console.log(cartItems, 'from api call')
-  //         return cartItems
-  //       },
-  //       error: error => {
-  //         // Handle error
-  //       }
-  //     })
-
-  //   }
-  //   else {
-  //     this.cartService.cartPost$Plain$Response().subscribe({
-  //       next: (response: HttpResponse<any>) => {
-  //         if (response.status === 200) {
-  //           // Handle 200 status code response
-  //           cartItems = response.body as Cart[]
-  //         } else if (response.status === 202) {
-  //           console.log(response.body.errors as string[])
-  //           console.log(response.body.errors as string[])
-  //           cartItems = response.body.data as Cart[]
-  //         }
-  //       },
-  //       error: error => {
-  //         // Handle error
-  //       }
-  //     })
-  //   }
-  //   return Promise<cartItems | undefined>
-  // }
 }
 
 @Injectable({ providedIn: 'root' })
@@ -557,7 +475,7 @@ export class StartTimeValidator implements Validator {
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    console.log(this.startTime)
+    console.log(this.startTime,control.value)
     if (!this.startTime) {
       this.startTime = { hour: 6, minute: 0, second: 0 };
     }

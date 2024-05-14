@@ -129,6 +129,9 @@ $my-app-theme: mat.define-light-theme(
     text-decoration: underline;
 }
 
+body {
+  overflow-x: hidden;
+}
 
 .card1 .card-body .sign {
     color: #31AC18;

@@ -80,6 +80,7 @@ export class ProfileComponent {
     this.sharedService.showLoadingSpinner()
     this.chiefService.chiefGetChiefProfileDataGet().subscribe({
       next: async (response) => {
+        this.sharedService.hideLoadingSpinner()
         this.chiefID = response.chiefID ?? null
         this.coverImage.setValue({ url: response.coverImage })
         this.chiefImage.setValue({ url: response.chiefImage })
@@ -99,7 +100,6 @@ export class ProfileComponent {
         this.floor.setValue(response.floorNumber);
         this.apartment.setValue(response.apartmentNumber);
         this.nationalID.setValue(response.governmentID)
-        this.sharedService.hideLoadingSpinner()
       },
       error: (error) => {
         this.sharedService.hideLoadingSpinner()
@@ -178,7 +178,7 @@ export class ProfileComponent {
           apartmentNumber: this.apartment.value,
           buildingID: this.building.value.id,
           chiefImage: this.chiefImageFileHandle.file,
-          closeTime: this.convertToApiTime(this.startTime.value),
+          closeTime: this.convertToApiTime(this.endTime.value),
           coverImage: this.coverImageFileHandle.file,
           description: this.description.value,
           firstName: this.firstName.value,
@@ -186,7 +186,7 @@ export class ProfileComponent {
           healthCertImage: this.healthCertImageFileHandle.file,
           lastName: this.lastName.value,
           phoneNumber: this.phone.value,
-          startTime: this.convertToApiTime(this.endTime.value),
+          startTime: this.convertToApiTime(this.startTime.value),
           governmentID: this.nationalID.value
         }
       }
@@ -194,7 +194,7 @@ export class ProfileComponent {
       this.chiefService.chiefPost(chiefPostPrams).subscribe({
         next: (response) => {
           this.sharedService.hideLoadingSpinner()
-          console.log(response)
+          this.sharedService.showPopUp('success','Profile Updated')
         },
         error: (error) => {
           this.sharedService.hideLoadingSpinner()

@@ -57,7 +57,7 @@
   </nav>
 </header>
 -->
-<nav class="navbar navbar-expand-lg p-3 text-nowrap">
+<nav class="navbar navbar-expand-lg p-3 text-nowrap"> 
   <div class="container d-lg-flex">
     <a class="navbar-brand col-lg-3" href="#">
       <svg style="vertical-align: sub;" width="159" height="30" viewBox="0 0 159 30" fill="none"
@@ -186,6 +186,13 @@
               </button>
             </div>
             <div *appUserHasRole="['Customer']">
+              <button mat-menu-item routerLink="/profile">
+                <mat-icon fontSet="material-icons-outlined">person</mat-icon>
+                <span>Profile</span>
+              </button>
+            </div>
+            <div *appUserHasRole="['Customer']">
+              <mat-divider></mat-divider>
               <button mat-menu-item routerLink="/order-history">
                 <mat-icon fontSet="material-icons-outlined">local_shipping</mat-icon>
                 <span>Order History</span>

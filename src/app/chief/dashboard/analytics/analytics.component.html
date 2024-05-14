@@ -22,7 +22,7 @@
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="one ps-0" style="left: -15px; position: relative;">
                                 <p>
-                                    <span class="money-number-span">6,500 </span>EGP
+                                    <span class="money-number-span">{{getTotalRevenue()}}</span>EGP
                                 </p>
                             </div>
                             <div class="two">
@@ -73,7 +73,7 @@
                         <p style="left: -22px; ">Profit Earned</p>
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="one ps-0">
-                                <p><span class="money-number-span">5,000 </span>EGP</p>
+                                <p><span class="money-number-span">{{getTotalProfit()}} </span>EGP</p>
                             </div>
                             <div class="two">
                                 <p>+15.03% <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -111,7 +111,7 @@
 
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="one ps-0">
-                                <p><span class="money-number-span">1,500</span> EGP</p>
+                                <p><span class="money-number-span">{{getTotalCost()}}</span> EGP</p>
                             </div>
                             <div class="two">
                                 <p>+15.03% <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -162,7 +162,7 @@
                                     <img style="width: 100px; height: 100px; background-color: #e3eae2; border-radius: 10px;" [src]="item.image" alt="">
                                 </td>
                                 <td>{{ item.name }}</td>
-                                <td>{{ (item.totalRevenue ?? 0) - (item.totalCost ?? 0) }}</td>
+                                <td>{{ ((item.totalRevenue ?? 0) - (item.totalCost ?? 0)) * .8 }}</td>
                                 <td>{{ item.totalCost }}</td>
                                 <td>{{ item.totalRevenue }}</td>
                                 <td>{{ item.soldAmount }}</td>
@@ -196,7 +196,7 @@
                                     <img style="width: 100px; height: 80px; background-color: #e3eae2; border-radius: 50%;" [src]="item.customerImage" alt="">
                                 </td>
                                 <td>{{ item.customerName }}</td>
-                                <td>{{ (item.totalRevenue ?? 0) - (item.totalCost ?? 0) }}</td>
+                                <td>{{ ((item.totalRevenue ?? 0) - (item.totalCost ?? 0)) * .8 }}</td>
                                 <td>{{ item.totalCost }}</td>
                                 <td>{{ item.totalRevenue }}</td>
                                 <td>{{ item.totalOrders }}</td>
@@ -227,7 +227,7 @@
                                 <td>{{ getEnumString(item.ingredient ?? 0) }}</td>
                                 <td>{{ item.costPerKilo }}</td>
                                 <td>{{ item.usedAmountInGrams }}</td>
-                                <td>{{ (item.costPerKilo ?? 0) * (item.usedAmountInGrams ?? 0) }}</td>
+                                <td>{{ ((item.costPerKilo ?? 0) / 1000) * (item.usedAmountInGrams ?? 0) }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -21,6 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { SignupPopupComponent } from '../signup-popup/signup-popup.component';
+import { AuthResendEmailConfirmationEmailPost$Params } from 'src/app/api/fn/auth/auth-resend-email-confirmation-email-post';
+import { AuthService } from 'src/app/api/services';
+import { SharedService } from 'src/app/shared/shared.service';
 
 
 
@@ -46,13 +49,17 @@ export class LoginPopUpComponent implements OnInit {
   submitted = false;
   errorMessages: string[] = [];
   returnUrl: string | null = null;
+  failedLogin = false;
   hide: any;
   isLoading: boolean = false;
+  showEmailConfirm = false
 
 
   constructor(public dialogRef: MatDialogRef<LoginPopUpComponent>,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
+    private sharedService: SharedService,
+    private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog) {
@@ -102,6 +109,9 @@ export class LoginPopUpComponent implements OnInit {
         },
 
         error: error => {
+          if (error.status === 409) {
+            this.showEmailConfirm = true
+          }
           if (error.error.errors) {
             this.errorMessages = error.error.errors;
           } else {
@@ -113,7 +123,23 @@ export class LoginPopUpComponent implements OnInit {
     }
   }
   resendEmailConfirmationLink() {
-    this.router.navigateByUrl('/account/send-email/resend-email-confirmation-link');
+    const request: AuthResendEmailConfirmationEmailPost$Params = {
+      email: this.email.value
+    }
+    this.sharedService.showLoadingSpinner();
+    this.authService.authResendEmailConfirmationEmailPost(request).subscribe({
+      next: (response: any) => {
+        this.sharedService.hideLoadingSpinner();
+        this.sharedService.showPopUp('succuss','Email Sent, please check your email');
+      }, error: error => {
+        this.sharedService.hideLoadingSpinner();
+        this.sharedService.showPopUp('danger','Failed, please try again later');
+      }
+    })
+  }
+  resetPassword() {
+    this.router.navigateByUrl('/account/send-email/forgot-username-or-password');
+    this.closeLoginPopUp()
   }
   closeLoginPopUp() {
     this.dialogRef.close();

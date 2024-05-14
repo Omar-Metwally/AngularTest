@@ -20,12 +20,11 @@
 .img2 img{
     position: absolute;
     bottom: -90px;
+    right: 43%;
     height: 180px;
     width: 180px;
-    left: 25px;
     border: 8px solid #fff;
     border-radius: 50%;
-    
 }
 
 .btnn{

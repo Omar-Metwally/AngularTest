@@ -144,6 +144,10 @@ export class SideNavComponent {
     this.collapsed = !this.collapsed;
   }
 
+  logout(){
+    this.accountService.logout();
+  }
+
   get sidenavWidth(): string {
     return this.collapsed ? '65px' : '250px';
   }

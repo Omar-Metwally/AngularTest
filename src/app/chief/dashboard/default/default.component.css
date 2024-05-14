@@ -12,50 +12,112 @@
     position: relative;
     left: 107px;
 }
-.three-card {
-    margin-top: 20px;
-}
 
-.button-table {
-    margin-bottom: 20px;
-}
 
-.div-wither {
-    width: 327px;
-    height: 145px;
-    margin-right: 24px;
-    border-radius: 10px;
+
+
+
+/* start cards */
+.container-fluid {
     position: relative;
-    box-shadow: 1px 1px 9.6px 0px #31AC1833;
-
+    width: 1026px !important;
+    justify-content: space-between;
+    align-items: center;
 }
-.div-wither:hover{
+
+
+.card-body {
+    margin-left: 30.5px;
+    width: 266px !important;
+    height: 103px !important;
+}
+
+.card-one {
+    left: -15px !important;
+}
+
+.card-two {
+    left: -7px !important;
+}
+
+.card-text {
+    margin-left: 66px;
+    position: relative;
+    top: -59px;
+    font-weight: 500;
+    color: #322F2F;
+    margin-top: 9px;
+}
+
+.line-data {
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    left: 33px;
+    padding-left: 15px;
+    top: -64px;
+}
+
+.line-data p {
+    color: #237A11;
+}
+
+.right-side p {
+    padding-top: 9px !important;
+}
+  
+
+
+
+
+
+
+
+.card {
+    height: 144px;
+    border-radius: 10px;
+    color: #322F2F;
+    box-shadow: 1px 1px 9.6px 0px #31AC1833;
+    border: none;
+    width: 326px !important;
+    margin-left: 24px !important;
+}
+
+.card:hover {
     background-color: #EAF7E8;
 }
 
 
-.top-content{
-    top: 20px;
-     justify-content: center;
+.money-number-span {
+    font-size: 24px;
+    font-weight: bolder;
+    color: #322F2F !important;
+}
+
+.card-under-data>p {
     position: relative;
-    align-items: center;
-    left: 44px;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    text-align: left;
-                
+    top: -50px;
 }
- 
-.contain-card-info{
-    position: absolute;
+
+.card-under-data .one {
+    left: -15px;
+    position: relative;
+    color: #237A11;
 }
-.div-content-center{
-    display: flex;
+
+.card-under-data .one>p {
+    position: relative;
+    top: -50px;
+}
+
+.card-under-data .two {
+    position: relative;
+    left: 80px;
+    top: -90px;
+    color: #237A11;
+}
 
 
-}
 .tow-button .button-table{
     width: 30%;
  font-family: Roboto;
@@ -334,11 +396,10 @@ background-color: #FDFFFC;
 
 
 
-@media screen and (max-width:500px) {
+/* @media screen and (max-width:500px) {
     .logo{
         width: 100%;
-        /* display: flex; */
-        text-align: center;
+         text-align: center;
         justify-content: center;
         align-items: center;
     }
@@ -355,9 +416,9 @@ background-color: #FDFFFC;
     padding: 10px;
     border: 10px;
  }   
-}
+} */
 
-@media screen and (max-width:500px) {
+/* @media screen and (max-width:500px) {
     .terms-conditions{
         width: 100%;
         display: flex;
@@ -372,17 +433,16 @@ background-color: #FDFFFC;
         justify-content: center;
         align-items: center;
          margin-top: 10px;
-    }
+    } */
     /* for test */
-    .top-content{
+    /* .top-content{
          display: flex;
         flex-direction: column;
         position: absolute;
         text-align: center;
         justify-content: end;
         text-align: center;
-        /* background-color: tan; */
-        left: 120px;
+         left: 120px;
         top: 30px;
         width: auto;
     }
@@ -421,9 +481,9 @@ background-color: #FDFFFC;
         line-height: 21px;
         text-align: left;
 
-    }
+    } */
     
-    .button-table {
+    /* .button-table {
 
         margin-top: 0px;
     }
@@ -460,10 +520,61 @@ background-color: #FDFFFC;
         }
         
 
-}
-@media screen and (max-width:500px) {
+} */
+/* @media screen and (max-width:500px) {
     .side-bar{
         width: 100%;
         height: 100%;
     }
 }
+ */
+
+ 
+
+
+
+
+ /* table-data */
+ .table-data {
+    width: 760px;
+    height: 915px;
+    top: 327px;
+    left: 515px;
+    opacity: 0px;
+    margin: 50px auto;
+    color: white;
+}
+ 
+
+.table tbody tr{
+    vertical-align: middle;
+    margin-bottom: 12px;  
+    box-shadow: 0px 2px 4px #31AC1833;  
+    border-radius: 10px;  
+    height: 98px;
+}
+table thead tr th {
+    color: #322F2F;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+}
+.margin{
+    margin: 12px 0; 
+ }
+
+
+ tbody .space{
+      margin: 12px;
+ }
+
+
+
+
+
+
+
+
+

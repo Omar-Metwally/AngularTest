@@ -6,6 +6,10 @@ import { AccountService } from '../account.service';
 import { take } from 'rxjs';
 import { User } from 'src/app/shared/models/account/user';
 import { ResetPassword } from 'src/app/shared/models/account/resetPassword';
+import { AuthService } from 'src/app/api/services';
+import { AuthResetPasswordPut$Params } from 'src/app/api/fn/auth/auth-reset-password-put';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginPopUpComponent } from '../login-popup/login-popup.component';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,6 +24,8 @@ export class ResetPasswordComponent implements OnInit {
   errorMessages: string[] = [];
 
   constructor(private accountService: AccountService,
+    public dialog: MatDialog,
+    private authService: AuthService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -61,24 +67,36 @@ export class ResetPasswordComponent implements OnInit {
     this.errorMessages = [];
 
     if (this.resetPasswordForm.valid && this.email && this.token) {
-      const model: ResetPassword = {
-        token: this.token,
-        email: this.email,
-        newPassword: this.resetPasswordForm.get('newPassword')?.value
+      const request: AuthResetPasswordPut$Params = {
+        body: {
+          token: this.token,
+          email: this.email,
+          newPassword: this.resetPasswordForm.get('newPassword')?.value    
+        }
       };
 
-      this.accountService.resetPassword(model).subscribe({
+      this.authService.authResetPasswordPut(request).subscribe({
         next: (response: any) => {
-          this.sharedService.showNotification(true, response.value.title, response.value.message);
-          this.router.navigateByUrl('/account/login');
+          this.sharedService.hideLoadingSpinner()
+          this.login('500mx', '250ms');
+          this.sharedService.showSnackBar('Password Resetted, you can login now');
         }, error: error => {
-          if (error.error.errors) {
-            this.errorMessages = error.error.errors;
-          } else {
-            this.errorMessages.push(error.error);
-          }
+          this.sharedService.showPopUp('danger',error[0]);
         }
       })
     }
   }
+
+  login(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(LoginPopUpComponent, {
+      width: 'min-content',
+      height: 'min-content',
+      minWidth: '20%',
+      maxWidth: '100%',
+      maxHeight: '80%',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+  
 }

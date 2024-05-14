@@ -301,4 +301,7 @@ export class MealComponent implements OnInit {
   trackByFunction(index: number, item: any) {
     return index;
   }
+  redirectToMealReview = (mealID: string) => {
+    this.router.navigate(['/meal-review', mealID]);
+  }
 }

@@ -55,7 +55,6 @@ export class MealCardComponent implements OnInit {
   currentMealOptionID: string = ''
 
   ngOnInit(): void {
-    console.log(this.mealCardData)
     this.currentMealOption = this.mealCardData.mealCardOptions[0]
     this.displayedImage = this.currentMealOption.mealOptionImage
     this.displayedPrice = this.currentMealOption.mealOptionPrice

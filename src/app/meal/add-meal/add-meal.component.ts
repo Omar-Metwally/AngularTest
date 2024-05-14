@@ -133,7 +133,7 @@ export class AddMealComponent implements OnInit {
   previousMealSize: number
   currentMealOption: mealOption = {
     mealOptionID: '',
-    MealSizeOption: 1,
+    MealSizeOption: 0,
     isAvailable: false,
     price: 0,
     availableQuantity: 0,
@@ -384,6 +384,17 @@ export class AddMealComponent implements OnInit {
     let mealOption: mealOption | undefined = meal.mealOptions.at(0)
 
     if (mealOption) {
+      this.currentMealOption = {
+        mealOptionID: mealOption.mealOptionID,
+        MealSizeOption: mealOption.MealSizeOption,
+        isAvailable: mealOption.isAvailable,
+        price: mealOption.price,
+        availableQuantity: mealOption.availableQuantity,
+        saveQuantitySetting: mealOption.saveQuantitySetting,
+        image: mealOption.image,
+        sideDishes: mealOption.sideDishes,
+        usedIngredients: mealOption.usedIngredients
+      }
       setTimeout(() => {
         this.mealSize.setValue(mealOption?.MealSizeOption);
         this.price.setValue(mealOption?.price);
@@ -421,6 +432,7 @@ export class AddMealComponent implements OnInit {
       // Object does not exist, push new object
       this.meal.mealOptions?.push(this.currentMealOption);
     }
+    console.log(this.currentMealOption)
   }
 
   mealForm() {
@@ -486,13 +498,13 @@ export class AddMealComponent implements OnInit {
   }
 
   mealOptionForm() {
+    console.log(this.currentMealOption)
     type MealSizeValues = 0 | 1 | 2;
     const mealSizeActions = {
       0: this.isSmallMealOptionAdded,
       1: this.isMediumMealOptionAdded,
       2: this.isLargeMealOptionAdded,
     };
-
     const action = mealSizeActions[this.mealSize.value as MealSizeValues];
     if (action) {
       this.putMealOption();
@@ -579,6 +591,7 @@ export class AddMealComponent implements OnInit {
   }
 
   putMealOption() {
+    console.log(this.currentMealOption)
     const addMealSideDish: AddMealSideDish[] = [];
     this.sideDishInputs.forEach(sideDish => {
       addMealSideDish.push({
@@ -598,7 +611,6 @@ export class AddMealComponent implements OnInit {
         amountInGrams: +ingredient.usedGrams
       })
     })
-    console.log(this.currentMealOption)
     const updateMealOptionRequest: MealOptionPut$Params = {
       body: {
         'mealOptionID': this.currentMealOption.mealOptionID ?? '',
@@ -611,7 +623,6 @@ export class AddMealComponent implements OnInit {
         'addIngredients': addIngredients
       }
     }
-
     this.mealOptionService.mealOptionPut(updateMealOptionRequest).subscribe({
       next: () => {
         if (this.mealSize.value === 0) {
@@ -664,15 +675,13 @@ export class AddMealComponent implements OnInit {
 
 
   changeCurrentMealOption(currentMealSize: MatRadioChange){
-    console.log(this.sideDishInputs)
     this.previousMealSize = currentMealSize.value;
-
     let index = this.meal.mealOptions?.findIndex(x => x.MealSizeOption == currentMealSize.value);
 
     if (index !== -1 && index !== undefined) {      
       this.currentMealOption = this.meal.mealOptions[index]
-      console.log(this.currentMealOption)
-      this.mealSize.setValue(currentMealSize, { emitEvent: false })
+      console.log(this.currentMealOption, this.meal)
+      this.mealSize.setValue(currentMealSize.value, { emitEvent: false })
       this.price.setValue(this.currentMealOption.price)
       this.isAvailable.setValue(this.currentMealOption.isAvailable)
       this.image.setValue(this.currentMealOption.image);
@@ -697,6 +706,7 @@ export class AddMealComponent implements OnInit {
       this.sideDishControl.reset()
       this.toggleQuantityInput(false)
     }
+    console.log(this.currentMealOption)
     this.ChangeAddOrEdit()
   }
 

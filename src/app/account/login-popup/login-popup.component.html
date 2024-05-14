@@ -33,9 +33,9 @@
             </mat-form-field> -->
             <div class="form-floatin" *ngIf="errorMessages.length > 0">
                 <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
-                <a class="btn btn-link" (click)="resendEmailConfirmationLink()"
-                    *ngIf="errorMessages[0].includes('Please confirm your email')">
-                    Click here to resend email confirmation link in case you didn't receive it.
+                <a style="cursor: pointer;" class="nav-link" (click)="resendEmailConfirmationLink()"
+                    *ngIf="showEmailConfirm">
+                    Resend email confirmation
                 </a>
             </div>
             <div class="text-center">
@@ -43,8 +43,8 @@
                     <i *ngIf="isLoading" class="fa fa-cog fa-spin" style="font-size:24px"></i>
                     <span *ngIf="!isLoading">Login</span>
                 </button>
-                <a href="#" class="nav-link pt-4">Forgot Password?</a>
-                <div class="d-lg-block bottom"> Don’t Have an Account? <a (click)="openSignupPopUp()" class="d-lg-inline sign">Signup</a>
+                <a *ngIf="failedLogin" (click)="resetPassword()" style="cursor: pointer;" class="nav-link pt-4">Forgot Password?</a>
+                <div class="d-lg-block bottom"> Don’t Have an Account? <a (click)="openSignupPopUp()" style="cursor: pointer;" class="d-lg-inline sign">Signup</a>
                 </div>
             </div>
         </div>

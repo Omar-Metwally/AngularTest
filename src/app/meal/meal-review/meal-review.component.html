@@ -153,7 +153,7 @@
 
         <div class="row mt-5" *ngFor="let review of this.reviews.mealReviews">
           <div class="col-md-auto">
-            <img src="/assets/images/man.png" alt=".." class="man">
+            <img [src]="review.customerImage" alt=".." class="man">
           </div>
           <div class="col-md-auto">
             <div class="fw-bold">{{review.customerName}}</div>

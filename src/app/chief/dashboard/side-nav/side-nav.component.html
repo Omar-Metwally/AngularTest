@@ -106,10 +106,9 @@ color: rgba(248, 249, 248, 1);
                     matListItemIcon>contact_support</mat-icon>
                 <span matListItemTitle style="color:#F8F9F8" *ngIf="!collapsed">Help Center</span>
             </a> -->
-            <a mat-list-item class="menu-item" routerLink="notification-center"
-                routerLinkActive="selected-menu-item" #rla="routerLinkActive" [activated]="rla.isActive">
+            <a mat-list-item class="menu-item" (click)="logout()">
                 <mat-icon style="color: #F8F9F8; transform: rotate(180deg)"
-                    [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+                    fontSet="material-icons"
                     matListItemIcon>logout</mat-icon>
                 <span matListItemTitle style="color:#F8F9F8" *ngIf="!collapsed">Log Out</span>
             </a>

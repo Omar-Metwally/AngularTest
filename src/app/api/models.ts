@@ -64,6 +64,7 @@ export { MealTag } from './models/meal-tag';
 export { OrderStatus } from './models/order-status';
 export { PaymentOption } from './models/payment-option';
 export { PostCustomerProfileDataRequest } from './models/post-customer-profile-data-request';
+export { ResetPasswordRequest } from './models/reset-password-request';
 export { SelectedSideDish } from './models/selected-side-dish';
 export { SortBy } from './models/sort-by';
 export { SubscriptionStatus } from './models/subscription-status';

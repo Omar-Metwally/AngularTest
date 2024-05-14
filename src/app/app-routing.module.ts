@@ -57,6 +57,7 @@ const routes: Routes = [
   { path: 'dashboard' , component: DashboardComponent, canActivate:[ChiefGuard],children:[
     {path:'menu', component: DefaultComponent},
     {path:'dashboard/menu', redirectTo: 'dashboard', pathMatch: 'full'},
+    {path:'', redirectTo: 'menu', pathMatch: 'full'},
     {path:'meal-add', component: AddMealComponent},
     {path:'meal-add/:mealID', component: AddMealComponent},
     {path:'side-dish-add', component: AddSideDishComponent},

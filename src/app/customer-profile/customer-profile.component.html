@@ -1,51 +1,53 @@
 <!-- [ngStyle]="coverImage.value.url" [style.background]="'url('+[(coverImage.value.url)]+')'" -->
-<div class="profile">
-    <div class="img2"><img style="object-fit: cover;" [src]="customerImage.value.url" alt=""></div>
-    <app-file-input style="position: absolute; top: 180px; left: 85px;" [control]="customerImage"
-        [fileHandle]="customerImageFileHandle" [showDragAndDrop]="false"></app-file-input>
-</div>
-
-<div class="container ">
-    <div class="row my-5">
-        <div class="col">
-            <h5 class="fw-bolder">Personal Information</h5>
-            <div class="row">
-                <div class="col my-3">
-                    <app-input [control]="firstName" label="First Name" type="text"
-                        placeholder="E.g: Ahmed"></app-input>
-                </div>
-                <div class="col my-3" id="lastname">
-                    <app-input [control]="lastName" label="Last Name" type="text"
-                        placeholder="E.g: Ibrahim"></app-input>
-                </div>
-            </div>
-            <div class="row">
-                <app-input [control]="phone" style="width: 100%;" type="number" prefix="01" format="0 0000 0000"
-                    label="Phone number"></app-input>
-            </div>
-            <h5 class="mt-5 fw-bolder">Location Details</h5>
-            <div class="row">
+<div class="container">
+    <div class="profile">
+        <div class="img2"><img style="object-fit: cover;" [src]="customerImage.value.url ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'" alt=""></div>
+        <app-file-input style="position: absolute; top: 180px; left: 54%;" [control]="customerImage"
+            [fileHandle]="customerImageFileHandle" [showDragAndDrop]="false"></app-file-input>
+    </div>
+    
+    <div class="container ">
+        <div class="row my-5">
+            <div class="col">
+                <h5 class="fw-bolder">Personal Information</h5>
                 <div class="row">
-                    <div class="col">
-                        <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text"
-                            placeholder="District" label="District" [options]="districts"></app-select-input>
+                    <div class="col my-3">
+                        <app-input [control]="firstName" label="First Name" type="text"
+                            placeholder="E.g: Ahmed"></app-input>
                     </div>
-                    <div class="col">
-                        <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text"
-                            placeholder="Street" label="Street" [options]="streets"></app-select-input>
-                    </div>
-                    <div class="col">
-                        <app-select-input [control]="building" type="text"
-                            placeholder="Building" label="Building" [options]="buildings"></app-select-input>
+                    <div class="col my-3" id="lastname">
+                        <app-input [control]="lastName" label="Last Name" type="text"
+                            placeholder="E.g: Ibrahim"></app-input>
                     </div>
                 </div>
-
+                <div class="row">
+                    <app-input [control]="phone" style="width: 100%;" type="number" prefix="01" format="0 0000 0000"
+                        label="Phone number"></app-input>
+                </div>
+                <h5 class="mt-5 fw-bolder">Location Details</h5>
+                <div class="row">
+                    <div class="row">
+                        <div class="col">
+                            <app-select-input [control]="district" [optionSelected]="districtOptionSelected" type="text"
+                                placeholder="District" label="District" [options]="districts"></app-select-input>
+                        </div>
+                        <div class="col">
+                            <app-select-input [control]="street" [optionSelected]="streetOptionSelected" type="text"
+                                placeholder="Street" label="Street" [options]="streets"></app-select-input>
+                        </div>
+                        <div class="col">
+                            <app-select-input [control]="building" type="text"
+                                placeholder="Building" label="Building" [options]="buildings"></app-select-input>
+                        </div>
+                    </div>
+    
+                </div>
+    
             </div>
-
-        </div>
-        <div class="row">
-            <div class="col-12 d-flex justify-content-center pt-5">
-                <button class="btn" (click)="UpsertForm()">Submit</button>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center pt-5">
+                    <button class="btn" (click)="UpsertForm()">Submit</button>
+                </div>
             </div>
         </div>
     </div>

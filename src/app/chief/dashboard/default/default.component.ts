@@ -82,13 +82,6 @@ export class DefaultComponent {
     this.totalSold = this.meals.reduce((total, meal) => total + (meal.totalSold || 0), 0);
   }
 
-  //   selectSize(meal: GetMealTableRequest, size: number) {
-  //     meal.selectedSize = size;
-  //     meal.price = meal.getMealOptionsTable[size].price;
-  //     meal.selectedImage = meal.getMealOptionsTable[size].thumbnailImage;
-  //     // Update other relevant data as needed
-  // }
-
   selectSize(meal: MealTableRow, size: number) {
     if (!meal.getMealOptionsTable || !meal.getMealOptionsTable[size]) {
       return;
