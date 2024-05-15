@@ -1,350 +1,181 @@
-<div class="container">
-    <div class="row three-card">
-        <div class="col-md-4 col-sm-6 div-wither">
-            <div class="top-content">
-                <p style="top: 100px;">Best Seller</p>
-                <img src="../assets/svg images/meal-svgrepo-com (2) 1.svg" alt="">
-                <div class="contain-card-info">
-                    <div class="Strawberry">
-                        <span style="font-size: 16px">Strawberry cake</span>
-                    </div>
-                    <div class="content-card">
-                        <div class="div-content-center">
-                            <div>
-                                <span class="fw-bold" style="font-size: 24px; right: 20px;">145</span>
-                                <span style="color: #31AC18;padding-left: 8px;">sold</span>
-                            </div>
-                            <div>
-                                <span style="margin: 22px;color: #31AC18;">+15.03%<img
-                                        src="../../../../assets/images/IconSet.png" alt="" style="position: absolute;"
-                                        style="position: absolute;"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6  div-wither">
-            <div class="top-content">
-                <p style="top: 100px;">Menu Rate</p>
-                <img src="../assets/svg images/star.svg" alt="">
-                <div class="contain-card-info">
-                    <div class="Strawberry">
-                        <span style="font-size: 16px">Average rating</span>
-                    </div>
-                    <div class="content-card">
-                        <div class="div-content-center">
-                            <div>
-                                <span class="fw-bold" style="font-size: 24px; right: 20px;">4.5</span>
-                                <span style="color: #31AC18;padding-left: 8px;">star</span>
-                            </div>
-                            <div>
-                                <span style="margin: 22px;color: #31AC18;">+0.1%<img
-                                        src="../../../../assets/images/IconSet.png" alt=""
-                                        style="position: absolute;"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6  div-wither">
-            <div class="top-content">
-                <p style="top: 100px;">Revenue</p>
-                <img src="../assets/svg images/money-recive.svg" alt="">
-                <div class="contain-card-info">
-                    <div class="Strawberry">
-                        <span style="font-size: 16px">Income earned</span>
-                    </div>
-                    <div class="content-card">
-                        <div class="div-content-center">
-                            <div>
-                                <span class="fw-bold" style="font-size: 24px; right: 20px;">145</span>
-                                <span style="color:#31AC18;padding-left: 8px;">EGP</span>
-                            </div>
-                            <div>
-                                <span style="margin: 22px;color: #31AC18;">+15.03%<img
-                                        src="../../../../assets/images/IconSet.png" alt=""
-                                        style="position: absolute;"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="main-content my-3 shadow">
-    <div class="w-100 pt-0 pb-2 row d-flex justify-content-between">
-        <div class="w-100 pt-4 pb-2 row d-flex justify-content-between">
-            <div class="two-button col-md-6 d-flex">
-                <!-- Button for Dish Catalogue -->
-                <div class="button-table col-md-3 me-3">
-                    <h6 class="dish-catalog" [class.active]="activeButton === 'button1'"
-                        (click)="setActiveButton('button1')">Dish
-                        Catalogue</h6>
-                    <p class="line1" [style.width]="activeButton === 'button1' ? '122px' : '0'"></p>
-                </div>
-                <!-- Button for Side Dish Catalogue -->
-                <div class="button-table col-md-3 ms-5">
-                    <h6 class="dish-catalog" [class.active]="activeButton === 'button2'"
-                        (click)="setActiveButton('button2')">Side
-                        Dish Catalogue</h6>
-                    <p class="line" [style.width]="activeButton === 'button2' ? '162px' : '0'"></p>
-                </div>
-            </div>
-            <div class="w-50  pb-2 row d-flex  d-flex justify-content-end">
-                <div class="col-md-6 w-100 position-relative">
-                    <div class="input-group position-relative">
-                        <input type="search" [(ngModel)]="searchText" class="form-control ms-3 ps-4"
-                            placeholder="Search by name">
-                    </div>
-                </div>
-                <!-- Add New Dish button -->
-                <div class="col-md-6 mt-3" *ngIf="activeButton === 'button1'">
-                    <button id="button1" class="button-on-table btn mb-3" style="margin-left: 15px;"
-                        [class.active]="activeButton === 'button1'" (click)="router.navigate(['/dashboard/meal-add']);">
-                        Add New Dish</button>
-                </div>
-                <!-- Add New Side Dish button -->
-                <div class="col-md-6 mt-3" *ngIf="activeButton === 'button2'">
-                    <button id="button2" class="button-on-table btn mb-3"
-                        style="margin-left: 15px; width:187px !important;" [class.active]="activeButton === 'button2'"
-                        (click)="router.navigate(['/dashboard/side-dish-add']);">
-                        Add New Side Dish</button>
-                </div>
-            </div>
-            <!-- Content for Dish Catalogue -->
-            <ng-container *ngIf="activeButton === 'button1'">
-                <!-- Your existing table code for Dish Catalogue goes here -->
-                <div class="table-content  table-responsive w-100 col-md-12 col-sm-12 text-center ms-3">
-                    <table class="table table-hover" style="background-color: #F8F9F8 !important;">
-                        <thead>
-                            <tr style="font-size: 16px;">
-                                <th scope="col">Image</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Spice level</th>
-                                <th scope="col">Available</th>
-                                <!-- <th scope="col">quantity</th> -->
-                                <th scope="col">Total sold</th>
-                                <th scope="col">Price</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody style="border: #9EE392 solid 1px;">
-                            <tr *ngFor="let meal of meals | filter:searchText" class="align-items-center"
-                                style="border: #9EE392 solid 1px;">
-                                <td> <img [src]="meal.selectedImage" style="width: 94px; height: 78px;"
-                                        alt="Meal Image">
-                                </td>
-                                <td>{{ meal.title}}</td>
-                                <td>{{ meal.category }}</td>
-                                <td>{{ meal.spiceLevel }}</td>
-                                <td>{{ meal.isAvailable }}</td>
-
-                                <td>{{ totalSold}}</td>
-                                <td style="color: #31AC18;">
-                                    <div *ngIf="meal.selectedSize === undefined ">
-
-                                        {{ meal.GetMealOptionsTable[0].price }} EG
-
-                                    </div>
-                                    <div *ngIf="meal.selectedSize !== undefined">
-                                        {{ meal.price }} EG
-
-
-                                    </div>
-
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <button (click)="selectSize(meal, 0)" [disabled]="!isSizeAvailable(meal, 0)"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable(meal, 0)}">Small </button>
-                                        <button (click)="selectSize(meal, 1)" [disabled]="!isSizeAvailable(meal, 1)"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable(meal, 1)}">Medium</button>
-                                        <button (click)="selectSize(meal, 2)" [disabled]="!isSizeAvailable(meal, 2)"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable(meal, 2)}">Large</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="container" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
-                                        <div class="dots d-flex justify-content-start me-4">
-                                            <i><img src="../assets/svg images/3dots.svg" width="15px" height="15px"
-                                                    alt=""></i>
-                                        </div>
-                                        <div style="position: absolute; left: -130px;" class="dropdown-content">
-                                            <a class="d-flex justify-content-between "><span>View</span> <img
-                                                    src="../assets/svg images/Eye.svg"
-                                                    (click)="redirectToMeal(meal)"></a>
-                                            <div class="dropdown-line"></div>
-                                            <a class="d-flex justify-content-between "
-                                                (click)="router.navigate(['/dashboard/meal-add', meal.mealID])"><span>Edit</span>
-                                                <img src="../assets/svg images/Icon Frame.svg" alt=""></a>
-                                            <div class="dropdown-line"></div>
-                                            <a class="d-flex justify-content-between "
-                                                (click)="openConfirmMealDeleteDialog(meal)"><span>Delete</span> <img
-                                                    src="../assets/svg images/delete.svg" alt=""></a>
-                                            <div class="dropdown-line"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </ng-container>
-
-
-
-
-            <!-- Content for Side Dish Catalogue -->
-            <ng-container *ngIf="activeButton === 'button2'">
-                <div class="table-content table-responsive w-100 col-md-12 col-sm-12 text-center  ms-3" style="text-align: center; margin: auto;  color: #322F2F;
-                    font-family: Roboto;
-                    font-size: 16px;
-                    font-weight: 600;
-                    line-height: 24px;
-                    text-align: center;">
-                    <table class="table table-hover"
-                        style="background-color: #F8F9F8 !important;">
-                        <thead>
-                            <tr style="font-size: 16px;">
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody
-                            style="border: #9EE392 solid 1px;">
-                            <tr class="align-items-center"
-                                style="border: #9EE392 solid 1px;">
-                                <td> <img src="../../../../assets/images/chef-cooking.svg"
-                                        style="width: 94px; height: 78px;" alt="Meal Image">
-                                </td>
-                                <td>Ahmed</td>
-                                <td style="color: #31AC18; position: relative;">
-                                    <div>
-                                        <span>9999 EG</span>
-                                    </div>
-                                    <div class="d-flex justify-content-center align-items-center mt-3">
-                                        <button (click)="selectSize" [disabled]="!isSizeAvailable"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button-one"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable}">Small </button>
-                                        <button (click)="selectSize" [disabled]="!isSizeAvailable"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button-two"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable}">Medium</button>
-                                        <button (click)="selectSize" [disabled]="!isSizeAvailable"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button-three"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable}">Large</button>
-                                    </div>
-                                    <div class="container" id="icon-place"
-                                     style="
-                                    
-                                    position: absolute;
-                                    top: 47px !important;
-                                    left: 541px !important;
-                                    width: 20px !important;
-                                    "
-                                     (mouseenter)="showDropdown()"
-                                        (mouseleave)="hideDropdown()">
-                                        <div class="dots-two d-flex justify-content-start me-4">
-                                            <i><img src="../assets/svg images/3dots.svg" width="15px" height="15px" alt=""></i>
-                                        </div>
-                                        <div style="position: absolute; left: -110px;" class="dropdown-content">
-                                            <a class="d-flex justify-content-between "><span>View</span> <img src="../assets/svg images/Eye.svg"
-                                                    (click)="redirectToMeal(meals)"></a>
-                                            <div class="dropdown-line"></div>
-                                            <a class="d-flex justify-content-between "
-                                                (click)="router.navigate(['/dashboard/side-dish-add', meals])"><span>Edit</span> <img
-                                                    src="../assets/svg images/Icon Frame.svg" alt=""></a>
-                                            <div class="dropdown-line"></div>
-                                            <a class="d-flex justify-content-between " (click)="openConfirmMealDeleteDialog(meals)"><span>Delete</span> <img
-                                                    src="../assets/svg images/delete.svg" alt=""></a>
-                                            <div class="dropdown-line"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="align-items-center"
-                                style="border: #9EE392 solid 1px; border-collapse: separate !important; border-spacing: 0px 12px !important;">
-                                <td> <img src="../../../../assets/images/chef-cooking.svg"
-                                        style="width: 94px; height: 78px;" alt="Meal Image">
-                                </td>
-                                <td>Ahmed</td>
-                                <td style="color: #31AC18; position: relative;">
-                                    <div>
-                                        4565 EG
-                                    </div>
-                                    <div class="d-flex justify-content-center align-items-center mt-3">
-                                        <button (click)="selectSize" [disabled]="!isSizeAvailable"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button-one"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable}">Small </button>
-                                        <button (click)="selectSize" [disabled]="!isSizeAvailable"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button-two"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable}">Medium</button>
-                                        <button (click)="selectSize" [disabled]="!isSizeAvailable"
-                                            class="btn m-1 btn-sm btn-outline border-1 color-button-three"
-                                            [ngClass]="{'disabled-button': !isSizeAvailable}">Large</button>
-                                    </div>
-                                    <div class="container" id="icon-place"  style="
-                                    
-                                    position: absolute;
-                                    top: 47px !important;
-                                    left: 541px !important;
-                                    width: 20px !important;
-                                    "(mouseenter)="showDropdown()"
-                                        (mouseleave)="hideDropdown()">
-                                        <div class="dots-two d-flex justify-content-start me-4">
-                                            <i><img src="../assets/svg images/3dots.svg" width="15px" height="15px" alt=""></i>
-                                        </div>
-                                        <!-- <div style="position: absolute; left: -130px;" class="dropdown-content"> -->
-                                        <div style="position: absolute; left: -110px;" class="dropdown-content">
-                                                <!-- left: -118px; -->
-                                            <a class="d-flex justify-content-between "><span>View</span> <img src="../assets/svg images/Eye.svg"
-                                                    (click)="redirectToMeal(meals)"></a>
-                                            <div class="dropdown-line"></div>
-                                            <a class="d-flex justify-content-between "
-                                                (click)="router.navigate(['/dashboard/side-dish-add', meals])"><span>Edit</span> <img
-                                                    src="../assets/svg images/Icon Frame.svg" alt=""></a>
-                                            <div class="dropdown-line"></div>
-                                            <a class="d-flex justify-content-between " (click)="openConfirmMealDeleteDialog(meals)"><span>Delete</span> <img
-                                                    src="../assets/svg images/delete.svg" alt=""></a>
-                                            <div class="dropdown-line"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                         </tbody>
-                    </table>
-                </div>
-            </ng-container>
+  <div class="w-100 pt-0 pb-2 row d-flex justify-content-between">
+    <div class="w-100 pt-4 pb-2 row d-flex justify-content-between">
+      <div class="two-button col-md-6 d-flex">
+        <!-- Button for Dish Catalogue -->
+        <div class="button-table col-md-3 me-3">
+          <h6 class="dish-catalog" [class.active]="activeButton === 'button1'" (click)="setActiveButton('button1')">Dish
+            Catalogue</h6>
+          <p class="line1" [style.width]="activeButton === 'button1' ? '122px' : '0'"></p>
         </div>
+        <!-- Button for Side Dish Catalogue -->
+        <div class="button-table col-md-3 ms-5">
+          <h6 class="dish-catalog" [class.active]="activeButton === 'button2'" (click)="setActiveButton('button2')">Side
+            Dish Catalogue</h6>
+          <p class="line" [style.width]="activeButton === 'button2' ? '162px' : '0'"></p>
+        </div>
+      </div>
+      <div class="w-50  pb-2 row d-flex  d-flex justify-content-end">
+        <div class="col-md-6 w-100 position-relative">
+          <div class="input-group position-relative">
+            <input type="search" [(ngModel)]="searchText" class="form-control ms-3 ps-4" placeholder="Search by name">
+          </div>
+        </div>
+        <!-- Add New Dish button -->
+        <div class="col-md-6 mt-3" *ngIf="activeButton === 'button1'">
+          <button id="button1" class="button-on-table btn mb-3" style="margin-left: 15px;"
+            [class.active]="activeButton === 'button1'" (click)="router.navigate(['/dashboard/meal-add']);">
+            Add New Dish</button>
+        </div>
+        <!-- Add New Side Dish button -->
+        <div class="col-md-6 mt-3" *ngIf="activeButton === 'button2'">
+          <button id="button2" class="button-on-table btn mb-3" style="margin-left: 15px; width:187px !important;"
+            [class.active]="activeButton === 'button2'" (click)="router.navigate(['/dashboard/side-dish-add']);">
+            Add New Side Dish</button>
+        </div>
+      </div>
+      <!-- Content for Dish Catalogue -->
+      <ng-container *ngIf="activeButton === 'button1'">
+        <!-- Your existing table code for Dish Catalogue goes here -->
+        <div class="table-content  table-responsive w-100 col-md-12 col-sm-12 text-center ms-3">
+          <table class="table table-hover" style="background-color: #F8F9F8 !important;">
+            <thead>
+              <tr style="font-size: 16px;">
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Category</th>
+                <th scope="col">Spice level</th>
+                <th scope="col">Available</th>
+                <!-- <th scope="col">quantity</th> -->
+                <th scope="col">Total sold</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody style="border: #9EE392 solid 1px;">
+              <tr *ngFor="let meal of meals | filter:searchText" class="align-items-center"
+                style="border: #9EE392 solid 1px;">
+                <td> <img [src]="meal.selectedImage" style="width: 94px; height: 78px;" alt="Meal Image">
+                </td>
+                <td>{{ meal.title}}</td>
+                <td>{{ meal.category }}</td>
+                <td>{{ meal.spiceLevel }}</td>
+                <td>{{ meal.isAvailable }}</td>
+
+                <td>{{ totalSold}}</td>
+                <td style="color: #31AC18;">
+                  <div *ngIf="meal.selectedSize === undefined ">
+
+                    {{ meal.GetMealOptionsTable[0].price }} EG
+
+                  </div>
+                  <div *ngIf="meal.selectedSize !== undefined">
+                    {{ meal.price }} EG
+
+
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <button (click)="selectSize(meal, 0)" [disabled]="!isSizeAvailable(meal, 0)"
+                      class="btn m-1 btn-sm btn-outline border-1 color-button"
+                      [ngClass]="{'disabled-button': !isSizeAvailable(meal, 0)}">Small </button>
+                    <button (click)="selectSize(meal, 1)" [disabled]="!isSizeAvailable(meal, 1)"
+                      class="btn m-1 btn-sm btn-outline border-1 color-button"
+                      [ngClass]="{'disabled-button': !isSizeAvailable(meal, 1)}">Medium</button>
+                    <button (click)="selectSize(meal, 2)" [disabled]="!isSizeAvailable(meal, 2)"
+                      class="btn m-1 btn-sm btn-outline border-1 color-button"
+                      [ngClass]="{'disabled-button': !isSizeAvailable(meal, 2)}">Large</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="container" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
+                    <div class="dots d-flex justify-content-start me-4">
+                      <i><img src="../assets/svg images/3dots.svg" width="15px" height="15px" alt=""></i>
+                    </div>
+                    <div style="position: absolute; left: -130px;" class="dropdown-content">
+                      <a class="d-flex justify-content-between "><span>View</span> <img
+                          src="../assets/svg images/Eye.svg" (click)="redirectToMeal(meal)"></a>
+                      <div class="dropdown-line"></div>
+                      <a class="d-flex justify-content-between "
+                        (click)="router.navigate(['/dashboard/meal-add', meal.mealID])"><span>Edit</span>
+                        <img src="../assets/svg images/Icon Frame.svg" alt=""></a>
+                      <div class="dropdown-line"></div>
+                      <a class="d-flex justify-content-between "
+                        (click)="openConfirmMealDeleteDialog(meal)"><span>Delete</span> <img
+                          src="../assets/svg images/delete.svg" alt=""></a>
+                      <div class="dropdown-line"></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="activeButton === 'button2'">
+        <div class="table-content table-responsive w-100 col-md-12 col-sm-12 text-center ms-3"
+          style="text-align: center;overflow: hidden; ">
+          <table class="table table-hover" style="background-color: #F8F9F8 !important; ">
+            <thead>
+              <tr
+                style="font-size: 16px; margin: auto; color: #322F2F; font-family: Roboto; font-size: 16px; font-weight: 600; line-height: 24px; text-align: center;">
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody style="border: #9EE392 solid 1px;">
+              <tr class="align-items-center" style="border: #9EE392 solid 1px;"
+                *ngFor="let dish of sideDishes | filter:searchText">
+                <td>
+                  <img [src]="dish.thumbnailImage" style="width: 94px; height: 78px;" alt="Side Dish Image">
+                </td>
+                <td>{{ dish.name }}</td>
+                <td style="color: #31AC18; position: relative;">
+                  <div>
+                    {{ getSideDishPrice(dish, dish.selectedSize) }}EG
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center mt-3">
+                    <button (click)="selectSizeDish(dish, 0)" [disabled]="!isSizeAvailableDish(dish, 0)"
+                      class="btn m-1 btn-sm btn-outline border-1 color-button-one"
+                      [ngClass]="{'disabled-button': !isSizeAvailableDish(dish, 0), 'active': dish.selectedSize === 0}">
+                      Small <span *ngIf="isSizeAvailableDish(dish, 0)"></span>
+                    </button>
+                    <button (click)="selectSizeDish(dish, 1)" [disabled]="!isSizeAvailableDish(dish, 1)"
+                      class="btn m-1 btn-sm btn-outline border-1 color-button-two"
+                      [ngClass]="{'disabled-button': !isSizeAvailableDish(dish, 1), 'active': dish.selectedSize === 1}">
+                      Medium <span *ngIf="isSizeAvailableDish(dish, 1)"></span>
+                    </button>
+                    <button (click)="selectSizeDish(dish, 2)" [disabled]="!isSizeAvailableDish(dish, 2)"
+                      class="btn m-1 btn-sm btn-outline border-1 color-button-three"
+                      [ngClass]="{'disabled-button': !isSizeAvailableDish(dish, 2), 'active': dish.selectedSize === 2}">
+                      Large <span *ngIf="isSizeAvailableDish(dish, 2)"></span>
+                    </button>
+                  </div>
+                  <div class="container" id="icon-place" style="position: absolute; top: 40px;left: 473px;">
+                    <div class="dots-two d-flex justify-content-start me-4">
+                      <i><img src="../assets/svg images/3dots.svg" width="15px" height="15px" alt=""></i>
+                    </div>
+                    <div style="position: absolute; left: -110px;" class="dropdown-content">
+
+                      <a class="d-flex justify-content-between "
+                        (click)="router.navigate(['/dashboard/side-dish-add', dish.sideDishID])">
+                        <span>Edit</span> <img src="../assets/svg images/Icon Frame.svg" alt="">
+                      </a>
+                      <div class="dropdown-line"></div>
+                      <a class="d-flex justify-content-between " (click)="openConfirmSideDishDeleteDialog(dish)">
+                        <span>Delete</span> <img src="../assets/svg images/delete.svg" alt="">
+                      </a>
+                      <div class="dropdown-line"></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
     </div>
+  </div>
 </div>
-
-
-
-
-
-
-
-
- 

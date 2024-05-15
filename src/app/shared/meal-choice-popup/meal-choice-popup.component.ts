@@ -50,6 +50,7 @@ export class MealChoicePopupComponent {
         this.mealSideDishes.push(sideDish)
       }
     });
+    console.log(this.mealSideDishes,this.mealToppings)
   }
 
 // selectedToppings: { [key: string]: [string, number ]} = {};

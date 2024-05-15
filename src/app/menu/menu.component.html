@@ -47,7 +47,7 @@
         </div>
     </div>
 </div> -->
-<div class="container">
+<div class="container d-lg-block">
   <div class="row mt-4">
     <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
       <div class="mt-4">
@@ -136,8 +136,9 @@
                       class="fw-medium col-12">Very spicy</mat-checkbox>
                   </div>
                   <div class="mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid; padding-top: 1.5rem;">
-                    <app-chips-auto-complete-input [optionSelected]="hello" class="mb-2" [SelectedOptions]="selectedTags"
-                    [control]="tags" type="text" label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+                    <app-chips-auto-complete-input [optionSelected]="hello" class="mb-2"
+                      [SelectedOptions]="selectedTags" [control]="tags" type="text" label="Tags"
+                      [options]="tagsOptions"></app-chips-auto-complete-input>
                   </div>
                   <div class="sizes" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
                     <div style="margin-bottom: 1rem;">
@@ -240,7 +241,7 @@
           </div>
           <div class="mt-4" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid; padding-top: 1.5rem;">
             <app-chips-auto-complete-input [optionSelected]="hello" class="mb-2" [SelectedOptions]="selectedTags"
-            [control]="tags" type="text" label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
+              [control]="tags" type="text" label="Tags" [options]="tagsOptions"></app-chips-auto-complete-input>
           </div>
           <div class="sizes" style="border-top: 0.11rem rgba(100, 100, 100, 0.33) solid;">
 
@@ -290,11 +291,13 @@
           <img src="/assets/images/asian-food.jpg">
           <div class="">Asian</div>
         </div> -->
-        <div *ngFor="let item of [0, 1, 2, 3, 4, 5]; let i = index" class="col box-style-option" [class.active-box-style-option]="activeDivIndex === i" (click)="toggleBoxShadow($event, i)">
-          <img [src]="'/assets/images/' + ['egyption-food.jpg', 'italian-food.jpg', 'moroccan-food.jpg', 'american-food.jpg', 'syrian-food.jpg', 'asian-food.jpg'][i]">
+        <div *ngFor="let item of [0, 1, 2, 3, 4, 5]; let i = index" class="col box-style-option"
+          [class.active-box-style-option]="activeDivIndex === i" (click)="toggleBoxShadow($event, i)">
+          <img
+            [src]="'/assets/images/' + ['egyption-food.jpg', 'italian-food.jpg', 'moroccan-food.jpg', 'american-food.jpg', 'syrian-food.jpg', 'asian-food.jpg'][i]">
           <div>{{['Egyptian', 'Italian', 'Moroccan', 'American', 'Syrian', 'Asian'][i]}}</div>
         </div>
-        
+
         <!-- <div class="col box-style-option" (click)="toggleBoxShadow($event)">
           <img src="/assets/images/egyption-food.jpg">
           <div>Egyptian</div>
@@ -319,7 +322,7 @@
           <img src="/assets/images/asian-food.jpg">
           <div>Asian</div>
         </div> -->
-        
+
 
 
 
@@ -345,19 +348,32 @@
       <div infiniteScroll [infiniteScrollDistance]="250" [infiniteScrollThrottle]="100" (scrolled)="onScroll()"
         [scrollWindow]="true">
         <div class="text-center" style="
-              margin-top: 2rem;
-              font-family: Roboto;
-              font-size: 24px;
-              font-weight: 700;
-              line-height: 34px;
-              letter-spacing: 0em;
-              text-align: left;
-              ">Our Most popular Dishes</div>
-        <div @fadeIn class="row d-flex justify-content-start">
+        margin-top: 2rem;
+        font-family: Roboto;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 34px;
+        letter-spacing: 0em;
+        text-align: left;">
+          <span *ngIf="sortBy.value.id == '0'">
+            Our Most popular Dishes
+          </span>
+          <span *ngIf="sortBy.value.id == '1'">
+            Our New Arrivals
+          </span>
+          <span *ngIf="sortBy.value.id == '2'">
+            Price Ascending
+          </span>
+          <span *ngIf="sortBy.value.id == '3'">
+            Price Descending
+          </span>
+        </div>
+
+        <div @fadeIn class="row d-flex justify-content-center">
           @for (mealCard of mealsCard; track mealCard) {
-          <div class="col-10 col-sm-7 col-md-6 col-lg-5 col-xl-5 col-xxl-4">
-            <app-meal-card [redirectToMealReview]="redirectToMealReview" [redirectToChiefPage]="redirectToChiefPage" [mealCardData]="mealCard" [addToCart]="addToCart"
-              [redirectToMeal]="redirectToMeal"></app-meal-card>
+          <div class="col-auto p-0">
+            <app-meal-card [redirectToMealReview]="redirectToMealReview" [redirectToChiefPage]="redirectToChiefPage"
+              [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMeal]="redirectToMeal"></app-meal-card>
           </div>
           }
           <div *ngIf="isLoading"><img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"></div>

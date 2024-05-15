@@ -24,6 +24,8 @@ import { SignupPopupComponent } from '../signup-popup/signup-popup.component';
 import { AuthResendEmailConfirmationEmailPost$Params } from 'src/app/api/fn/auth/auth-resend-email-confirmation-email-post';
 import { AuthService } from 'src/app/api/services';
 import { SharedService } from 'src/app/shared/shared.service';
+import { AuthResetPasswordPut$Params } from 'src/app/api/fn/auth/auth-reset-password-put';
+import { AuthForgotPasswordEmailPost$Params } from 'src/app/api/fn/auth/auth-forgot-password-email-post';
 
 
 
@@ -117,6 +119,7 @@ export class LoginPopUpComponent implements OnInit {
           } else {
             this.errorMessages.push(error.error);
           }
+          this.failedLogin = true;
           this.isLoading = false;
         }
       })
@@ -138,8 +141,23 @@ export class LoginPopUpComponent implements OnInit {
     })
   }
   resetPassword() {
-    this.router.navigateByUrl('/account/send-email/forgot-username-or-password');
-    this.closeLoginPopUp()
+    // this.router.navigateByUrl('/account/send-email/forgot-username-or-password');
+    // this.closeLoginPopUp()
+
+    const request: AuthForgotPasswordEmailPost$Params = {
+        email: this.email.value
+    }
+    this.sharedService.showLoadingSpinner();
+    this.authService.authForgotPasswordEmailPost(request).subscribe({
+      next: (response: any) => {
+        this.sharedService.hideLoadingSpinner();
+        this.sharedService.showPopUp('succuss','Email Sent, please check your email');
+      }, error: error => {
+        this.sharedService.hideLoadingSpinner();
+        this.sharedService.showPopUp('danger','Failed, please try again later');
+      }
+    })
+
   }
   closeLoginPopUp() {
     this.dialogRef.close();

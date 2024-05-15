@@ -8,6 +8,11 @@ import { MealCardComponent } from "../shared/meal-card/meal-card.component";
 import { mealCard, mealCardOption } from '../shared/meal-card/meal-card';
 import { MealsGet$Params } from '../api/fn/meals/meals-get';
 import { Router } from '@angular/router';
+import { GetCartItemRequest } from '../api/models';
+import { MealChoicePopupComponent } from '../shared/meal-choice-popup/meal-choice-popup.component';
+import { Dialog } from '@angular/cdk/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { AccountService } from '../account/account.service';
 
 
 
@@ -23,7 +28,6 @@ export class HomeComponent {
   @ViewChild('mealCards', { read: ElementRef })
   public mealCards!: ElementRef<any>;
   mealsCard: mealCard[] = [];
-  addToCart!: (mealOption: mealCardOption) => void;
   redirectToMeal = (event: Event, mealID: string) => {
     if ((event.target as HTMLElement).tagName === 'DIV') {
       this.router.navigate(['/meal', mealID]);
@@ -44,7 +48,9 @@ export class HomeComponent {
   errorMessages: any;
 
   constructor(private mealsService: MealsService,
-    private router: Router){
+    private router: Router,
+    public dialog: MatDialog,
+    private accountService: AccountService){
     this.mealsService.mealsGet(this.mealGetRequest).subscribe({
       next: (body) => {
         console.log(body)
@@ -93,8 +99,27 @@ export class HomeComponent {
     this.router.navigate(['/chief-page', chiefID]);
   }
 
-  loadMeals(){
-
+  addToCart = (mealOption: mealCardOption) => {
+    if(mealOption.mealSideDishes.length > 0){
+      const dialogRef = this.dialog.open(MealChoicePopupComponent, {
+        width: 'min-content',
+        height: 'min-content',
+        minWidth: 'min-content',
+        maxWidth: '100%',
+        maxHeight: '80%',
+        enterAnimationDuration: '500ms',
+        exitAnimationDuration: '250ms',
+        data: {
+          mealOptionID: mealOption.mealOptionID,
+          mealOptionPrice: mealOption.mealOptionPrice,
+          mealSideDishes: mealOption.mealSideDishes,
+        }
+      });
+    }
+    else{
+      const cartItem: GetCartItemRequest = { mealOptionID: mealOption.mealOptionID, quantity: 1 }
+      this.accountService.addItemToCart(cartItem)
+    }
   }
   
   // scrollRight(scrollable: CdkScrollable) {

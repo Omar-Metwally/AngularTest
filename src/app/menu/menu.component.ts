@@ -52,7 +52,7 @@ export class MenuComponent implements OnInit {
   styleFilter: number[] = []
   activeDivIndex: number = -1;
 
-  sortBy: FormControl = new FormControl('', {
+  sortBy: FormControl = new FormControl({ id: '0', name: 'Best Selling' }, {
   });
   category: FormControl = new FormControl('', {
   });
@@ -125,7 +125,7 @@ export class MenuComponent implements OnInit {
       const dialogRef = this.dialog.open(MealChoicePopupComponent, {
         width: 'min-content',
         height: 'min-content',
-        minWidth: '20%',
+        minWidth: 'min-content',
         maxWidth: '100%',
         maxHeight: '80%',
         enterAnimationDuration: '500ms',
@@ -142,23 +142,23 @@ export class MenuComponent implements OnInit {
       this.accountService.addItemToCart(cartItem)
     }
   }
-  postCart(cartItem: GetCartItemRequest) {
-    const upsertCartRequest: GetCartItemRequest[] = [{ mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity }]
-    const CartPostParams: CartPost$Params = {
-      body: upsertCartRequest
-    }
-    this.cartService.cartPost(CartPostParams).subscribe({
-      next: (response) => {
-      },
-      error: error => {
-        if (error.error.errors) {
-          this.errorMessages = error.error.errors;
-        } else {
-          this.errorMessages.push(error.error);
-        }
-      }
-    })
-  }
+  // postCart(cartItem: GetCartItemRequest) {
+  //   const upsertCartRequest: GetCartItemRequest[] = [{ mealOptionID: cartItem.mealOptionID, quantity: cartItem.quantity }]
+  //   const CartPostParams: CartPost$Params = {
+  //     body: upsertCartRequest
+  //   }
+  //   this.cartService.cartPost(CartPostParams).subscribe({
+  //     next: (response) => {
+  //     },
+  //     error: error => {
+  //       if (error.error.errors) {
+  //         this.errorMessages = error.error.errors;
+  //       } else {
+  //         this.errorMessages.push(error.error);
+  //       }
+  //     }
+  //   })
+  // }
 
   hello = () => {
     this.toggleLoading();

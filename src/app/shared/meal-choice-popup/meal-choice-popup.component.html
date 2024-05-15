@@ -12,7 +12,7 @@
                         <span *ngSwitchCase="0" class="size-indicator">(S)</span>
                         <span *ngSwitchCase="1" class="size-indicator">(M)</span>
                         <span *ngSwitchCase="2" class="size-indicator">(L)</span>
-                        <span *ngIf="mealTopping.isFree">+{{ option.price }} EGP</span>
+                        <span *ngIf="!mealTopping.isFree"> +{{ option.price }} EGP</span>
                         
                     </div>
                 </mat-radio-button>
@@ -21,7 +21,7 @@
         <mat-divider></mat-divider>
     }
     
-    <div class="headline mb-1 mt-2">Side Dishes</div>
+    <div class="headline mb-1 mt-2" *ngIf="mealSideDishes.length > 0">Side Dishes</div>
     @for (mealSideDish of mealSideDishes; track mealSideDish) {
         <mat-radio-group [name]="mealSideDish.mealSideDishID" [(ngModel)]="selectedSideDishes[mealSideDish.mealSideDishID]">
             <ng-container *ngFor="let option of mealSideDish.mealSideDishOptions; trackBy: trackByFunction; let i = index">
@@ -31,7 +31,7 @@
                         <span *ngSwitchCase="0" class="size-indicator">(S)</span>
                         <span *ngSwitchCase="1" class="size-indicator">(M)</span>
                         <span *ngSwitchCase="2" class="size-indicator">(L)</span>
-                        <span *ngIf="mealSideDish.isFree"> +{{ option.price }} EGP</span>
+                        <span *ngIf="!mealSideDish.isFree"> +{{ option.price }} EGP</span>
                     </div>
                 </mat-radio-button>
             </ng-container>

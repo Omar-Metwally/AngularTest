@@ -22,6 +22,7 @@ import { AdminGuard } from './shared/guards/admin.guard';
 import { ChiefGuard } from './shared/guards/chief.gaurd';
 import { PendingChiefsComponent } from './admin/pending-chiefs/pending-chiefs.component';
 import { MealsOverviewComponent } from './admin/meals-overview/meals-overview.component';
+import { MealReviewComponent } from './meal/meal-review/meal-review.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,9 +43,9 @@ const routes: Routes = [
   { path: 'dashboard/meal/add', loadComponent: () => import('./meal/add-meal/add-meal.component').then(module => module.AddMealComponent ) , outlet: "chief-dashboard"},
   { path: 'side-dish/add/:sideDishID', loadComponent: () => import('./side-dish/add-side-dish/add-side-dish.component').then(module => module.AddSideDishComponent ) },
   { path: 'side-dish/add', loadComponent: () => import('./side-dish/add-side-dish/add-side-dish.component').then(module => module.AddSideDishComponent ) },
-  { path: 'cart', loadComponent: () => import('./cart/cart.component').then(module => module.CartComponent ) },
+  { path: 'cart', canActivate: [AuthorizationGuard], loadComponent: () => import('./cart/cart.component').then(module => module.CartComponent ) },
   { path: 'account', loadChildren: () => import('./account/account.module').then(module => module.AccountModule) },
-  { path: 'meal-review/:mealID', loadComponent: () => import('./meal/meal-review/meal-review.component').then(module => module.MealReviewComponent ) },
+  { path: 'meal-review/:mealID', component: MealReviewComponent },
   { path: 'order-history', loadComponent: () => import('./customer-orders-history/customer-orders-history.component').then(module => module.CustomerOrdersHistoryComponent ) },
   { path: 'chief-page/:chiefID', loadComponent: () => import('./chief-page/chief-page.component').then(module => module.ChiefPageComponent ) },
 
@@ -60,6 +61,7 @@ const routes: Routes = [
     {path:'', redirectTo: 'menu', pathMatch: 'full'},
     {path:'meal-add', component: AddMealComponent},
     {path:'meal-add/:mealID', component: AddMealComponent},
+    {path:'side-dish-add', component: AddSideDishComponent},
     {path:'side-dish-add/:sideDishID', component: AddSideDishComponent},
     {path:'profile', component: ProfileComponent},
     {path:'orders', component: OrdersComponent},

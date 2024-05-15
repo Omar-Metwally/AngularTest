@@ -5,11 +5,12 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { AccountService } from '../account.service';
 import { take } from 'rxjs';
 import { User } from 'src/app/shared/models/account/user';
-import { ResetPassword } from 'src/app/shared/models/account/resetPassword';
 import { AuthService } from 'src/app/api/services';
 import { AuthResetPasswordPut$Params } from 'src/app/api/fn/auth/auth-reset-password-put';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginPopUpComponent } from '../login-popup/login-popup.component';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
 
 @Component({
   selector: 'app-reset-password',
@@ -58,14 +59,17 @@ export class ResetPasswordComponent implements OnInit {
   initializeForm(username: string) {
     this.resetPasswordForm = this.formBuilder.group({
       email: [{value: username, disabled: true}],
-      newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
-    })
+      newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+    }, { validator: passwordMatchValidator });
   }
+
+  get f() { return this.resetPasswordForm.controls; }
 
   resetPassword() {
     this.submitted = true;
     this.errorMessages = [];
-
+    console.log(this.resetPasswordForm)
     if (this.resetPasswordForm.valid && this.email && this.token) {
       const request: AuthResetPasswordPut$Params = {
         body: {
@@ -100,3 +104,11 @@ export class ResetPasswordComponent implements OnInit {
   }
   
 }
+
+
+export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const newPassword = control.get('newPassword');
+  const confirmPassword = control.get('confirmPassword');
+
+  return newPassword && confirmPassword && newPassword.value !== confirmPassword.value ? { passwordMismatch: true } : null;
+};

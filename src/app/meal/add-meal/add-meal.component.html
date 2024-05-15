@@ -2,7 +2,7 @@
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
             labelPosition="bottom">
-            <mat-step [optional]="true" [completed]="isMealAdded" label="Dish Profile" state="dish">
+            <mat-step [optional]="false" [completed]="isMealAdded" label="Dish Profile" state="dish">
                 <ng-template matStepContent>
                     <form [formGroup]="addMealForm" (ngSubmit)="mealForm()">
                         <div class="py-5 container">
@@ -100,59 +100,7 @@
                                                     <mat-radio-button [color]="'primary'"
                                                         [value]="2">Large</mat-radio-button>
                                                 </mat-radio-group>
-                                                <!-- <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                        <label class="form-check-label" for="inlineRadio1">1</label>
-                                                      </div>
 
-                                                      <div class="form-check form-check-inline">
-                                                        <input style="color:#31AC18" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                        <label class="form-check-label" for="inlineRadio1">1</label>
-                                                      </div>
-
-                                                      <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                        <label class="form-check-label" for="inlineRadio1">1</label>
-                                                      </div>
-                                                      
-                                                    <div class="form-check">
-                                                        <input [value]="0" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                            Small
-                                                        </label>
-                                                      </div>
-
-                                                      <div class="form-check">
-                                                        <input [value]="1" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                            Medium
-                                                        </label>
-                                                      </div>
-
-                                                      <div class="form-check">
-                                                        <input [value]="2" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                            Large
-                                                        </label>
-                                                      </div>
-                                                      
-                                                    <input [formControl]="mealSize" [value]="0" type="radio"
-                                                        class="btn-check" name="meal-size" id="small" #small
-                                                        autocomplete="off" checked>
-                                                    <label class="btn btn-outline-success" for="small"
-                                                        id="btn-S">S</label>
-
-                                                    <input [formControl]="mealSize" [value]="1" type="radio"
-                                                        class="btn-check" name="meal-size" id="medium" #medium
-                                                        autocomplete="off">
-                                                    <label class="btn btn-outline-success" for="medium"
-                                                        id="btn-m">M</label>
-
-                                                    <input [formControl]="mealSize" [value]="2" type="radio"
-                                                        class="btn-check" name="meal-size" id="large" #large
-                                                        autocomplete="off">
-                                                    <label class="btn btn-outline-success" for="large"
-                                                        id="btn-L">L</label> -->
                                             </div>
                                             <app-input class="me-1 mt-3" [control]="price" placeholder="Enter The Price"
                                                 type="number" format="9999" label="Price"></app-input>
@@ -168,37 +116,6 @@
                                                         (change)="toggleQuantityInput(false)"
                                                         [value]="false">No</mat-radio-button>
                                                 </mat-radio-group>
-                                                <!-- <div class="col-xl-12 col-lg-8 col-md-10 col-sm-10">
-                                                        <div class="d-flex justify-content-between">
-                                                            <input class="me-1 my-5" [formControl]="saveQuantitySetting"
-                                                                [value]="true" type="radio" class="btn-check"
-                                                                name="save-quantity-setting" id="save-quantity-setting"
-                                                                autocomplete="off">
-                                                            <label class="btn btn-outline-success"
-                                                                for="save-quantity-setting" id="btn-y">Yes</label>
-
-                                                            <input [formControl]="saveQuantitySetting" [value]="false"
-                                                                type="radio" class="btn-check"
-                                                                name="save-quantity-setting"
-                                                                id="not-save-quantity-setting" autocomplete="off">
-                                                            <label class="btn btn-outline-success mx-2"
-                                                                for="not-save-quantity-setting" id="btn-n">No</label>
-
-                                                            <input class="me-1" [formControl]="isAvailable"
-                                                                (click)="toggleQuantityInput(true)" [value]="true"
-                                                                type="radio" class="btn-check" name="is-available"
-                                                                id="available" autocomplete="off">
-                                                            <label class="btn btn-outline-success mx-2" for="available"
-                                                                id="btn-yy">Yes</label>
-
-                                                            <input [formControl]="isAvailable"
-                                                                (click)="toggleQuantityInput(false)" [value]="false"
-                                                                type="radio" class="btn-check" name="is-available"
-                                                                id="not-available" autocomplete="off">
-                                                            <label class="btn btn-outline-success " for="not-available"
-                                                                id="btn-nn">No</label>
-                                                        </div>
-                                                    </div> -->
                                             </div>
                                             <div>
                                                 <app-input class="me-1 mt-5 my-5" class="me-1" [control]="quantity"
@@ -227,14 +144,15 @@
                                             <div class="d-flex justify-content-start"
                                                 style="align-self: center; position: relative;"
                                                 *ngFor="let sideDish of sideDishInputs; let i = index">
-                                                <mat-form-field *ngIf="chiefSideDishOption.length > 0" appearance="outline" style="width: 65%;">
+                                                <mat-form-field *ngIf="chiefSideDishOption.length > 0"
+                                                    appearance="outline" style="width: 65%;">
                                                     <mat-label>Side Dish / Topping</mat-label>
-                                                    <mat-select  [(ngModel)]="sideDish.sideDishOptions"
-                                                        [ngModelOptions]="{standalone: true}" multiple>
-                                                        <mat-option
-                                                            *ngFor="let sideDishOption of chiefSideDishOption"
+                                                    <mat-select [(ngModel)]="sideDish.sideDishOptions"
+                                                        [ngModelOptions]="{standalone: true}" multiple
+                                                        [compareWith]="compareFn">
+                                                        <mat-option *ngFor="let sideDishOption of chiefSideDishOption"
                                                             [value]="sideDishOption">
-                                                            {{ sideDishOption.name }}
+                                                            {{sideDishOption.name}}
                                                             <ng-container
                                                                 *ngIf="sideDishOption.sideDishSizeOption === 0">(S)</ng-container>
                                                             <ng-container
@@ -244,6 +162,7 @@
                                                         </mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
+
                                                 <div style="position: absolute; top: 8px; right:10px; display: flex;">
                                                     <mat-checkbox style="align-self: center;"
                                                         [(ngModel)]="sideDish.isFree" color="primary"
@@ -272,8 +191,7 @@
                                                 margin-right: 3rem
                                                 " *ngFor="let usedIngredient of usedIngredientsList; let i = index">
                                                     <app-input [(ngModel)]="usedIngredient.usedGrams" class="col-auto"
-                                                        [label]="usedIngredient.name"
-                                                        endText="Grams"></app-input>
+                                                        [label]="usedIngredient.name" endText="Grams"></app-input>
                                                     <button class="col-auto" mat-mini-fab color="warn" style="border-radius: 10px !important; position: absolute;
                                                         right: -10%;
                                                         top: 10%;" (click)="removeIngredient(usedIngredient)">

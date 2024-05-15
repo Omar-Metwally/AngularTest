@@ -21,8 +21,8 @@ export class AuthorizationGuard {
         if (user) {
           return true;
         } else {
-          this.sharedService.showNotification(false, 'Restricted Area', 'Leave immediately!');
-          this.router.navigate(['account/login'], {queryParams: {returnUrl: state.url}});
+          this.sharedService.showPopUp('danger', 'you need to login first');
+          this.router.navigate([]);
           return false;
         }
       })

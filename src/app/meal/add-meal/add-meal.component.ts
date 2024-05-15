@@ -202,7 +202,7 @@ export class AddMealComponent implements OnInit {
       { id: '14', name: 'Beef' },
       { id: '15', name: 'Lamb' },
       { id: '16', name: 'Ribs' },);
-    this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Syrian' }, { id: '2', name: 'Lebanese' }, { id: '3', name: 'Western' }, { id: '4', name: 'Asian' }, { id: '5', name: 'Indian' })
+    this.styleOptions.push({ id: '0', name: 'Egyptian' }, { id: '1', name: 'Italian' }, { id: '2', name: 'Moroccan' }, { id: '3', name: 'American' }, { id: '4', name: 'Syrian' }, { id: '5', name: 'Asian' })
 
 
 
@@ -765,5 +765,9 @@ export class AddMealComponent implements OnInit {
       newSideDishes.push(sideDish.sideDishID,sideDish.sideDishSizeOption)
     })
     return newSideDishes;
+  }
+
+  compareFn(o1: mealSideDishOption, o2: mealSideDishOption) {
+    return o1 && o2 ? (o1.name === o2.name && o1.sideDishSizeOption === o2.sideDishSizeOption) : o1 === o2;
   }
 }
