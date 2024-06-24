@@ -124,6 +124,7 @@ export class AddMealComponent implements OnInit {
   AddOrEdit: string = 'Add'
   selectedTags: Option[] = []
   chiefSideDishOption: mealSideDishOption[] = []
+  mealCost = 0;
   meal: Meal = {
     title: '',
     mealID: '',
@@ -695,7 +696,6 @@ export class AddMealComponent implements OnInit {
       this.sideDishControl.reset()
       this.toggleQuantityInput(false)
     }
-    console.log(this.currentMealOption)
     this.ChangeAddOrEdit()
   }
 
@@ -769,5 +769,15 @@ export class AddMealComponent implements OnInit {
 
   compareFn(o1: mealSideDishOption, o2: mealSideDishOption) {
     return o1 && o2 ? (o1.name === o2.name && o1.sideDishSizeOption === o2.sideDishSizeOption) : o1 === o2;
+  }
+
+  
+
+  calcTotalCost(): number{
+    let totalCost = 0
+    this.usedIngredientsList.forEach(usedIngredient => {
+      totalCost += ( +usedIngredient.usedGrams * ((usedIngredient.pricePerKilo ?? 0) / 1000))
+    })
+    return totalCost
   }
 }

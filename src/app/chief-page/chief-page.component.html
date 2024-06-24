@@ -1,6 +1,6 @@
 <div class="container">
 
-    <div class="profile" [style.background-image.url]="this.chief.coverImage">
+    <div class="profile">
         <img [src]="this.chief.coverImage" style="position: absolute; height: 336px; width: 100%; object-fit: cover; z-index: -1;
         border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
         <div class="img2"><img style="object-fit: cover; aspect-ratio: 1 / 1;" [src]="this.chief.prfileImage" alt="">
@@ -17,7 +17,7 @@
                     style="display: inline-block; margin-left: 1.5rem;color: red;">Offline</p>
                 <p class="" style="color: #656565;">{{this.chief.description}}</p>
             </div>
-            <div class="justify-content-end d-flex col boxs">
+            <div class="justify-content-center d-flex col mt-lg-5">
                 <div class="box " style="margin-right: 1rem;">
                     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -64,25 +64,25 @@
     <div class="container justify-content-center" style="margin-top: 5rem;">
         <div class="media">
             <div *ngIf="this.mostPopularMeals.length > 0" class="container1 me-3" style="display: inline-block;">
-                <button class="button btn fw-semibold">Most Popular</button>
+                <button class="button btn fw-semibold" (click)="scrollTo('most_popular')">Most Popular</button>
             </div>
             <div *ngIf="this.newArrivalsMeals.length > 0" class="container1 me-3" style="display: inline-block;">
-                <button class="button btn fw-semibold">New Arrivals</button>
+                <button class="button btn fw-semibold" (click)="scrollTo('new_arrivals')">New Arrivals</button>
             </div>
             <div *ngIf="this.mainDishMeals.length > 0" class="container1 me-3" style="display: inline-block;">
-                <button class="button btn fw-semibold">Main Dish</button>
+                <button class="button btn fw-semibold" (click)="scrollTo('main_dish')">Main Dish</button>
             </div>
             <div *ngIf="this.sideDishMeals.length > 0" class="container1 me-3" style="display: inline-block;">
-                <button class="button btn fw-semibold">Side Dish</button>
+                <button class="button btn fw-semibold" (click)="scrollTo('side_dish')">Side Dish</button>
             </div>
             <div *ngIf="this.dessertMeals.length > 0" class="container1" style="display: inline-block;">
-                <button class="button btn fw-semibold">Dessert</button>
+                <button class="button btn fw-semibold" (click)="scrollTo('dessert')">Dessert</button>
             </div>
         </div>
     </div>
 
 
-    <div *ngIf="this.mostPopularMeals.length > 0">
+    <div #most_popular *ngIf="this.mostPopularMeals.length > 0">
         <div class="text-center" style="
               margin-top: 2rem;
               font-family: Roboto;
@@ -94,13 +94,13 @@
               ">Most popular</div>
         <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
             @for (mealCard of this.mostPopularMeals; track mealCard) {
-            <app-meal-card [redirectToChiefPage]="redirectToChiefPage" class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card [redirectToChiefPage]="redirectToChiefPage" class="col-auto p-2" [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMealReview]="redirectToMealReview"
                 [redirectToMeal]="redirectToMeal"></app-meal-card>
             }
         </div>
     </div>
 
-    <div *ngIf="this.newArrivalsMeals.length > 0">
+    <div id="new_arrivals" #new_arrivals *ngIf="this.newArrivalsMeals.length > 0">
         <div class="text-center" style="
               margin-top: 2rem;
               font-family: Roboto;
@@ -112,13 +112,13 @@
               ">New Arrivals</div>
         <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
             @for (mealCard of this.newArrivalsMeals; track mealCard) {
-            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card class="col-auto p-2" [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMealReview]="redirectToMealReview"
                 [redirectToMeal]="redirectToMeal"></app-meal-card>
             }
         </div>
     </div>
 
-    <div *ngIf="this.mainDishMeals.length > 0">
+    <div id="main_dish" #main_dish *ngIf="this.mainDishMeals.length > 0">
         <div class="text-center" style="
               margin-top: 2rem;
               font-family: Roboto;
@@ -130,13 +130,13 @@
               ">Main Dish</div>
         <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
             @for (mealCard of this.mainDishMeals; track mealCard) {
-            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card class="col-auto p-2" [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMealReview]="redirectToMealReview"
                 [redirectToMeal]="redirectToMeal"></app-meal-card>
             }
         </div>
     </div>
 
-    <div *ngIf="this.sideDishMeals.length > 0">
+    <div id="side_dish" #side_dish *ngIf="this.sideDishMeals.length > 0">
         <div class="text-center" style="
               margin-top: 2rem;
               font-family: Roboto;
@@ -148,13 +148,13 @@
               ">Side Dish</div>
         <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
             @for (mealCard of this.sideDishMeals; track mealCard) {
-            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card class="col-auto p-2" [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMealReview]="redirectToMealReview"
                 [redirectToMeal]="redirectToMeal"></app-meal-card>
             }
         </div>
     </div>
 
-    <div *ngIf="this.dessertMeals.length > 0">
+    <div id="dessert" *ngIf="this.dessertMeals.length > 0">
         <div class="text-center" style="
               margin-top: 2rem;
               font-family: Roboto;
@@ -166,7 +166,7 @@
               ">Dessert</div>
         <div *ngIf="dataLoaded" class="row d-flex justify-content-center">
             @for (mealCard of this.dessertMeals; track mealCard) {
-            <app-meal-card class="col-auto p-0" [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card class="col-auto p-2" [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMealReview]="redirectToMealReview"
                 [redirectToMeal]="redirectToMeal"></app-meal-card>
             }
         </div>

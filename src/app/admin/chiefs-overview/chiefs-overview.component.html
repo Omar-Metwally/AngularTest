@@ -18,11 +18,6 @@
                         <div class="left-side">
                              <p><span class="money-number-span">{{getTotalRevenue() | number:'1.0-2'}} </span>EGP</p>
                         </div>
-                        <div class="right-side">
-                                <p>+15.03% <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.95488 6.10777L14.5 4.5L13.1198 10.1061L11.398 8.4532L8.62069 11.3463C8.52641 11.4445 8.39615 11.5 8.26 11.5C8.12385 11.5 7.99359 11.4445 7.89931 11.3463L5.86 9.22199L2.86069 12.3463C2.66946 12.5455 2.35294 12.5519 2.15373 12.3607C1.95453 12.1695 1.94807 11.8529 2.13931 11.6537L5.49931 8.15373C5.59359 8.05552 5.72385 8 5.86 8C5.99615 8 6.12641 8.05552 6.22069 8.15373L8.26 10.278L10.6766 7.76067L8.95488 6.10777Z" fill="#237A11"/>
-                    </svg></span></p>
-                        </div>
                     
                     </div>
                   
@@ -44,17 +39,7 @@
                     <p class="card-text">Profit Earned</p>
                     <div class="d-flex line-data">
                         <div class="left-side">
-                                                <p><span class="money-number-span">{{getTotalProfit() | number:'1.0-2'}} </span>star</p>
-                        </div>
-                        <div class="right-side">
-                            <p>+0.1%
-                                <span>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M8.95488 6.10777L14.5 4.5L13.1198 10.1061L11.398 8.4532L8.62069 11.3463C8.52641 11.4445 8.39615 11.5 8.26 11.5C8.12385 11.5 7.99359 11.4445 7.89931 11.3463L5.86 9.22199L2.86069 12.3463C2.66946 12.5455 2.35294 12.5519 2.15373 12.3607C1.95453 12.1695 1.94807 11.8529 2.13931 11.6537L5.49931 8.15373C5.59359 8.05552 5.72385 8 5.86 8C5.99615 8 6.12641 8.05552 6.22069 8.15373L8.26 10.278L10.6766 7.76067L8.95488 6.10777Z"
-                                            fill="#237A11" />
-                                    </svg></span>
-                            </p>
+                                                <p><span class="money-number-span">{{getTotalProfit() | number:'1.0-2'}} </span>EGP</p>
                         </div>
                     </div>
                     
@@ -74,13 +59,7 @@
                         <div class="left-side">
                             <p><span class="money-number-span">{{getTotalCost() | number:'1.0-2'}}</span> EGP</p>
                         </div>
-                        <div class="right-side">
-                            <p>+15.03% <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M8.95488 6.10777L14.5 4.5L13.1198 10.1061L11.398 8.4532L8.62069 11.3463C8.52641 11.4445 8.39615 11.5 8.26 11.5C8.12385 11.5 7.99359 11.4445 7.89931 11.3463L5.86 9.22199L2.86069 12.3463C2.66946 12.5455 2.35294 12.5519 2.15373 12.3607C1.95453 12.1695 1.94807 11.8529 2.13931 11.6537L5.49931 8.15373C5.59359 8.05552 5.72385 8 5.86 8C5.99615 8 6.12641 8.05552 6.22069 8.15373L8.26 10.278L10.6766 7.76067L8.95488 6.10777Z"
-                                            fill="#237A11" />
-                                    </svg></span></p>
-                        </div>
+
                     </div>
                     
                 </div>
@@ -103,7 +82,7 @@
         </thead>
         <!-- Table body -->
         <tbody>
-            <tr class="data-row"  *ngFor="let chief of this.chiefs">
+            <tr class="data-row"  *ngFor="let chief of this.chiefs" (click)="getChiefChart(chief.chiefID ?? '')">
                 <td>
                     <img style="width: 100px; height: 100px; background-color: #e3eae2; border-radius: 50%; object-fit: cover;"
                         [src]="chief.image ?? 'https://www.digitary.net/wp-content/uploads/2021/07/Generic-Profile-Image.png'"
@@ -118,3 +97,4 @@
         </tbody>
     </table>
 </section>
+<canvas id="ctx"></canvas>

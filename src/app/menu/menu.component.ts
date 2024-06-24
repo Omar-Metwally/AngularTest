@@ -252,10 +252,10 @@ export class MenuComponent implements OnInit {
         mealCategory: request.mealCategory || 0,
         createdDate: request.createdDate || '',
         rating: request.rating || 0,
-        reviewsCount: request.reviewCount || 0, // You need to provide the source for reviewsCount
+        reviewsCount: request.reviewCount || 0,
         mealCardOptions: request.getMealOptionsRequest?.map(option => ({
           mealOptionID: option.mealOptionID || '',
-          mealOptionSize: option.mealSizeOption || 0, // Assuming MealSizeOption is a number
+          mealOptionSize: option.mealSizeOption || 0,
           mealOptionImage: option.thumbnailImage || '',
           mealOptionPrice: option.price || 0,
           IsAvailable: option.isAvailable || false,

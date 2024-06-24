@@ -13,7 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Option } from 'src/app/shared/models/address/option';
 import { AddressService } from 'src/app/address/address.service';
 import { SelectInputComponent } from "../shared/select-input/select-input.component";
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperOrientation } from '@angular/cdk/stepper';
 import { SharedService } from '../shared/shared.service';
 import { OrderPost$Params } from '../api/fn/order/order-post';
 import { SafePipe } from '../safe-url.pipe';
@@ -25,6 +25,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderPlacedPopupComponent } from '../shared/order-placed-popup/order-placed-popup.component';
 import { User } from '../shared/models/account/user';
+import { Observable, map } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 
 
@@ -63,7 +65,12 @@ export class CartComponent implements OnInit {
     private snackBar: MatSnackBar,
     private cartService: CartService,
     private phoneValidator: PhoneValidator,
+    breakpointObserver: BreakpointObserver
   ) {
+    this.stepperOrientation = breakpointObserver
+    .observe('(min-width: 800px)')
+    .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+
     this.user = this.accountService.getCurrentUser() ?? {
       firstName: '',
       lastName: '',
@@ -116,6 +123,8 @@ export class CartComponent implements OnInit {
   PayOnline: PaymentOption = 0;
   DeliverNow: boolean = true;
   isShippingStepValid: boolean = false;
+  stepperOrientation: Observable<StepperOrientation>;
+
 
   items = ['First', 'Second', 'Third', 'Forth'];
 
@@ -224,6 +233,7 @@ export class CartComponent implements OnInit {
             paymentOption: this.PayOnline,
             phoneNumber: this.phone.value,
             promoCodeID: this.promoCodeInput.value,
+            timeOfDelivery: this.convertToApiTime(this.timeOfDeliveryStruct)
           }
         }
         this.orderService.orderPost(orderPost$Params).subscribe({

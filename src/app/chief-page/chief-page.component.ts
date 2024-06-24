@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { ChiefService } from '../api/services';
 import { ChiefGetChiefMealsGet$Params } from '../api/fn/chief/chief-get-chief-meals-get';
@@ -38,7 +38,9 @@ export class ChiefPageComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private accountService: AccountService,
-    private sharedService: SharedService){
+    private sharedService: SharedService,
+    private renderer: Renderer2,
+    private elementRef: ElementRef){
 
   }
   ngOnInit(): void {
@@ -57,7 +59,7 @@ export class ChiefPageComponent implements OnInit {
           rating: request.rating || 0,
           mealCategory: request.mealCategory || 0,
           createdDate: request.createdDate || '',
-          reviewsCount: 0,
+          reviewsCount: request.reviewCount || 0,
           mealCardOptions: request.getMealOptionsRequest?.map(option => ({
             mealOptionID: option.mealOptionID || '',
             mealOptionSize: option.mealSizeOption || 0,
@@ -111,6 +113,10 @@ export class ChiefPageComponent implements OnInit {
 
   redirectToChiefPage = (chiefID: string) => {
     this.router.navigate(['/chief-page', chiefID]);
+  }
+
+  redirectToMealReview = (mealID: string) => {
+    this.router.navigate(['/meal-review', mealID]);
   }
 
   addToCart = (mealOption: mealCardOption) => {
@@ -185,6 +191,15 @@ export class ChiefPageComponent implements OnInit {
         .slice(0, 4) ?? [];
       resolve();
     });
+  }
+
+  scrollTo(section: string) {
+    console.log(section)
+    const targetElement = this.elementRef.nativeElement.querySelector('#' + section);
+    if (targetElement) {
+      console.log(section)
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
 }

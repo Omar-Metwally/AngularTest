@@ -189,11 +189,11 @@
 }
 
 .line-data {
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
   position: relative;
   left: 38px;
-  padding-left: 15px;
+  padding-left: 29px;
   top: -71px;
 }
 
@@ -244,4 +244,8 @@
   left: 80px;
   top: -90px;
   color: #237A11;
+}
+
+tbody tr{
+  cursor: pointer;
 }

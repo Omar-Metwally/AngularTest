@@ -1,8 +1,6 @@
 /* tslint:disable */
-
-import { MealSizeOption } from "./meal-size-option";
-
 /* eslint-disable */
+import { MealSizeOption } from '../models/meal-size-option';
 export interface GetMealAnalysis {
   image?: string | null;
   mealID?: string;

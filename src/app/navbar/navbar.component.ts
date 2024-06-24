@@ -41,11 +41,11 @@ export class NavbarComponent {
 
   signup(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(SignupPopupComponent, {
-      width: 'min-content',
+      width: '500px',
       height: 'min-content',
-      minWidth: '25%',
+      minWidth: '300px',
       maxWidth: '100%',
-      maxHeight: '80%',
+      maxHeight: '100%',
       enterAnimationDuration,
       exitAnimationDuration,
     });

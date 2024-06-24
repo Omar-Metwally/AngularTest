@@ -1,4 +1,4 @@
-<div class="orders w-100 vh-10 mt-1" style="margin: 0; width: 95% !important; background-color:#FDFFFC">
+<div class="orders w-100 vh-10 mt-1">
     <div class="tab-content" id="pills-tabContent">
         <h1>My Orders</h1>
         <div class="page-orders d-flex">
@@ -92,7 +92,7 @@
                                                     </ng-container>
                                             </div>
                                         </td>
-                                        <td>{{ 4 }}</td>
+                                        <td>{{ item.expectedTimeOfDelivery }}</td>
                                         <td>{{ item.quantity }}</td>
                                         <td class="price-color">{{ item.totalAmount }} EGP
                                         </td>
@@ -141,7 +141,7 @@
                                                     </ng-container>
                                             </div>
                                         </td>
-                                        <td>{{ 4 }}</td>
+                                        <td>{{ item.expectedTimeOfDelivery }}</td>
                                         <td>{{ item.quantity }}</td>
                                         <td class="price-color">{{ item.totalAmount }} EGP
                                         </td>
@@ -188,7 +188,7 @@
                                                     </ng-container>
                                             </div>
                                         </td>
-                                        <td>{{ 4 }}</td>
+                                        <td>{{ item.expectedTimeOfDelivery }}</td>
                                         <td>{{ item.quantity }}</td>
                                         <td class="price-color">{{ item.totalAmount }} EGP</td>
                                         <td><button style="background-color: rgba(42, 145, 21, 1);"

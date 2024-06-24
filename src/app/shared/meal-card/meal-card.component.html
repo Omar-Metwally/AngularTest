@@ -1,4 +1,4 @@
-<div (click)="redirectToMeal($event, mealCardData.mealID)" class="card p-2" style="width: 18rem; margin: 15px; ">
+<div (click)="redirectToMeal($event, mealCardData.mealID)" class="card p-2" style="width: 18rem; margin-top: 15px; ">
   <div class="imd">
     <div class="card">
       <img id="foodImage" [src]="displayedImage" class="card-img-top bef" [alt]="mealCardData.title">
@@ -11,11 +11,13 @@
           </p>
         </div>
         <div class="card2">
-          <img style="object-fit: cover;" [src]="mealCardData.chiefImage" class="chef-img" width="50px" height="50px">
+          <img style="object-fit: cover;" [src]="mealCardData.chiefImage" class="chef-img">
         </div>
       </div>
-      <div (click)="redirectToMealReview(mealCardData.mealID)" class="d-flex justify-content-between" style="cursor: pointer;">
-        <p id="card-text" class="card-text mb-0"><span class="text-warning">&#9733;</span> <u>{{mealCardData.rating}}
+      <div class="d-flex justify-content-between" >
+        <p (click)="redirectToMealReview(mealCardData.mealID)" style="cursor: pointer;" id="card-text" class="card-text mb-0"><span class="text-warning">
+          <svg style="margin-bottom: 3px; margin-right: 3px;" width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.19154 0.568099C6.52167 -0.100821 7.47554 -0.100828 7.80567 0.568099L9.37767 3.75325L12.8927 4.26401C13.6309 4.37127 13.9256 5.27847 13.3915 5.79913L10.8479 8.2784L11.4484 11.7793C11.5745 12.5145 10.8028 13.0751 10.1425 12.728L6.99861 11.0751L3.85469 12.728C3.19443 13.0751 2.42273 12.5145 2.54883 11.7793L3.14927 8.2784L0.605781 5.79913C0.0716147 5.27847 0.366375 4.37127 1.10457 4.26401L4.61959 3.75325L6.19154 0.568099Z" fill="#FA8232"/></svg> 
+        </span> <u>{{mealCardData.rating}}
             ({{mealCardData.reviewsCount}})</u></p>
       </div>
       <div class="mt-4 button-container d-flex justify-content-start">

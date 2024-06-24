@@ -129,13 +129,16 @@ export class HomeComponent {
   // scrollLeft(scrollable: CdkScrollable) {
   //   scrollable.scrollTo({ left: (scrollable.measureScrollOffset('left') - scrollable.getElementRef().nativeElement.offsetWidth) });
   // }
+  redirectToMealReview = (mealID: string) => {
+    this.router.navigate(['/meal-review', mealID]);
+  }
 
   public scrollRight(): void {
-    this.mealCards.nativeElement.scrollTo({ left: (this.mealCards.nativeElement.scrollLeft + 150), behavior: 'smooth' });
+    this.mealCards.nativeElement.scrollTo({ left: (this.mealCards.nativeElement.scrollLeft + 200), behavior: 'smooth' });
   }
 
   public scrollLeft(): void {
-    this.mealCards.nativeElement.scrollTo({ left: (this.mealCards.nativeElement.scrollLeft - 150), behavior: 'smooth' });
+    this.mealCards.nativeElement.scrollTo({ left: (this.mealCards.nativeElement.scrollLeft - 200), behavior: 'smooth' });
   }
 
 }

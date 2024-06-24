@@ -207,7 +207,7 @@
         <app-select-input [optionSelected]="hello" class="mb-2" [control]="sortBy" type="text" placeholder="Sort By"
           label="Sort By" [options]="sortByOptions" icon="sort"></app-select-input>
         <div class="filterby mt-4 d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block">
-          <div style="border: 0.11rem #31AC18 solid; color: #31AC18; border-radius: 0.5rem; margin-bottom: 1rem;">
+          <div style="border: 0.11rem #31AC18 solid; color: #31AC18; border-radius: 0.5rem; margin-bottom: 1rem; background-color: white;">
             <p class="fw-semibold" style="text-align: left; font-size: 17px; padding-left: 1rem; padding-top: 1rem;">
               Filter By</p>
           </div>
@@ -265,8 +265,8 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
-      <div class="d-flex row justify-content-center gx-5">
+    <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9" id="food-types">
+      <div class="d-flex row justify-content-center gx-5" id="food-types-two">
         <!-- <div class="col box-style-option" (click)="this.style.setValue(0)">
           <img src="/assets/images/egyption-food.jpg">
           <div class="">Egyptian</div>
@@ -291,89 +291,28 @@
           <img src="/assets/images/asian-food.jpg">
           <div class="">Asian</div>
         </div> -->
-        <div *ngFor="let item of [0, 1, 2, 3, 4, 5]; let i = index" class="col box-style-option"
-          [class.active-box-style-option]="activeDivIndex === i" (click)="toggleBoxShadow($event, i)">
-          <img
-            [src]="'/assets/images/' + ['egyption-food.jpg', 'italian-food.jpg', 'moroccan-food.jpg', 'american-food.jpg', 'syrian-food.jpg', 'asian-food.jpg'][i]">
+        <div *ngFor="let item of [0, 1, 2, 3, 4, 5]; let i = index" class="col box-style-option" id="small-card" [class.active-box-style-option]="activeDivIndex === i" (click)="toggleBoxShadow($event, i)">
+          <img [src]="'/assets/images/' + ['egyption-food.jpg', 'italian-food.jpg', 'moroccan-food.jpg', 'american-food.jpg', 'syrian-food.jpg', 'asian-food.jpg'][i]">
           <div>{{['Egyptian', 'Italian', 'Moroccan', 'American', 'Syrian', 'Asian'][i]}}</div>
         </div>
 
-        <!-- <div class="col box-style-option" (click)="toggleBoxShadow($event)">
-          <img src="/assets/images/egyption-food.jpg">
-          <div>Egyptian</div>
-        </div>
-        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
-          <img src="/assets/images/italian-food.jpg">
-          <div>Italian</div>
-        </div>
-        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
-          <img src="/assets/images/moroccan-food.jpg">
-          <div>Moroccan</div>
-        </div>
-        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
-          <img src="/assets/images/american-food.jpg">
-          <div>American</div>
-        </div>
-        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
-          <img src="/assets/images/syrian-food.jpg">
-          <div>Syrian</div>
-        </div>
-        <div class="col box-style-option" (click)="toggleBoxShadow($event)">
-          <img src="/assets/images/asian-food.jpg">
-          <div>Asian</div>
-        </div> -->
-
-
-
-
-        <!-- <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/american.svg"
-            class="card-img-top" alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/indian.svg" class="card-img-top"
-            alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/latin-american.svg"
-            class="card-img-top" alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/chinese.svg" class="card-img-top"
-            alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/pakistania.svg"
-            class="card-img-top" alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/japanese.svg"
-            class="card-img-top" alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/egyption.svg"
-            class="card-img-top" alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/italian.svg" class="card-img-top"
-            alt="..."></div>
-        <div style="padding-left: 1rem; padding-right: 1rem;"><img src="/assets/images/maghrby.svg" class="card-img-top"
-            alt="..."></div> -->
       </div>
       <div infiniteScroll [infiniteScrollDistance]="250" [infiniteScrollThrottle]="100" (scrolled)="onScroll()"
         [scrollWindow]="true">
         <div class="text-center" style="
-        margin-top: 2rem;
-        font-family: Roboto;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 34px;
-        letter-spacing: 0em;
-        text-align: left;">
-          <span *ngIf="sortBy.value.id == '0'">
-            Our Most popular Dishes
-          </span>
-          <span *ngIf="sortBy.value.id == '1'">
-            Our New Arrivals
-          </span>
-          <span *ngIf="sortBy.value.id == '2'">
-            Price Ascending
-          </span>
-          <span *ngIf="sortBy.value.id == '3'">
-            Price Descending
-          </span>
-        </div>
-
-        <div @fadeIn class="row d-flex justify-content-center">
+              margin-top: 2rem;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 34px;
+              letter-spacing: 0em;
+              text-align: left;
+              ">Our Most popular Dishes</div>
+        <div @fadeIn class="row d-flex justify-content-center" id="card-small">
           @for (mealCard of mealsCard; track mealCard) {
-          <div class="col-auto p-0">
-            <app-meal-card [redirectToMealReview]="redirectToMealReview" [redirectToChiefPage]="redirectToChiefPage"
-              [mealCardData]="mealCard" [addToCart]="addToCart" [redirectToMeal]="redirectToMeal"></app-meal-card>
+          <div class="col-10 col-sm-7 col-md-6 col-lg-5 col-xl-5 col-xxl-4">
+            <app-meal-card [redirectToMealReview]="redirectToMealReview" [redirectToChiefPage]="redirectToChiefPage" [mealCardData]="mealCard" [addToCart]="addToCart"
+              [redirectToMeal]="redirectToMeal"></app-meal-card>
           </div>
           }
           <div *ngIf="isLoading"><img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"></div>

@@ -38,7 +38,7 @@ export class ProfileComponent {
     private endTimeValidator: EndTimeValidator,
     private chiefService: ChiefService,
     private sharedService: SharedService,
-    private router: Router) {
+    public router: Router) {
     this.upsertChiefDataForm = this.formBuilder.group({
       firstName: this.firstName,
       lastName: this.lastName,

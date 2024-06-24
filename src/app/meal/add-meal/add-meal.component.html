@@ -1,7 +1,7 @@
 <div class="row pt-4">
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
-            labelPosition="bottom">
+            labelPosition="bottom" style="background-color: #F8F9F8;">
             <mat-step [optional]="false" [completed]="isMealAdded" label="Dish Profile" state="dish">
                 <ng-template matStepContent>
                     <form [formGroup]="addMealForm" (ngSubmit)="mealForm()">
@@ -142,7 +142,7 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-start"
-                                                style="align-self: center; position: relative;"
+                                                style="align-self: center; position: relative; min-height: 30px;"
                                                 *ngFor="let sideDish of sideDishInputs; let i = index">
                                                 <mat-form-field *ngIf="chiefSideDishOption.length > 0"
                                                     appearance="outline" style="width: 65%;">
@@ -198,6 +198,13 @@
                                                         <mat-icon>close</mat-icon>
                                                     </button>
                                                 </div>
+                                            </div>
+                                            <div class="row d-flex justify-content-between">
+                                                <span class="col-auto">Meal Revenue:{{this.price.value}}</span>
+                                                <span class="col-auto">Meal Cost: {{calcTotalCost() | number:'1.0-2'}}</span>
+                                                <span class="col-auto">Site Cut: {{this.price.value * .2}}</span>
+                                                <span class="col-auto">Your Cut: {{this.price.value * .8}}</span>
+                                                <span class="col-auto">Profit: {{(this.price.value - calcTotalCost() - this.price.value * .2)}}</span>
                                             </div>
                                             <app-file-input [fileHandle]="fileHandle"
                                                 [control]="image"></app-file-input>

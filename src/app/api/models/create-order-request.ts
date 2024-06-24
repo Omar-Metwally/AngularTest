@@ -8,4 +8,5 @@ export interface CreateOrderRequest {
   paymentOption?: PaymentOption;
   phoneNumber?: string | null;
   promoCodeID?: string | null;
+  timeOfDelivery?: string | null;
 }

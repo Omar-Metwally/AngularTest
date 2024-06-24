@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
+            <mat-stepper style="background-color: #f8f9f8;" class="example-stepper" [orientation]="(stepperOrientation | async)!" [linear]="true"
                 labelPosition="bottom">
                 <mat-step [optional]="true" [completed]="isSideDishAdded" label="Dish Profile" state="dish">
                     <ng-template matStepContent>
@@ -37,7 +37,7 @@
                                         font-size: 24px;
                                         font-weight: 700;
                                         letter-spacing: 0em;" *ngIf="!isSideDishAdded">Add
-                                            Meal</button>
+                                            Side Dish</button>
                                         <button type="submit" style="width:  306px;
                                         height:  56px;
                                         padding: 8px 40px 8px 40px;
@@ -51,7 +51,7 @@
                                         font-weight: 700;
                                         letter-spacing: 0em;" class="btn btn-success" matStepperNext
                                             *ngIf="isSideDishAdded">Edit
-                                            Meal</button>
+                                            Side Dish</button>
                                     </div>
                                     <h6 class="fw-bold">Copyright &copy; 2024 <span style="color: green;">Ta'am Beit</span> All rights reserved</h6>
                                 </div>

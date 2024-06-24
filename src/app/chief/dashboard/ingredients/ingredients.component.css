@@ -10,4 +10,6 @@
     border-style: none;
     width: 40%;
     aspect-ratio: 424 / 51;
+    min-width: 150px;
+    min-height: 40px;
 }

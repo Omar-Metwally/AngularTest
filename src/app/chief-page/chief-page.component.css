@@ -5,9 +5,12 @@
 
 }
 
+.container{
+    background: none !important;
+}
+
 .profile {
     position: relative;
-    background-image: url("/assets/images/chef-cover.svg");
     height: 350px;
     width: 100%;
     margin-bottom: 30px;
@@ -107,24 +110,22 @@
 .container .button {
     padding-top: .5rem;
     padding-bottom: .5rem;
+    min-width: 100px;
     width: 14rem;
     border-radius: 10px;
     background-color: #FDFFFC;
     color: #322F2F;
     font-family: Roboto;
-    font-size: 1.3rem;
+    font-size: 18px;
+    font-weight: 500;
     text-align: center;
 }
 
 .container .button:active {
     padding-top: .5rem;
     padding-bottom: .5rem;
-    width: 14rem;
-    border-radius: 10px;
     background-color: #FDFFFC;
     color: #322F2F;
-    font-family: Roboto;
-    font-size: 1.3rem;
     text-align: center;
 }
 
@@ -221,7 +222,7 @@
     }
 
     .boxs {
-        margin-left: 2.2rem;
+        /* margin-left: 2.2rem; */
         justify-content: center;
     }
 
@@ -241,87 +242,3 @@
 
 }
 
-@media screen and (max-width:650px) {
-
-    .online {
-        margin-top: 5rem;
-    }
-
-    .boxs {
-        margin-left: 2.2rem;
-        justify-content: center;
-    }
-
-    .container .button {
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        width: 4rem;
-        border-radius: 10px;
-        background-color: #FDFFFC;
-        color: #322F2F;
-        font-family: Roboto;
-        font-size: .53rem;
-        text-align: center;
-    }
-
-}
-
-@media screen and (max-width:536px) {
-
-    .online {
-        margin-top: 5rem;
-    }
-
-    .boxs {
-        margin-left: 1rem;
-        justify-content: center;
-    }
-
-    .container .box {
-        height: 90px;
-        font-size: .7rem;
-    }
-
-    .container .button {
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        width: 4rem;
-        border-radius: 10px;
-        background-color: #FDFFFC;
-        color: #322F2F;
-        font-family: Roboto;
-        font-size: .350rem;
-        text-align: center;
-    }
-
-}
-
-@media screen and (max-width:450px) {
-
-    .online {
-        margin-top: 5rem;
-    }
-
-    .boxs {
-        margin-left: 1rem;
-        justify-content: center;
-    }
-
-    .container .box {
-        height: 90px;
-        font-size: .7rem;
-    }
-
-    .container .button {
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        width: 3.2rem;
-        border-radius: 10px;
-        background-color: #FDFFFC;
-        color: #322F2F;
-        font-family: Roboto;
-        font-size: .350rem;
-        text-align: center;
-    }
-
-}

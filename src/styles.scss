@@ -102,6 +102,10 @@ $my-app-theme: mat.define-light-theme(
     --box-shadow: 0 .3rem 0.3rem rgba(0, 0, 0, 0.1);
 }
 
+.card{
+  background-color: inherit;
+}
+
 .card1 {
     display: flex;
     flex-direction: column;
@@ -131,6 +135,15 @@ $my-app-theme: mat.define-light-theme(
 
 body {
   overflow-x: hidden;
+  background: #F8F9F8;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.container{
+  background-color: #F8F9F8;
 }
 
 .card1 .card-body .sign {
@@ -226,7 +239,9 @@ body {
     }
   }
 }
-
+html{
+  overflow-x: hidden;
+}
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, [dir=ltr] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before { 
   border-top-width: 4px !important;
   border-top-color: #5ABD46;
@@ -264,7 +279,39 @@ body {
 .ngb-tp .ngb-tp-input-container .btn-link {
   color: #31AC18 !important;
 }
-// .mat-mdc-dialog-container .mdc-dialog__surface {
-//   background-color: transparent !important;
-//   box-shadow: none !important;
-//   }
+
+.primary-btn{
+  font-family: Roboto;
+  border-radius: 10px;
+  border: none;
+  background-color: #31AC18;
+  color: #F8F9F8;
+}
+.primary-btn:active {
+  animation: glow 0.3s ease-out; /* Add glow animation when button is pressed */
+}
+.secondary-btn {
+  font-family: Roboto;
+  border-radius: 10px;
+  color: #31AC18;
+  background-color: #F8F9F8;
+  border: 1px solid #2A9115;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.secondary-btn:hover {
+  background-color: #31AC18;
+  color: #F8F9F8;
+}
+.secondary-btn:active {
+  animation: glow 0.3s ease-out; /* Add glow animation when button is pressed */
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px #31AC18; /* Start with a small shadow */
+  }
+  100% {
+    box-shadow: 0 0 10px #31AC18; /* End with a bigger shadow */
+  }
+}

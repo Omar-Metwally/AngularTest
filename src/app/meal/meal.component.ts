@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { MealsService } from '../api/services/meals.service';
 import { MealsMealIdGet$Params } from '../api/fn/meals/meals-meal-id-get';
@@ -11,18 +11,26 @@ import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinn
 import { environment } from 'src/environments/environment';
 import { mealOption, mealSideDishOption } from '../shared/models/meal/mealOption';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { AccountService } from '../account/account.service';
 import { GetCartItemRequest, MealCategory, MealSizeOption, MealSpiceLevel, MealStyle } from '../api/models';
 import { MatRadioModule } from '@angular/material/radio';
-import { mealSideDish } from '../shared/meal-card/meal-card';
+import { mealCard, mealCardOption, mealSideDish } from '../shared/meal-card/meal-card';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { NgbRating } from '@ng-bootstrap/ng-bootstrap';
+import { MealsGetSimilarMealsGet$Params } from '../api/fn/meals/meals-get-similar-meals-get';
+import { MealCardComponent } from "../shared/meal-card/meal-card.component";
+import { MealChoicePopupComponent } from '../shared/meal-choice-popup/meal-choice-popup.component';
 
 interface Meal1{
   mealID: string;
+  chiefID: string;
+  chiefOrderCount: number;
+  chiefDescription: string;
+  chiefName: string;
+  reviewCount: number;
   title: string;
   description: string;
   rating: number;
@@ -51,8 +59,9 @@ interface MealOption {
 
 }
 interface MealSideDish{
-  mealSideDishID: string
-  sideDishOptions: Array<MealSideDishOption>
+  mealSideDishID: string;
+  isFree: boolean;
+  sideDishOptions: Array<MealSideDishOption>;
 }
 interface MealSideDishOption{
   sideDishOptionID: string;
@@ -62,22 +71,29 @@ interface MealSideDishOption{
 }
 
 @Component({
-  selector: 'app-meal',
-  standalone: true,
-  imports: [CommonModule, SharedModule, MatRadioModule, MatDividerModule,FormsModule, NgbRating],
-  templateUrl: './meal.component.html',
-  styleUrl: './meal.component.css'
+    selector: 'app-meal',
+    standalone: true,
+    templateUrl: './meal.component.html',
+    styleUrl: './meal.component.css',
+    imports: [CommonModule, SharedModule, MatRadioModule, MatDividerModule, FormsModule, NgbRating, MealCardComponent]
 })
 export class MealComponent implements OnInit {
 
   @Input() mealID: string = ''
-  categoryOptions: Option[] = [];
+  @ViewChild('mealCards', { read: ElementRef })
+  public mealCards!: ElementRef<any>;  categoryOptions: Option[] = [];
   spiceLevelOptions: Option[] = [];
   styleOptions: Option[] = [];
   tagsOptions: Option[] = [];
+  mealsCard: mealCard[] = []
   meal: Meal1 = {
+    chiefOrderCount: 0,
+    reviewCount: 0,
     title: '',
+    chiefID: '',
     mealID: '',
+    chiefDescription: '',
+    chiefName: '',
     description: '',
     rating: 0,
     mealOptions: [],
@@ -105,7 +121,8 @@ export class MealComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private route: ActivatedRoute
   ) {
     this.categoryOptions.push({ id: '0', name: 'Main Dish' }, { id: '1', name: 'Side Dish' }, { id: '2', name: 'Appetizer' });
     this.spiceLevelOptions.push({ id: '0', name: 'Not Spicy' }, { id: '1', name: 'Mild' }, { id: '2', name: 'Medium' }, { id: '3', name: 'Hot' }, { id: '4', name: 'Very Hot' });
@@ -135,6 +152,71 @@ export class MealComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      this.mealID = params['mealID'];
+      this.getMeal()
+    });
+    
+    // const mealsMealIdGetParams: MealsMealIdGet$Params = { MealID: this.mealID }
+    // let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
+    //   panelClass: '',
+    //   disableClose: true
+    // });
+    // this.meal.mealOptions.fill(this.currentMealOption)
+    // // console.log(this.meal)
+    // this.mealsService.mealsMealIdGet(mealsMealIdGetParams).subscribe({
+    //   next: (body) => {
+    //     body.getMealOptionsRequest = body.getMealOptionsRequest?.sort((a, b) => (a.mealSizeOption ?? 0) - (b.mealSizeOption ?? 0)) || []
+    //     dialogRef.close()
+    //     this.loadMeal(body)
+    //     const request: MealsGetSimilarMealsGet$Params = {
+    //       MealID: body.mealID ?? ''
+    //     }
+    //     this.mealsService.mealsGetSimilarMealsGet(request).subscribe({
+    //       next: response => this.mealsCard = [...this.mealsCard, ...response.map(request => ({
+    //         mealID: request.mealID || '',
+    //         chiefID: request.chiefID || '',
+    //         title: request.title || '',
+    //         chiefName: request.chiefName || '',
+    //         chiefImage: request.chiefImage || '',
+    //         mealCategory: request.mealCategory || 0,
+    //         createdDate: request.createdDate || '',
+    //         rating: request.rating || 0,
+    //         reviewsCount: request.reviewCount || 0,
+    //         mealCardOptions: request.getMealOptionsRequest?.map(option => ({
+    //           mealOptionID: option.mealOptionID || '',
+    //           mealOptionSize: option.mealSizeOption || 0,
+    //           mealOptionImage: option.thumbnailImage || '',
+    //           mealOptionPrice: option.price || 0,
+    //           IsAvailable: option.isAvailable || false,
+    //           mealSideDishes: option.getMealSideDishesRequest?.map(mealSideDish => ({
+    //             mealSideDishID: mealSideDish.mealSideDishID || '',
+    //             isFree: mealSideDish.isFree || false,
+    //             isTopping: mealSideDish.isTopping || false,
+    //             mealSideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map(sideDishOption => ({
+    //               sideDishID: sideDishOption.sideDishID || '',
+    //               sideDishSizeOption: sideDishOption.sideDishSizeOption || 0,
+    //               name: sideDishOption.name || '',
+    //               price: sideDishOption.price || 0,
+    //               quantity: sideDishOption.quantity || 0
+    //             })).sort((a, b) => a.sideDishSizeOption - b.sideDishSizeOption) || []
+    //           })) || []
+    
+    //         })).sort((a, b) => a.mealOptionSize - b.mealOptionSize) || []
+    //       }))],
+    //       error: (error => {
+
+    //       })
+    //     });
+    //   },
+    //   error: _ => {
+    //     dialogRef.close()
+    //     this.router.navigate(['/not-found']);
+    //   }
+    // })
+  }
+
+  getMeal(){
     const mealsMealIdGetParams: MealsMealIdGet$Params = { MealID: this.mealID }
     let dialogRef: MatDialogRef<LoadingSpinnerComponent> = this.dialog.open(LoadingSpinnerComponent, {
       panelClass: '',
@@ -144,14 +226,57 @@ export class MealComponent implements OnInit {
     // console.log(this.meal)
     this.mealsService.mealsMealIdGet(mealsMealIdGetParams).subscribe({
       next: (body) => {
+        body.getMealOptionsRequest = body.getMealOptionsRequest?.sort((a, b) => (a.mealSizeOption ?? 0) - (b.mealSizeOption ?? 0)) || []
         dialogRef.close()
         this.loadMeal(body)
+        const request: MealsGetSimilarMealsGet$Params = {
+          MealID: body.mealID ?? ''
+        }
+        this.mealsService.mealsGetSimilarMealsGet(request).subscribe({
+          next: response => {
+            this.mealsCard = []
+            this.mealsCard = [...this.mealsCard, ...response.map(request => ({
+            mealID: request.mealID || '',
+            chiefID: request.chiefID || '',
+            title: request.title || '',
+            chiefName: request.chiefName || '',
+            chiefImage: request.chiefImage || '',
+            mealCategory: request.mealCategory || 0,
+            createdDate: request.createdDate || '',
+            rating: request.rating || 0,
+            reviewsCount: request.reviewCount || 0,
+            mealCardOptions: request.getMealOptionsRequest?.map(option => ({
+              mealOptionID: option.mealOptionID || '',
+              mealOptionSize: option.mealSizeOption || 0,
+              mealOptionImage: option.thumbnailImage || '',
+              mealOptionPrice: option.price || 0,
+              IsAvailable: option.isAvailable || false,
+              mealSideDishes: option.getMealSideDishesRequest?.map(mealSideDish => ({
+                mealSideDishID: mealSideDish.mealSideDishID || '',
+                isFree: mealSideDish.isFree || false,
+                isTopping: mealSideDish.isTopping || false,
+                mealSideDishOptions: mealSideDish.getMealSideDishOptionsRequest?.map(sideDishOption => ({
+                  sideDishID: sideDishOption.sideDishID || '',
+                  sideDishSizeOption: sideDishOption.sideDishSizeOption || 0,
+                  name: sideDishOption.name || '',
+                  price: sideDishOption.price || 0,
+                  quantity: sideDishOption.quantity || 0
+                })).sort((a, b) => a.sideDishSizeOption - b.sideDishSizeOption) || []
+              })) || []
+    
+            })).sort((a, b) => a.mealOptionSize - b.mealOptionSize) || []
+          }))]},
+          error: (error => {
+
+          })
+        });
       },
       error: _ => {
         dialogRef.close()
         this.router.navigate(['/not-found']);
       }
     })
+
   }
 
   addToCart(mealOptionID: string) {
@@ -161,11 +286,10 @@ export class MealComponent implements OnInit {
 
   changeDisplayedOption(mealOptionIndex: number) {
     this.currentMealOption = this.meal.mealOptions[mealOptionIndex] ?? this.meal.mealOptions[0]
-    this.displayedImage = `${environment.appUrl}images/meal/FullScreen_${this.currentMealOption.mealOptionID}.jpg`
+    this.displayedImage = this.currentMealOption.image
     this.displayedPrice = this.currentMealOption.price;
     this.currentQuantity = 1;
     this.currentMealOptionID = this.currentMealOption.mealOptionID;
-    console.log(this.currentMealOption)
   }
 
   // loadMeal(getMealRequest: GetMealRequest) {
@@ -210,6 +334,11 @@ export class MealComponent implements OnInit {
     this.meal = {
       title: getMealRequest.title ?? '',
       mealID: getMealRequest.mealID ?? '',
+      chiefID: getMealRequest.chiefID ?? '',
+      chiefDescription: getMealRequest.chiefDescription ?? '',
+      chiefOrderCount: getMealRequest.chiefOrderCount ?? 0,
+      reviewCount: getMealRequest.reviewCount ?? 0,
+      chiefName: getMealRequest.chiefName ?? '',
       rating: getMealRequest.rating ?? 0,
       mealCategory: getMealRequest.mealCategory,
       mealSpiceLevel: getMealRequest.mealSpiceLevel,
@@ -224,6 +353,7 @@ export class MealComponent implements OnInit {
       mealOptions: [],
       mealReviews: []
     }
+    console.log(getMealRequest.getMealReviewsRequest)
     getMealRequest.getMealOptionsRequest?.forEach(mealOption => {
       let sideDishes: MealSideDish[] = [];
       let toppings: MealSideDish[] = [];
@@ -231,6 +361,7 @@ export class MealComponent implements OnInit {
         if(sideDish.isTopping){
           toppings.push({
             mealSideDishID: sideDish.mealSideDishID ?? '',
+            isFree: sideDish.isFree ?? false,
             sideDishOptions: sideDish.getMealSideDishOptionsRequest?.map(sideDishOption => {
               return {
                 sideDishOptionID: sideDishOption.sideDishID ?? '',
@@ -244,6 +375,7 @@ export class MealComponent implements OnInit {
         else{
           sideDishes.push({
             mealSideDishID: sideDish.mealSideDishID ?? '',
+            isFree: sideDish.isFree ?? false,
             sideDishOptions: sideDish.getMealSideDishOptionsRequest?.map(sideDishOption => {
               return {
                 sideDishOptionID: sideDishOption.sideDishID ?? '',
@@ -263,19 +395,20 @@ export class MealComponent implements OnInit {
         image: mealOption.fullScreenImage ?? "",
         mealSideDishes: sideDishes,
         mealToppings: toppings
-      }),
-      getMealRequest.getMealReviewsRequest?.forEach(mealReview => {
-        this.meal.mealReviews.push({
-          title: mealReview.reviewText ?? '',
-          customerName: mealReview.customerName ?? '',
-          customerRating: mealReview.rating ?? 0,
-          date: mealReview.reviewDate ?? ''
-          
-        })
       })
 
     })
-    this.displayedImage = `${environment.appUrl}images/meal/FullScreen_${this.meal.mealOptions[0].mealOptionID}.jpg`
+    getMealRequest.getMealReviewsRequest?.forEach(mealReview => {
+      this.meal.mealReviews.push({
+        title: mealReview.reviewText ?? '',
+        customerName: mealReview.customerName ?? '',
+        customerRating: mealReview.rating ?? 0,
+        date: mealReview.reviewDate ?? ''
+        
+      })
+    })
+
+    this.displayedImage = this.meal.mealOptions[0].image
     this.currentMealOption = this.meal.mealOptions[0]
     this.displayedPrice = this.meal.mealOptions[0].price
     this.currentMealOptionID = this.meal.mealOptions[0].mealOptionID
@@ -304,4 +437,46 @@ export class MealComponent implements OnInit {
   redirectToMealReview = (mealID: string) => {
     this.router.navigate(['/meal-review', mealID]);
   }
+
+  redirectToChiefPage = (chiefID: string) => {
+    this.router.navigate(['/chief-page', chiefID]);
+  }
+
+  redirectToMeal = (event: Event, mealID: string) => {
+    if ((event.target as HTMLElement).tagName === 'DIV') {
+      this.router.navigate(['/meal', mealID]);
+    }
+  }
+
+  addToCart2 = (mealOption: mealCardOption) => {
+    if(mealOption.mealSideDishes.length > 0){
+      const dialogRef = this.dialog.open(MealChoicePopupComponent, {
+        width: 'min-content',
+        height: 'min-content',
+        minWidth: 'min-content',
+        maxWidth: '100%',
+        maxHeight: '80%',
+        enterAnimationDuration: '500ms',
+        exitAnimationDuration: '250ms',
+        data: {
+          mealOptionID: mealOption.mealOptionID,
+          mealOptionPrice: mealOption.mealOptionPrice,
+          mealSideDishes: mealOption.mealSideDishes,
+        }
+      });
+    }
+    else{
+      const cartItem: GetCartItemRequest = { mealOptionID: mealOption.mealOptionID, quantity: 1 }
+      this.accountService.addItemToCart(cartItem)
+    }
+  }
+
+  public scrollRight(): void {
+    this.mealCards.nativeElement.scrollTo({ left: (this.mealCards.nativeElement.scrollLeft + 200), behavior: 'smooth' });
+  }
+
+  public scrollLeft(): void {
+    this.mealCards.nativeElement.scrollTo({ left: (this.mealCards.nativeElement.scrollLeft - 200), behavior: 'smooth' });
+  }
+  
 }

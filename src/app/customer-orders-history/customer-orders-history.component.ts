@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { OrderService } from '../api/services';
-import { GetOrderItem, GetOrderRequest } from '../api/models';
+import { GetOrderItem, GetOrderRequest, OrderStatus } from '../api/models';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ReviewMealComponent } from '../review-meal/review-meal.component';
@@ -67,6 +67,21 @@ export class CustomerOrdersHistoryComponent {
       document.body.innerHTML = originalContents;
     } else {
       console.error("Element with ID '" + orderID + "' not found.");
+    }
+  }
+
+  getOrderStatusString(index: OrderStatus): string{
+    switch(index){
+      case 0:
+        return 'Pending Confirm'
+      case 2:
+        return 'On Fire'
+      case 3:
+        return 'Delivered'
+      case 4:
+        return 'Cancelled'
+      default:
+        return 'unknown'
     }
   }
 }

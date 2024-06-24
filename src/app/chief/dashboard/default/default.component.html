@@ -1,4 +1,4 @@
-<div class="main-content my-3 shadow">
+<div class="main-content my-3 shadow" style="background-color: #FDFFFC;">
   <div class="w-100 pt-0 pb-2 row d-flex justify-content-between">
     <div class="w-100 pt-4 pb-2 row d-flex justify-content-between">
       <div class="two-button col-md-6 d-flex">
@@ -47,7 +47,6 @@
                 <th scope="col">Spice level</th>
                 <th scope="col">Available</th>
                 <!-- <th scope="col">quantity</th> -->
-                <th scope="col">Total sold</th>
                 <th scope="col">Price</th>
                 <th scope="col"></th>
               </tr>
@@ -58,11 +57,10 @@
                 <td> <img [src]="meal.selectedImage" style="width: 94px; height: 78px;" alt="Meal Image">
                 </td>
                 <td>{{ meal.title}}</td>
-                <td>{{ meal.category }}</td>
-                <td>{{ meal.spiceLevel }}</td>
+                <td>{{getCategory(meal.category)}}</td>
+                <td>{{ getSpiceLevel(meal.spiceLevel) }}</td>
                 <td>{{ meal.isAvailable }}</td>
 
-                <td>{{ totalSold}}</td>
                 <td style="color: #31AC18;">
                   <div *ngIf="meal.selectedSize === undefined ">
 

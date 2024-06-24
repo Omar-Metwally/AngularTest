@@ -1,6 +1,7 @@
 {
-    "input": "http://localhost:5166/swagger/v1/swagger.json",
+    "input": "https://taambeit.runasp.net/swagger/v1/swagger.json",
     "output": "src/app/api",
     "skipJsonSuffix" : true,
-    "removeStaleFiles": true
+    "removeStaleFiles": true,
+    "apiService":  "https://taambeit.runasp.net"
 }

@@ -27,6 +27,7 @@ export { GetCartItemRequest } from './models/get-cart-item-request';
 export { GetCartMealRequest } from './models/get-cart-meal-request';
 export { GetCartRequest } from './models/get-cart-request';
 export { GetCartRequestCartResult } from './models/get-cart-request-cart-result';
+export { GetChartData } from './models/get-chart-data';
 export { GetChiefAnalyticsRequest } from './models/get-chief-analytics-request';
 export { GetChiefIngredientRequest } from './models/get-chief-ingredient-request';
 export { GetChiefMealsRequest } from './models/get-chief-meals-request';

@@ -18,8 +18,10 @@ export class MealReviewComponent implements OnInit {
   @Input() mealID: string | null = ''
   mealRating : number = 0
   reviews: GetMealReviewsRequest = {
-
   };
+  totalReviews: number = 0;
+  fiveStartCount = 0
+
   constructor(private mealReview: MealReviewService) {
   }
   ngOnInit(): void {
@@ -42,6 +44,17 @@ export class MealReviewComponent implements OnInit {
     let totalRating = 0;
     let totalCount = 0;
   
+ 
+    // khaled
+    // return (
+    //   (reviews.fiveStarCount ?? 0) +
+    //   (reviews.fourStarCount ?? 0) +
+    //   (reviews.threeStarCount ?? 0) +
+    //   (reviews.twoStarCount ?? 0) +
+    //   (reviews.oneStarCount ?? 0)
+    // );
+
+
     // Sum up the total rating based on the count of each star rating
     if (ratings.fiveStarCount !== undefined) {
       totalRating += 5 * ratings.fiveStarCount;

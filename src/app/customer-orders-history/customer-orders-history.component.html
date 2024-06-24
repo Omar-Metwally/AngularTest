@@ -24,7 +24,7 @@
                         </button>
                     </div>
                 </div>
-                <div *ngFor="let orderItem of order.getOrderItems" class="d-flex justify-content-between"
+                <div *ngFor="let orderItem of order.getOrderItems" class="row d-flex justify-content-between"
                     style="padding-top: 12px;">
                     <div class="col d-flex">
                         <img class="col"
@@ -40,6 +40,7 @@
                                     <span *ngIf="!itemOption.isFree">+({{ itemOption.pricePerUnit }})</span>
                                 </div>
                             </div>
+                            <div class="order-item-side-dish">{{getOrderStatusString(orderItem.orderStatus ?? 0)}}</div>
                         </div>
                     </div>
                     <div class="col-auto">

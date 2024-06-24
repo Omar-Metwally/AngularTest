@@ -1,6 +1,9 @@
 body{
     margin-top:20px;
-    background-color: #f1f3f7;
+}
+
+.container{
+    background: #F8F9F8;
 }
 
 #avatar {
@@ -140,12 +143,13 @@ td , th{
     height: 48px;
 }
 .custom-search-botton {
+    width: 83px;
     position: absolute;
     right: 0px; 
     top: 0px;
     bottom: 2px;
     border: 0;
-    background: #31AC18;
+    background: #2A9115;
     color: #fff;
     outline: none;
     margin: 0;
@@ -355,6 +359,21 @@ box-shadow: 0 0 0 1px rgb(0,0,0,0.1),
     background: rgba(253, 255, 252, 1);
     border-radius: 10px;
   }
-  /* ::ng-depp .mdc-label{
-    display: contents !important;
-  } */
+  @media screen and (min-width: 992px) {
+    .ps-4 {
+      padding-left: 1.5rem !important;
+    }
+  }
+  
+  /* Styles for screens narrower than 992px */
+  @media screen and (max-width: 991px) {
+    .ps-4 {
+        padding-left: calc(var(--bs-gutter-x) * .5) !important;
+    }
+    .ps-3{
+        padding-left: 0px !important;
+    }
+    .pe-3{
+        padding-right: 0px !important;
+    }
+  }

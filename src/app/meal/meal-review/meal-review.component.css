@@ -20,18 +20,7 @@ cursor: pointer;
 .container1{
 padding-left:15%;
 }
-
-.side {
-  right:0%;
-  width: 15%;
-  
-}
-
-.middle {
-  margin-top:20px;
-  float: left;
-  width: 70%;
-}
+ 
 
 .bar-container1 {
   width: 126px;
@@ -90,3 +79,68 @@ i {
 .filled.low {
   color: rgba(250, 130, 50, 1);
 }
+
+
+
+
+
+
+/* CSS for star rating bars and containers */
+.side {
+  right: 0%;
+  width: 15%;
+}
+
+.middle {
+  margin-top: 20px;
+  float: left;
+  width: 70%;
+  /* position: relative; */
+
+  top: -8px;
+  /* left: -15px; */
+  position: relative;
+  left: -25px;
+}
+
+/* Add the "20 Reviews" text after each bar container */
+.bar-container1::after
+{
+  font-size: 0.9rem;
+  color: #6c757d; /* Adjust color as needed */
+  position: absolute;
+  /* left: 130px;
+  top: -6px;  */
+  left: 143px;
+  top: -12px;
+}
+.bar-container2::after{
+  font-size: 0.9rem;
+  color: #6c757d; /* Adjust color as needed */
+  position: absolute;
+  left: 108px;
+  top: -12px;
+}
+.bar-container3::after{
+  font-size: 0.9rem;
+  color: #6c757d; /* Adjust color as needed */
+  position: absolute;
+  left: 80px;
+  top: -10px;
+}
+.bar-container4::after{
+  font-size: 0.9rem;
+  color: #6c757d; /* Adjust color as needed */
+  position: absolute;
+  left: 50px;
+  top: -12px;
+}
+.bar-container5::after{
+  font-size: 0.9rem;
+  color: #6c757d; /* Adjust color as needed */
+  position: absolute;
+  left: 27px;
+    top: -10px;
+}
+
+

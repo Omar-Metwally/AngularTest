@@ -1,7 +1,7 @@
-<div class="container">
-  <div class="landing">
-    <div class="container">
-      <div class="container mainpage">
+<div class="">
+  <!-- <div class="landing">
+    <div class="">
+      <div class=" mainpage">
         <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-3 shadow-lg"
           style="background-image: url('/assets/images/landing-page-main.jpg');   background-position: center;   background-repeat: no-repeat;">
           <div class="d-flex flex-column h-200 p-5 pb-6 text-white text-shadow-2 text-center">
@@ -14,10 +14,19 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div class="hero-image">
+    <div class="hero-text">
+      <h1>Flavors from Home,<br>Delivered to Your Door.</h1>
+      <p>Healthy, high quality meals made with love by local chefs in your community.</p>
+      <div class="find-meals">
+        <a class="nav-link ps-3 pe-3 ms-lg-2 btn" (click)="redirectToMenu()">Find Meals</a>
+      </div>
+    </div>
   </div>
   <div class="landing-2">
     <div class="container">
-      <h1 class="display-6 lh-1 fw-bold lh-sm">Our most popular meals</h1>
+      <h1 class="display-6">Our most popular meals</h1>
       <p>Get a glimpse of our different chefs and cuisines</p>
       <div class="d-flex flex-row-reverse mb-2">
         <button class="button ms-2" (click)="redirectToMenu()">View All Dishes</button>
@@ -29,9 +38,8 @@
         </button>
       </div>
       <div class="overflow-hidden" #mealCards style="display: flex; overflow-x: auto;">
-        <!-- <app-meal-card></app-meal-card> -->
         @for (mealCard of mealsCard; track mealCard) {
-            <app-meal-card [redirectToChiefPage]="redirectToChiefPage" [mealCardData]="mealCard" [addToCart]="addToCart"
+            <app-meal-card class="p-2" [redirectToChiefPage]="redirectToChiefPage" [redirectToMealReview]="redirectToMealReview" [mealCardData]="mealCard" [addToCart]="addToCart"
               [redirectToMeal]="redirectToMeal"></app-meal-card>
           }
       </div>
@@ -43,7 +51,7 @@
 
   <div class="landing-4">
     <div class="container">
-      <h2 class="display-6 lh-1 fw-bold lh-sm">How it Works</h2>
+      <h1 class="display-6 lh-1 fw-bold lh-sm">How it Works</h1>
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card">
@@ -59,7 +67,7 @@
           <div class="card">
             <img src="/assets/images/chef-cooking.svg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h1 class="card-title">Chef prepares</h1>
+              <h3 class="card-title">Chef prepares</h3>
               <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
                 content. This content is a little bit longer.</p>
             </div>
@@ -89,7 +97,7 @@
     </div>
   </div>
 
-  <div class="landing-5">
+  <!-- <div class="landing-5">
     <div class="container">
       <h3 class="display-6 lh-1 fw-bold">Don’t hear from us </h3>
       <h1 class="display-6 lh-1 fw-bold">Hear from them</h1>
@@ -183,7 +191,7 @@
         </div>
       </div>
     </ng-template>
-  </ngb-carousel>
+  </ngb-carousel> -->
 </div>
 
 <!--<div class="landing-6">

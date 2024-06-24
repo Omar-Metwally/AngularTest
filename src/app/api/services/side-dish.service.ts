@@ -24,6 +24,7 @@ import { sideDishSideDishIdGet$Plain } from '../fn/side-dish/side-dish-side-dish
 import { SideDishSideDishIdGet$Plain$Params } from '../fn/side-dish/side-dish-side-dish-id-get-plain';
 import { sideDishUpdateSideDishPut } from '../fn/side-dish/side-dish-update-side-dish-put';
 import { SideDishUpdateSideDishPut$Params } from '../fn/side-dish/side-dish-update-side-dish-put';
+import { SideDishDelete$Params, sideDishDelete } from '../fn/side-dish/side-dish-delete';
 
 @Injectable({ providedIn: 'root' })
 export class SideDishService extends BaseService {
@@ -196,5 +197,30 @@ export class SideDishService extends BaseService {
       map((r: StrictHttpResponse<Array<GetSideDishRequest>>): Array<GetSideDishRequest> => r.body)
     );
   }
+
+    /** Path part for operation `sideDishDelete()` */
+    static readonly SideDishDeletePath = '/SideDish';
+
+    /**
+     * This method provides access to the full `HttpResponse`, allowing access to response headers.
+     * To access only the response body, use `sideDishDelete()` instead.
+     *
+     * This method doesn't expect any request body.
+     */
+    sideDishDelete$Response(params?: SideDishDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+      return sideDishDelete(this.http, this.rootUrl, params, context);
+    }
+  
+    /**
+     * This method provides access only to the response body.
+     * To access the full response (for headers, for example), `sideDishDelete$Response()` instead.
+     *
+     * This method doesn't expect any request body.
+     */
+    sideDishDelete(params?: SideDishDelete$Params, context?: HttpContext): Observable<void> {
+      return this.sideDishDelete$Response(params, context).pipe(
+        map((r: StrictHttpResponse<void>): void => r.body)
+      );
+    }
 
 }

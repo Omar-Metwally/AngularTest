@@ -70,7 +70,6 @@
   font-family: Roboto;
   font-size: 16px;
   font-weight: 500;
-  line-height: 24px;
   text-align: left;
   color: rgba(50, 47, 47, 1);
   cursor: pointer;
@@ -112,4 +111,57 @@
 .active-box-style-option{
   background-color: rgba(234, 247, 232, 1);
   box-shadow: 3px 3px 30px 0px rgba(49, 172, 24, 0.2) !important;
+}
+
+@media screen and (max-width:720px) {
+
+
+   #food-types {
+    height: auto;
+    left: 0px !important;
+    right: 0px !important;
+    position: relative;
+    margin-right: 0px !important;
+    margin-left: 3px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  .box-style-option,  #small-card{
+   width: 175px !important;
+ }
+ 
+#food-types-two{
+  height: 177px !important;
+  overflow: auto;
+  display: flex;
+  margin: auto;
+
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-right: 0px !important;
+}
+#food-types-two #small-card{
+  width: 150px !important;
+   height: 179px !important;
+  position: relative;
+  margin-left: 0px !important;
+}
+ #card-small{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+
+ }
+ #food-types{
+  padding-left:0px !important;
+  padding-right: 0px !important;
+  position: relative;
+}
+ 
+
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

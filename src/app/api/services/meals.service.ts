@@ -22,6 +22,10 @@ import { mealsGet } from '../fn/meals/meals-get';
 import { MealsGet$Params } from '../fn/meals/meals-get';
 import { mealsGet$Plain } from '../fn/meals/meals-get-plain';
 import { MealsGet$Plain$Params } from '../fn/meals/meals-get-plain';
+import { mealsGetSimilarMealsGet } from '../fn/meals/meals-get-similar-meals-get';
+import { MealsGetSimilarMealsGet$Params } from '../fn/meals/meals-get-similar-meals-get';
+import { mealsGetSimilarMealsGet$Plain } from '../fn/meals/meals-get-similar-meals-get-plain';
+import { MealsGetSimilarMealsGet$Plain$Params } from '../fn/meals/meals-get-similar-meals-get-plain';
 import { mealsMealIdGet } from '../fn/meals/meals-meal-id-get';
 import { MealsMealIdGet$Params } from '../fn/meals/meals-meal-id-get';
 import { mealsMealIdGet$Plain } from '../fn/meals/meals-meal-id-get-plain';
@@ -325,6 +329,53 @@ export class MealsService extends BaseService {
   mealsMealIdGet(params: MealsMealIdGet$Params, context?: HttpContext): Observable<GetMealRequest> {
     return this.mealsMealIdGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<GetMealRequest>): GetMealRequest => r.body)
+    );
+  }
+
+  /** Path part for operation `mealsGetSimilarMealsGet()` */
+  static readonly MealsGetSimilarMealsGetPath = '/Meals/GetSimilarMeals';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsGetSimilarMealsGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsGetSimilarMealsGet$Plain$Response(params?: MealsGetSimilarMealsGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealRequest>>> {
+    return mealsGetSimilarMealsGet$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsGetSimilarMealsGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsGetSimilarMealsGet$Plain(params?: MealsGetSimilarMealsGet$Plain$Params, context?: HttpContext): Observable<Array<GetMealRequest>> {
+    return this.mealsGetSimilarMealsGet$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetMealRequest>>): Array<GetMealRequest> => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsGetSimilarMealsGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsGetSimilarMealsGet$Response(params?: MealsGetSimilarMealsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<GetMealRequest>>> {
+    return mealsGetSimilarMealsGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsGetSimilarMealsGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsGetSimilarMealsGet(params?: MealsGetSimilarMealsGet$Params, context?: HttpContext): Observable<Array<GetMealRequest>> {
+    return this.mealsGetSimilarMealsGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<GetMealRequest>>): Array<GetMealRequest> => r.body)
     );
   }
 

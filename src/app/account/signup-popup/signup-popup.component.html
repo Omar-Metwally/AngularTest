@@ -8,9 +8,9 @@
                 </button>
             </div>
             <img class="mb-2" style="width: 100%;" src="/assets/images/dicount.svg" alt="My Happy SVG" />
-            <div class="d-flex justify-content-between mt-3 mb-2">
-                <app-input class="me-1" [control]="firstName" type="text" placeholder="Hoda" label="First Name"></app-input>
-                <app-input class="ms-1" [control]="lastName" type="text" placeholder="Khaled" label="Last Name"></app-input>
+            <div class="d-flex row justify-content-between mt-3 mb-2">
+                <app-input class="col-lg-6" [control]="firstName" type="text" placeholder="Hoda" label="First Name"></app-input>
+                <app-input class="col-lg-6" [control]="lastName" type="text" placeholder="Khaled" label="Last Name"></app-input>
             </div>
             <div class="mb-2">
                 <app-input [control]="email" style="width: 100%;" type="email" placeholder="user@example.com" icon="alternate_email" label="Email"></app-input>
